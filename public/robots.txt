@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: {{SITE_URL}}/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_nuxt/
+Disallow: /_ipx/
+
+# Allow important pages
+Allow: /about
+Allow: /contact
+Allow: /pricing
+Allow: /faqs
+Allow: /careers

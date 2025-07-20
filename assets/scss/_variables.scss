@@ -1,0 +1,128 @@
+// Color Variables
+:root {
+  // Primary Colors
+  --color-primary: #f97316; // Orange-500
+  --color-primary-dark: #ea580c; // Orange-600
+  --color-primary-light: #fb923c; // Orange-400
+  
+  // Secondary Colors
+  --color-secondary: #6b7280; // Gray-500
+  --color-secondary-dark: #4b5563; // Gray-600
+  --color-secondary-light: #9ca3af; // Gray-400
+  
+  // Accent Colors
+  --color-accent: #3b82f6; // Blue-500
+  --color-accent-dark: #2563eb; // Blue-600
+  --color-accent-light: #60a5fa; // Blue-400
+  
+  // Success Colors
+  --color-success: #f97316; // Orange-500
+  --color-success-dark: #ea580c; // Orange-600
+  --color-success-light: #fb923c; // Orange-400
+  
+  // Warning Colors
+  --color-warning: #f59e0b; // Amber-500
+  --color-warning-dark: #d97706; // Amber-600
+  --color-warning-light: #fbbf24; // Amber-400
+  
+  // Error Colors
+  --color-error: #ef4444; // Red-500
+  --color-error-dark: #dc2626; // Red-600
+  --color-error-light: #f87171; // Red-400
+  
+  // Neutral Colors
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  
+  // Background Colors
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-dark: #000000;
+  --color-bg-dark-secondary: #111827;
+  
+  // Text Colors
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-light: #ffffff;
+  --color-text-muted: #9ca3af;
+  
+  // Border Colors
+  --color-border: #e5e7eb;
+  --color-border-dark: #d1d5db;
+  --color-border-light: #f3f4f6;
+  
+  // Shadow Colors
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-shadow-dark: rgba(0, 0, 0, 0.25);
+}
+
+// SCSS Variables for use in components
+$primary: var(--color-primary);
+$primary-dark: var(--color-primary-dark);
+$primary-light: var(--color-primary-light);
+
+$secondary: var(--color-secondary);
+$secondary-dark: var(--color-secondary-dark);
+$secondary-light: var(--color-secondary-light);
+
+$accent: var(--color-accent);
+$accent-dark: var(--color-accent-dark);
+$accent-light: var(--color-accent-light);
+
+$success: var(--color-success);
+$success-dark: var(--color-success-dark);
+$success-light: var(--color-success-light);
+
+$warning: var(--color-warning);
+$warning-dark: var(--color-warning-dark);
+$warning-light: var(--color-warning-light);
+
+$error: var(--color-error);
+$error-dark: var(--color-error-dark);
+$error-light: var(--color-error-light);
+
+// Button Variables
+$button-border-radius: 0.5rem;
+$button-padding-x: 1rem;
+$button-padding-y: 0.5rem;
+$button-font-weight: 500;
+$button-transition: all 0.2s ease-in-out;
+
+// Button Sizes
+$button-size-sm: (
+  padding-x: 0.5rem,
+  padding-y: 0.25rem,
+  font-size: 0.875rem,
+  line-height: 1.25rem
+);
+
+$button-size-md: (
+  padding-x: 0.75rem,
+  padding-y: 0.5rem,
+  font-size: 1rem,
+  line-height: 1.5rem
+);
+
+$button-size-lg: (
+  padding-x: 1rem,
+  padding-y: 0.75rem,
+  font-size: 1.125rem,
+  line-height: 1.75rem
+);
+
+$button-size-xl: (
+  padding-x: 1.5rem,
+  padding-y: 1rem,
+  font-size: 1.25rem,
+  line-height: 1.75rem
+); 
