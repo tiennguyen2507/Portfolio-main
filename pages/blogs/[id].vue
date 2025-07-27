@@ -1,228 +1,235 @@
 <template>
-  <div class="min-h-screen mt-10">
-    <!-- Loading State -->
-    <div v-if="loading" class="flex items-center justify-center min-h-screen">
-      <div class="text-center">
-        <div
-          class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"
-        ></div>
-        <p class="mt-4 text-gray-600">Loading article...</p>
+  <div>
+    <div class="h-[80px] bg-black"></div>
+    <div class="min-h-screen mt-2 bg-white">
+      <!-- Loading State -->
+      <div v-if="loading" class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+          <div
+            class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"
+          ></div>
+          <p class="mt-4 text-gray-600">Loading article...</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Error State -->
-    <div
-      v-else-if="error"
-      class="flex items-center justify-center min-h-screen"
-    >
-      <div class="text-center">
-        <p class="text-red-600 mb-4 text-lg">{{ error }}</p>
-        <button
-          @click="fetchBlogDetail"
-          class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg"
-        >
-          Try Again
-        </button>
-        <NuxtLink
-          to="/blogs"
-          class="block mt-4 text-orange-500 hover:text-orange-600"
-        >
-          ← Back to Blogs
-        </NuxtLink>
+      <!-- Error State -->
+      <div
+        v-else-if="error"
+        class="flex items-center justify-center min-h-screen"
+      >
+        <div class="text-center">
+          <p class="text-red-600 mb-4 text-lg">{{ error }}</p>
+          <button
+            @click="fetchBlogDetail"
+            class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg"
+          >
+            Try Again
+          </button>
+          <NuxtLink
+            to="/blogs"
+            class="block mt-4 text-orange-500 hover:text-orange-600"
+          >
+            ← Back to Blogs
+          </NuxtLink>
+        </div>
       </div>
-    </div>
 
-    <!-- Blog Detail Content -->
-    <article
-      v-else-if="blog"
-      class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
-      itemscope
-      itemtype="https://schema.org/BlogPosting"
-    >
-      <!-- Breadcrumbs -->
-      <nav class="mb-8" aria-label="Breadcrumb">
-        <ol
-          class="flex items-center space-x-2 text-sm text-gray-500"
-          itemscope
-          itemtype="https://schema.org/BreadcrumbList"
-        >
-          <li
-            itemprop="itemListElement"
+      <!-- Blog Detail Content -->
+      <article
+        v-else-if="blog"
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        itemscope
+        itemtype="https://schema.org/BlogPosting"
+      >
+        <!-- Breadcrumbs -->
+        <nav class="mb-8" aria-label="Breadcrumb">
+          <ol
+            class="flex items-center space-x-2 text-sm text-gray-500"
             itemscope
-            itemtype="https://schema.org/ListItem"
+            itemtype="https://schema.org/BreadcrumbList"
           >
-            <NuxtLink to="/" class="hover:text-orange-500" itemprop="item">
-              <span itemprop="name">Home</span>
-            </NuxtLink>
-            <meta itemprop="position" content="1" />
-          </li>
-          <li>
-            <svg
-              class="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
             >
-              <path
-                fill-rule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </li>
-          <li
-            itemprop="itemListElement"
-            itemscope
-            itemtype="https://schema.org/ListItem"
-          >
-            <NuxtLink to="/blogs" class="hover:text-orange-500" itemprop="item">
-              <span itemprop="name">Blogs</span>
-            </NuxtLink>
-            <meta itemprop="position" content="2" />
-          </li>
-          <li>
-            <svg
-              class="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </li>
-          <li
-            class="text-gray-900 font-medium truncate max-w-xs"
-            itemprop="itemListElement"
-            itemscope
-            itemtype="https://schema.org/ListItem"
-          >
-            <span itemprop="name">{{ blog.title }}</span>
-            <meta itemprop="position" content="3" />
-          </li>
-        </ol>
-      </nav>
-
-      <!-- Blog Content - Seamless Layout -->
-      <div class="bg-white">
-        <!-- Title -->
-        <header>
-          <h1
-            class="text-4xl font-bold text-gray-900 mb-6 leading-tight"
-            itemprop="headline"
-          >
-            {{ blog.title }}
-          </h1>
-
-          <!-- Meta Info -->
-          <div class="flex flex-wrap items-center gap-6 mb-8 text-sm">
-            <div class="flex items-center">
-              <span class="text-gray-500 mr-2">Published on:</span>
-              <time
-                :datetime="formatDateISO(blog.createdAt)"
-                class="text-gray-900"
-                itemprop="datePublished"
-              >
-                {{ formatDate(blog.createdAt) }}
-              </time>
-            </div>
-            <div class="flex items-center">
-              <span class="text-gray-500 mr-2">By:</span>
-              <img
-                :src="blog.createdBy.avatar"
-                :alt="`${blog.createdBy.firstName} ${blog.createdBy.lastName}`"
-                class="w-6 h-6 rounded-full mr-2"
-                @error="handleAvatarError"
-              />
-              <span
-                class="text-gray-900"
-                itemprop="author"
-                itemscope
-                itemtype="https://schema.org/Person"
-              >
-                <span itemprop="name"
-                  >{{ blog.createdBy.firstName }}
-                  {{ blog.createdBy.lastName }}</span
-                >
-              </span>
-            </div>
-            <div class="flex items-center">
-              <span class="text-gray-500 mr-2">Status:</span>
-              <span
-                :class="blog.status ? 'bg-green-500' : 'bg-gray-500'"
-                class="text-white px-2 py-1 rounded text-xs font-medium"
-              >
-                {{ blog.status ? "Active" : "Inactive" }}
-              </span>
-            </div>
-          </div>
-        </header>
-
-        <!-- Featured Image -->
-        <figure class="relative mb-8">
-          <img
-            :src="blog.thumbnail"
-            :alt="`Featured image for: ${blog.title}`"
-            class="w-full h-96 object-cover"
-            @error="handleImageError"
-            itemprop="image"
-          />
-          <figcaption
-            class="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm"
-          >
-            Featured image for: {{ blog.title }}
-          </figcaption>
-        </figure>
-
-        <!-- Blog Content -->
-        <div
-          class="prose prose-lg max-w-none mb-8"
-          itemprop="articleBody"
-          v-html="blog.description"
-        ></div>
-
-        <!-- Footer -->
-        <footer
-          class="flex items-center justify-between text-sm text-gray-500 pt-8 border-t border-gray-200"
-        >
-          <div>
-            <span>Last updated: </span>
-            <time
-              :datetime="formatDateISO(blog.updatedAt || blog.createdAt)"
-              itemprop="dateModified"
-            >
-              {{ formatDate(blog.updatedAt || blog.createdAt) }}
-            </time>
-          </div>
-          <div>
-            <NuxtLink
-              to="/blogs"
-              class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              aria-label="Back to all blog posts"
-            >
+              <NuxtLink to="/" class="hover:text-orange-500" itemprop="item">
+                <span itemprop="name">Home</span>
+              </NuxtLink>
+              <meta itemprop="position" content="1" />
+            </li>
+            <li>
               <svg
-                class="w-4 h-4 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+                class="w-4 h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 19l-7-7 7-7"
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
                 ></path>
               </svg>
-              Back to All Posts
-            </NuxtLink>
-          </div>
-        </footer>
-      </div>
-    </article>
+            </li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+            >
+              <NuxtLink
+                to="/blogs"
+                class="hover:text-orange-500"
+                itemprop="item"
+              >
+                <span itemprop="name">Blogs</span>
+              </NuxtLink>
+              <meta itemprop="position" content="2" />
+            </li>
+            <li>
+              <svg
+                class="w-4 h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </li>
+            <li
+              class="text-gray-900 font-medium truncate max-w-xs"
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+            >
+              <span itemprop="name">{{ blog.title }}</span>
+              <meta itemprop="position" content="3" />
+            </li>
+          </ol>
+        </nav>
+
+        <!-- Blog Content - Seamless Layout -->
+        <div class="bg-white">
+          <!-- Title -->
+          <header>
+            <h1
+              class="text-4xl font-bold text-gray-900 mb-6 leading-tight"
+              itemprop="headline"
+            >
+              {{ blog.title }}
+            </h1>
+
+            <!-- Meta Info -->
+            <div class="flex flex-wrap items-center gap-6 mb-8 text-sm">
+              <div class="flex items-center">
+                <span class="text-gray-500 mr-2">Published on:</span>
+                <time
+                  :datetime="formatDateISO(blog.createdAt)"
+                  class="text-gray-900"
+                  itemprop="datePublished"
+                >
+                  {{ formatDate(blog.createdAt) }}
+                </time>
+              </div>
+              <div class="flex items-center">
+                <span class="text-gray-500 mr-2">By:</span>
+                <img
+                  :src="blog.createdBy.avatar"
+                  :alt="`${blog.createdBy.firstName} ${blog.createdBy.lastName}`"
+                  class="w-6 h-6 rounded-full mr-2"
+                  @error="handleAvatarError"
+                />
+                <span
+                  class="text-gray-900"
+                  itemprop="author"
+                  itemscope
+                  itemtype="https://schema.org/Person"
+                >
+                  <span itemprop="name"
+                    >{{ blog.createdBy.firstName }}
+                    {{ blog.createdBy.lastName }}</span
+                  >
+                </span>
+              </div>
+              <div class="flex items-center">
+                <span class="text-gray-500 mr-2">Status:</span>
+                <span
+                  :class="blog.status ? 'bg-green-500' : 'bg-gray-500'"
+                  class="text-white px-2 py-1 rounded text-xs font-medium"
+                >
+                  {{ blog.status ? "Active" : "Inactive" }}
+                </span>
+              </div>
+            </div>
+          </header>
+
+          <!-- Featured Image -->
+          <figure class="relative mb-8">
+            <img
+              :src="blog.thumbnail"
+              :alt="`Featured image for: ${blog.title}`"
+              class="w-full h-96 object-cover"
+              @error="handleImageError"
+              itemprop="image"
+            />
+            <figcaption
+              class="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm"
+            >
+              Featured image for: {{ blog.title }}
+            </figcaption>
+          </figure>
+
+          <!-- Blog Content -->
+          <div
+            class="prose prose-lg max-w-none mb-8"
+            itemprop="articleBody"
+            v-html="blog.description"
+          ></div>
+
+          <!-- Footer -->
+          <footer
+            class="flex items-center justify-between text-sm text-gray-500 pt-8 border-t border-gray-200"
+          >
+            <div>
+              <span>Last updated: </span>
+              <time
+                :datetime="formatDateISO(blog.updatedAt || blog.createdAt)"
+                itemprop="dateModified"
+              >
+                {{ formatDate(blog.updatedAt || blog.createdAt) }}
+              </time>
+            </div>
+            <div>
+              <NuxtLink
+                to="/blogs"
+                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                aria-label="Back to all blog posts"
+              >
+                <svg
+                  class="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  ></path>
+                </svg>
+                Back to All Posts
+              </NuxtLink>
+            </div>
+          </footer>
+        </div>
+      </article>
+    </div>
   </div>
 </template>
 
