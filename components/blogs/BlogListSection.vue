@@ -1,30 +1,56 @@
 <template>
   <section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Loading State -->
+      <div v-if="loading" class="text-center py-12">
+        <div
+          class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"
+        ></div>
+        <p class="mt-4 text-gray-600">Loading blogs...</p>
+      </div>
+
+      <!-- Error State -->
+      <div v-else-if="error" class="text-center py-12">
+        <p class="text-red-600 mb-4">{{ error }}</p>
+        <button
+          @click="fetchBlogs"
+          class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg"
+        >
+          Try Again
+        </button>
+      </div>
+
       <!-- Blog Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div 
-          v-for="blog in blogs" 
-          :key="blog.id"
-          class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group"
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <NuxtLink
+          v-for="blog in blogs"
+          :key="blog._id"
+          :to="`/blogs/${blog._id}`"
+          class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group cursor-pointer block"
         >
           <!-- Blog Image -->
           <div class="relative overflow-hidden h-48">
-            <img 
-              :src="blog.image" 
+            <img
+              :src="blog.thumbnail"
               :alt="blog.title"
               class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              @error="handleImageError"
             />
             <!-- Category Badge -->
             <div class="absolute top-4 left-4">
-              <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {{ blog.category }}
+              <span
+                class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+              >
+                Blog
               </span>
             </div>
-            <!-- Read Time -->
+            <!-- Status Badge -->
             <div class="absolute top-4 right-4">
-              <span class="bg-black/70 text-white px-2 py-1 rounded text-xs">
-                {{ blog.readTime }} min read
+              <span
+                :class="blog.status ? 'bg-green-500' : 'bg-gray-500'"
+                class="text-white px-2 py-1 rounded text-xs"
+              >
+                {{ blog.status ? "Active" : "Inactive" }}
               </span>
             </div>
           </div>
@@ -33,52 +59,96 @@
           <div class="p-6">
             <!-- Date -->
             <div class="flex items-center text-sm text-gray-500 mb-3">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
               </svg>
-              {{ blog.date }}
+              {{ formatDate(blog.createdAt) }}
             </div>
 
             <!-- Title -->
-            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-orange-500 transition-colors duration-300">
+            <h3
+              class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-orange-500 transition-colors duration-300 h-[55px]"
+            >
               {{ blog.title }}
             </h3>
 
             <!-- Excerpt -->
-            <p class="text-gray-600 mb-4 line-clamp-3">
-              {{ blog.excerpt }}
-            </p>
+            <div
+              class="text-gray-600 mb-4 line-clamp-3 prose prose-sm max-w-none h-[63px]"
+              v-html="blog.description"
+            ></div>
 
             <!-- Author -->
             <div class="flex items-center justify-between">
               <div class="flex items-center">
-                <img 
-                  :src="blog.author.avatar" 
-                  :alt="blog.author.name"
+                <img
+                  :src="blog.createdBy.avatar"
+                  :alt="`${blog.createdBy.firstName} ${blog.createdBy.lastName}`"
                   class="w-8 h-8 rounded-full mr-3"
+                  @error="handleAvatarError"
                 />
                 <div>
-                  <p class="text-sm font-semibold text-gray-900">{{ blog.author.name }}</p>
-                  <p class="text-xs text-gray-500">{{ blog.author.role }}</p>
+                  <p class="text-sm font-semibold text-gray-900">
+                    {{ blog.createdBy.firstName }} {{ blog.createdBy.lastName }}
+                  </p>
+                  <p class="text-xs text-gray-500">Author</p>
                 </div>
               </div>
-              
+
               <!-- Read More Button -->
-              <button class="text-orange-500 hover:text-orange-600 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform duration-300">
+              <button
+                class="text-orange-500 hover:text-orange-600 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform duration-300"
+              >
                 Read More
-                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                <svg
+                  class="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
                 </svg>
               </button>
             </div>
           </div>
-        </div>
+        </NuxtLink>
+      </div>
+
+      <!-- Empty State -->
+      <div
+        v-if="!loading && !error && blogs.length === 0"
+        class="text-center py-12"
+      >
+        <p class="text-gray-600">No blogs found.</p>
       </div>
 
       <!-- Load More Button -->
-      <div class="text-center mt-12">
-        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-          Load More Articles
+      <div v-if="blogs.length > 0 && hasMorePages" class="text-center mt-12">
+        <button
+          @click="loadMoreBlogs"
+          :disabled="loadingMore"
+          class="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto"
+        >
+          <div
+            v-if="loadingMore"
+            class="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"
+          ></div>
+          {{ loadingMore ? "Loading..." : "Load More Articles" }}
         </button>
       </div>
     </div>
@@ -86,95 +156,94 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from "vue";
 
-// Blog data
-const blogs = ref([
-  {
-    id: 1,
-    title: "10 Proven Strategies to Boost Your Affiliate Marketing Revenue in 2024",
-    excerpt: "Discover the most effective affiliate marketing strategies that top performers are using to increase their revenue and grow their business in the competitive digital landscape.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop",
-    category: "Strategy",
-    readTime: 8,
-    date: "March 15, 2024",
-    author: {
-      name: "Sarah Johnson",
-      role: "Marketing Director",
-      avatar: "/images/ab-1.webp"
+// Reactive data
+const blogs = ref([]);
+const loading = ref(true);
+const error = ref(null);
+const currentPage = ref(1);
+const hasMorePages = ref(true);
+const loadingMore = ref(false);
+
+// API URL with pagination
+const API_URL = "https://blog-data.up.railway.app/posts";
+const LIMIT = 6;
+
+// Fetch blogs from API
+const fetchBlogs = async (page = 1, append = false) => {
+  try {
+    if (page === 1) {
+      loading.value = true;
+    } else {
+      loadingMore.value = true;
     }
-  },
-  {
-    id: 2,
-    title: "The Complete Guide to Lead Generation for Affiliate Marketers",
-    excerpt: "Learn how to generate high-quality leads that convert into sales. This comprehensive guide covers everything from lead magnets to email marketing automation.",
-    image: "/images/blog-2.webp",
-    category: "Lead Generation",
-    readTime: 12,
-    date: "March 12, 2024",
-    author: {
-      name: "Mike Chen",
-      role: "Lead Generation Expert",
-      avatar: "/images/ab-2.webp"
+    error.value = null;
+
+    const url = `${API_URL}?page=${page}&limit=${LIMIT}`;
+    console.log("Fetching from:", url);
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  },
-  {
-    id: 3,
-    title: "How to Build Trust and Credibility in Your Affiliate Marketing Business",
-    excerpt: "Trust is the foundation of successful affiliate marketing. Learn proven techniques to build credibility with your audience and increase conversion rates.",
-    image: "/images/ab-3.webp",
-    category: "Trust Building",
-    readTime: 6,
-    date: "March 10, 2024",
-    author: {
-      name: "Emma Davis",
-      role: "Content Strategist",
-      avatar: "/images/ab-3.webp"
+
+    const data = await response.json();
+    console.log("API response:", data);
+
+    if (append) {
+      // Append new blogs to existing ones
+      blogs.value = [...blogs.value, ...(data.data || [])];
+    } else {
+      // Replace blogs for first page
+      blogs.value = data.data || [];
     }
-  },
-  {
-    id: 4,
-    title: "Top 5 Affiliate Marketing Tools Every Publisher Should Use",
-    excerpt: "Discover the essential tools and software that will streamline your affiliate marketing operations and help you scale your business efficiently.",
-    image: "/images/blog-4.webp",
-    category: "Tools",
-    readTime: 10,
-    date: "March 8, 2024",
-    author: {
-      name: "David Wilson",
-      role: "Tech Specialist",
-      avatar: "/images/ab-4.webp"
-    }
-  },
-  {
-    id: 5,
-    title: "Social Media Marketing for Affiliate Marketers: Best Practices",
-    excerpt: "Master social media marketing to promote your affiliate products effectively. Learn platform-specific strategies and content creation tips.",
-    image: "/images/blog-2.webp",
-    category: "Social Media",
-    readTime: 9,
-    date: "March 5, 2024",
-    author: {
-      name: "Lisa Rodriguez",
-      role: "Social Media Manager",
-      avatar: "/images/ab-1.webp"
-    }
-  },
-  {
-    id: 6,
-    title: "Email Marketing Automation: The Secret Weapon of Successful Affiliates",
-    excerpt: "Automate your email marketing campaigns to nurture leads and drive sales. Learn how to create effective email sequences that convert.",
-    image: "/images/blog-4.webp",
-    category: "Email Marketing",
-    readTime: 11,
-    date: "March 3, 2024",
-    author: {
-      name: "Alex Thompson",
-      role: "Email Marketing Expert",
-      avatar: "/images/ab-2.webp"
-    }
+
+    // Update pagination state
+    currentPage.value = page;
+    hasMorePages.value = data.nextPage || false;
+  } catch (err) {
+    console.error("Error fetching blogs:", err);
+    error.value = "Failed to load blogs. Please try again later.";
+  } finally {
+    loading.value = false;
+    loadingMore.value = false;
   }
-])
+};
+
+// Load more blogs
+const loadMoreBlogs = async () => {
+  if (!hasMorePages.value || loadingMore.value) return;
+
+  const nextPage = currentPage.value + 1;
+  await fetchBlogs(nextPage, true);
+};
+
+// Format date
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+// Handle image error
+const handleImageError = (event) => {
+  event.target.src = "/images/blog-1.webp"; // Fallback image
+};
+
+// Handle avatar error
+const handleAvatarError = (event) => {
+  event.target.src = "/images/ab-1.webp"; // Fallback avatar
+};
+
+// Fetch blogs on component mount
+onMounted(() => {
+  fetchBlogs(1, false);
+});
 </script>
 
 <style scoped>
@@ -205,4 +274,78 @@ const blogs = ref([
 .group:hover .group-hover\:translate-x-1 {
   transform: translateX(0.25rem);
 }
-</style> 
+
+/* Quill editor content styling */
+.prose {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.prose p {
+  margin: 0;
+  padding: 0;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: #374151;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose ul,
+.prose ol {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.prose li {
+  margin: 0.25rem 0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  margin: 0;
+  font-weight: 600;
+  color: #374151;
+}
+
+.prose blockquote {
+  margin: 0;
+  padding-left: 0.75rem;
+  border-left: 3px solid #f97316;
+  font-style: italic;
+}
+
+.prose code {
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  color: #374151;
+}
+
+.prose pre {
+  background-color: #f3f4f6;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.prose a {
+  color: #f97316;
+  text-decoration: none;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+</style>
