@@ -167,7 +167,8 @@ const hasMorePages = ref(true);
 const loadingMore = ref(false);
 
 // API URL with pagination
-const API_URL = process.env.NUXT_PUBLIC_API_URL || "http://localhost:3000";
+const config = useRuntimeConfig();
+const API_URL = config.public.NUXT_PUBLIC_API_URL || "http://localhost:3000";
 const POSTS_ENDPOINT = `${API_URL}/posts`;
 const LIMIT = 6;
 
