@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <!-- Left Side - Text Content -->
         <div class="space-y-6">
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold">
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold uppercase">
             <span :class="titleFirstColor">{{ titleFirst }}</span>
             <br>
             <span :class="titleSecondColor">{{ titleSecond }}</span>

@@ -28,7 +28,7 @@
         <div class="text-center lg:text-left">
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
             <span class="block">JOIN OUR TEAM AT</span>
-            <span class="block text-orange-500">LEADSWISE</span>
+            <span class="block text-orange-500">LEADSMAX</span>
           </h1>
           
           <div class="space-y-6 text-lg text-white/90 leading-relaxed">
@@ -54,7 +54,7 @@
           <div class="relative rounded-2xl overflow-hidden shadow-2xl">
             <img
               src="/assets/images/Executive.webp"
-              alt="Diverse team collaborating at LeadsWise"
+              alt="Diverse team collaborating at Leadsmax"
               class="w-full h-[500px] object-cover"
             />
             <!-- Subtle overlay to enhance the image -->

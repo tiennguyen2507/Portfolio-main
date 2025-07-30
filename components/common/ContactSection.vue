@@ -23,8 +23,8 @@
               </div>
               <div>
                 <p class="font-semibold text-gray-900">Phone</p>
-                <a href="tel:+84123456789" class="text-gray-600 hover:text-orange-600 transition-colors">
-                  +84 123 456 789
+                <a href="tel:+84372571498" class="text-gray-600 hover:text-orange-600 transition-colors">
+                  +84 372 571 498
                 </a>
               </div>
             </div>
@@ -37,19 +37,19 @@
               </div>
               <div>
                 <p class="font-semibold text-gray-900">Email</p>
-                <div class="space-y-1">
+                <div class="space-y-3">
                   <p class="text-gray-600">
-                    <span class="font-medium">Affiliate Account Manager:</span>
+                    <span class="font-medium">Affiliate Manager:</span>
                     <br>
-                    <a href="mailto:janice.kim@leadswise.com" class="hover:text-orange-600 transition-colors">
-                      Ms. Janice Kim
+                    <a href="mailto:mia@leadsmaxgroup.com" class="hover:text-orange-600 transition-colors">
+                      Mia - mia@leadsmaxgroup.com
                     </a>
                   </p>
                   <p class="text-gray-600">
-                    <span class="font-medium">Advertiser Account Manager:</span>
+                    <span class="font-medium">Business Development Director:</span>
                     <br>
-                    <a href="mailto:elise.kim@leadswise.com" class="hover:text-orange-600 transition-colors">
-                      Ms. Elise Kim
+                    <a href="mailto:ethan@leadsmaxgroup.com" class="hover:text-orange-600 transition-colors">
+                      Ethan - ethan@leadsmaxgroup.com
                     </a>
                   </p>
                 </div>
@@ -65,7 +65,7 @@
               </div>
               <div>
                 <p class="font-semibold text-gray-900">Address</p>
-                <p class="text-gray-600">Ho Chi Minh City, Viet Nam</p>
+                <p class="text-gray-600">84 Ho Tung Mau, Hoa Minh, Lien Chieu, Da Nang, Vietnam</p>
               </div>
             </div>
           </div>

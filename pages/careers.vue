@@ -9,12 +9,16 @@
   
   <script setup>
   useHead({
-    title: "Advertisers - LEADSWISE Network",
+    title: "Careers - Leadsmax Network | Join Our Team",
     meta: [
       {
         name: "description",
         content:
-          "Join our prestigious affiliate network as an advertiser. Enjoy seamless connections to diverse traffic sources and achieve your desired ROI with our award-winning team.",
+          "Join Leadsmax Network's dynamic team. We're hiring talented professionals in marketing, tech, and operations. Grow your career with Vietnam's premier affiliate marketing platform.",
+      },
+      {
+        name: "keywords",
+        content: "careers, jobs, employment, affiliate marketing, Vietnam, digital marketing, tech jobs, marketing careers",
       },
     ],
   });

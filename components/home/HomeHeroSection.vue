@@ -3,12 +3,12 @@
     <!-- Background with hero image -->
     <div class="fixed inset-0" style="z-index: -1;">
       <img 
-        src="/assets/images/hero-background.webp" 
+        src="/images/ab-bg.webp" 
         alt="Hero Background" 
         class="w-full h-full object-cover"
       />
       <!-- Dark overlay for better text readability -->
-      <div class="absolute inset-0 bg-black/70"></div>
+      <div class="absolute inset-0 bg-black/80"></div>
     </div>
     
     <!-- Overlay to hide background after hero section -->
@@ -18,7 +18,7 @@
     <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto mb-16">
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 mt-16">
         <span class="text-orange-500 relative">
-          LEADSWISE
+          LEADSMAX
           <div class="absolute -inset-2 bg-gradient-to-r from-orange-500/20 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         </span>
         <span class="text-white"> NETWORK</span>
@@ -26,21 +26,23 @@
       
       <div class="space-y-6 mb-12">
         <p class="text-2xl md:text-3xl lg:text-4xl text-white font-light leading-tight">
-          Empowering Affiliate Journey
+          Maximum Performance – Outstanding Results
         </p>
         
         <p class="text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          Partnerships Built on Trust, Your Growth is Our Goal
+          Trusted by partners. Driven by results.
         </p>
       </div>
       
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <NuxtLink 
-          to="/about" 
+          to="https://leadswise.affise.com/v2/sign/up" 
+          target="_blank"
+          rel="noopener noreferrer"
           class="group relative inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-white px-10 py-5 rounded-xl text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-orange-500/25"
         >
           <div class="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-orange-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <span class="relative z-10">LEARN MORE</span>
+          <span class="relative z-10">SIGN UP</span>
         </NuxtLink>
         
         <NuxtLink to="/blogs" class="group relative inline-flex items-center px-8 py-5 border-2 border-white/30 text-white rounded-xl font-semibold hover:border-orange-400 hover:text-orange-400 transition-all duration-300 transform hover:scale-105">
@@ -53,7 +55,7 @@
     </div>
     
     <!-- Stats Section -->
-    <div class="absolute bottom-[0] z-10 w-full h-[22vh]">
+    <div class="absolute bottom-[0] z-10 w-full h-[30vh] lg:h-[22vh]">
       <!-- Separator line -->
       <div class="w-full h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-30 mb-8"></div>
       
@@ -131,9 +133,9 @@ onMounted(() => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         // Start animations
-        animateCounter(leadsCounter.value, 1) // 1M
-        animateCounter(advertisersCounter.value, 300)
-        animateCounter(publishersCounter.value, 1000)
+        animateCounter(leadsCounter.value, 1.2) // 1M
+        animateCounter(advertisersCounter.value, 350)
+        animateCounter(publishersCounter.value, 1500)
         animateCounter(offersCounter.value, 500)
         
         // Stop observing after animation starts

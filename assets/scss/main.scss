@@ -4,8 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-// Import variables
+// Import variables and fonts
 @import 'variables';
+@import 'fonts';
 
 body {
     @apply text-gray-800 #{!important};

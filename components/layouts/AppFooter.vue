@@ -15,16 +15,15 @@
               />
               <!-- Text Logo (fallback) -->
               <div class="flex flex-col">
-                <div class="text-2xl font-serif font-bold">
+                <div class="text-2xl font-utm-hanzel">
                   <span class="text-white">Leads</span>
                   <span class="text-orange-500">max</span>
                 </div>
-                <div class="text-xs italic text-white font-light">NETWORK</div>
               </div>
             </div>
           </div>
           <p class="text-orange-100 mb-6 max-w-md">
-            Empowering affiliate marketing partnerships with trust, transparency, and growth-focused solutions.
+            Our solutions help connect agencies and advertisers with the right publishers to maximize their marketing performance.
           </p>
           <!-- Social media icons -->
           <div class="flex space-x-4">
@@ -60,24 +59,26 @@
           <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
           <div class="space-y-3 text-orange-100">
             <div>
-              <p class="font-medium">NGUYEN THI THONG</p>
-              <p>General Manager</p>
-            </div>
-            <div>
-              <p class="font-medium">Email:</p>
-              <a href="mailto:leadswisenetwork@gmail.com" class="hover:text-white transition-colors">
-                leadswisenetwork@gmail.com
+              <p class="font-medium">Phone:</p>
+              <a href="tel:+84372571498" class="hover:text-white transition-colors">
+                +84 372 571 498
               </a>
             </div>
             <div>
-              <p class="font-medium">Phone:</p>
-              <a href="tel:+84123456789" class="hover:text-white transition-colors">
-                +84 123 456 789
+              <p class="font-medium">Affiliate Manager:</p>
+              <a href="mailto:mia@leadsmaxgroup.com" class="hover:text-white transition-colors">
+                Mia - mia@leadsmaxgroup.com
+              </a>
+            </div>
+            <div>
+              <p class="font-medium">Business Development Director:</p>
+              <a href="mailto:ethan@leadsmaxgroup.com" class="hover:text-white transition-colors">
+                Ethan - ethan@leadsmaxgroup.com
               </a>
             </div>
             <div>
               <p class="font-medium">Address:</p>
-              <p>Ha Tinh, Viet Nam</p>
+              <p>84 Ho Tung Mau, Hoa Minh, Lien Chieu, Da Nang, Vietnam</p>
             </div>
           </div>
         </div>
@@ -87,7 +88,7 @@
       <div class="border-t border-orange-700 pt-8">
         <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p class="text-orange-100">
-            © 2024 Copyright LeadsWise Network. All rights reserved.
+            © 2024 Copyright Leadsmax Network. All rights reserved.
           </p>
           <div class="flex space-x-6 text-sm">
             <NuxtLink to="/privacy" class="text-orange-100 hover:text-white transition-colors">

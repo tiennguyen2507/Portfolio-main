@@ -1,5 +1,12 @@
 export const navigationItems = [
   {
+    path: '/',
+    label: 'ABOUT',
+    class: 'text-white hover:text-orange-400 transition-colors font-medium text-sm uppercase tracking-wide',
+    activeClass: 'text-orange-400',
+    mobileClass: 'text-white hover:text-orange-400 transition-colors'
+  },
+  {
     path: '/advertisers',
     label: 'ADVERTISERS',
     class: 'text-white hover:text-orange-400 transition-colors font-medium text-sm uppercase tracking-wide',
@@ -14,22 +21,8 @@ export const navigationItems = [
     mobileClass: 'text-white hover:text-orange-400 transition-colors'
   },
   {
-    path: '/about',
-    label: 'ABOUT',
-    class: 'text-white hover:text-orange-400 transition-colors font-medium text-sm uppercase tracking-wide',
-    activeClass: 'text-orange-400',
-    mobileClass: 'text-white hover:text-orange-400 transition-colors'
-  },
-  {
-    path: '/pricing',
-    label: 'PRICING',
-    class: 'text-white hover:text-orange-400 transition-colors font-medium text-sm uppercase tracking-wide',
-    activeClass: 'text-orange-400',
-    mobileClass: 'text-white hover:text-orange-400 transition-colors'
-  },
-  {
-    path: '/faqs',
-    label: 'FAQS',
+    path: '/blogs',
+    label: 'BLOGS',
     class: 'text-white hover:text-orange-400 transition-colors font-medium text-sm uppercase tracking-wide',
     activeClass: 'text-orange-400',
     mobileClass: 'text-white hover:text-orange-400 transition-colors'
@@ -37,6 +30,13 @@ export const navigationItems = [
   {
     path: '/careers',
     label: 'CAREERS',
+    class: 'text-white hover:text-orange-400 transition-colors font-medium text-sm uppercase tracking-wide',
+    activeClass: 'text-orange-400',
+    mobileClass: 'text-white hover:text-orange-400 transition-colors'
+  },
+  {
+    path: '/faqs',
+    label: 'FAQS',
     class: 'text-white hover:text-orange-400 transition-colors font-medium text-sm uppercase tracking-wide',
     activeClass: 'text-orange-400',
     mobileClass: 'text-white hover:text-orange-400 transition-colors'
@@ -50,7 +50,7 @@ export const navigationItems = [
   },
   {
     path: '/publisher-signup',
-    label: 'PUBLISHER SIGN UP',
+    label: 'SIGN UP',
     class: 'border border-white text-orange-400 px-4 py-2 rounded hover:border-orange-400 hover:text-orange-300 transition-all duration-300 font-medium text-xs uppercase tracking-wide text-center leading-tight',
     activeClass: 'text-orange-400',
     mobileClass: 'border border-white text-orange-400 px-4 py-2 rounded hover:border-orange-400 hover:text-orange-300 transition-all duration-300 font-medium text-xs uppercase tracking-wide text-center leading-tight',

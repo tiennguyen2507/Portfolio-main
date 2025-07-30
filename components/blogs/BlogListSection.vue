@@ -167,7 +167,8 @@ const hasMorePages = ref(true);
 const loadingMore = ref(false);
 
 // API URL with pagination
-const API_URL = "https://blog-data.up.railway.app/posts";
+const API_URL = process.env.NUXT_PUBLIC_API_URL || "http://localhost:3000";
+const POSTS_ENDPOINT = `${API_URL}/posts`;
 const LIMIT = 6;
 
 // Fetch blogs from API
@@ -180,7 +181,7 @@ const fetchBlogs = async (page = 1, append = false) => {
     }
     error.value = null;
 
-    const url = `${API_URL}?page=${page}&limit=${LIMIT}`;
+    const url = `${POSTS_ENDPOINT}?page=${page}&limit=${LIMIT}`;
     console.log("Fetching from:", url);
 
     const response = await fetch(url);

@@ -133,7 +133,7 @@ const testimonials = ref([
     position: "AFFILIATE MANAGER",
     quote:
       "Working here has been a game-changer for my career. The supportive environment, challenging projects, and growth opportunities have exceeded my expectations.",
-    avatar: "/assets/images/team-1.jpg",
+    avatar: "/assets/images/avatar-default.jpg",
   },
   {
     id: 2,
@@ -141,23 +141,23 @@ const testimonials = ref([
     position: "DEVELOPER",
     quote:
       "I appreciate the flexibility here. Remote work options allow me to balance my professional and personal life effectively.",
-    avatar: "/assets/images/team-2.jpg",
+    avatar: "/assets/images/avatar-default.jpg",
   },
   {
     id: 3,
     name: "SARAH",
     position: "SENIOR DEVELOPER",
     quote:
-      "The collaborative culture at LeadsWise is incredible. Every day brings new challenges and learning opportunities. I've grown both professionally and personally.",
-    avatar: "/assets/images/team-3.jpg",
+      "The collaborative culture at Leadsmax is incredible. Every day brings new challenges and learning opportunities. I've grown both professionally and personally.",
+    avatar: "/assets/images/avatar-default.jpg",
   },
   {
     id: 4,
     name: "MIKE",
     position: "MARKETING DIRECTOR",
     quote:
-      "What sets LeadsWise apart is the genuine care for employee development. The mentorship programs and skill-building initiatives are truly outstanding.",
-    avatar: "/assets/images/team-4.jpg",
+      "What sets Leadsmax apart is the genuine care for employee development. The mentorship programs and skill-building initiatives are truly outstanding.",
+    avatar: "/assets/images/avatar-default.jpg",
   },
   {
     id: 5,
@@ -165,7 +165,7 @@ const testimonials = ref([
     position: "DATA ANALYST",
     quote:
       "The work-life balance here is perfect. Management truly understands the importance of personal time while maintaining high performance standards.",
-    avatar: "/assets/images/team-5.jpg",
+    avatar: "/assets/images/avatar-default.jpg",
   },
 ]);
 </script>

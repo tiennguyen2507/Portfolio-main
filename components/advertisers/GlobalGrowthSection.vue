@@ -64,11 +64,20 @@
         </div>
       </div>
       
-      <div v-if="statsCards" class="absolute top-[-18%] left-8 transform translate-y-1/2 hidden lg:block">
+      <div v-if="statsCards && statsCards.clicks" class="absolute top-[-18%] left-8 transform translate-y-1/2 hidden lg:block">
         <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300">
           <div class="text-center">
             <div class="text-3xl font-bold text-orange-500 mb-2 hover:text-orange-600 transition-colors duration-300">{{ statsCards.clicks.value }}</div>
             <div class="text-sm text-gray-300">{{ statsCards.clicks.label }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <div v-if="statsCards && statsCards.publishers" class="absolute top-[-18%] left-8 transform translate-y-1/2 hidden lg:block">
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-orange-500 mb-2 hover:text-orange-600 transition-colors duration-300">{{ statsCards.publishers.value }}</div>
+            <div class="text-sm text-gray-300">{{ statsCards.publishers.label }}</div>
           </div>
         </div>
       </div>
@@ -163,6 +172,10 @@ const props = defineProps({
       clicks: {
         value: '1M+',
         label: 'Daily Clicks'
+      },
+      publishers: {
+        value: '1000+',
+        label: 'Active Publishers'
       }
     })
   }

@@ -5,21 +5,22 @@
         <!-- Text content -->
         <div>
           <h2 
-            class="text-4xl md:text-5xl font-bold mb-6 opacity-0 transform translate-y-8 transition-all duration-800 ease-out"
+            class="text-3xl md:text-4xl font-bold mb-6 opacity-0 transform translate-y-8 transition-all duration-800 ease-out"
             :class="{ 'animate-fade-in-up': isVisible }"
           >
-            <span class="text-black">EMPOWERING YOUR MARKETING</span>
+            <span class="text-black uppercase">Scale Smarter with Affiliate</span>
             <br>
-            <span class="text-orange-500">PERFORMANCE</span>
+            <span class="text-orange-500 text-4xl md:text-5xl">PERFORMANCE</span>
+            <br>
+            <span class="text-black uppercase">That Delivers</span>
           </h2>
           
           <p 
             class="text-lg text-gray-600 leading-relaxed mb-8 opacity-0 transform translate-y-8 transition-all duration-800 ease-out"
             :class="{ 'animate-fade-in-up delay-200': isVisible }"
           >
-            We specialize in affiliate marketing, connecting consumers with brands and helping advertisers 
-            and publishers achieve their goals. Our platform provides the tools and support needed to 
-            maximize your marketing performance and drive sustainable growth.
+          At Leadsmax Network, we connect advertisers and publishers through high-impact affiliate campaigns.
+          Our platform is built for performance — giving you the tools, insights, and support to drive results that scale.
           </p>
           
           <div class="space-y-4">
@@ -32,7 +33,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <span class="text-gray-700">Advanced targeting and optimization</span>
+              <span class="text-gray-700">Smarter targeting. Better optimization.</span>
             </div>
             
             <div 
@@ -44,7 +45,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <span class="text-gray-700">Real-time analytics and reporting</span>
+              <span class="text-gray-700">Real-time tracking with actionable insights.</span>
             </div>
             
             <div 
@@ -56,7 +57,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <span class="text-gray-700">Dedicated support and guidance</span>
+              <span class="text-gray-700">Dedicated account support that grows with you.</span>
             </div>
           </div>
         </div>

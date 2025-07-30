@@ -26,8 +26,8 @@
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 mt-24">
         <span class="text-white uppercase text-2xl md:text-4xl">Blogs</span>
         <br />
-        <span class="text-orange-500 relative uppercase">
-          Stay Informed with Our Blog
+        <span class="text-orange-500 relative uppercase ">
+          Stay Informed with Our Blog 
           <div
             class="absolute -inset-2 bg-gradient-to-r from-orange-500/20 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           ></div>

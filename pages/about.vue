@@ -5,8 +5,7 @@
       <!-- Performance Purpose Section -->
       <PerformancePurposeSection />
       
-      <!-- Mission Vision Section -->
-      <MissionVisionSection />
+
 
       <!-- Seamless Connections Section -->
       <SeamlessConnectionsSection />

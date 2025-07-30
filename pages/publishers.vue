@@ -83,8 +83,8 @@
 // Hero section data for advertisers page
 const heroData = {
   title: "PUBLISHERS",
-  subtitle: "UNLOCK EXCLUSIVE OPPORTUNITIES BY JOINING OUR ELITE, RENOWNED AFFILIATE NETWORK",
-  description: "Leadswise offers a comprehensive range of advertising services to fit any specific set of KPIs for publishers, advertisers, and agencies worldwide.",
+  subtitle: "EARN MORE. SCALE FASTER. JOIN A NETWORK THAT WORKS FOR YOU.",
+  description: "Leadsmax is where top-performing affiliates thrive. Whether you're a solo media buyer, a seasoned team, or a content-driven traffic source — we offer high-paying offers, on-time payouts, and real support to help you win bigger.",
   primaryButton: {
     text: "PUBLISHER SIGN UP",
     link: "https://leadswise.affise.com/v2/sign/up"
@@ -130,84 +130,86 @@ const statsData = {
   ]
 }
 
-// Seamless Connections data for advertisers page
+// Seamless Connections data for publishers page
 const seamlessData = {
   backgroundClass: 'bg-white',
-  titleFirst: 'SEAMLESS CONNECTIONS',
+  titleFirst: 'Traffic In. Revenue Out.',
   titleFirstColor: 'text-black',
-  titleSecond: 'POWERFUL RESULTS',
+  titleSecond: ' Support Always',
   titleSecondColor: 'text-orange-500',
-  description: 'For advertisers, we provide seamless connections to diverse traffic sources, allowing you to widely promote your products to consumers through different advertising formats and achieve your desired ROI.',
+  description: `Leadsmax helps publishers unlock more value from their traffic — with smart offers, fast payouts, and hands-on support.
+With global demand and local expertise, we help you grow smarter — not just bigger.`,
   descriptionColor: 'text-gray-700',
   image: {
     src: '/images/adv1.webp',
-    alt: 'Business Partnership - Two people shaking hands'
+    alt: 'Publisher Success - Traffic monetization partnership'
   },
   statsCard: {
     value: '+150%',
-    label: 'Average ROI'
+    label: 'Average Publisher Earnings'
   }
 }
 
-// Personalized Strategies data for advertisers page
+// Personalized Strategies data for publishers page
 const personalizedData = {
   backgroundClass: 'bg-gray-50',
-  titleFirst: 'PERSONALIZED STRATEGIES FOR',
+  titleFirst: 'Campaigns That Convert.',
   titleFirstColor: 'text-black',
-  titleSecond: 'OPTIMAL PERFORMANCE',
+  titleSecond: 'Support That Scales.',
   titleSecondColor: 'text-orange-500',
-  description: 'Our priority is to foster a fair and efficient marketplace that supports advertisers and publishers in achieving their revenue goals and business objectives. Through relentless innovation focused on shared growth and prosperity, LeadsWise proudly stands as one of Singapore\'s leading performance marketing networks.',
+  description: `We match publishers with high-quality campaigns — backed by real support, flexible payouts, and data that drives results.`,
   descriptionColor: 'text-gray-700',
   image: {
     src: '/images/adv2.webp',
-    alt: 'Team Collaboration - Four people celebrating success'
+    alt: 'Publisher Success - Team celebrating revenue growth'
   },
   achievementCard: {
     title: 'Award-Winning',
-    subtitle: 'Performance Network'
+    subtitle: 'Publisher Network'
   },
-  features: [
-    {
-      title: 'Innovation Focus',
-      description: 'Cutting-edge marketing solutions'
-    },
-    {
-      title: 'Shared Growth',
-      description: 'Mutual success partnerships'
-    },
-    {
-      title: 'Fair Marketplace',
-      description: 'Transparent and ethical practices'
-    },
-    {
-      title: 'Leading Network',
-      description: 'Singapore\'s top performance network'
-    }
-  ]
+  // features: [
+  //   {
+  //     title: 'Traffic Monetization',
+  //     description: 'Maximum revenue from your traffic'
+  //   },
+  //   {
+  //     title: 'Fast Payouts',
+  //     description: 'Quick and reliable payments'
+  //   },
+  //   {
+  //     title: 'Fair Marketplace',
+  //     description: 'Transparent and ethical practices'
+  //   },
+  //   {
+  //     title: 'Leading Network',
+  //     description: 'Vietnam\'s top publisher network'
+  //   }
+  // ]
 }
 
-// Global Growth data for advertisers page
+// Global Growth data for publishers page
 const globalGrowthData = {
   isBack: false,
-  titleFirst: 'ASSURED',
+  titleFirst: 'GROW BEYOND TRAFFIC.',
   titleFirstColor: 'text-white',
-  titleSecond: 'WORLDWIDE',
+  titleSecond: 'BUILD',
   titleSecondColor: 'text-orange-500',
-  titleThird: 'GROWTH',
+  titleThird: 'REAL REVENUE',
   titleThirdColor: 'text-orange-500',
-  description: 'As an advertiser, you play a crucial role in our mission. Whether you\'re an established brand, a growing business, or a startup looking to expand your reach, our platform is designed to provide you with seamless access to diverse traffic sources and high-performing publishers. By joining our network, you\'ll gain access to targeted audiences that can help you maximize your ROI and achieve sustainable growth. Together, let\'s achieve worldwide success!',
+  description: `Whether you're a media buyer, influencer, or content creator — your role in the ecosystem is pivotal.
+At Leadsmax, we collaborate with publishers who think long-term, build quality traffic, and seek more than just payouts: sustainable growth, transparency, and strategic partnership.`,
   descriptionColor: 'text-gray-200',
   primaryButton: {
-    text: 'BECOME AN ADVERTISER',
+    text: 'BECOME A PUBLISHER',
     link: '/login'
   },
   secondaryButton: {
-    text: 'ADVERTISER ACCESS',
+    text: 'PUBLISHER ACCESS',
     link: '/contact'
   },
   backgroundImage: {
     src: '/images/pub-global.webp',
-    alt: 'Global Growth Background'
+    alt: 'Global Publisher Growth Background'
   },
   overlayClass: 'bg-black/70',
   statsCards: {
@@ -215,9 +217,9 @@ const globalGrowthData = {
       value: '50+',
       label: 'Countries'
     },
-    clicks: {
-      value: '1M+',
-      label: 'Daily Clicks'
+    publishers: {
+      value: '1000+',
+      label: 'Active Publishers'
     }
   }
 }
@@ -225,17 +227,27 @@ const globalGrowthData = {
 // Key Features data for advertisers page
 const keyFeaturesData = {
   backgroundClass: 'bg-gradient-to-br from-gray-50 to-white',
-  title: 'Why Choose',
+  title: 'Why Publishers Choose',
   titleColor: 'text-gray-900',
-  titleAccent: 'Leadswise',
+  titleAccent: 'Leadsmax',
   titleAccentColor: 'text-orange-500',
-  subtitle: 'Experience the advantages of partnering with Singapore\'s leading performance network',
+  subtitle: 'Experience the advantages of partnering with Vietnam\'s leading performance network for publishers',
   subtitleColor: 'text-gray-600',
   features: [
     {
-      title: 'DIVERSE TRAFFIC TYPES',
-      description: 'Access multiple traffic sources including social media, search engines, display networks, and native advertising platforms for maximum reach and performance.',
-      iconBgClass: 'bg-gradient-to-br from-blue-500 to-blue-600',
+      title: 'TOP-CONVERTING OFFERS',
+      description: 'Promote offers that actually convert — across verticals like loans, sweepstakes, insurance, and more.',
+      iconBgClass: 'bg-gradient-to-br from-green-500 to-green-600',
+      titleColor: 'text-gray-900',
+      titleHoverColor: 'group-hover:text-green-600',
+      descriptionColor: 'text-gray-600',
+      floatingElement1: 'bg-green-400',
+      floatingElement2: 'bg-blue-400'
+    },
+    {
+      title: 'FAST & RELIABLE PAYOUTS',
+      description: 'We pay on time. Every time. Weekly, bi-weekly or custom terms available for top partners.',
+      iconBgClass: 'bg-gradient-to-br from-orange-500 to-orange-600',
       titleColor: 'text-gray-900',
       titleHoverColor: 'group-hover:text-orange-600',
       descriptionColor: 'text-gray-600',
@@ -243,24 +255,34 @@ const keyFeaturesData = {
       floatingElement2: 'bg-yellow-400'
     },
     {
-      title: 'VARIOUS VERTICALS',
-      description: 'Partner across diverse industries including e-commerce, finance, gaming, health, education, and more to expand your market reach and revenue potential.',
-              iconBgClass: 'bg-gradient-to-br from-orange-500 to-orange-600',
+      title: 'REAL-TIME TRACKING',
+      description: 'Get instant access to performance data via our tracking dashboard — detailed, transparent, and mobile-friendly.',
+      iconBgClass: 'bg-gradient-to-br from-blue-500 to-blue-600',
       titleColor: 'text-gray-900',
-      titleHoverColor: 'group-hover:text-orange-600',
+      titleHoverColor: 'group-hover:text-blue-600',
       descriptionColor: 'text-gray-600',
-      floatingElement1: 'bg-pink-400',
-      floatingElement2: 'bg-blue-400'
+      floatingElement1: 'bg-blue-400',
+      floatingElement2: 'bg-purple-400'
     },
     {
-      title: 'DEDICATED SUPPORT TEAM',
-      description: 'Get personalized assistance from our experienced team of affiliate managers, optimization specialists, and technical support to maximize your campaign success.',
+      title: 'SMART OPTIMIZATION SUPPORT',
+      description: 'Our team helps you test creatives, optimize traffic sources, and scale without the guesswork.',
       iconBgClass: 'bg-gradient-to-br from-purple-500 to-purple-600',
       titleColor: 'text-gray-900',
       titleHoverColor: 'group-hover:text-purple-600',
       descriptionColor: 'text-gray-600',
-      floatingElement1: 'bg-red-400',
-      floatingElement2: 'bg-yellow-400'
+      floatingElement1: 'bg-purple-400',
+      floatingElement2: 'bg-pink-400'
+    },
+    {
+      title: 'CLEAN NETWORK REPUTATION',
+      description: 'We maintain strict compliance. No scrubbing games. No shady practices.',
+      iconBgClass: 'bg-gradient-to-br from-teal-500 to-teal-600',
+      titleColor: 'text-gray-900',
+      titleHoverColor: 'group-hover:text-teal-600',
+      descriptionColor: 'text-gray-600',
+      floatingElement1: 'bg-teal-400',
+      floatingElement2: 'bg-green-400'
     }
   ]
 }

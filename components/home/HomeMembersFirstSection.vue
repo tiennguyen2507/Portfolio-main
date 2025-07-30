@@ -16,23 +16,22 @@
       </div>
     </div>
     
-    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 
         class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out"
         :class="{ 'animate-fade-in-up': isVisible }"
       >
-                    <span class="text-orange-500">AT LEADSWISE MEDIA, OUR</span>
+                    <span class="text-orange-500 uppercase">At Leadsmax, People Come First</span>
         <br>
-        <span class="text-white">MEMBERS COME FIRST</span>
+        <span class="text-white uppercase">Empowered Teams. Meaningful Work. Shared Wins.</span>
       </h2>
       
       <p 
         class="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto opacity-0 transform translate-y-8 transition-all duration-1000 ease-out delay-200"
         :class="{ 'animate-fade-in-up': isVisible }"
       >
-        We believe in fostering an inclusive environment where every member feels valued and supported. 
-        Our commitment to our employees goes beyond just providing a workplace – we create a community 
-        where innovation thrives, collaboration flourishes, and success is celebrated together.
+      We believe that great performance starts with great people.
+      At Leadsmax, we don’t just build campaigns — we build a culture where every voice matters, innovation thrives, and success is something we create together.
       </p>
       
       <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -46,7 +45,7 @@
             </svg>
           </div>
           <h3 class="text-xl font-semibold mb-2">Inclusive Culture</h3>
-          <p class="text-gray-400">Diverse and welcoming environment for all team members</p>
+          <p class="text-gray-400">A safe, supportive space where everyone belongs.</p>
         </div>
         
         <div 
@@ -58,8 +57,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2">Innovation Focus</h3>
-          <p class="text-gray-400">Encouraging creative thinking and new solutions</p>
+          <h3 class="text-xl font-semibold mb-2">Innovation-Driven</h3>
+          <p class="text-gray-400">We challenge ideas, not people — and create bold new solutions.</p>
         </div>
         
         <div 
@@ -71,8 +70,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2">Collaboration</h3>
-          <p class="text-gray-400">Working together to achieve shared success</p>
+          <h3 class="text-xl font-semibold mb-2">Collaborative Spirit</h3>
+          <p class="text-gray-400">We grow faster when we win together.</p>
         </div>
       </div>
     </div>

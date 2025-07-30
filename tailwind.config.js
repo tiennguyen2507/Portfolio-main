@@ -87,6 +87,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        'utm-hanzel': ['UTM Hanzel', 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

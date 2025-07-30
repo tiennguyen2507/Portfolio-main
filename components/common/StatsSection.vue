@@ -48,24 +48,24 @@ const props = defineProps({
     type: Array,
     default: () => [
       {
-        value: 1,
+        value: '+1.2',
         suffix: 'M',
         label: 'Monthly leads'
       },
       {
-        value: 300,
+        value: 350,
         suffix: '+',
         label: 'Advertisers'
       },
       {
-        value: 1000,
+        value: 1500,
         suffix: '+',
         label: 'Publishers'
       },
       {
-        value: 500,
+        value: 600,
         suffix: '+',
-        label: 'Offers'
+        label: 'Live Offers'
       }
     ]
   }

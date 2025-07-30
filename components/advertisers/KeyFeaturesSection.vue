@@ -2,27 +2,25 @@
   <section class="py-20" :class="backgroundClass">
     <div class="max-w-7xl mx-auto px-8">
       <!-- Section Header -->
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold mb-6" :class="titleColor">
-          {{ title }} <span :class="titleAccentColor">{{ titleAccent }}</span>
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-orange-400 via-black to-orange-600 bg-clip-text text-transparent drop-shadow-lg leading-tight py-2">
+          {{ title }} <span class="text-black">{{ titleAccent }}</span>
         </h2>
-        <p class="text-xl max-w-3xl mx-auto" :class="subtitleColor">
-          {{ subtitle }}
-        </p>
       </div>
 
       <!-- Features Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
         
+        <!-- First 3 items -->
         <div 
-          v-for="(feature, index) in features" 
+          v-for="(feature, index) in features.slice(0, 3)" 
           :key="feature.title"
           class="group text-center"
         >
           <div class="relative mb-8">
             <!-- Icon Container -->
             <div class="w-24 h-24 mx-auto rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl" :class="feature.iconBgClass">
-              <!-- Network Icon -->
+              <!-- Network Icon - Qualified traffic -->
               <svg v-if="index === 0" class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="3" stroke-width="2"/>
                 <circle cx="6" cy="6" r="2" stroke-width="2"/>
@@ -35,15 +33,16 @@
                 <line x1="18" y1="18" x2="12" y2="12" stroke-width="2"/>
               </svg>
               
-              <!-- Documents Icon -->
+              <!-- Target Icon - Advanced targeting -->
               <svg v-else-if="index === 1" class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" transform="translate(2,2)"/>
+                <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                <circle cx="12" cy="12" r="6" stroke-width="2"/>
+                <circle cx="12" cy="12" r="2" stroke-width="2"/>
               </svg>
               
-              <!-- Team Icon -->
+              <!-- Chart Icon - Transparent tracking -->
               <svg v-else-if="index === 2" class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
               </svg>
             </div>
             
@@ -52,12 +51,49 @@
             <div class="absolute -bottom-2 -left-2 w-4 h-4 rounded-full opacity-80 group-hover:animate-pulse" :class="feature.floatingElement2"></div>
           </div>
           
-          <h3 class="text-2xl font-bold mb-4 transition-colors duration-300" :class="[feature.titleColor, feature.titleHoverColor]">
+          <h3 class="text-xl font-bold mb-4 transition-colors duration-300" :class="[feature.titleColor, feature.titleHoverColor]">
             {{ feature.title }}
           </h3>
-          <p class="leading-relaxed" :class="feature.descriptionColor">
+          <p class="leading-relaxed text-sm" :class="feature.descriptionColor">
             {{ feature.description }}
           </p>
+        </div>
+
+        <!-- Last 2 items - centered -->
+        <div class="md:col-span-2 lg:col-span-3 flex justify-center">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl">
+            <div 
+              v-for="(feature, index) in features.slice(3, 5)" 
+              :key="feature.title"
+              class="group text-center"
+            >
+              <div class="relative mb-8">
+                <!-- Icon Container -->
+                <div class="w-24 h-24 mx-auto rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl" :class="feature.iconBgClass">
+                  <!-- Shield Icon - Fraud prevention -->
+                  <svg v-if="index === 0" class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                  </svg>
+                  
+                  <!-- Team Icon - Account managers -->
+                  <svg v-else-if="index === 1" class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </div>
+                
+                <!-- Floating Elements -->
+                <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full opacity-80 group-hover:animate-pulse" :class="feature.floatingElement1"></div>
+                <div class="absolute -bottom-2 -left-2 w-4 h-4 rounded-full opacity-80 group-hover:animate-pulse" :class="feature.floatingElement2"></div>
+              </div>
+              
+              <h3 class="text-xl font-bold mb-4 transition-colors duration-300" :class="[feature.titleColor, feature.titleHoverColor]">
+                {{ feature.title }}
+              </h3>
+              <p class="leading-relaxed text-sm" :class="feature.descriptionColor">
+                {{ feature.description }}
+              </p>
+            </div>
+          </div>
         </div>
 
       </div>

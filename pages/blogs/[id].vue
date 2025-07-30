@@ -250,7 +250,8 @@ const error = ref(null);
 
 // API URL - sử dụng computed
 const API_URL = computed(
-  () => `https://blog-data.up.railway.app/posts/${blogId.value}`
+  () =>
+    `${process.env.NUXT_PUBLIC_API_URL || "http://localhost:3000"}/posts/${blogId.value}`
 );
 
 // Fetch blog detail from API

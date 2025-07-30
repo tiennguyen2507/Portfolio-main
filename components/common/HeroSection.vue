@@ -21,7 +21,7 @@
           <span :class="`text-${theme.textColor} block text-2xl md:text-2xl lg:text-3xl font-medium mb-2`">
             {{ title }}
           </span>
-          <span :class="`text-${theme.textColor} block leading-tight`">
+          <span :class="`text-${theme.textColor} block leading-tight uppercase`">
             {{ subtitle }}
           </span>
         </h1>

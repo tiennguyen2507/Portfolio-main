@@ -83,11 +83,15 @@
 // Hero section data for advertisers page
 const heroData = {
   title: "ADVERTISERS",
-  subtitle: "JOIN OUR PRESTIGIOUS AFFILIATE NETWORK",
-  description: "And enjoy the benefits of partnering with an award-winning team!",
+  subtitle: "Acquire high-quality leads at scale",
+  description: "At Leadsmax, we help advertisers cut through the noise and reach real users who convert. Whether you're promoting financial products, insurance, sweepstakes, or lead-gen offers — our network is built to maximize every dollar you spend.",
   primaryButton: {
     text: "ADVERTISER SIGN UP",
     link: "/login"
+  },
+  secondaryButton: {
+    text: "ADVERTISER LOGIN",
+    link: "https://leadswise.affise.com/v2/sign/in"
   },
   backgroundImage: "/images/adv-bg.webp",
   theme: {
@@ -128,11 +132,13 @@ const statsData = {
 // Seamless Connections data for advertisers page
 const seamlessData = {
   backgroundClass: 'bg-white',
-  titleFirst: 'SEAMLESS CONNECTIONS',
+  titleFirst: 'Effortless Access',
   titleFirstColor: 'text-black',
-  titleSecond: 'POWERFUL RESULTS',
+  titleSecond: 'Exceptional Performance',
   titleSecondColor: 'text-orange-500',
-  description: 'For advertisers, we provide seamless connections to diverse traffic sources, allowing you to widely promote your products to consumers through different advertising formats and achieve your desired ROI.',
+  description: `We don’t just connect you to traffic — we own a significant portion of it.
+Our in-house media buying team and vetted publisher network allow us to deliver high-quality clicks and leads with speed and consistency. That means more predictability, more performance — and less waste.
+`,
   descriptionColor: 'text-gray-700',
   image: {
     src: '/images/adv1.webp',
@@ -147,11 +153,12 @@ const seamlessData = {
 // Personalized Strategies data for advertisers page
 const personalizedData = {
   backgroundClass: 'bg-gray-50',
-  titleFirst: 'PERSONALIZED STRATEGIES FOR',
+  titleFirst: 'Personalized Strategies for',
   titleFirstColor: 'text-black',
-  titleSecond: 'OPTIMAL PERFORMANCE',
+  titleSecond: 'Peak Performance',
   titleSecondColor: 'text-orange-500',
-  description: 'Our priority is to foster a fair and efficient marketplace that supports advertisers and publishers in achieving their revenue goals and business objectives. Through relentless innovation focused on shared growth and prosperity, LeadsWise proudly stands as one of Singapore\'s leading performance marketing networks.',
+  description: `Leadsmax builds a transparent, results-driven ecosystem where advertisers and publishers grow together.
+With data-driven strategies and real collaboration, we help you scale smarter and hit your goals.`,
   descriptionColor: 'text-gray-700',
   image: {
     src: '/images/adv2.webp',
@@ -163,20 +170,20 @@ const personalizedData = {
   },
   features: [
     {
-      title: 'Innovation Focus',
-      description: 'Cutting-edge marketing solutions'
+      title: 'Premium Traffic',
+      description: ' In-house & verified sources.'
     },
     {
-      title: 'Shared Growth',
-      description: 'Mutual success partnerships'
+      title: 'Global Scale',
+      description: '50+ countries, seamless reach.'
     },
     {
-      title: 'Fair Marketplace',
-      description: 'Transparent and ethical practices'
+      title: 'Performance Focus',
+      description: 'Optimized for ROI.'
     },
     {
-      title: 'Leading Network',
-      description: 'Singapore\'s top performance network'
+      title: 'Trusted Partners',
+      description: 'Transparent & committed.'
     }
   ]
 }
@@ -186,11 +193,12 @@ const globalGrowthData = {
   isBack: false,
   titleFirst: 'ASSURED',
   titleFirstColor: 'text-white',
-  titleSecond: 'WORLDWIDE',
+  titleSecond: 'GLOBAL',
   titleSecondColor: 'text-orange-500',
   titleThird: 'GROWTH',
   titleThirdColor: 'text-orange-500',
-  description: 'As an advertiser, you play a crucial role in our mission. Whether you\'re an established brand, a growing business, or a startup looking to expand your reach, our platform is designed to provide you with seamless access to diverse traffic sources and high-performing publishers. By joining our network, you\'ll gain access to targeted audiences that can help you maximize your ROI and achieve sustainable growth. Together, let\'s achieve worldwide success!',
+  description: `Whether you're a well-established brand, an ambitious startup, or a business on the rise, our platform connects you with high-quality traffic sources and top-performing publishers worldwide. By joining our network, you'll reach highly targeted audiences, drive better campaign performance, and maximize your return on investment.
+Let’s grow together — and take your business to the next level on a global scale.`,
   descriptionColor: 'text-gray-200',
   primaryButton: {
     text: 'BECOME AN ADVERTISER',
@@ -220,16 +228,16 @@ const globalGrowthData = {
 // Key Features data for advertisers page
 const keyFeaturesData = {
   backgroundClass: 'bg-gradient-to-br from-gray-50 to-white',
-  title: 'Why Choose',
+  title: 'Why Work With Us?',
   titleColor: 'text-gray-900',
-  titleAccent: 'Leadswise',
+  titleAccent: '',
   titleAccentColor: 'text-orange-500',
   subtitle: 'Experience the advantages of partnering with Singapore\'s leading performance network',
   subtitleColor: 'text-gray-600',
   features: [
     {
-      title: 'DIVERSE TRAFFIC TYPES',
-      description: 'Access multiple traffic sources including social media, search engines, display networks, and native advertising platforms for maximum reach and performance.',
+      title: 'Qualified, performance-driven traffic',
+      description: 'Tap into our curated publisher base — trusted affiliates who deliver real results, not just impressions.',
       iconBgClass: 'bg-gradient-to-br from-blue-500 to-blue-600',
       titleColor: 'text-gray-900',
       titleHoverColor: 'group-hover:text-orange-600',
@@ -238,9 +246,9 @@ const keyFeaturesData = {
       floatingElement2: 'bg-yellow-400'
     },
     {
-      title: 'VARIOUS VERTICALS',
-      description: 'Partner across diverse industries including e-commerce, finance, gaming, health, education, and more to expand your market reach and revenue potential.',
-              iconBgClass: 'bg-gradient-to-br from-orange-500 to-orange-600',
+      title: 'Advanced targeting & optimization',
+      description: 'Run smart campaigns with geo, device, and behavioral filters. We optimize in real time to hit your KPIs.',
+      iconBgClass: 'bg-gradient-to-br from-orange-500 to-orange-600',
       titleColor: 'text-gray-900',
       titleHoverColor: 'group-hover:text-orange-600',
       descriptionColor: 'text-gray-600',
@@ -248,28 +256,304 @@ const keyFeaturesData = {
       floatingElement2: 'bg-blue-400'
     },
     {
-      title: 'DEDICATED SUPPORT TEAM',
-      description: 'Get personalized assistance from our experienced team of affiliate managers, optimization specialists, and technical support to maximize your campaign success.',
+      title: 'Clean, transparent tracking',
+      description: 'From first click to final conversion — we track everything. You see what we see.',
+      iconBgClass: 'bg-gradient-to-br from-green-500 to-green-600',
+      titleColor: 'text-gray-900',
+      titleHoverColor: 'group-hover:text-green-600',
+      descriptionColor: 'text-gray-600',
+      floatingElement1: 'bg-red-400',
+      floatingElement2: 'bg-yellow-400'
+    },
+    {
+      title: 'Fraud prevention by design',
+      description: 'Every lead is verified. Every source is monitored. We protect your budget with layered fraud defense.',
+      iconBgClass: 'bg-gradient-to-br from-red-500 to-red-600',
+      titleColor: 'text-gray-900',
+      titleHoverColor: 'group-hover:text-red-600',
+      descriptionColor: 'text-gray-600',
+      floatingElement1: 'bg-purple-400',
+      floatingElement2: 'bg-blue-400'
+    },
+    {
+      title: 'Dedicated account managers',
+      description: 'Our experienced team works alongside you — optimizing, scaling, and solving fast.',
       iconBgClass: 'bg-gradient-to-br from-purple-500 to-purple-600',
       titleColor: 'text-gray-900',
       titleHoverColor: 'group-hover:text-purple-600',
       descriptionColor: 'text-gray-600',
-      floatingElement1: 'bg-red-400',
-      floatingElement2: 'bg-yellow-400'
+      floatingElement1: 'bg-orange-400',
+      floatingElement2: 'bg-green-400'
     }
   ]
 }
 
-// Set page meta
+// Get runtime config for environment variables
+const config = useRuntimeConfig();
+
+// SEO meta tags with structured data
 useHead({
-  title: 'Advertisers - LEADSWISE Network',
+  title: "Advertisers - Leadsmax Network | Vietnam's Premier Affiliate Marketing Platform",
   meta: [
     {
-      name: 'description',
-      content: 'Join our prestigious affiliate network as an advertiser. Enjoy seamless connections to diverse traffic sources and achieve your desired ROI with our award-winning team.'
-    }
-  ]
-})
+      name: "description",
+      content: "Join Leadsmax Network as an advertiser and acquire high-quality leads at scale. Connect with 1000+ publishers across 50+ countries. Specialize in CPA, CPL campaigns with real-time tracking and competitive ROI.",
+    },
+    {
+      name: "keywords",
+      content: "advertiser affiliate network, CPA marketing, CPL campaigns, lead generation Vietnam, performance marketing, affiliate advertising, digital marketing Vietnam, ROI optimization",
+    },
+    {
+      name: "robots",
+      content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+    },
+    {
+      name: "author",
+      content: "Leadsmax Network",
+    },
+    {
+      name: "viewport",
+      content: "width=device-width, initial-scale=1",
+    },
+    {
+      name: "format-detection",
+      content: "telephone=no",
+    },
+    {
+      name: "theme-color",
+      content: "#f97316",
+    },
+    {
+      name: "msapplication-TileColor",
+      content: "#f97316",
+    },
+    {
+      name: "apple-mobile-web-app-capable",
+      content: "yes",
+    },
+    {
+      name: "apple-mobile-web-app-status-bar-style",
+      content: "default",
+    },
+    {
+      name: "apple-mobile-web-app-title",
+      content: "Leadsmax Network - Advertisers",
+    },
+    {
+      name: "application-name",
+      content: "Leadsmax Network",
+    },
+    {
+      name: "geo.region",
+      content: "VN",
+    },
+    {
+      name: "geo.placename",
+      content: "Da Nang, Vietnam",
+    },
+    {
+      name: "geo.position",
+      content: "16.0544;108.2022",
+    },
+    {
+      name: "ICBM",
+      content: "16.0544, 108.2022",
+    },
+    {
+      property: "og:title",
+      content: "Advertisers - Leadsmax Network | Vietnam's Premier Affiliate Marketing Platform",
+    },
+    {
+      property: "og:description",
+      content: "Join Leadsmax Network as an advertiser and acquire high-quality leads at scale. Connect with 1000+ publishers across 50+ countries. Specialize in CPA, CPL campaigns with real-time tracking and competitive ROI.",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:url",
+      content: `${config.public.SITE_URL || "https://leadswise.network"}/advertisers`,
+    },
+    {
+      property: "og:image",
+      content: config.public.SITE_OG_IMAGE || `${config.public.SITE_URL || "https://leadswise.network"}/og-image.jpg`,
+    },
+    {
+      property: "og:image:width",
+      content: "1200",
+    },
+    {
+      property: "og:image:height",
+      content: "630",
+    },
+    {
+      property: "og:site_name",
+      content: "Leadsmax Network",
+    },
+    {
+      property: "og:locale",
+      content: "en_US",
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:title",
+      content: "Advertisers - Leadsmax Network | Vietnam's Premier Affiliate Platform",
+    },
+    {
+      name: "twitter:description",
+      content: "Join Leadsmax Network as an advertiser and acquire high-quality leads at scale. Connect with 1000+ publishers across 50+ countries. Specialize in CPA, CPL campaigns.",
+    },
+    {
+      name: "twitter:image",
+      content: config.public.SITE_TWITTER_IMAGE || `${config.public.SITE_URL || "https://leadswise.network"}/twitter-image.jpg`,
+    },
+    {
+      name: "twitter:site",
+      content: "@leadswise",
+    },
+    {
+      name: "twitter:creator",
+      content: "@leadswise",
+    },
+  ],
+  link: [
+    {
+      rel: "canonical",
+      href: `${config.public.SITE_URL || "https://leadswise.network"}/advertisers`,
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.googleapis.com",
+    },
+    {
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+      crossorigin: "",
+    },
+    {
+      rel: "dns-prefetch",
+      href: "https://www.google-analytics.com",
+    },
+  ],
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "Advertisers - Leadsmax Network",
+        url: `${config.public.SITE_URL || "https://leadswise.network"}/advertisers`,
+        description: "Join Leadsmax Network as an advertiser and acquire high-quality leads at scale. Connect with 1000+ publishers across 50+ countries.",
+        mainEntity: {
+          "@type": "Organization",
+          name: "Leadsmax Network",
+          url: config.public.SITE_URL || "https://leadswise.network",
+          logo: config.public.SITE_LOGO || `${config.public.SITE_URL || "https://leadswise.network"}/logo.png`,
+          description: "Vietnam's premier affiliate marketing platform connecting advertisers and publishers for maximum performance.",
+          sameAs: [
+            config.public.SITE_FACEBOOK || "https://facebook.com/leadswise",
+            config.public.SITE_TWITTER || "https://twitter.com/leadswise",
+            config.public.SITE_LINKEDIN || "https://linkedin.com/company/leadswise",
+          ],
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: config.public.SITE_PHONE || "+84 372 571 498",
+            contactType: "customer service",
+            areaServed: config.public.SITE_AREA_SERVED || "VN",
+            availableLanguage: config.public.SITE_LANGUAGES
+              ? config.public.SITE_LANGUAGES.split(",")
+              : ["English", "Vietnamese"],
+          },
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "VN",
+            addressRegion: "Da Nang",
+            addressLocality: "Da Nang",
+            streetAddress: "84 Ho Tung Mau, Hoa Minh, Lien Chieu",
+          },
+          foundingDate: "2024",
+          numberOfEmployees: "50-100",
+          industry: "Affiliate Marketing",
+          keywords: "affiliate marketing, CPA, CPL, lead generation, Vietnam, advertisers",
+        },
+      }),
+    },
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: config.public.SITE_URL || "https://leadswise.network",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Advertisers",
+            item: `${config.public.SITE_URL || "https://leadswise.network"}/advertisers`,
+          },
+        ],
+      }),
+    },
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "How can I join Leadsmax Network as an advertiser?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "To join Leadsmax Network as an advertiser, simply click on 'ADVERTISER SIGN UP' button and fill out our application form. Our team will review your application and get back to you within 24 hours.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What types of campaigns do you support?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "We support CPA (Cost Per Action) and CPL (Cost Per Lead) campaigns across various industries including finance, insurance, education, e-commerce, and more. Our network specializes in high-converting offers.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What is the minimum budget requirement?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "We work with advertisers of all sizes. Our minimum budget requirements are flexible and depend on your campaign goals. Contact our team to discuss your specific needs and budget requirements.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Do you provide real-time tracking and reporting?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes, we provide comprehensive real-time tracking and detailed reporting through our advanced dashboard. You can monitor campaign performance, track conversions, and optimize your campaigns in real-time.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What countries do you operate in?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "We operate in 50+ countries worldwide, with strong presence in Vietnam and Southeast Asia. Our global network allows you to reach diverse audiences and scale your campaigns internationally.",
+            },
+          },
+        ],
+      }),
+    },
+  ],
+});
 </script>
 
 <style scoped>
