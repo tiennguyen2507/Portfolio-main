@@ -26,7 +26,18 @@ export default defineNuxtConfig({
     provider: "ipx",
   },
 
-  // Vite configuration for better auto import
+  // Performance optimization
+  nitro: {
+    compressPublicAssets: true,
+    minify: true,
+  },
+
+  // Build optimization
+  build: {
+    transpile: ["swiper"],
+  },
+
+  // Vite configuration for better auto import and performance
   vite: {
     vue: {
       script: {
@@ -41,6 +52,20 @@ export default defineNuxtConfig({
           silenceDeprecations: ["import"],
         },
       },
+    },
+    build: {
+      cssMinify: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ["vue", "vue-router"],
+            swiper: ["swiper"],
+          },
+        },
+      },
+    },
+    optimizeDeps: {
+      include: ["vue", "vue-router", "swiper"],
     },
   },
 
@@ -108,6 +133,21 @@ export default defineNuxtConfig({
         {
           rel: "canonical",
           href: process.env.SITE_URL || "https://nguyenledinhtien.io.vn",
+        },
+        // Preload critical resources
+        {
+          rel: "preload",
+          href: "/fonts/UTM-Hanzel.ttf",
+          as: "font",
+          type: "font/ttf",
+          crossorigin: "anonymous",
+        },
+        { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        {
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+          crossorigin: "anonymous",
         },
       ],
     },
