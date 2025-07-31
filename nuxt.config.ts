@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   // Auto import components
   components: [
     { path: "~/components", pathPrefix: false },
-    { path: "~/pages/_components", pathPrefix: false }
+    { path: "~/pages/_components", pathPrefix: false },
   ],
 
   // Image optimization configuration
@@ -32,6 +32,14 @@ export default defineNuxtConfig({
       script: {
         defineModel: true,
         propsDestructure: true,
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true,
+          silenceDeprecations: ["import"],
+        },
       },
     },
   },

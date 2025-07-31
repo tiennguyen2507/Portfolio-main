@@ -65,7 +65,7 @@
             <Textarea
               v-model="form.message"
               placeholder="Your Message"
-              rows="4"
+              :rows="4"
               size="lg"
               required
             />
