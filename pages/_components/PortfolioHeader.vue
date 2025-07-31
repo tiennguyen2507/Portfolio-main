@@ -1,7 +1,8 @@
 <template>
   <!-- Header/Navigation -->
   <header
-    class="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800"
+    class="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-gray-800 transition-all duration-300"
+    :class="isScrolled ? 'bg-gray-900' : 'bg-gray-900/90'"
   >
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
@@ -87,8 +88,26 @@ const navigationItems = ref([
 // Mobile menu state
 const showMobileMenu = ref(false);
 
+// Scroll state
+const isScrolled = ref(false);
+
 // Toggle mobile menu
 const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value;
 };
+
+// Handle scroll event
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50;
+};
+
+// Add scroll event listener on mount
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+// Remove scroll event listener on unmount
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
