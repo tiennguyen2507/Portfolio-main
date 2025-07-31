@@ -2,13 +2,16 @@
   <div
     class="min-h-screen bg-gray-900 text-white w-full max-w-full overflow-x-hidden"
   >
+    <StructuredData />
     <!-- Header/Navigation -->
     <PortfolioHeader />
 
     <PortfolioHero />
 
     <!-- Technologies Section -->
-    <section class="py-16 bg-gray-800/50 relative overflow-hidden">
+    <section
+      class="py-8 sm:py-12 md:py-16 bg-gray-800/50 relative overflow-hidden"
+    >
       <!-- Background Tech Pattern -->
       <div class="absolute inset-0 opacity-5 pointer-events-none">
         <div
@@ -33,7 +36,7 @@
       </div>
 
       <div class="relative z-10">
-        <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
           <div
             class="flex flex-wrap justify-center gap-8 text-gray-400 text-lg"
           >
@@ -56,33 +59,38 @@
     <PortfolioAbout />
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-gray-800/30">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-16">
+    <section id="projects" class="py-12 sm:py-16 md:py-20 bg-gray-800/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-8 sm:mb-12 md:mb-16">
           <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-            Projects
+            Dự án nổi bật
           </h2>
+          <p class="text-lg text-gray-300 mb-4">
+            Các dự án web và ứng dụng tôi đã phát triển
+          </p>
           <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
         </div>
 
         <!-- Project Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           <Card variant="elevated" hover>
             <img
               src="~/assets/images/blog-1.webp"
-              alt="Project 1"
+              alt="E-commerce Platform - Dự án thương mại điện tử hiện đại"
               class="w-full h-48 object-cover rounded-t-lg"
             />
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
               <h3 class="text-xl font-semibold text-white mb-2">
                 E-commerce Platform
               </h3>
               <p class="text-gray-400 mb-4">
-                A modern e-commerce solution built with React and Node.js
+                Nền tảng thương mại điện tử hiện đại với React frontend và
+                Node.js backend, tích hợp thanh toán và quản lý đơn hàng
               </p>
               <div class="flex flex-wrap gap-2">
                 <Badge variant="primary">React</Badge>
                 <Badge variant="primary">Node.js</Badge>
+                <Badge variant="primary">MongoDB</Badge>
               </div>
             </div>
           </Card>
@@ -90,17 +98,21 @@
           <Card variant="elevated" hover>
             <img
               src="~/assets/images/blog-2.webp"
-              alt="Project 2"
+              alt="Mobile App - Ứng dụng quản lý công việc đa nền tảng"
               class="w-full h-48 object-cover rounded-t-lg"
             />
-            <div class="p-6">
-              <h3 class="text-xl font-semibold text-white mb-2">Mobile App</h3>
+            <div class="p-4 sm:p-6">
+              <h3 class="text-xl font-semibold text-white mb-2">
+                Task Management App
+              </h3>
               <p class="text-gray-400 mb-4">
-                Cross-platform mobile application for task management
+                Ứng dụng quản lý công việc đa nền tảng với React Native, tích
+                hợp Firebase cho real-time sync
               </p>
               <div class="flex flex-wrap gap-2">
                 <Badge variant="primary">React Native</Badge>
                 <Badge variant="primary">Firebase</Badge>
+                <Badge variant="primary">Redux</Badge>
               </div>
             </div>
           </Card>
@@ -108,19 +120,21 @@
           <Card variant="elevated" hover>
             <img
               src="~/assets/images/blog-3.webp"
-              alt="Project 3"
+              alt="Dashboard System - Hệ thống bảng điều khiển phân tích dữ liệu"
               class="w-full h-48 object-cover rounded-t-lg"
             />
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
               <h3 class="text-xl font-semibold text-white mb-2">
-                Dashboard System
+                Analytics Dashboard
               </h3>
               <p class="text-gray-400 mb-4">
-                Analytics dashboard with real-time data visualization
+                Hệ thống bảng điều khiển phân tích dữ liệu thời gian thực với
+                Vue.js và D3.js, hiển thị biểu đồ tương tác
               </p>
               <div class="flex flex-wrap gap-2">
                 <Badge variant="primary">Vue.js</Badge>
                 <Badge variant="primary">D3.js</Badge>
+                <Badge variant="primary">Chart.js</Badge>
               </div>
             </div>
           </Card>
@@ -131,8 +145,8 @@
     <PortfolioContact @submit="handleContactSubmit" />
 
     <!-- Footer -->
-    <footer class="py-8 border-t border-gray-800">
-      <div class="max-w-7xl mx-auto px-6 text-center">
+    <footer class="py-6 sm:py-8 border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
         <p class="text-gray-400">
           &copy; 2025 Nguyễn Lê Đình Tiên. All rights reserved.
         </p>
@@ -145,14 +159,21 @@
 import Card from "~/components/ui/Card.vue";
 import Badge from "~/components/ui/Badge.vue";
 import PortfolioHero from "~/pages/_components/PortfolioHero.vue";
+import StructuredData from "~/components/StructuredData.vue";
 
 useHead({
-  title: "Nguyễn Lê Đình Tiên - Software Developer Portfolio",
+  title:
+    "Nguyễn Lê Đình Tiên - Fullstack Web Developer | React, Vue.js, Node.js | Da Nang",
   meta: [
     {
       name: "description",
       content:
-        "Nguyễn Lê Đình Tiên is a passionate software developer specializing in web development, mobile apps, and modern technologies. View my portfolio and get in touch for your next project.",
+        "Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.",
+    },
+    {
+      name: "keywords",
+      content:
+        "web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer, NestJS, TypeScript",
     },
   ],
   link: [

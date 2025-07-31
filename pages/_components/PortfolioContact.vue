@@ -1,8 +1,8 @@
 <template>
   <!-- Contact Section -->
-  <section id="contact" class="py-20 bg-gray-800/30">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
+  <section id="contact" class="py-12 sm:py-16 md:py-20 bg-gray-800/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-8 sm:mb-12 md:mb-16">
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
           {{ contactData.title }}
         </h2>
@@ -11,9 +11,9 @@
         </p>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-16">
+      <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16">
         <!-- Contact Information -->
-        <div class="space-y-8">
+        <div class="space-y-6 sm:space-y-8">
           <div
             v-for="contact in contactData.contacts"
             :key="contact.label"
@@ -46,8 +46,8 @@
         </div>
 
         <!-- Contact Form -->
-        <div class="bg-gray-800/50 p-8 rounded-lg">
-          <form @submit.prevent="handleSubmit" class="space-y-6">
+        <div class="bg-gray-800/50 p-4 sm:p-6 md:p-8 rounded-lg">
+          <form @submit.prevent="handleSubmit" class="space-y-4 sm:space-y-6">
             <Input
               v-model="form.name"
               type="text"

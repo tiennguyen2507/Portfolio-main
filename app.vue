@@ -10,15 +10,11 @@
 // Global SEO and performance optimizations
 useHead({
   htmlAttrs: {
-    lang: "en",
+    lang: "vi",
   },
   bodyAttrs: {
     class: "antialiased",
   },
-});
-
-// Preload critical resources
-useHead({
   link: [
     {
       rel: "preconnect",

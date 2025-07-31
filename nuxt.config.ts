@@ -51,31 +51,63 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
       title:
         process.env.SITE_TITLE ||
-        "Nguyễn Lê Đình Tiên - Software Developer Portfolio",
+        "Nguyễn Lê Đình Tiên - Fullstack Web Developer | React, Vue.js, Node.js | Da Nang",
       meta: [
         {
           name: "description",
           content:
             process.env.SITE_DESCRIPTION ||
-            "Nguyễn Lê Đình Tiên is a passionate software developer specializing in web development, mobile apps, and modern technologies. View my portfolio and get in touch for your next project.",
+            "Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.",
         },
         { name: "robots", content: "index, follow" },
         {
           name: "author",
           content: process.env.SITE_AUTHOR || "Nguyễn Lê Đình Tiên",
         },
+        {
+          name: "keywords",
+          content:
+            "web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer",
+        },
         { property: "og:type", content: "website" },
+        {
+          property: "og:title",
+          content:
+            process.env.SITE_TITLE ||
+            "Nguyễn Lê Đình Tiên - Fullstack Web Developer | React, Vue.js, Node.js | Da Nang",
+        },
+        {
+          property: "og:description",
+          content:
+            process.env.SITE_DESCRIPTION ||
+            "Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS.",
+        },
         {
           property: "og:site_name",
           content: process.env.SITE_NAME || "Nguyễn Lê Đình Tiên Portfolio",
         },
         { name: "twitter:card", content: "summary_large_image" },
+        {
+          name: "twitter:title",
+          content: "Nguyễn Lê Đình Tiên - Fullstack Web Developer",
+        },
+        {
+          name: "twitter:description",
+          content:
+            "Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development",
+        },
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1, maximum-scale=5",
+        },
+        { name: "theme-color", content: "#f97316" },
+        { name: "msapplication-TileColor", content: "#f97316" },
       ],
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
         {
           rel: "canonical",
-          href: process.env.SITE_URL || "https://leadswise.network",
+          href: process.env.SITE_URL || "https://nguyenledinhtien.io.vn",
         },
       ],
     },
@@ -95,36 +127,40 @@ export default defineNuxtConfig({
         process.env.LOGIN_URL || "https://leadswise.affise.com/v2/sign/in",
 
       // Site SEO Configuration
-      SITE_URL: process.env.SITE_URL || "https://leadswise.network",
+      SITE_URL: process.env.SITE_URL || "https://nguyenledinhtien.io.vn",
       SITE_TITLE:
         process.env.SITE_TITLE ||
-        "Nguyễn Lê Đình Tiên - Software Developer Portfolio",
+        "Nguyễn Lê Đình Tiên - Fullstack Web Developer | React, Vue.js, Node.js | Da Nang",
       SITE_DESCRIPTION:
         process.env.SITE_DESCRIPTION ||
-        "Nguyễn Lê Đình Tiên is a passionate software developer specializing in web development, mobile apps, and modern technologies. View my portfolio and get in touch for your next project.",
+        "Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.",
       SITE_KEYWORDS:
         process.env.SITE_KEYWORDS ||
-        "software developer, web development, mobile development, Vue.js, React, Node.js, JavaScript, TypeScript, frontend developer, backend developer, full-stack developer, Vietnam, portfolio",
+        "web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer, NestJS, TypeScript",
       SITE_NAME: process.env.SITE_NAME || "Nguyễn Lê Đình Tiên Portfolio",
       SITE_AUTHOR: process.env.SITE_AUTHOR || "Nguyễn Lê Đình Tiên",
       SITE_LOCALE: process.env.SITE_LOCALE || "en_US",
 
       // Social Media URLs
       SITE_FACEBOOK:
-        process.env.SITE_FACEBOOK || "https://facebook.com/leadswise",
-      SITE_TWITTER: process.env.SITE_TWITTER || "https://twitter.com/leadswise",
+        process.env.SITE_FACEBOOK || "https://facebook.com/nguyenledinhtien",
+      SITE_TWITTER:
+        process.env.SITE_TWITTER || "https://twitter.com/nguyenledinhtien",
       SITE_LINKEDIN:
-        process.env.SITE_LINKEDIN || "https://linkedin.com/company/leadswise",
-      SITE_TWITTER_SITE: process.env.SITE_TWITTER_SITE || "@leadswise",
-      SITE_TWITTER_CREATOR: process.env.SITE_TWITTER_CREATOR || "@leadswise",
+        process.env.SITE_LINKEDIN || "https://linkedin.com/in/nguyenledinhtien",
+      SITE_TWITTER_SITE: process.env.SITE_TWITTER_SITE || "@nguyenledinhtien",
+      SITE_TWITTER_CREATOR:
+        process.env.SITE_TWITTER_CREATOR || "@nguyenledinhtien",
 
       // Images
       SITE_OG_IMAGE:
-        process.env.SITE_OG_IMAGE || "https://leadswise.network/og-image.jpg",
+        process.env.SITE_OG_IMAGE ||
+        "https://nguyenledinhtien.io.vn/og-image.jpg",
       SITE_TWITTER_IMAGE:
         process.env.SITE_TWITTER_IMAGE ||
-        "https://leadswise.network/twitter-image.jpg",
-      SITE_LOGO: process.env.SITE_LOGO || "https://leadswise.network/logo.png",
+        "https://nguyenledinhtien.io.vn/twitter-image.jpg",
+      SITE_LOGO:
+        process.env.SITE_LOGO || "https://nguyenledinhtien.io.vn/logo.png",
 
       // Contact Information
       SITE_PHONE: process.env.SITE_PHONE || "+84 88 669 4350",
