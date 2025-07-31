@@ -8,7 +8,7 @@
         <div class="flex justify-between items-center">
           <div class="flex items-center">
             <img
-              src="/images/image-removebg-preview.png"
+              src="~/assets/images/logo-main.webp"
               alt="Logo"
               class="h-8 w-auto"
             />
@@ -66,7 +66,9 @@
                 <span class="text-orange-500 ml-2">●</span>
               </h1>
               <div class="flex items-center space-x-4">
-                <span class="text-3xl md:text-4xl text-white">I'm Jensen</span>
+                <span class="text-3xl md:text-4xl text-white"
+                  >I'm Nguyễn Lê Đình Tiên</span
+                >
                 <div class="w-16 h-0.5 bg-orange-500"></div>
               </div>
               <h2 class="text-4xl md:text-5xl font-bold text-white">
@@ -135,7 +137,7 @@
                       </svg>
                     </div>
                     <div class="text-orange-500 font-semibold text-lg">
-                      Jensen Omega
+                      Nguyễn Lê Đình Tiên
                     </div>
                     <div class="text-gray-400 text-sm">Software Developer</div>
                   </div>
@@ -318,7 +320,7 @@
             class="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300"
           >
             <img
-              src="/images/blog-1.webp"
+              src="~/assets/images/blog-1.webp"
               alt="Project 1"
               class="w-full h-48 object-cover"
             />
@@ -346,7 +348,7 @@
             class="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300"
           >
             <img
-              src="/images/blog-2.webp"
+              src="~/assets/images/blog-2.webp"
               alt="Project 2"
               class="w-full h-48 object-cover"
             />
@@ -372,7 +374,7 @@
             class="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300"
           >
             <img
-              src="/images/blog-3.webp"
+              src="~/assets/images/blog-3.webp"
               alt="Project 3"
               class="w-full h-48 object-cover"
             />
@@ -523,7 +525,7 @@
     <footer class="py-8 border-t border-gray-800">
       <div class="max-w-7xl mx-auto px-6 text-center">
         <p class="text-gray-400">
-          &copy; 2024 Jensen Omega. All rights reserved.
+          &copy; 2024 Nguyễn Lê Đình Tiên. All rights reserved.
         </p>
       </div>
     </footer>
@@ -532,12 +534,28 @@
 
 <script setup>
 useHead({
-  title: "Jensen Omega - Software Developer Portfolio",
+  title: "Nguyễn Lê Đình Tiên - Software Developer Portfolio",
   meta: [
     {
       name: "description",
       content:
-        "Jensen Omega is a passionate software developer specializing in web development, mobile apps, and modern technologies. View my portfolio and get in touch for your next project.",
+        "Nguyễn Lê Đình Tiên is a passionate software developer specializing in web development, mobile apps, and modern technologies. View my portfolio and get in touch for your next project.",
+    },
+  ],
+  link: [
+    {
+      rel: "icon",
+      type: "image/webp",
+      href: "/favicon.webp",
+    },
+    {
+      rel: "shortcut icon",
+      type: "image/webp",
+      href: "/favicon.webp",
+    },
+    {
+      rel: "apple-touch-icon",
+      href: "/favicon.webp",
     },
   ],
 });
