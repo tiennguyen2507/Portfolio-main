@@ -5,114 +5,48 @@
     <!-- Header/Navigation -->
     <PortfolioHeader />
 
-    <!-- Hero Section -->
-    <section id="home" class="pt-24 pb-16 min-h-screen flex items-center">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <!-- Left Side - Introduction -->
-          <div class="space-y-8">
-            <div class="space-y-4">
-              <h1 class="text-6xl md:text-7xl font-bold">
-                <span class="text-white">Hello.</span>
-                <span class="text-orange-500 ml-2">●</span>
-              </h1>
-              <div class="flex items-center space-x-4">
-                <span class="text-3xl md:text-4xl text-white"
-                  >I'm Nguyễn Lê Đình Tiên</span
-                >
-                <div class="w-16 h-0.5 bg-orange-500"></div>
-              </div>
-              <h2 class="text-4xl md:text-5xl font-bold text-white">
-                Software Developer
-              </h2>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-4">
-              <button
-                class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-              >
-                Got a project?
-              </button>
-              <button
-                class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-              >
-                My resume
-              </button>
-            </div>
-          </div>
-
-          <!-- Right Side - Profile Picture -->
-          <div class="relative flex justify-center lg:justify-end">
-            <div class="relative">
-              <!-- Background decorative elements -->
-              <div
-                class="absolute -top-8 -left-8 w-32 h-32 border-2 border-orange-500/30 rounded-full"
-              ></div>
-              <div
-                class="absolute -bottom-8 -right-8 w-24 h-24 border-2 border-orange-500/20 rounded-full"
-              ></div>
-
-              <!-- Chevron shapes -->
-              <div
-                class="absolute -left-16 top-1/2 transform -translate-y-1/2 text-orange-500/30 text-6xl font-bold"
-              >
-                &lt;
-              </div>
-              <div
-                class="absolute -right-16 top-1/2 transform -translate-y-1/2 text-orange-500/30 text-6xl font-bold"
-              >
-                &gt;
-              </div>
-
-              <!-- Profile Image -->
-              <div class="relative z-10">
-                <div
-                  class="w-80 h-80 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/20 border-4 border-orange-500/20 shadow-2xl flex items-center justify-center"
-                >
-                  <div class="text-center">
-                    <div
-                      class="w-32 h-32 bg-orange-500/30 rounded-full flex items-center justify-center mb-4"
-                    >
-                      <svg
-                        class="w-16 h-16 text-orange-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <div class="text-orange-500 font-semibold text-lg">
-                      Nguyễn Lê Đình Tiên
-                    </div>
-                    <div class="text-gray-400 text-sm">Software Developer</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PortfolioHero />
 
     <!-- Technologies Section -->
-    <section class="py-16 bg-gray-800/50">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-wrap justify-center gap-8 text-gray-400 text-lg">
-          <span class="hover:text-orange-500 transition-colors">HTML</span>
-          <span class="hover:text-orange-500 transition-colors">CSS</span>
-          <span class="hover:text-orange-500 transition-colors"
-            >Javascript</span
+    <section class="py-16 bg-gray-800/50 relative overflow-hidden">
+      <!-- Background Tech Pattern -->
+      <div class="absolute inset-0 opacity-5 pointer-events-none">
+        <div
+          class="absolute top-10 left-1/4 text-orange-500 text-2xl animate-pulse"
+        >
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+        </div>
+        <div
+          class="absolute bottom-10 right-1/4 text-orange-500 text-2xl animate-bounce"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+            />
+          </svg>
+        </div>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5"
+        ></div>
+      </div>
+
+      <div class="relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+          <div
+            class="flex flex-wrap justify-center gap-8 text-gray-400 text-lg"
           >
-          <span class="hover:text-orange-500 transition-colors">Node.js</span>
-          <span class="hover:text-orange-500 transition-colors">React</span>
-          <span class="hover:text-orange-500 transition-colors">Git</span>
-          <span class="hover:text-orange-500 transition-colors">Github</span>
+            <span class="hover:text-orange-500 transition-colors">HTML</span>
+            <span class="hover:text-orange-500 transition-colors">CSS</span>
+            <span class="hover:text-orange-500 transition-colors"
+              >Javascript</span
+            >
+            <span class="hover:text-orange-500 transition-colors">Node.js</span>
+            <span class="hover:text-orange-500 transition-colors">React</span>
+            <span class="hover:text-orange-500 transition-colors">Git</span>
+            <span class="hover:text-orange-500 transition-colors">Github</span>
+          </div>
         </div>
       </div>
     </section>
@@ -209,6 +143,7 @@
 <script setup>
 import Card from "~/components/ui/Card.vue";
 import Badge from "~/components/ui/Badge.vue";
+import PortfolioHero from "~/pages/_components/PortfolioHero.vue";
 
 useHead({
   title: "Nguyễn Lê Đình Tiên - Software Developer Portfolio",
