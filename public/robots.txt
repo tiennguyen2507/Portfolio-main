@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: {{SITE_URL}}/sitemap.xml
+Sitemap: https://nguyenledinhtien.io.vn/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1
@@ -14,8 +14,10 @@ Disallow: /_nuxt/
 Disallow: /_ipx/
 
 # Allow important pages
+Allow: /
 Allow: /about
 Allow: /contact
 Allow: /pricing
 Allow: /faqs
 Allow: /careers
+Allow: /blogs
