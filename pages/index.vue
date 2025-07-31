@@ -42,10 +42,11 @@
             <span class="hover:text-orange-500 transition-colors"
               >Javascript</span
             >
-            <span class="hover:text-orange-500 transition-colors">Node.js</span>
+            <span class="hover:text-orange-500 transition-colors">Nest JS</span>
             <span class="hover:text-orange-500 transition-colors">React</span>
-            <span class="hover:text-orange-500 transition-colors">Git</span>
-            <span class="hover:text-orange-500 transition-colors">Github</span>
+            <span class="hover:text-orange-500 transition-colors">Next</span>
+            <span class="hover:text-orange-500 transition-colors">Vue</span>
+            <span class="hover:text-orange-500 transition-colors">Nuxt</span>
           </div>
         </div>
       </div>
