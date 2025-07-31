@@ -134,7 +134,7 @@
     <footer class="py-8 border-t border-gray-800">
       <div class="max-w-7xl mx-auto px-6 text-center">
         <p class="text-gray-400">
-          &copy; 2024 Nguyễn Lê Đình Tiên. All rights reserved.
+          &copy; 2025 Nguyễn Lê Đình Tiên. All rights reserved.
         </p>
       </div>
     </footer>
