@@ -15,7 +15,10 @@ export default defineNuxtConfig({
   },
 
   // Auto import components
-  components: [{ path: "~/components", pathPrefix: false }],
+  components: [
+    { path: "~/components", pathPrefix: false },
+    { path: "~/pages/_components", pathPrefix: false }
+  ],
 
   // Image optimization configuration
   // @ts-ignore
@@ -40,23 +43,23 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
       title:
         process.env.SITE_TITLE ||
-        "LeadsWise Network - Empowering Affiliate Journey",
+        "Nguyễn Lê Đình Tiên - Software Developer Portfolio",
       meta: [
         {
           name: "description",
           content:
             process.env.SITE_DESCRIPTION ||
-            "LeadsWise Network specializes in affiliate marketing, connecting consumers with brands and helping advertisers and publishers achieve their goals.",
+            "Nguyễn Lê Đình Tiên is a passionate software developer specializing in web development, mobile apps, and modern technologies. View my portfolio and get in touch for your next project.",
         },
         { name: "robots", content: "index, follow" },
         {
           name: "author",
-          content: process.env.SITE_AUTHOR || "LeadsWise Network",
+          content: process.env.SITE_AUTHOR || "Nguyễn Lê Đình Tiên",
         },
         { property: "og:type", content: "website" },
         {
           property: "og:site_name",
-          content: process.env.SITE_NAME || "LeadsWise Network",
+          content: process.env.SITE_NAME || "Nguyễn Lê Đình Tiên Portfolio",
         },
         { name: "twitter:card", content: "summary_large_image" },
       ],
@@ -87,15 +90,15 @@ export default defineNuxtConfig({
       SITE_URL: process.env.SITE_URL || "https://leadswise.network",
       SITE_TITLE:
         process.env.SITE_TITLE ||
-        "LeadsWise Network - Empowering Affiliate Journey",
+        "Nguyễn Lê Đình Tiên - Software Developer Portfolio",
       SITE_DESCRIPTION:
         process.env.SITE_DESCRIPTION ||
-        "LeadsWise Network specializes in affiliate marketing, connecting consumers with brands and helping advertisers and publishers achieve their goals.",
+        "Nguyễn Lê Đình Tiên is a passionate software developer specializing in web development, mobile apps, and modern technologies. View my portfolio and get in touch for your next project.",
       SITE_KEYWORDS:
         process.env.SITE_KEYWORDS ||
-        "affiliate marketing, leads management, digital marketing, publishers, advertisers, performance marketing, Vietnam, CPA, CPL, lead generation",
-      SITE_NAME: process.env.SITE_NAME || "LeadsWise Network",
-      SITE_AUTHOR: process.env.SITE_AUTHOR || "LeadsWise Network",
+        "software developer, web development, mobile development, Vue.js, React, Node.js, JavaScript, TypeScript, frontend developer, backend developer, full-stack developer, Vietnam, portfolio",
+      SITE_NAME: process.env.SITE_NAME || "Nguyễn Lê Đình Tiên Portfolio",
+      SITE_AUTHOR: process.env.SITE_AUTHOR || "Nguyễn Lê Đình Tiên",
       SITE_LOCALE: process.env.SITE_LOCALE || "en_US",
 
       // Social Media URLs
@@ -116,7 +119,7 @@ export default defineNuxtConfig({
       SITE_LOGO: process.env.SITE_LOGO || "https://leadswise.network/logo.png",
 
       // Contact Information
-      SITE_PHONE: process.env.SITE_PHONE || "+84 372 571 498",
+      SITE_PHONE: process.env.SITE_PHONE || "+84 88 669 4350",
       SITE_AREA_SERVED: process.env.SITE_AREA_SERVED || "VN",
       SITE_LANGUAGES: process.env.SITE_LANGUAGES || "English,Vietnamese",
     },

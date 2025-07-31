@@ -1,21 +1,22 @@
 <template>
   <!-- Contact Section -->
-  <section id="contact" class="py-20">
+  <section id="contact" class="py-20 bg-gray-800/30">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16">
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-          {{ portfolioContactData.title }}
+          {{ contactData.title }}
         </h2>
         <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-          {{ portfolioContactData.description }}
+          {{ contactData.description }}
         </p>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-12">
-        <div class="space-y-6">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <!-- Contact Information -->
+        <div class="space-y-8">
           <div
-            v-for="(contact, index) in portfolioContactData.contacts"
-            :key="index"
+            v-for="contact in contactData.contacts"
+            :key="contact.label"
             class="flex items-center space-x-4"
           >
             <div
@@ -36,34 +37,42 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-white font-semibold">{{ contact.label }}</h3>
+              <h3 class="text-lg font-semibold text-white">
+                {{ contact.label }}
+              </h3>
               <p class="text-gray-400">{{ contact.value }}</p>
             </div>
           </div>
         </div>
 
-        <div class="space-y-4">
-          <Input
-            v-model="formData.name"
-            type="text"
-            placeholder="Your Name"
-            size="lg"
-          />
-          <Input
-            v-model="formData.email"
-            type="email"
-            placeholder="Your Email"
-            size="lg"
-          />
-          <Textarea
-            v-model="formData.message"
-            placeholder="Your Message"
-            rows="4"
-            size="lg"
-          />
-          <Button @click="handleSubmit" variant="primary" size="lg" fullWidth>
-            Send Message
-          </Button>
+        <!-- Contact Form -->
+        <div class="bg-gray-800/50 p-8 rounded-lg">
+          <form @submit.prevent="handleSubmit" class="space-y-6">
+            <Input
+              v-model="form.name"
+              type="text"
+              placeholder="Your Name"
+              size="lg"
+              required
+            />
+            <Input
+              v-model="form.email"
+              type="email"
+              placeholder="Your Email"
+              size="lg"
+              required
+            />
+            <Textarea
+              v-model="form.message"
+              placeholder="Your Message"
+              rows="4"
+              size="lg"
+              required
+            />
+            <Button @click="handleSubmit" variant="primary" size="lg" fullWidth>
+              Send Message
+            </Button>
+          </form>
         </div>
       </div>
     </div>
@@ -76,21 +85,25 @@ import Button from "~/components/ui/Button.vue";
 import Input from "~/components/ui/Input.vue";
 import Textarea from "~/components/ui/Textarea.vue";
 
-// Reactive form data
-const formData = ref({
+// Contact data
+const contactData = portfolioContactData;
+
+// Form data
+const form = ref({
   name: "",
   email: "",
   message: "",
 });
 
-// Emit event khi submit form
+// Emit event for parent component
 const emit = defineEmits(["submit"]);
 
 // Handle form submission
 const handleSubmit = () => {
-  emit("submit", formData.value);
-  // Reset form after submission
-  formData.value = {
+  emit("submit", { ...form.value });
+
+  // Reset form
+  form.value = {
     name: "",
     email: "",
     message: "",

@@ -10,31 +10,31 @@
 // Global SEO and performance optimizations
 useHead({
   htmlAttrs: {
-    lang: 'en'
+    lang: "en",
   },
   bodyAttrs: {
-    class: 'antialiased'
-  }
-})
+    class: "antialiased",
+  },
+});
 
 // Preload critical resources
 useHead({
   link: [
     {
-      rel: 'preconnect',
-      href: 'https://fonts.googleapis.com'
+      rel: "preconnect",
+      href: "https://fonts.googleapis.com",
     },
     {
-      rel: 'preconnect',
-      href: 'https://fonts.gstatic.com',
-      crossorigin: ''
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+      crossorigin: "",
     },
     {
-      rel: 'dns-prefetch',
-      href: 'https://leadswise.affise.com'
-    }
-  ]
-})
+      rel: "dns-prefetch",
+      href: "https://fonts.googleapis.com",
+    },
+  ],
+});
 </script>
 
 <style>
@@ -44,7 +44,13 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -72,4 +78,4 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
-</style> 
+</style>

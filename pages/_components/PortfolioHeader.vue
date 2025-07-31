@@ -8,7 +8,7 @@
         <div class="flex items-center">
           <img
             src="~/assets/images/logo-main.webp"
-            alt="Logo"
+            alt="Nguyễn Lê Đình Tiên Logo"
             class="h-8 w-auto"
           />
         </div>
