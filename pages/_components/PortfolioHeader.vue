@@ -7,13 +7,15 @@
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
-          <img
-            src="~/assets/images/logo-main.webp"
-            alt="Nguyễn Lê Đình Tiên Logo"
-            class="h-8 w-auto"
-          />
+          <NuxtLink to="/" class="hover:opacity-80 transition-opacity">
+            <img
+              src="~/assets/images/logo-main.webp"
+              alt="Nguyễn Lê Đình Tiên Logo"
+              class="h-8 w-auto"
+            />
+          </NuxtLink>
         </div>
-        <nav class="hidden md:flex space-x-8">
+        <nav v-if="isHomePage" class="hidden md:flex space-x-8">
           <a
             v-for="item in navigationItems"
             :key="item.path"
@@ -24,6 +26,7 @@
           </a>
         </nav>
         <button
+          v-if="isHomePage"
           @click="toggleMobileMenu"
           class="md:hidden text-white hover:text-orange-500 transition-colors"
         >
@@ -45,7 +48,7 @@
 
       <!-- Mobile menu -->
       <div
-        v-if="showMobileMenu"
+        v-if="isHomePage && showMobileMenu"
         class="md:hidden mt-4 pb-4 border-t border-gray-700"
       >
         <ul class="flex flex-col space-y-2 pt-4">
@@ -65,6 +68,12 @@
 </template>
 
 <script setup>
+// Get current route
+const route = useRoute();
+
+// Check if current page is home page
+const isHomePage = computed(() => route.path === "/");
+
 // Navigation items for portfolio
 const navigationItems = ref([
   {
