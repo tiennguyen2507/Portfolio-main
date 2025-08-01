@@ -9,7 +9,7 @@ export const usePerformance = () => {
           const lcpObserver = new PerformanceObserver((list) => {
             const entries = list.getEntries();
             const lastEntry = entries[entries.length - 1];
-            console.log("LCP:", lastEntry.startTime);
+            // LCP measurement available
           });
           lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
 
@@ -17,7 +17,7 @@ export const usePerformance = () => {
           const fidObserver = new PerformanceObserver((list) => {
             const entries = list.getEntries();
             entries.forEach((entry) => {
-              console.log("FID:", entry.processingStart - entry.startTime);
+              // FID measurement available
             });
           });
           fidObserver.observe({ entryTypes: ["first-input"] });
@@ -31,7 +31,7 @@ export const usePerformance = () => {
                 cls += entry.value;
               }
             });
-            console.log("CLS:", cls);
+            // CLS measurement available
           });
           clsObserver.observe({ entryTypes: ["layout-shift"] });
         }
@@ -39,15 +39,7 @@ export const usePerformance = () => {
         // Traditional metrics
         const navigation = performance.getEntriesByType("navigation")[0];
         if (navigation) {
-          console.log(
-            "DOM Content Loaded:",
-            navigation.domContentLoadedEventEnd -
-              navigation.domContentLoadedEventStart
-          );
-          console.log(
-            "Load Complete:",
-            navigation.loadEventEnd - navigation.loadEventStart
-          );
+          // DOM Content Loaded and Load Complete measurements available
         }
       });
     }
@@ -62,7 +54,7 @@ export const usePerformance = () => {
             entry.initiatorType === "css" ||
             entry.initiatorType === "script"
           ) {
-            console.log(`${entry.initiatorType}:`, entry.name, entry.duration);
+            // Resource timing measurement available
           }
         });
       });

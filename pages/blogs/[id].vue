@@ -77,12 +77,8 @@
               itemscope
               itemtype="https://schema.org/ListItem"
             >
-              <NuxtLink
-                to="/blogs"
-                class="hover:text-orange-500"
-                itemprop="item"
-              >
-                <span itemprop="name">Blogs</span>
+              <NuxtLink to="/" class="hover:text-orange-500" itemprop="item">
+                <span itemprop="name">Portfolio</span>
               </NuxtLink>
               <meta itemprop="position" content="2" />
             </li>
@@ -205,9 +201,9 @@
             </div>
             <div>
               <NuxtLink
-                to="/blogs"
+                to="/"
                 class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                aria-label="Back to all blog posts"
+                aria-label="Back to portfolio"
               >
                 <svg
                   class="w-4 h-4 mr-2"
@@ -223,7 +219,7 @@
                     d="M15 19l-7-7 7-7"
                   ></path>
                 </svg>
-                Back to All Posts
+                Back to Portfolio
               </NuxtLink>
             </div>
           </footer>
@@ -235,24 +231,16 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import httpRequest from "~/utils/httpRequest";
 
 // Get route params
 const route = useRoute();
 const blogId = computed(() => route.params.id);
 
-console.log("Blog Detail Page - Route params:", route.params);
-console.log("Blog ID:", blogId.value);
-
 // Reactive data
 const blog = ref(null);
 const loading = ref(true);
 const error = ref(null);
-
-// API URL - sử dụng computed
-const API_URL = computed(
-  () =>
-    `${process.env.NUXT_PUBLIC_API_URL || "http://localhost:3000"}/posts/${blogId.value}`
-);
 
 // Fetch blog detail from API
 const fetchBlogDetail = async () => {
@@ -260,16 +248,7 @@ const fetchBlogDetail = async () => {
     loading.value = true;
     error.value = null;
 
-    console.log("Fetching from API:", API_URL.value);
-
-    const response = await fetch(API_URL.value);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("API response:", data);
+    const data = await httpRequest.get(`/posts/${blogId.value}`);
     blog.value = data;
   } catch (err) {
     console.error("Error fetching blog detail:", err);
@@ -316,18 +295,18 @@ const handleAvatarError = (event) => {
 useHead(() => {
   if (!blog.value) {
     return {
-      title: "Blog Detail - LEADSWISE Network",
+      title: "Blog Detail - Nguyễn Lê Đình Tiên",
       meta: [
         {
           name: "description",
           content:
-            "Read our latest blog articles and insights about affiliate marketing, lead generation, and digital marketing strategies.",
+            "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình.",
         },
       ],
     };
   }
 
-  const title = `${blog.value.title} - LEADSWISE Network`;
+  const title = `${blog.value.title} - Nguyễn Lê Đình Tiên`;
   const description = stripHtml(blog.value.description).substring(0, 160);
   const imageUrl = blog.value.thumbnail || "/images/blog-1.webp";
   const authorName = `${blog.value.createdBy.firstName} ${blog.value.createdBy.lastName}`;
@@ -335,7 +314,7 @@ useHead(() => {
   const modifiedDate = formatDateISO(
     blog.value.updatedAt || blog.value.createdAt
   );
-  const url = `https://leadswisenetwork.com/blogs/${blog.value._id}`;
+  const url = `https://your-domain.com/blogs/${blog.value._id}`;
 
   return {
     title,
@@ -348,7 +327,7 @@ useHead(() => {
       {
         name: "keywords",
         content:
-          "blog, article, marketing, affiliate marketing, lead generation, digital marketing, LEADSWISE Network",
+          "blog, article, technology, web development, programming, React, Vue.js, Node.js, Nguyễn Lê Đình Tiên",
       },
       {
         name: "author",
@@ -395,7 +374,7 @@ useHead(() => {
       },
       {
         property: "og:site_name",
-        content: "LEADSWISE Network",
+        content: "Nguyễn Lê Đình Tiên - Portfolio",
       },
       {
         property: "og:locale",
@@ -437,11 +416,11 @@ useHead(() => {
       },
       {
         name: "twitter:site",
-        content: "@leadswisenetwork",
+        content: "@yourusername",
       },
       {
         name: "twitter:creator",
-        content: "@leadswisenetwork",
+        content: "@yourusername",
       },
 
       // Additional SEO
@@ -451,7 +430,7 @@ useHead(() => {
       },
       {
         name: "article:publisher",
-        content: "https://leadswisenetwork.com",
+        content: "https://your-domain.com",
       },
     ],
     link: [
@@ -476,10 +455,10 @@ useHead(() => {
           },
           publisher: {
             "@type": "Organization",
-            name: "LEADSWISE Network",
+            name: "Nguyễn Lê Đình Tiên",
             logo: {
               "@type": "ImageObject",
-              url: "https://leadswisenetwork.com/images/logo.webp",
+              url: "https://your-domain.com/images/logo.webp",
             },
           },
           datePublished: publishedDate,
@@ -491,8 +470,8 @@ useHead(() => {
           url: url,
           isPartOf: {
             "@type": "Blog",
-            name: "LEADSWISE Network Blog",
-            url: "https://leadswisenetwork.com/blogs",
+            name: "Nguyễn Lê Đình Tiên Blog",
+            url: "https://your-domain.com/blogs",
           },
         }),
       },
@@ -504,7 +483,6 @@ useHead(() => {
 watch(
   blogId,
   (newId) => {
-    console.log("Blog ID changed to:", newId);
     if (newId) {
       fetchBlogDetail();
     }
@@ -514,7 +492,6 @@ watch(
 
 // Fetch blog detail on component mount
 onMounted(() => {
-  console.log("Component mounted, blogId:", blogId.value);
   if (blogId.value) {
     fetchBlogDetail();
   } else {

@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col">
     <!-- Header -->
-    <AppHeader />
+    <PortfolioHeader />
 
     <!-- Main Content -->
     <main class="flex-1">
@@ -9,10 +9,11 @@
     </main>
 
     <!-- Footer -->
-    <AppFooter />
+    <PortfolioFooter />
   </div>
 </template>
 
 <script setup>
-// Layout logic can be added here if needed
-</script> 
+import PortfolioHeader from "~/pages/_components/PortfolioHeader.vue";
+import PortfolioFooter from "~/pages/_components/PortfolioFooter.vue";
+</script>
