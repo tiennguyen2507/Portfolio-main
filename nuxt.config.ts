@@ -129,7 +129,7 @@ export default defineNuxtConfig({
         { name: "msapplication-TileColor", content: "#f97316" },
       ],
       link: [
-        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        { rel: "icon", type: "image/webp", href: "/favicon.webp" },
         {
           rel: "canonical",
           href: process.env.SITE_URL || "https://nguyenledinhtien.io.vn",
