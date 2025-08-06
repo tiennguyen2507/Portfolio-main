@@ -4,9 +4,6 @@ Allow: /
 # Sitemap
 Sitemap: https://nguyenledinhtien.io.vn/sitemap.xml
 
-# Crawl-delay
-Crawl-delay: 1
-
 # Disallow admin areas
 Disallow: /admin/
 Disallow: /api/
