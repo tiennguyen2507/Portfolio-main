@@ -15,16 +15,53 @@
           <div class="relative">
             <button
               @click="toggleUserMenu"
-              class="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
+              class="flex items-center space-x-3 text-gray-700 hover:text-gray-900 transition-colors duration-200"
             >
-              <div
-                class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center"
-              >
-                <span class="text-sm font-medium">A</span>
+              <!-- Avatar -->
+              <div class="relative">
+                <div
+                  v-if="userStore.user && userStore.user.avatar"
+                  class="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200"
+                >
+                  <img
+                    :src="userStore.user.avatar"
+                    :alt="`${userStore.user && userStore.user.firstName ? userStore.user.firstName : 'User'} ${userStore.user && userStore.user.lastName ? userStore.user.lastName : ''}`"
+                    class="w-full h-full object-cover rounded-full"
+                    @error="handleAvatarError"
+                  />
+                  <!-- Fallback avatar (hidden by default) -->
+                  <div
+                    class="absolute inset-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg"
+                    style="display: none"
+                  >
+                    <span>{{ getUserInitials() }}</span>
+                  </div>
+                </div>
+                <div
+                  v-else
+                  class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg"
+                >
+                  <span>{{ getUserInitials() }}</span>
+                </div>
               </div>
-              <span class="text-sm font-medium">Admin</span>
+
+              <!-- User Info -->
+              <div class="flex flex-col items-start">
+                <span class="text-sm font-semibold text-gray-900">
+                  {{ getUserFullName() }}
+                </span>
+                <span class="text-xs text-gray-500">
+                  {{
+                    userStore.user && userStore.user.email
+                      ? userStore.user.email
+                      : "admin@example.com"
+                  }}
+                </span>
+              </div>
+
+              <!-- Dropdown Arrow -->
               <svg
-                class="w-4 h-4"
+                class="w-4 h-4 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -41,27 +78,134 @@
             <!-- Dropdown Menu -->
             <div
               v-if="showUserMenu"
-              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
+              class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
             >
-              <NuxtLink
-                to="/admin/profile"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Hồ sơ
-              </NuxtLink>
-              <NuxtLink
-                to="/admin/settings"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Cài đặt
-              </NuxtLink>
-              <hr class="my-1" />
-              <button
-                @click="logout"
-                class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-              >
-                Đăng xuất
-              </button>
+              <!-- User Info Header -->
+              <div class="px-4 py-3 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                  <div class="relative">
+                    <div
+                      v-if="userStore.user && userStore.user.avatar"
+                      class="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200"
+                    >
+                      <img
+                        :src="userStore.user.avatar"
+                        :alt="`${userStore.user && userStore.user.firstName ? userStore.user.firstName : 'User'} ${userStore.user && userStore.user.lastName ? userStore.user.lastName : ''}`"
+                        class="w-full h-full object-cover rounded-full"
+                        @error="handleAvatarError"
+                      />
+                      <!-- Fallback avatar (hidden by default) -->
+                      <div
+                        class="absolute inset-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-xl"
+                        style="display: none"
+                      >
+                        <span>{{ getUserInitials() }}</span>
+                      </div>
+                    </div>
+                    <div
+                      v-else
+                      class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-xl"
+                    >
+                      <span>{{ getUserInitials() }}</span>
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-gray-900 truncate">
+                      {{ getUserFullName() }}
+                    </p>
+                    <p class="text-xs text-gray-500 truncate">
+                      {{
+                        userStore.user && userStore.user.email
+                          ? userStore.user.email
+                          : "admin@example.com"
+                      }}
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1">
+                      {{
+                        userStore.user && userStore.user.role
+                          ? userStore.user.role
+                          : "Administrator"
+                      }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Menu Items -->
+              <div class="py-1">
+                <NuxtLink
+                  to="/admin/profile"
+                  class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+                  @click="showUserMenu = false"
+                >
+                  <svg
+                    class="w-4 h-4 mr-3 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  Hồ sơ cá nhân
+                </NuxtLink>
+                <NuxtLink
+                  to="/admin/settings"
+                  class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+                  @click="showUserMenu = false"
+                >
+                  <svg
+                    class="w-4 h-4 mr-3 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  Cài đặt
+                </NuxtLink>
+              </div>
+
+              <!-- Divider -->
+              <div class="border-t border-gray-100 my-1"></div>
+
+              <!-- Logout -->
+              <div class="py-1">
+                <button
+                  @click="logout"
+                  class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150"
+                >
+                  <svg
+                    class="w-4 h-4 mr-3 text-red-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                  </svg>
+                  Đăng xuất
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -259,19 +403,69 @@
 </template>
 
 <script setup>
+const userStore = useUserStore();
 const showUserMenu = ref(false);
 
 const toggleUserMenu = () => {
   showUserMenu.value = !showUserMenu.value;
 };
 
+// Helper functions for user display
+const getUserFullName = () => {
+  const user = userStore.user;
+  if (!user) return "Admin";
+
+  const firstName = user.firstName || "";
+  const lastName = user.lastName || "";
+
+  if (firstName && lastName) {
+    return `${firstName} ${lastName}`;
+  } else if (firstName) {
+    return firstName;
+  } else if (lastName) {
+    return lastName;
+  }
+
+  return "Admin";
+};
+
+const getUserInitials = () => {
+  const user = userStore.user;
+  if (!user) return "A";
+
+  const firstName = user.firstName || "";
+  const lastName = user.lastName || "";
+
+  if (firstName && lastName) {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  } else if (firstName) {
+    return firstName.charAt(0).toUpperCase();
+  } else if (lastName) {
+    return lastName.charAt(0).toUpperCase();
+  }
+
+  return "A";
+};
+
+const handleAvatarError = (event) => {
+  // Hide the broken image and show the fallback avatar
+  event.target.style.display = "none";
+  if (event.target.nextElementSibling) {
+    event.target.nextElementSibling.style.display = "flex";
+  }
+};
+
 const logout = () => {
-  // Clear authentication data
+  // Clear authentication data from store
+  userStore.clearAuth();
+
+  // Clear localStorage
   localStorage.removeItem("access_token");
   localStorage.removeItem("user");
   localStorage.removeItem("remember_me");
 
   showUserMenu.value = false;
+
   // Redirect to login page
   navigateTo("/auth/login");
 };

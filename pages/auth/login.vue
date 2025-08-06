@@ -290,6 +290,10 @@ const handleLogin = async () => {
         localStorage.removeItem("remember_me");
       }
 
+      // Set auth data in store
+      const userStore = useUserStore();
+      userStore.setAuth(response.access_token, response.user);
+
       successMessage.value = "Đăng nhập thành công! Đang chuyển hướng...";
 
       // Redirect to admin dashboard or home page
@@ -328,8 +332,8 @@ const socialLogin = (provider) => {
 
 // Check if user is already logged in
 onMounted(() => {
-  const token = localStorage.getItem("access_token");
-  if (token) {
+  const userStore = useUserStore();
+  if (userStore.isAuthenticated) {
     // User is already logged in, redirect to admin
     navigateTo("/admin");
   }

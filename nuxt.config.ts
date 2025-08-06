@@ -6,7 +6,12 @@ export default defineNuxtConfig({
   ssr: true,
 
   css: ["~/assets/scss/main.scss", "swiper/css"],
-  modules: ["@nuxtjs/tailwindcss", "@vee-validate/nuxt", "@nuxt/image"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@vee-validate/nuxt",
+    "@nuxt/image",
+    "@pinia/nuxt",
+  ],
 
   // Auto import Vue composables and composables from composables directory
   imports: {
