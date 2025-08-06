@@ -303,7 +303,7 @@
 
             <!-- Campaigns -->
             <NuxtLink
-              to="/admin/campaigns"
+              to="/admin/blogs"
               class="group flex items-center px-2 py-2 text-sm font-medium rounded-md"
               :class="[
                 $route.path.startsWith('/admin/campaigns')
@@ -330,7 +330,7 @@
                   d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
                 />
               </svg>
-              Chiến dịch Marketing
+              Quản lý bài viết
             </NuxtLink>
 
             <!-- Reports -->
