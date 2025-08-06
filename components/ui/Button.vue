@@ -1,7 +1,7 @@
 <template>
   <button
     :type="type"
-    :disabled="disabled"
+    :disabled="disabled || loading"
     :class="buttonClasses"
     @click="$emit('click', $event)"
   >
@@ -23,6 +23,10 @@ const props = defineProps({
     validator: (value) => ["sm", "md", "lg"].includes(value),
   },
   disabled: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
     type: Boolean,
     default: false,
   },
@@ -58,12 +62,14 @@ const buttonClasses = computed(() => {
   };
 
   const widthClass = props.fullWidth ? "w-full" : "";
+  const loadingClass = props.loading ? "cursor-not-allowed" : "";
 
   return [
     baseClasses,
     sizeClasses[props.size],
     variantClasses[props.variant],
     widthClass,
+    loadingClass,
   ].join(" ");
 });
 </script>

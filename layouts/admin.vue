@@ -266,8 +266,14 @@ const toggleUserMenu = () => {
 };
 
 const logout = () => {
-  // Add logout logic here
+  // Clear authentication data
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("user");
+  localStorage.removeItem("remember_me");
+
   showUserMenu.value = false;
+  // Redirect to login page
+  navigateTo("/auth/login");
 };
 
 // Close user menu when clicking outside

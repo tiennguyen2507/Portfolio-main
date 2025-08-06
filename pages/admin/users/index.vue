@@ -121,15 +121,6 @@
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
-              <label class="flex items-center">
-                <input
-                  type="checkbox"
-                  v-model="selectAll"
-                  @change="toggleSelectAll"
-                  class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                />
-                <span class="ml-2 text-sm text-gray-700">Chọn tất cả</span>
-              </label>
               <span class="text-sm text-gray-500">
                 {{ selectedUsers.length }} users được chọn
               </span>
@@ -179,27 +170,33 @@
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  User ID
+                  <div class="flex items-center">
+                    <input
+                      type="checkbox"
+                      v-model="selectAll"
+                      @change="toggleSelectAll"
+                      class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
+                    />
+                    <span
+                      >LEAD
+                      <span class="text-red-600 font-bold">user</span></span
+                    >
+                  </div>
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Client
+                  NGUỒN
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Email
+                  TRẠNG THÁI
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Ngày tạo
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Trạng thái
+                  NGÀY TẠO
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -222,57 +219,58 @@
                       :value="user._id"
                       class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
                     />
-                    <span class="text-sm font-medium text-gray-900">
-                      {{ user._id }}
-                    </span>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex items-center">
-                    <div
-                      v-if="user.avatar"
-                      class="w-8 h-8 rounded-full overflow-hidden mr-3"
-                    >
-                      <img
-                        :src="user.avatar"
-                        :alt="user.fullName"
-                        class="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div
-                      v-else
-                      class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3"
-                    >
-                      <span class="text-xs font-medium text-gray-600">{{
-                        user.fullName
-                          ? user.fullName.charAt(0).toUpperCase()
-                          : "U"
-                      }}</span>
-                    </div>
-                    <div>
-                      <div class="text-sm font-medium text-gray-900">
-                        {{ user.fullName || "N/A" }}
+                    <div class="flex items-center">
+                      <div
+                        v-if="user.avatar"
+                        class="w-10 h-10 rounded-full overflow-hidden mr-3"
+                      >
+                        <img
+                          :src="user.avatar"
+                          :alt="user.fullName"
+                          class="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3"
+                      >
+                        <span class="text-sm font-medium text-gray-600">{{
+                          user.fullName
+                            ? user.fullName.charAt(0).toUpperCase()
+                            : "U"
+                        }}</span>
+                      </div>
+                      <div>
+                        <div class="text-sm font-bold text-gray-900">
+                          {{ user.fullName || "N/A" }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                          {{ user.email }}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900"></div>
-                  <div class="text-sm text-gray-500">{{ user.email }}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ formatDate(user.createdAt) }}
+                  <span
+                    class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                  >
+                    Website
+                  </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span
-                    class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                    class="inline-flex px-3 py-1 text-xs font-semibold rounded-full"
                     :class="{
                       'bg-green-100 text-green-800': user.status === 1,
-                      'bg-red-100 text-red-800': user.status === 0,
+                      'bg-gray-100 text-gray-800': user.status === 0,
                     }"
                   >
-                    {{ user.status === 1 ? "Hoạt động" : "Không hoạt động" }}
+                    {{ user.status === 1 ? "Hoạt động" : "Mới" }}
                   </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ formatDate(user.createdAt) }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div class="flex items-center space-x-2">
@@ -432,6 +430,7 @@ import { httpRequest } from "~/utils/httpRequest";
 
 definePageMeta({
   layout: "admin",
+  middleware: "auth",
 });
 
 // Reactive data

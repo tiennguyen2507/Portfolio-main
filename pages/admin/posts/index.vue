@@ -172,6 +172,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
+definePageMeta({
+  layout: "admin",
+  middleware: "auth",
+});
+
 // Import Quill editor only on client side
 let QuillEditor = null;
 if (process.client) {
