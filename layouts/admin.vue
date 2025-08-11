@@ -280,7 +280,7 @@
               to="/admin/contacts"
               class="group flex items-center px-2 py-2 text-sm font-medium rounded-md"
               :class="[
-                $route.path.startsWith('/admin/leads')
+                $route.path.startsWith('/admin/contacts')
                   ? 'bg-blue-100 text-blue-900'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
               ]"
@@ -306,7 +306,7 @@
               to="/admin/blogs"
               class="group flex items-center px-2 py-2 text-sm font-medium rounded-md"
               :class="[
-                $route.path.startsWith('/admin/campaigns')
+                $route.path.startsWith('/admin/blogs')
                   ? 'bg-blue-100 text-blue-900'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
               ]"
@@ -331,6 +331,38 @@
                 />
               </svg>
               Quản lý bài viết
+            </NuxtLink>
+
+            <!-- Campaigns -->
+            <NuxtLink
+              to="/admin/comments"
+              class="group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+              :class="[
+                $route.path.startsWith('/admin/comments')
+                  ? 'bg-blue-100 text-blue-900'
+                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+              ]"
+            >
+              <svg
+                class="mr-3 h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+                />
+              </svg>
+              Quản lý bình luận
             </NuxtLink>
 
             <!-- Reports -->
