@@ -28,177 +28,45 @@
       </template>
     </HeaderContent>
 
-    <!-- Create/Edit Blog Modal using common Modal + FormBlogs -->
-    <Modal v-if="showCreateModal" :isOpen="showCreateModal" width="2xl" maxHeight="90vh" @close="closeModal">
-      <template #header>
-        <h3 class="text-lg font-semibold text-gray-900">
-          {{ isEditing ? 'Chỉnh sửa bài viết' : 'Tạo bài viết mới' }}
-        </h3>
-      </template>
-
-      <FormBlogs v-model="form" :editorOptions="editorOptions" @thumbnailChange="(f) => (thumbnailFile = f)" />
-
-      <template #footer>
-        <button
-          @click="closeModal"
-          class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
-        >
-          Return
-        </button>
-        <button
-          @click="handleCreateOrUpdateBlog"
-          class="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700"
-        >
-          Submit
-        </button>
-      </template>
-    </Modal>
+    <!-- Create/Edit Blog Modal -->
+    <FormBlogs
+      v-if="showCreateModal"
+      :isOpen="showCreateModal"
+      :isEditing="isEditing"
+      :form="form"
+      :submitting="submitting"
+      :error="error"
+      :editorOptions="editorOptions"
+      @close="closeModal"
+      @submit="handleFormSubmit"
+      @thumbnailChange="(f) => (thumbnailFile = f)"
+    />
 
     <!-- Blogs List -->
-    <Loading v-if="loading" text="Đang tải dữ liệu..." />
-    <div v-else-if="error" class="flex justify-center items-center py-12">
-      <span class="text-red-500">{{ error }}</span>
-    </div>
-    <div v-else>
-      <!-- Table -->
-      <div
-        class="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden"
-      >
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Thumbnail
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Tiêu đề
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Mô tả
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Trạng thái
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Tác giả
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Ngày tạo
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Ngày cập nhật
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Thao tác
-                </th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr
-                v-for="post in posts"
-                :key="post._id"
-                class="hover:bg-gray-50"
-              >
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <img
-                    v-if="post.thumbnail"
-                    :src="post.thumbnail"
-                    :alt="post.title"
-                    class="w-16 h-16 object-cover rounded-lg"
-                  />
-                  <div
-                    v-else
-                    class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center"
-                  >
-                    <span class="text-gray-400 text-xs">No image</span>
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <NuxtLink
-                    :to="`/blogs/${post._id}`"
-                    class="text-sm font-semibold text-blue-600 max-w-xs truncate hover:underline focus:underline focus:outline-none cursor-pointer hover:text-blue-700"
-                    title="Xem bài viết"
-                  >
-                    {{ post.title }}
-                  </NuxtLink>
-                </td>
-                <td class="px-6 py-4">
-                  <div
-                    class="text-sm text-gray-500 max-w-md overflow-hidden line-clamp-3"
-                    v-html="post.description"
-                  ></div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <Badge
-                    :variant="post.status ? 'success' : 'danger'"
-                    size="sm"
-                  >
-                    {{ post.status ? 'Hoạt động' : 'Không hoạt động' }}
-                  </Badge>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex items-center">
-                    <img
-                      v-if="post.createdBy && post.createdBy.avatar"
-                      :src="post.createdBy.avatar"
-                      :alt="post.createdBy.firstName"
-                      class="w-8 h-8 rounded-full mr-3"
-                    />
-                    <div class="text-sm text-gray-900">
-                      {{
-                        post.createdBy
-                          ? post.createdBy.firstName + ' ' + post.createdBy.lastName
-                          : 'Admin'
-                      }}
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ formatDate(post.createdAt) }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ formatDate(post.updatedAt) }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div class="flex items-center gap-2">
-                    <ButtonIcon icon="edit" color="blue" @click="startEdit(post)" />
-                    <ButtonIcon icon="delete" color="red" @click="deletePost(post._id)" />
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <ErrorCommon 
+      v-if="error"
+      :message="error"
+      @retry="fetchPosts"
+    />
+    
+    <TableBlogs  
+      v-if="!error"
+      :posts="posts"
+      :loading="loading"
+      @edit="startEdit"
+      @delete="deletePost"
+    />
 
-      <!-- Pagination -->
-      <div v-if="posts.length > 0" class="bg-white px-6 py-3 border-t border-gray-200">
-        <Pagination
-          :page="currentPage"
-          :total="pagination.total"
-          :limit="limit"
-          :show-info="true"
-          :split="true"
-          @update:page="(p) => { currentPage = p; fetchPosts(); }"
-        />
-      </div>
+    <!-- Pagination - Separated from Table -->
+    <div v-if="!error && posts.length > 0" class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-3">
+      <Pagination
+        :page="currentPage"
+        :total="pagination.total"
+        :limit="limit"
+        :show-info="true"
+        :split="true"
+        @update:page="handlePageChange"
+      />
     </div>
   </div>
 </template>
@@ -206,14 +74,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import httpRequest from "~/utils/httpRequest";
-import Badge from "~/components/ui/Badge.vue";
+import handleUpdateImage from "~/utils/handleUpdateImage";
 import Button from "~/components/ui/Button.vue";
-import Modal from "~/components/ui/Modal.vue";
-import FormBlogs from "~/pages/admin/blogs/_components/FormBlogs.vue";
-import ButtonIcon from "~/components/ui/ButtonIcon.vue";
+import FormBlogs from "~/pages/admin/blogs/_components/ModalFormBlogs.vue"  
 import HeaderContent from "~/components/admin/HeaderContent.vue";
-import Loading from "~/components/ui/Loading.vue";
+import ErrorCommon from "~/components/admin/ErrorCommon.vue";
 import Pagination from "~/components/ui/Pagination.vue";
+import TableBlogs from "~/pages/admin/blogs/_components/TableBlogs.vue";
 
 definePageMeta({
   layout: "admin",
@@ -224,6 +91,7 @@ const posts = ref([]);
 const loading = ref(true);
 const error = ref("");
 const showCreateModal = ref(false);
+const submitting = ref(false); // Loading state for form submit
 let form = ref({ title: "", description: "", thumbnail: "" });
 const isEditing = ref(false);
 const editingId = ref(null);
@@ -238,20 +106,14 @@ const pagination = ref({
   prePage: false,
 });
 
+
+
+
+
+
+
+// Editor options - now using default options from Editor component
 const editorOptions = {
-  modules: {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ color: [] }, { background: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ align: [] }],
-      [{ indent: "-1" }, { indent: "+1" }],
-      ["blockquote", "code-block"],
-      ["link", "image", "video"],
-      ["clean"],
-    ],
-  },
   placeholder: "Nhập nội dung bài viết...",
 };
 
@@ -267,6 +129,7 @@ const fetchPosts = async () => {
     });
     
     const resp = await httpRequest.get(`/posts?${params.toString()}`);
+    
     posts.value = resp.data || [];
     pagination.value = {
       total: resp.total || 0,
@@ -286,36 +149,62 @@ function closeModal() {
   showCreateModal.value = false;
   isEditing.value = false;
   editingId.value = null;
+  error.value = ""; // Clear error when closing modal
+  thumbnailFile = null; // Reset thumbnail file when closing modal
 }
 
 function startEdit(post) {
   isEditing.value = true;
   editingId.value = post._id;
   form.value = { title: post.title || "", description: post.description || "", thumbnail: post.thumbnail || "" };
+  thumbnailFile = null; // Reset thumbnail file when editing
   showCreateModal.value = true;
 }
 
-const handleCreateOrUpdateBlog = async () => {
+const handleFormSubmit = async (result) => {
+  if (!result.success) {
+    error.value = result.error;
+    return;
+  }
+
+  submitting.value = true;
   try {
+    let thumbnailUrl = result.data.thumbnail;
+
+    // Upload thumbnail if there's a new file
+    if (result.thumbnailFile && result.thumbnailFile instanceof File) {
+      const uploadedUrl = await handleUpdateImage(result.thumbnailFile, 'blogs');
+      if (uploadedUrl) {
+        thumbnailUrl = uploadedUrl;
+      } else {
+        error.value = "Không thể upload thumbnail. Vui lòng thử lại.";
+        submitting.value = false;
+        return;
+      }
+    }
+
     if (isEditing.value && editingId.value) {
-      await httpRequest.put(`/posts/${editingId.value}`, {
-        title: form.value.title,
-        description: form.value.description,
-        thumbnail: form.value.thumbnail,
+      await httpRequest.patch(`/posts/${editingId.value}`, {
+        title: result.data.title.trim(),
+        description: result.data.description.trim(),
+        thumbnail: thumbnailUrl,
       });
     } else {
       await httpRequest.post("/posts", {
-        title: form.value.title,
-        description: form.value.description,
-        thumbnail: form.value.thumbnail,
+        title: result.data.title.trim(),
+        description: result.data.description.trim(),
+        thumbnail: thumbnailUrl,
         status: true,
       });
     }
     await fetchPosts();
     closeModal();
     form.value = { title: "", description: "", thumbnail: "" };
+    error.value = ""; // Clear any previous errors
   } catch (err) {
     error.value = err?.message || "Không thể lưu dữ liệu.";
+  } finally {
+    submitting.value = false;
   }
 };
 
@@ -331,29 +220,12 @@ const deletePost = async (id) => {
   }
 };
 
-onMounted(fetchPosts);
-</script>
+const handlePageChange = (page) => {
+  currentPage.value = page;
+  fetchPosts();
+};
 
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-@keyframes fadeIn {
-  from {
-    transform: translateY(40px) scale(0.98);
-    opacity: 0;
-  }
-  to {
-    transform: none;
-    opacity: 1;
-  }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-</style>
+onMounted(() => {
+  fetchPosts();
+});
+</script>

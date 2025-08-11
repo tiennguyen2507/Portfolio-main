@@ -45,6 +45,15 @@ export const httpRequest = {
     });
   },
 
+  async patch(url: string, data?: any, options?: any): Promise<any> {
+    const config = createRequestConfig(options);
+    return await $fetch(url, {
+      method: "PATCH",
+      body: data,
+      ...config,
+    });
+  },
+
   async delete(url: string, options?: any): Promise<any> {
     const config = createRequestConfig(options);
     return await $fetch(url, {

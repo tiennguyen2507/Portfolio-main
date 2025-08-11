@@ -6,6 +6,25 @@
       subtitle="Danh sách lời nhận xét/testimonials"
     />
 
+    <!-- Error Display -->
+    <div v-if="error" class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div>
+          <h3 class="text-sm font-medium text-red-800">Lỗi khi tải dữ liệu</h3>
+          <p class="text-red-600 mt-1">{{ error }}</p>
+        </div>
+      </div>
+      <button
+        @click="fetchComments"
+        class="mt-3 bg-red-600 text-white px-3 py-1.5 rounded-md hover:bg-red-700 transition-colors text-sm"
+      >
+        Thử lại
+      </button>
+    </div>
+
     <!-- Loading State -->
     <div
       v-if="loading"
@@ -15,7 +34,7 @@
     </div>
 
     <!-- Comments Table -->
-    <div v-else class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div v-else-if="!error" class="bg-white rounded-lg shadow-sm border border-gray-200">
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
@@ -99,8 +118,12 @@
                   <ButtonIcon
                     icon="delete"
                     color="red"
+                    :disabled="deletingId === comment._id"
                     @click="deleteComment(comment._id)"
                   />
+                  <div v-if="deletingId === comment._id" class="ml-2">
+                    <div class="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -110,13 +133,13 @@
 
       <!-- Empty State -->
       <EmptyData
-        v-if="comments.length === 0 && !loading"
+        v-if="comments.length === 0 && !loading && !error"
         title="Không có nhận xét nào"
         description="Chưa có dữ liệu hiển thị."
       />
 
       <!-- Pagination -->
-      <div v-if="comments.length > 0" class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+      <div v-if="comments.length > 0" class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6 mt-2">
         <Pagination
           :page="currentPage"
           :total="pagination.total"
@@ -132,6 +155,7 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import { httpRequest } from "~/utils/httpRequest";
 import Avatar from "~/components/ui/Avatar.vue";
 import ButtonIcon from "~/components/ui/ButtonIcon.vue";
@@ -149,6 +173,8 @@ definePageMeta({
 const currentPage = ref(1);
 const limit = 10;
 const loading = ref(false);
+const error = ref(""); // Error state
+const deletingId = ref(null); // Track which comment is being deleted
 const comments = ref([]);
 const pagination = ref({
   total: 0,
@@ -172,6 +198,7 @@ const isActiveStatus = (status) => {
 // Fetch comments from API
 const fetchComments = async () => {
   loading.value = true;
+  error.value = "";
   try {
     const params = new URLSearchParams({
       page: currentPage.value.toString(),
@@ -182,17 +209,17 @@ const fetchComments = async () => {
       `/comments-about-me?${params.toString()}`
     );
 
-    comments.value = response.data;
+    comments.value = response.data || [];
     pagination.value = {
-      total: response.total,
-      page: response.page,
-      limit: response.limit,
-      nextPage: response.nextPage,
-      prePage: response.prePage,
+      total: response.total || 0,
+      page: response.page || 1,
+      limit: response.limit || 10,
+      nextPage: response.nextPage || false,
+      prePage: response.prePage || false,
     };
-  } catch (error) {
-    console.error("Error fetching comments:", error);
-    // You might want to show a toast notification here
+  } catch (err) {
+    console.error("Error fetching comments:", err);
+    error.value = err?.message || "Không thể tải dữ liệu comments.";
   } finally {
     loading.value = false;
   }
@@ -201,6 +228,7 @@ const fetchComments = async () => {
 // Delete comment
 const deleteComment = async (id) => {
   if (confirm("Bạn có chắc chắn muốn xóa nhận xét này?")) {
+    deletingId.value = id;
     try {
       await httpRequest.delete(`/comments-about-me/${id}`);
 
@@ -212,8 +240,11 @@ const deleteComment = async (id) => {
         currentPage.value--;
         fetchComments();
       }
-    } catch (error) {
-      console.error("Error deleting comment:", error);
+    } catch (err) {
+      console.error("Error deleting comment:", err);
+      error.value = err?.message || "Không thể xóa comment.";
+    } finally {
+      deletingId.value = null;
     }
   }
 };
