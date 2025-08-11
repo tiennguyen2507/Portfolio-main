@@ -29,12 +29,7 @@
     </HeaderContent>
 
     <!-- Loading State -->
-    <div v-if="loading" class="flex justify-center items-center py-12">
-      <div
-        class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"
-      ></div>
-      <span class="ml-3 text-gray-600">Đang tải dữ liệu...</span>
-    </div>
+    <Loading v-if="loading" size="lg" />
 
     <!-- Error State -->
     <div
@@ -425,6 +420,7 @@
 <script setup>
 import { httpRequest } from "~/utils/httpRequest";
 import HeaderContent from "~/components/admin/HeaderContent.vue";
+import Loading from "~/components/ui/Loading.vue";
 
 definePageMeta({
   layout: "admin",

@@ -11,12 +11,7 @@
       v-if="loading"
       class="bg-white rounded-lg shadow-sm border border-gray-200 p-8"
     >
-      <div class="flex justify-center items-center">
-        <div
-          class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
-        ></div>
-        <span class="ml-2 text-gray-600">Đang tải dữ liệu...</span>
-      </div>
+      <Loading />
     </div>
 
     <!-- Comments Table -->
@@ -143,6 +138,7 @@ import ButtonIcon from "~/components/ui/ButtonIcon.vue";
 import EmptyData from "~/components/ui/EmptyData.vue";
 import Pagination from "~/components/ui/Pagination.vue";
 import HeaderContent from "~/components/admin/HeaderContent.vue";
+import Loading from "~/components/ui/Loading.vue";
 
 definePageMeta({
   layout: "admin",

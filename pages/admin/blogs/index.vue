@@ -55,9 +55,7 @@
     </Modal>
 
     <!-- Blogs List -->
-    <div v-if="loading" class="flex justify-center items-center py-12">
-      <span class="text-gray-500">Đang tải dữ liệu...</span>
-    </div>
+    <Loading v-if="loading" text="Đang tải dữ liệu..." />
     <div v-else-if="error" class="flex justify-center items-center py-12">
       <span class="text-red-500">{{ error }}</span>
     </div>
@@ -202,6 +200,7 @@ import Modal from "~/components/ui/Modal.vue";
 import FormBlogs from "~/pages/admin/blogs/_components/FormBlogs.vue";
 import ButtonIcon from "~/components/ui/ButtonIcon.vue";
 import HeaderContent from "~/components/admin/HeaderContent.vue";
+import Loading from "~/components/ui/Loading.vue";
 
 definePageMeta({
   layout: "admin",
