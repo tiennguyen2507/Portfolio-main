@@ -119,7 +119,7 @@
           <textarea
             v-model="form.comment"
             @input="validateField('comment')"
-            placeholder="Nhận xét (ít nhất 150 ký tự)"
+            placeholder="Nhận xét (ít nhất 20 ký tự)"
             :class="[
               'px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 resize-y h-11 overflow-y-auto',
               errors.comment
@@ -343,7 +343,7 @@ const validateField = (field) => {
       break;
     case "comment":
       errors.value.comment =
-        value.length < 150 ? "Mô tả/nhận xét cần ít nhất 150 ký tự" : "";
+        value.length < 20 ? "Mô tả/nhận xét cần ít nhất 20 ký tự" : "";
       break;
   }
 };
