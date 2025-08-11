@@ -12,6 +12,7 @@
     <ProjectsSection />
 
     <PortfolioBlog />
+    <CommentsAboutMe />
 
     <PortfolioContact @submit="handleContactSubmit" />
   </div>
@@ -23,6 +24,7 @@ import TechnologiesSection from "~/pages/_components/TechnologiesSection.vue";
 import ProjectsSection from "~/pages/_components/ProjectsSection.vue";
 import PortfolioBlog from "~/pages/_components/PortfolioBlog.vue";
 import StructuredData from "~/components/StructuredData.vue";
+import CommentsAboutMe from "~/pages/_components/CommentsAboutMe.vue";
 
 useHead({
   title:
