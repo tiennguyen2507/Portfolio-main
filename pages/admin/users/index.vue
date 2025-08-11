@@ -1,14 +1,11 @@
 <template>
   <div>
     <!-- Page Header -->
-    <div class="mb-8">
-      <div class="flex justify-between items-center">
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900">Quản lý Users</h1>
-          <p class="text-gray-600 mt-2">
-            Quản lý và theo dõi tất cả users trong hệ thống
-          </p>
-        </div>
+    <HeaderContent
+      title="Quản lý Users"
+      subtitle="Quản lý và theo dõi tất cả users trong hệ thống"
+    >
+      <template #action>
         <NuxtLink
           to="/admin/users/new"
           class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
@@ -28,8 +25,8 @@
           </svg>
           Thêm User mới
         </NuxtLink>
-      </div>
-    </div>
+      </template>
+    </HeaderContent>
 
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center items-center py-12">
@@ -427,6 +424,7 @@
 
 <script setup>
 import { httpRequest } from "~/utils/httpRequest";
+import HeaderContent from "~/components/admin/HeaderContent.vue";
 
 definePageMeta({
   layout: "admin",

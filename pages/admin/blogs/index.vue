@@ -1,14 +1,11 @@
 <template>
   <div>
     <!-- Page Header -->
-    <div class="mb-8">
-      <div class="flex justify-between items-center">
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900">Quản lý Bài viết</h1>
-          <p class="text-gray-600 mt-2">
-            Quản lý và theo dõi tất cả bài viết trong hệ thống
-          </p>
-        </div>
+    <HeaderContent
+      title="Quản lý Bài viết"
+      subtitle="Quản lý và theo dõi tất cả bài viết trong hệ thống"
+    >
+      <template #action>
         <Button
           @click="() => { showCreateModal = true; isEditing = false; editingId = null; form = { title: '', description: '', thumbnail: '' }; }"
           class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors flex items-center"
@@ -28,8 +25,8 @@
           </svg>
           Thêm bài viết mới
         </Button>
-      </div>
-    </div>
+      </template>
+    </HeaderContent>
 
     <!-- Create/Edit Blog Modal using common Modal + FormBlogs -->
     <Modal v-if="showCreateModal" :isOpen="showCreateModal" width="2xl" maxHeight="90vh" @close="closeModal">
@@ -204,6 +201,7 @@ import Button from "~/components/ui/Button.vue";
 import Modal from "~/components/ui/Modal.vue";
 import FormBlogs from "~/pages/admin/blogs/_components/FormBlogs.vue";
 import ButtonIcon from "~/components/ui/ButtonIcon.vue";
+import HeaderContent from "~/components/admin/HeaderContent.vue";
 
 definePageMeta({
   layout: "admin",

@@ -1,16 +1,10 @@
 <template>
   <div>
     <!-- Page Header -->
-    <div class="mb-8">
-      <div class="flex justify-between items-center">
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900">Quản lý Liên hệ</h1>
-          <p class="text-gray-600 mt-2">
-            Quản lý và theo dõi tất cả liên hệ từ khách hàng
-          </p>
-        </div>
-      </div>
-    </div>
+    <HeaderContent
+      title="Quản lý Liên hệ"
+      subtitle="Quản lý và theo dõi tất cả liên hệ từ khách hàng"
+    />
 
     <!-- Filters -->
     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
@@ -275,6 +269,7 @@
 
 <script setup>
 import { httpRequest } from "~/utils/httpRequest";
+import HeaderContent from "~/components/admin/HeaderContent.vue";
 
 definePageMeta({
   layout: "admin",

@@ -1,16 +1,10 @@
 <template>
   <div>
     <!-- Page Header -->
-    <div class="mb-8">
-      <div class="flex justify-between items-center">
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900">
-            Quản lý Comments About Me
-          </h1>
-          <p class="text-gray-600 mt-2">Danh sách lời nhận xét/testimonials</p>
-        </div>
-      </div>
-    </div>
+    <HeaderContent
+      title="Quản lý Comments About Me"
+      subtitle="Danh sách lời nhận xét/testimonials"
+    />
 
     <!-- Loading State -->
     <div
@@ -148,6 +142,7 @@ import Avatar from "~/components/ui/Avatar.vue";
 import ButtonIcon from "~/components/ui/ButtonIcon.vue";
 import EmptyData from "~/components/ui/EmptyData.vue";
 import Pagination from "~/components/ui/Pagination.vue";
+import HeaderContent from "~/components/admin/HeaderContent.vue";
 
 definePageMeta({
   layout: "admin",

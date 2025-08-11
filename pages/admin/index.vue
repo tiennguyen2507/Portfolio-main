@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Page Header -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
-      <p class="text-gray-600 mt-2">Tổng quan về hiệu suất hệ thống</p>
-    </div>
+    <HeaderContent
+      title="Dashboard"
+      subtitle="Tổng quan về hiệu suất hệ thống"
+    />
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -252,6 +252,8 @@
 </template>
 
 <script setup>
+import HeaderContent from "~/components/admin/HeaderContent.vue";
+
 definePageMeta({
   layout: "admin",
   middleware: "auth",
