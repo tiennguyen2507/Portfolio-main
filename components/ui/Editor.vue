@@ -65,7 +65,4 @@ function onUpdate(val) {
 </script>
 
 <style scoped>
-.quill-editor {
-  min-height: 200px;
-}
 </style>

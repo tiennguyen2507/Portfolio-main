@@ -12,33 +12,33 @@
       <!-- Modal Content -->
       <div
         :class="modalClasses"
+        :style="modalStyle"
         @click.stop
         role="dialog"
         aria-modal="true"
-        style="z-index: 10"
       >
         <!-- Header -->
         <div
           v-if="$slots.header"
-          class="modal-header flex items-center justify-between border-b border-gray-700/60 px-8 py-6"
+          class="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 px-6 py-4 bg-white"
         >
           <slot name="header" />
           <button
             @click="close"
-            class="ml-4 flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white text-2xl font-bold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            class="ml-4 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 text-xl transition-colors focus:outline-none focus:ring-0"
             aria-label="Đóng"
           >
             &times;
           </button>
         </div>
         <!-- Content -->
-        <div class="modal-body px-8 py-6 text-gray-200 text-base">
+        <div class="px-6 py-6 text-gray-700 text-base flex-1 overflow-y-auto bg-white">
           <slot />
         </div>
         <!-- Footer -->
         <div
           v-if="$slots.footer"
-          class="modal-footer border-t border-gray-700/60 px-8 py-5 flex justify-end space-x-3 bg-gray-900/80"
+          class="sticky bottom-0 z-10 border-t border-gray-200 px-6 py-4 flex justify-end space-x-3 bg-white"
         >
           <slot name="footer" />
         </div>
@@ -55,22 +55,34 @@ const props = defineProps({
   },
   width: {
     type: String,
-    default: "md",
-    validator: (v) => ["sm", "md", "lg"].includes(v),
+    default: "lg",
+    validator: (v) => ["sm", "md", "lg", "xl", "2xl", "full"].includes(v),
+  },
+  maxHeight: {
+    type: String,
+    default: "90vh",
   },
 });
 const emit = defineEmits(["close"]);
 
 const modalClasses = computed(() => {
   const base =
-    "relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl border border-gray-700/40 max-h-[90vh] overflow-y-auto transition-all duration-300";
+    "relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full overflow-hidden flex flex-col transition-all duration-300";
   const widthMap = {
-    sm: "w-full max-w-sm",
-    md: "w-full max-w-lg",
-    lg: "w-full max-w-2xl",
+    sm: "max-w-sm",
+    md: "max-w-lg",
+    lg: "max-w-2xl",
+    xl: "max-w-3xl",
+    "2xl": "max-w-5xl",
+    full: "max-w-[96vw]",
   };
   return `${base} ${widthMap[props.width]}`;
 });
+
+const modalStyle = computed(() => ({
+  zIndex: 10,
+  maxHeight: props.maxHeight,
+}));
 
 function close() {
   emit("close");

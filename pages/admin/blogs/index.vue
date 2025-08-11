@@ -10,7 +10,7 @@
           </p>
         </div>
         <Button
-          @click="showCreateModal = true"
+          @click="() => { showCreateModal = true; isEditing = false; editingId = null; form = { title: '', description: '', thumbnail: '' }; }"
           class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors flex items-center"
         >
           <svg
@@ -31,73 +31,31 @@
       </div>
     </div>
 
-    <!-- Create Blog Modal (Ant Design style) -->
-    <transition name="fade">
-      <div
-        v-if="showCreateModal"
-        class="fixed inset-0 z-50 flex items-center justify-center"
-      >
-        <!-- Overlay -->
-        <div
-          class="fixed inset-0 bg-black/70 transition-all duration-300"
-          @click="showCreateModal = false"
-        ></div>
-        <!-- Modal -->
-        <div
-          class="relative bg-white rounded-xl shadow-2xl border border-gray-200 max-w-lg w-full mx-4 z-10 animate-fadeIn"
+    <!-- Create/Edit Blog Modal using common Modal + FormBlogs -->
+    <Modal v-if="showCreateModal" :isOpen="showCreateModal" width="2xl" maxHeight="90vh" @close="closeModal">
+      <template #header>
+        <h3 class="text-lg font-semibold text-gray-900">
+          {{ isEditing ? 'Chỉnh sửa bài viết' : 'Tạo bài viết mới' }}
+        </h3>
+      </template>
+
+      <FormBlogs v-model="form" :editorOptions="editorOptions" @thumbnailChange="(f) => (thumbnailFile = f)" />
+
+      <template #footer>
+        <button
+          @click="closeModal"
+          class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
         >
-          <!-- Header -->
-          <div
-            class="flex items-center justify-between px-6 py-4 border-b border-gray-100"
-          >
-            <h3 class="text-lg font-semibold text-gray-900">
-              Tạo bài viết mới
-            </h3>
-            <button
-              @click="showCreateModal = false"
-              class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 text-xl transition-colors"
-              aria-label="Đóng"
-            >
-              &times;
-            </button>
-          </div>
-          <!-- Content -->
-          <div class="px-6 py-6">
-            <Input
-              v-model="form.title"
-              placeholder="Tiêu đề bài viết"
-              class="mb-4"
-            />
-            <Editor
-              v-model="form.description"
-              placeholder="Nhập nội dung bài viết..."
-              height="250px"
-              contentType="html"
-              theme="snow"
-              :options="editorOptions"
-              class="mb-4"
-            />
-          </div>
-          <!-- Footer -->
-          <div
-            class="flex justify-end items-center gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50 rounded-b-xl"
-          >
-            <button
-              @click="showCreateModal = false"
-              class="px-5 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 transition"
-            >
-              Hủy
-            </button>
-            <button
-              @click="handleCreateBlog"
-              class="px-5 py-2 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
-            >
-              Tạo mới
-            </button>
-          </div>
-        </div>
-      </div>
-    </transition>
+          Return
+        </button>
+        <button
+          @click="handleCreateOrUpdateBlog"
+          class="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700"
+        >
+          Submit
+        </button>
+      </template>
+    </Modal>
 
     <!-- Blogs List -->
     <div v-if="loading" class="flex justify-center items-center py-12">
@@ -178,15 +136,17 @@
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <div
-                    class="text-sm font-medium text-gray-900 max-w-xs truncate"
+                  <NuxtLink
+                    :to="`/blogs/${post._id}`"
+                    class="text-sm font-semibold text-blue-600 max-w-xs truncate hover:underline focus:underline focus:outline-none cursor-pointer hover:text-blue-700"
+                    title="Xem bài viết"
                   >
                     {{ post.title }}
-                  </div>
+                  </NuxtLink>
                 </td>
                 <td class="px-6 py-4">
                   <div
-                    class="text-sm text-gray-500 max-w-md h-16 overflow-hidden line-clamp-3"
+                    class="text-sm text-gray-500 max-w-md overflow-hidden line-clamp-3"
                     v-html="post.description"
                   ></div>
                 </td>
@@ -195,7 +155,7 @@
                     :variant="post.status ? 'success' : 'danger'"
                     size="sm"
                   >
-                    {{ post.status ? "Hoạt động" : "Không hoạt động" }}
+                    {{ post.status ? 'Hoạt động' : 'Không hoạt động' }}
                   </Badge>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -209,10 +169,8 @@
                     <div class="text-sm text-gray-900">
                       {{
                         post.createdBy
-                          ? post.createdBy.firstName +
-                            " " +
-                            post.createdBy.lastName
-                          : "Admin"
+                          ? post.createdBy.firstName + ' ' + post.createdBy.lastName
+                          : 'Admin'
                       }}
                     </div>
                   </div>
@@ -224,12 +182,9 @@
                   {{ formatDate(post.updatedAt) }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div class="flex space-x-2">
-                    <NuxtLink :to="`/blogs/${post._id}`">
-                      <Button size="sm" variant="primary">Xem</Button>
-                    </NuxtLink>
-                    <Button size="sm" variant="secondary">Sửa</Button>
-                    <Button size="sm" variant="danger">Xóa</Button>
+                  <div class="flex items-center gap-2">
+                    <ButtonIcon icon="edit" color="blue" @click="startEdit(post)" />
+                    <ButtonIcon icon="delete" color="red" @click="deletePost(post._id)" />
                   </div>
                 </td>
               </tr>
@@ -244,11 +199,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import httpRequest from "~/utils/httpRequest";
-import Card from "~/components/ui/Card.vue";
 import Badge from "~/components/ui/Badge.vue";
 import Button from "~/components/ui/Button.vue";
-import Input from "~/components/ui/Input.vue";
-import Editor from "~/components/ui/Editor.vue";
+import Modal from "~/components/ui/Modal.vue";
+import FormBlogs from "~/pages/admin/blogs/_components/FormBlogs.vue";
+import ButtonIcon from "~/components/ui/ButtonIcon.vue";
 
 definePageMeta({
   layout: "admin",
@@ -259,7 +214,10 @@ const posts = ref([]);
 const loading = ref(true);
 const error = ref("");
 const showCreateModal = ref(false);
-const form = ref({ title: "", description: "" });
+let form = ref({ title: "", description: "", thumbnail: "" });
+const isEditing = ref(false);
+const editingId = ref(null);
+let thumbnailFile = null;
 
 const editorOptions = {
   modules: {
@@ -278,17 +236,13 @@ const editorOptions = {
   placeholder: "Nhập nội dung bài viết...",
 };
 
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString("vi-VN");
-};
+const formatDate = (dateString) => new Date(dateString).toLocaleDateString("vi-VN");
 
 const fetchPosts = async () => {
   loading.value = true;
   error.value = "";
   try {
-    const resp = await httpRequest.get(
-      "https://blog-data.up.railway.app/posts?page=1&limit=10"
-    );
+    const resp = await httpRequest.get("/posts?page=1&limit=10");
     posts.value = resp.data || [];
   } catch (err) {
     error.value = err?.message || "Không thể tải dữ liệu.";
@@ -297,11 +251,53 @@ const fetchPosts = async () => {
   }
 };
 
-const handleCreateBlog = async () => {
-  // TODO: Gọi API tạo blog, validate, đóng modal, refetch
-  alert(`Tạo blog: ${form.value.title}`);
+function closeModal() {
   showCreateModal.value = false;
-  // Sau này có thể gọi fetchPosts() để reload danh sách
+  isEditing.value = false;
+  editingId.value = null;
+}
+
+function startEdit(post) {
+  isEditing.value = true;
+  editingId.value = post._id;
+  form.value = { title: post.title || "", description: post.description || "", thumbnail: post.thumbnail || "" };
+  showCreateModal.value = true;
+}
+
+const handleCreateOrUpdateBlog = async () => {
+  try {
+    if (isEditing.value && editingId.value) {
+      await httpRequest.put(`/posts/${editingId.value}`, {
+        title: form.value.title,
+        description: form.value.description,
+        thumbnail: form.value.thumbnail,
+      });
+    } else {
+      await httpRequest.post("/posts", {
+        title: form.value.title,
+        description: form.value.description,
+        thumbnail: form.value.thumbnail,
+        status: true,
+      });
+    }
+    await fetchPosts();
+    closeModal();
+    form.value = { title: "", description: "", thumbnail: "" };
+  } catch (err) {
+    error.value = err?.message || "Không thể lưu dữ liệu.";
+  }
+};
+
+const deletePost = async (id) => {
+  if (!id) return;
+  if (confirm("Bạn có chắc chắn muốn xóa bài viết này?")) {
+    try {
+      await httpRequest.delete(`/posts/${id}`);
+      await fetchPosts();
+    } catch (err) {
+      error.value = err?.message || "Không thể xóa bài viết.";
+    }
+  }
 };
 
 onMounted(fetchPosts);
