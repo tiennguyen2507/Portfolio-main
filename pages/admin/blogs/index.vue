@@ -187,6 +187,18 @@
           </table>
         </div>
       </div>
+
+      <!-- Pagination -->
+      <div v-if="posts.length > 0" class="bg-white px-6 py-3 border-t border-gray-200">
+        <Pagination
+          :page="currentPage"
+          :total="pagination.total"
+          :limit="limit"
+          :show-info="true"
+          :split="true"
+          @update:page="(p) => { currentPage = p; fetchPosts(); }"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -201,6 +213,7 @@ import FormBlogs from "~/pages/admin/blogs/_components/FormBlogs.vue";
 import ButtonIcon from "~/components/ui/ButtonIcon.vue";
 import HeaderContent from "~/components/admin/HeaderContent.vue";
 import Loading from "~/components/ui/Loading.vue";
+import Pagination from "~/components/ui/Pagination.vue";
 
 definePageMeta({
   layout: "admin",
@@ -215,6 +228,15 @@ let form = ref({ title: "", description: "", thumbnail: "" });
 const isEditing = ref(false);
 const editingId = ref(null);
 let thumbnailFile = null;
+const currentPage = ref(1);
+const limit = 10;
+const pagination = ref({
+  total: 0,
+  page: 1,
+  limit: 10,
+  nextPage: false,
+  prePage: false,
+});
 
 const editorOptions = {
   modules: {
@@ -239,8 +261,20 @@ const fetchPosts = async () => {
   loading.value = true;
   error.value = "";
   try {
-    const resp = await httpRequest.get("/posts?page=1&limit=10");
+    const params = new URLSearchParams({
+      page: currentPage.value.toString(),
+      limit: limit.toString(),
+    });
+    
+    const resp = await httpRequest.get(`/posts?${params.toString()}`);
     posts.value = resp.data || [];
+    pagination.value = {
+      total: resp.total || 0,
+      page: resp.page || 1,
+      limit: resp.limit || 10,
+      nextPage: resp.nextPage || false,
+      prePage: resp.prePage || false,
+    };
   } catch (err) {
     error.value = err?.message || "Không thể tải dữ liệu.";
   } finally {
