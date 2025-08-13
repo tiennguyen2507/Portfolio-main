@@ -609,7 +609,7 @@ watch(
 );
 </script>
 
-<style scoped>
+<style>
 /* Enhanced Prose styling for blog content */
 .prose {
   color: #374151;
