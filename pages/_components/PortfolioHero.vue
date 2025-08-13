@@ -212,11 +212,12 @@
           </div>
 
           <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <button
-              class="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105"
+            <NuxtLink
+              to="/blogs"
+              class="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 inline-block"
             >
-              Got a project?
-            </button>
+              Explore my blogs
+            </NuxtLink>
             <button
               class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105"
             >
