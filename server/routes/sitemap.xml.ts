@@ -40,6 +40,12 @@ export default defineEventHandler(async event => {
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>${baseUrl}/blogs</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>`
 
   setHeader(event, 'Content-Type', 'application/xml')

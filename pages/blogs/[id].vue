@@ -350,16 +350,16 @@
     event.target.src = '/images/ab-1.webp' // Fallback avatar
   }
 
-  // Enhanced SEO Meta Tags with SSR support
+  // Enhanced SEO Meta Tags with SSR support - Optimized for Google Search
   useHead(() => {
     if (!blogData.value) {
       return {
-        title: 'Chi tiết bài viết - Nguyễn Lê Đình Tiên',
+        title: 'Blog Detail - Nguyễn Lê Đình Tiên',
         meta: [
           {
             name: 'description',
             content:
-              'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.',
+              'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình.',
           },
           {
             name: 'robots',
@@ -369,28 +369,36 @@
       }
     }
 
-    const title = `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`
-    const description = stripHtml(blogData.value.description).substring(0, 160)
+    // Optimized title for Google Search (50-60 characters)
+    const title = `${blogData.value.title} - Nguyễn Lê Đình Tiên`
+
+    // Optimized description for Google Search (150-160 characters)
+    const rawDescription = stripHtml(blogData.value.description)
+    const description =
+      rawDescription.length > 155
+        ? rawDescription.substring(0, 155) + '...'
+        : rawDescription
+
     const imageUrl = blogData.value.thumbnail || '/images/blog-1.webp'
     const authorName = `${blogData.value.createdBy.firstName} ${blogData.value.createdBy.lastName}`
     const publishedDate = formatDateISO(blogData.value.createdAt)
     const modifiedDate = formatDateISO(
       blogData.value.updatedAt || blogData.value.createdAt
     )
-    const url = `https://your-domain.com/blogs/${blogData.value._id}`
+    const url = `https://nguyenledinhtien.io.vn/blogs/${blogData.value._id}`
     const readingTime = calculateReadingTime(blogData.value.description)
 
     return {
       title,
       meta: [
-        // Basic SEO
+        // Basic SEO - Optimized for Google Search
         {
           name: 'description',
           content: description,
         },
         {
           name: 'keywords',
-          content: `${blogData.value.title}, blog, bài viết, công nghệ, phát triển web, lập trình, React, Vue.js, Node.js, Nguyễn Lê Đình Tiên`,
+          content: `${blogData.value.title}, blog, bài viết, công nghệ, phát triển web, lập trình, React, Vue.js, Node.js, Nguyễn Lê Đình Tiên, frontend, backend, fullstack`,
         },
         {
           name: 'author',
@@ -408,6 +416,15 @@
         {
           name: 'article:reading_time',
           content: readingTime.toString(),
+        },
+        // Additional Google-specific meta tags
+        {
+          name: 'google-site-verification',
+          content: 'your-google-verification-code', // Thay bằng code từ Google Search Console
+        },
+        {
+          name: 'google',
+          content: 'notranslate',
         },
 
         // Open Graph (Facebook, LinkedIn)
@@ -441,7 +458,7 @@
         },
         {
           property: 'og:site_name',
-          content: 'Nguyễn Lê Đình Tiên - Portfolio & Blog',
+          content: 'nguyenledinhtien.io.vn',
         },
         {
           property: 'og:locale',
@@ -549,11 +566,11 @@
               name: 'Nguyễn Lê Đình Tiên',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://your-domain.com/images/logo.webp',
+                url: 'https://nguyenledinhtien.io.vn/images/logo.webp',
                 width: 200,
                 height: 200,
               },
-              url: 'https://your-domain.com',
+              url: 'https://nguyenledinhtien.io.vn',
             },
             datePublished: publishedDate,
             dateModified: modifiedDate,
@@ -564,8 +581,8 @@
             url: url,
             isPartOf: {
               '@type': 'Blog',
-              name: 'Nguyễn Lê Đình Tiên Blog',
-              url: 'https://your-domain.com/blogs',
+              name: 'Blog - Nguyễn Lê Đình Tiên',
+              url: 'https://nguyenledinhtien.io.vn/blogs',
               description: 'Blog về công nghệ, phát triển web và lập trình',
             },
             articleSection: 'Blog',
@@ -588,13 +605,13 @@
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Trang chủ',
-                item: 'https://your-domain.com',
+                item: 'https://nguyenledinhtien.io.vn',
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Blog',
-                item: 'https://your-domain.com/blogs',
+                item: 'https://nguyenledinhtien.io.vn/blogs',
               },
               {
                 '@type': 'ListItem',
@@ -609,30 +626,62 @@
     }
   })
 
-  // Set page title for better SEO
+  // Set page title for better SEO - Optimized for Google Search
   useSeoMeta({
     title: computed(() =>
       blogData.value
-        ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`
-        : 'Chi tiết bài viết - Nguyễn Lê Đình Tiên'
+        ? `${blogData.value.title} - Nguyễn Lê Đình Tiên`
+        : 'Blog Detail - Nguyễn Lê Đình Tiên'
     ),
-    description: computed(() =>
-      blogData.value
-        ? stripHtml(blogData.value.description).substring(0, 160)
-        : 'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.'
-    ),
+    description: computed(() => {
+      if (!blogData.value) {
+        return 'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình.'
+      }
+      const rawDescription = stripHtml(blogData.value.description)
+      return rawDescription.length > 155
+        ? rawDescription.substring(0, 155) + '...'
+        : rawDescription
+    }),
     ogTitle: computed(() =>
       blogData.value
-        ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`
-        : 'Chi tiết bài viết - Nguyễn Lê Đình Tiên'
+        ? `${blogData.value.title} - Nguyễn Lê Đình Tiên`
+        : 'Blog Detail - Nguyễn Lê Đình Tiên'
     ),
-    ogDescription: computed(() =>
-      blogData.value
-        ? stripHtml(blogData.value.description).substring(0, 160)
-        : 'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.'
-    ),
+    ogDescription: computed(() => {
+      if (!blogData.value) {
+        return 'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình.'
+      }
+      const rawDescription = stripHtml(blogData.value.description)
+      return rawDescription.length > 155
+        ? rawDescription.substring(0, 155) + '...'
+        : rawDescription
+    }),
     ogImage: computed(() => blogData.value?.thumbnail || '/images/blog-1.webp'),
+    ogUrl: computed(() =>
+      blogData.value
+        ? `https://nguyenledinhtien.io.vn/blogs/${blogData.value._id}`
+        : 'https://nguyenledinhtien.io.vn/blogs'
+    ),
+    ogSiteName: 'nguyenledinhtien.io.vn',
+    ogLocale: 'vi_VN',
     twitterCard: 'summary_large_image',
+    twitterTitle: computed(() =>
+      blogData.value
+        ? `${blogData.value.title} - Nguyễn Lê Đình Tiên`
+        : 'Blog Detail - Nguyễn Lê Đình Tiên'
+    ),
+    twitterDescription: computed(() => {
+      if (!blogData.value) {
+        return 'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình.'
+      }
+      const rawDescription = stripHtml(blogData.value.description)
+      return rawDescription.length > 155
+        ? rawDescription.substring(0, 155) + '...'
+        : rawDescription
+    }),
+    twitterImage: computed(
+      () => blogData.value?.thumbnail || '/images/blog-1.webp'
+    ),
   })
 
   // Handle route changes for SPA navigation
