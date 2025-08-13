@@ -68,55 +68,55 @@
 </template>
 
 <script setup>
-// Get current route
-const route = useRoute();
+  // Get current route
+  const route = useRoute()
 
-// Check if current page is home page
-const isHomePage = computed(() => route.path === "/");
+  // Check if current page is home page
+  const isHomePage = computed(() => route.path === '/')
 
-// Navigation items for portfolio
-const navigationItems = ref([
-  {
-    label: "Home",
-    path: "#home",
-  },
-  {
-    label: "About",
-    path: "#about",
-  },
-  {
-    label: "Projects",
-    path: "#projects",
-  },
-  {
-    label: "Contact",
-    path: "#contact",
-  },
-]);
+  // Navigation items for portfolio
+  const navigationItems = ref([
+    {
+      label: 'Home',
+      path: '#home',
+    },
+    {
+      label: 'About',
+      path: '#about',
+    },
+    {
+      label: 'Projects',
+      path: '#projects',
+    },
+    {
+      label: 'Contact',
+      path: '#contact',
+    },
+  ])
 
-// Mobile menu state
-const showMobileMenu = ref(false);
+  // Mobile menu state
+  const showMobileMenu = ref(false)
 
-// Scroll state
-const isScrolled = ref(false);
+  // Scroll state
+  const isScrolled = ref(false)
 
-// Toggle mobile menu
-const toggleMobileMenu = () => {
-  showMobileMenu.value = !showMobileMenu.value;
-};
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    showMobileMenu.value = !showMobileMenu.value
+  }
 
-// Handle scroll event
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50;
-};
+  // Handle scroll event
+  const handleScroll = () => {
+    isScrolled.value = window.scrollY > 50
+  }
 
-// Add scroll event listener on mount
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-});
+  // Add scroll event listener on mount
+  onMounted(() => {
+    window.addEventListener('scroll', handleScroll)
+  })
 
-// Remove scroll event listener on unmount
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+  // Remove scroll event listener on unmount
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+  })
 </script>

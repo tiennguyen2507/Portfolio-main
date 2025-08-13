@@ -54,7 +54,7 @@
                   {{
                     userStore.user && userStore.user.email
                       ? userStore.user.email
-                      : "admin@example.com"
+                      : 'admin@example.com'
                   }}
                 </span>
               </div>
@@ -117,14 +117,14 @@
                       {{
                         userStore.user && userStore.user.email
                           ? userStore.user.email
-                          : "admin@example.com"
+                          : 'admin@example.com'
                       }}
                     </p>
                     <p class="text-xs text-gray-400 mt-1">
                       {{
                         userStore.user && userStore.user.role
                           ? userStore.user.role
-                          : "Administrator"
+                          : 'Administrator'
                       }}
                     </p>
                   </div>
@@ -435,79 +435,79 @@
 </template>
 
 <script setup>
-const userStore = useUserStore();
-const showUserMenu = ref(false);
+  const userStore = useUserStore()
+  const showUserMenu = ref(false)
 
-const toggleUserMenu = () => {
-  showUserMenu.value = !showUserMenu.value;
-};
-
-// Helper functions for user display
-const getUserFullName = () => {
-  const user = userStore.user;
-  if (!user) return "Admin";
-
-  const firstName = user.firstName || "";
-  const lastName = user.lastName || "";
-
-  if (firstName && lastName) {
-    return `${firstName} ${lastName}`;
-  } else if (firstName) {
-    return firstName;
-  } else if (lastName) {
-    return lastName;
+  const toggleUserMenu = () => {
+    showUserMenu.value = !showUserMenu.value
   }
 
-  return "Admin";
-};
+  // Helper functions for user display
+  const getUserFullName = () => {
+    const user = userStore.user
+    if (!user) return 'Admin'
 
-const getUserInitials = () => {
-  const user = userStore.user;
-  if (!user) return "A";
+    const firstName = user.firstName || ''
+    const lastName = user.lastName || ''
 
-  const firstName = user.firstName || "";
-  const lastName = user.lastName || "";
-
-  if (firstName && lastName) {
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-  } else if (firstName) {
-    return firstName.charAt(0).toUpperCase();
-  } else if (lastName) {
-    return lastName.charAt(0).toUpperCase();
-  }
-
-  return "A";
-};
-
-const handleAvatarError = (event) => {
-  // Hide the broken image and show the fallback avatar
-  event.target.style.display = "none";
-  if (event.target.nextElementSibling) {
-    event.target.nextElementSibling.style.display = "flex";
-  }
-};
-
-const logout = () => {
-  // Clear authentication data from store
-  userStore.clearAuth();
-
-  // Clear localStorage
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("user");
-  localStorage.removeItem("remember_me");
-
-  showUserMenu.value = false;
-
-  // Redirect to login page
-  navigateTo("/auth/login");
-};
-
-// Close user menu when clicking outside
-onMounted(() => {
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".relative")) {
-      showUserMenu.value = false;
+    if (firstName && lastName) {
+      return `${firstName} ${lastName}`
+    } else if (firstName) {
+      return firstName
+    } else if (lastName) {
+      return lastName
     }
-  });
-});
+
+    return 'Admin'
+  }
+
+  const getUserInitials = () => {
+    const user = userStore.user
+    if (!user) return 'A'
+
+    const firstName = user.firstName || ''
+    const lastName = user.lastName || ''
+
+    if (firstName && lastName) {
+      return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
+    } else if (firstName) {
+      return firstName.charAt(0).toUpperCase()
+    } else if (lastName) {
+      return lastName.charAt(0).toUpperCase()
+    }
+
+    return 'A'
+  }
+
+  const handleAvatarError = event => {
+    // Hide the broken image and show the fallback avatar
+    event.target.style.display = 'none'
+    if (event.target.nextElementSibling) {
+      event.target.nextElementSibling.style.display = 'flex'
+    }
+  }
+
+  const logout = () => {
+    // Clear authentication data from store
+    userStore.clearAuth()
+
+    // Clear localStorage
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('user')
+    localStorage.removeItem('remember_me')
+
+    showUserMenu.value = false
+
+    // Redirect to login page
+    navigateTo('/auth/login')
+  }
+
+  // Close user menu when clicking outside
+  onMounted(() => {
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.relative')) {
+        showUserMenu.value = false
+      }
+    })
+  })
 </script>

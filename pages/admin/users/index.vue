@@ -229,12 +229,12 @@
                         <span class="text-sm font-medium text-gray-600">{{
                           user.fullName
                             ? user.fullName.charAt(0).toUpperCase()
-                            : "U"
+                            : 'U'
                         }}</span>
                       </div>
                       <div>
                         <div class="text-sm font-bold text-gray-900">
-                          {{ user.fullName || "N/A" }}
+                          {{ user.fullName || 'N/A' }}
                         </div>
                         <div class="text-sm text-gray-500">
                           {{ user.email }}
@@ -258,7 +258,7 @@
                       'bg-gray-100 text-gray-800': user.status === 0,
                     }"
                   >
-                    {{ user.status === 1 ? "Hoạt động" : "Mới" }}
+                    {{ user.status === 1 ? 'Hoạt động' : 'Mới' }}
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -321,14 +321,21 @@
         </div>
 
         <!-- Pagination -->
-        <div v-if="filteredUsers.length > 0" class="bg-white px-6 py-3 border-t border-gray-200">
+        <div
+          v-if="filteredUsers.length > 0"
+          class="bg-white px-6 py-3 border-t border-gray-200"
+        >
           <Pagination
             :page="currentPage"
             :total="filteredUsers.length"
             :limit="itemsPerPage"
             :show-info="true"
             :split="true"
-            @update:page="(p) => { currentPage = p; }"
+            @update:page="
+              p => {
+                currentPage = p
+              }
+            "
           />
         </div>
       </div>
@@ -337,226 +344,222 @@
 </template>
 
 <script setup>
-import { httpRequest } from "~/utils/httpRequest";
-import HeaderContent from "~/components/admin/HeaderContent.vue";
-import Loading from "~/components/ui/Loading.vue";
-import Pagination from "~/components/ui/Pagination.vue";
+  import { httpRequest } from '~/utils/httpRequest'
+  import HeaderContent from '~/components/admin/HeaderContent.vue'
+  import Loading from '~/components/ui/Loading.vue'
+  import Pagination from '~/components/ui/Pagination.vue'
 
-definePageMeta({
-  layout: "admin",
-  middleware: "auth",
-});
+  definePageMeta({
+    layout: 'admin',
+    middleware: 'auth',
+  })
 
-// Reactive data
-const searchQuery = ref("");
-const selectedStatus = ref("");
-const currentPage = ref(1);
-const itemsPerPage = 10;
-const loading = ref(false);
-const error = ref(null);
-const users = ref([]);
-const selectedUsers = ref([]);
-const selectAll = ref(false);
+  // Reactive data
+  const searchQuery = ref('')
+  const selectedStatus = ref('')
+  const currentPage = ref(1)
+  const itemsPerPage = 10
+  const loading = ref(false)
+  const error = ref(null)
+  const users = ref([])
+  const selectedUsers = ref([])
+  const selectAll = ref(false)
 
-// Computed properties
-const filteredUsers = computed(() => {
-  let filtered = users.value;
+  // Computed properties
+  const filteredUsers = computed(() => {
+    let filtered = users.value
 
-  if (searchQuery.value) {
-    filtered = filtered.filter(
-      (user) =>
-        (user.fullName &&
-          user.fullName
-            .toLowerCase()
-            .includes(searchQuery.value.toLowerCase())) ||
-        (user.email &&
-          user.email.toLowerCase().includes(searchQuery.value.toLowerCase()))
-    );
-  }
-
-  if (selectedStatus.value !== "") {
-    filtered = filtered.filter(
-      (user) => user.status === parseInt(selectedStatus.value)
-    );
-  }
-
-  return filtered;
-});
-
-const totalPages = computed(() =>
-  Math.ceil(filteredUsers.value.length / itemsPerPage)
-);
-const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage);
-const endIndex = computed(() =>
-  Math.min(startIndex.value + itemsPerPage, filteredUsers.value.length)
-);
-
-const paginatedUsers = computed(() => {
-  return filteredUsers.value.slice(startIndex.value, endIndex.value);
-});
-
-
-
-// Methods
-const fetchUsers = async () => {
-  loading.value = true;
-  error.value = null;
-
-  try {
-    const response = await httpRequest.get("/users");
-    // API trả về array trực tiếp, không có data wrapper
-    users.value = Array.isArray(response) ? response : [];
-  } catch (err) {
-    console.error("Error fetching users:", err);
-    error.value = err.message || "Có lỗi xảy ra khi tải danh sách users";
-  } finally {
-    loading.value = false;
-  }
-};
-
-const applyFilters = () => {
-  currentPage.value = 1;
-  selectedUsers.value = [];
-  selectAll.value = false;
-};
-
-const formatDate = (dateString) => {
-  if (!dateString) return "N/A";
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = date.toLocaleDateString("en-US", { month: "short" });
-  const year = date.getFullYear();
-  return `${day} ${month}, ${year}`;
-};
-
-const editUser = (id) => {
-  // Navigate to edit page
-  navigateTo(`/admin/users/${id}/edit`);
-};
-
-const toggleUserStatus = async (id, currentStatus) => {
-  try {
-    await httpRequest.put(`/users/${id}`, {
-      status: currentStatus === 1 ? 0 : 1,
-    });
-
-    // Update local state
-    const userIndex = users.value.findIndex((user) => user._id === id);
-    if (userIndex !== -1) {
-      users.value[userIndex].status = currentStatus === 1 ? 0 : 1;
+    if (searchQuery.value) {
+      filtered = filtered.filter(
+        user =>
+          (user.fullName &&
+            user.fullName
+              .toLowerCase()
+              .includes(searchQuery.value.toLowerCase())) ||
+          (user.email &&
+            user.email.toLowerCase().includes(searchQuery.value.toLowerCase()))
+      )
     }
-  } catch (err) {
-    console.error("Error toggling user status:", err);
-    alert("Có lỗi xảy ra khi cập nhật trạng thái user");
-  }
-};
 
-const deleteUser = async (id) => {
-  if (confirm("Bạn có chắc chắn muốn xóa user này?")) {
+    if (selectedStatus.value !== '') {
+      filtered = filtered.filter(
+        user => user.status === parseInt(selectedStatus.value)
+      )
+    }
+
+    return filtered
+  })
+
+  const totalPages = computed(() =>
+    Math.ceil(filteredUsers.value.length / itemsPerPage)
+  )
+  const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage)
+  const endIndex = computed(() =>
+    Math.min(startIndex.value + itemsPerPage, filteredUsers.value.length)
+  )
+
+  const paginatedUsers = computed(() => {
+    return filteredUsers.value.slice(startIndex.value, endIndex.value)
+  })
+
+  // Methods
+  const fetchUsers = async () => {
+    loading.value = true
+    error.value = null
+
     try {
-      await httpRequest.delete(`/users/${id}`);
-
-      // Remove from local state
-      users.value = users.value.filter((user) => user._id !== id);
-      selectedUsers.value = selectedUsers.value.filter(
-        (userId) => userId !== id
-      );
+      const response = await httpRequest.get('/users')
+      // API trả về array trực tiếp, không có data wrapper
+      users.value = Array.isArray(response) ? response : []
     } catch (err) {
-      console.error("Error deleting user:", err);
-      alert("Có lỗi xảy ra khi xóa user");
+      console.error('Error fetching users:', err)
+      error.value = err.message || 'Có lỗi xảy ra khi tải danh sách users'
+    } finally {
+      loading.value = false
     }
   }
-};
 
-// Bulk actions
-const toggleSelectAll = () => {
-  if (selectAll.value) {
-    selectedUsers.value = paginatedUsers.value.map((user) => user._id);
-  } else {
-    selectedUsers.value = [];
+  const applyFilters = () => {
+    currentPage.value = 1
+    selectedUsers.value = []
+    selectAll.value = false
   }
-};
 
-const bulkActivate = async () => {
-  if (selectedUsers.value.length === 0) return;
+  const formatDate = dateString => {
+    if (!dateString) return 'N/A'
+    const date = new Date(dateString)
+    const day = date.getDate().toString().padStart(2, '0')
+    const month = date.toLocaleDateString('en-US', { month: 'short' })
+    const year = date.getFullYear()
+    return `${day} ${month}, ${year}`
+  }
 
-  try {
-    await Promise.all(
-      selectedUsers.value.map((id) =>
-        httpRequest.put(`/users/${id}`, { status: 1 })
-      )
-    );
+  const editUser = id => {
+    // Navigate to edit page
+    navigateTo(`/admin/users/${id}/edit`)
+  }
 
-    // Update local state
-    users.value.forEach((user) => {
-      if (selectedUsers.value.includes(user._id)) {
-        user.status = 1;
+  const toggleUserStatus = async (id, currentStatus) => {
+    try {
+      await httpRequest.put(`/users/${id}`, {
+        status: currentStatus === 1 ? 0 : 1,
+      })
+
+      // Update local state
+      const userIndex = users.value.findIndex(user => user._id === id)
+      if (userIndex !== -1) {
+        users.value[userIndex].status = currentStatus === 1 ? 0 : 1
       }
-    });
-
-    selectedUsers.value = [];
-    selectAll.value = false;
-  } catch (err) {
-    console.error("Error bulk activating users:", err);
-    alert("Có lỗi xảy ra khi kích hoạt users");
+    } catch (err) {
+      console.error('Error toggling user status:', err)
+      alert('Có lỗi xảy ra khi cập nhật trạng thái user')
+    }
   }
-};
 
-const bulkDeactivate = async () => {
-  if (selectedUsers.value.length === 0) return;
+  const deleteUser = async id => {
+    if (confirm('Bạn có chắc chắn muốn xóa user này?')) {
+      try {
+        await httpRequest.delete(`/users/${id}`)
 
-  try {
-    await Promise.all(
-      selectedUsers.value.map((id) =>
-        httpRequest.put(`/users/${id}`, { status: 0 })
-      )
-    );
-
-    // Update local state
-    users.value.forEach((user) => {
-      if (selectedUsers.value.includes(user._id)) {
-        user.status = 0;
+        // Remove from local state
+        users.value = users.value.filter(user => user._id !== id)
+        selectedUsers.value = selectedUsers.value.filter(
+          userId => userId !== id
+        )
+      } catch (err) {
+        console.error('Error deleting user:', err)
+        alert('Có lỗi xảy ra khi xóa user')
       }
-    });
-
-    selectedUsers.value = [];
-    selectAll.value = false;
-  } catch (err) {
-    console.error("Error bulk deactivating users:", err);
-    alert("Có lỗi xảy ra khi vô hiệu users");
+    }
   }
-};
 
-const bulkDelete = async () => {
-  if (selectedUsers.value.length === 0) return;
+  // Bulk actions
+  const toggleSelectAll = () => {
+    if (selectAll.value) {
+      selectedUsers.value = paginatedUsers.value.map(user => user._id)
+    } else {
+      selectedUsers.value = []
+    }
+  }
 
-  if (
-    confirm(
-      `Bạn có chắc chắn muốn xóa ${selectedUsers.value.length} users này?`
-    )
-  ) {
+  const bulkActivate = async () => {
+    if (selectedUsers.value.length === 0) return
+
     try {
       await Promise.all(
-        selectedUsers.value.map((id) => httpRequest.delete(`/users/${id}`))
-      );
+        selectedUsers.value.map(id =>
+          httpRequest.put(`/users/${id}`, { status: 1 })
+        )
+      )
 
-      // Remove from local state
-      users.value = users.value.filter(
-        (user) => !selectedUsers.value.includes(user._id)
-      );
-      selectedUsers.value = [];
-      selectAll.value = false;
+      // Update local state
+      users.value.forEach(user => {
+        if (selectedUsers.value.includes(user._id)) {
+          user.status = 1
+        }
+      })
+
+      selectedUsers.value = []
+      selectAll.value = false
     } catch (err) {
-      console.error("Error bulk deleting users:", err);
-      alert("Có lỗi xảy ra khi xóa users");
+      console.error('Error bulk activating users:', err)
+      alert('Có lỗi xảy ra khi kích hoạt users')
     }
   }
-};
 
+  const bulkDeactivate = async () => {
+    if (selectedUsers.value.length === 0) return
 
+    try {
+      await Promise.all(
+        selectedUsers.value.map(id =>
+          httpRequest.put(`/users/${id}`, { status: 0 })
+        )
+      )
 
-// Lifecycle
-onMounted(() => {
-  fetchUsers();
-});
+      // Update local state
+      users.value.forEach(user => {
+        if (selectedUsers.value.includes(user._id)) {
+          user.status = 0
+        }
+      })
+
+      selectedUsers.value = []
+      selectAll.value = false
+    } catch (err) {
+      console.error('Error bulk deactivating users:', err)
+      alert('Có lỗi xảy ra khi vô hiệu users')
+    }
+  }
+
+  const bulkDelete = async () => {
+    if (selectedUsers.value.length === 0) return
+
+    if (
+      confirm(
+        `Bạn có chắc chắn muốn xóa ${selectedUsers.value.length} users này?`
+      )
+    ) {
+      try {
+        await Promise.all(
+          selectedUsers.value.map(id => httpRequest.delete(`/users/${id}`))
+        )
+
+        // Remove from local state
+        users.value = users.value.filter(
+          user => !selectedUsers.value.includes(user._id)
+        )
+        selectedUsers.value = []
+        selectAll.value = false
+      } catch (err) {
+        console.error('Error bulk deleting users:', err)
+        alert('Có lỗi xảy ra khi xóa users')
+      }
+    }
+  }
+
+  // Lifecycle
+  onMounted(() => {
+    fetchUsers()
+  })
 </script>

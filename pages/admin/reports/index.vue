@@ -8,11 +8,11 @@
 </template>
 
 <script setup>
-import HeaderContent from "~/components/admin/HeaderContent.vue";
+  import HeaderContent from '~/components/admin/HeaderContent.vue'
 
-definePageMeta({
-  layout: "admin",
-  middleware: "auth",
-});
-// Trang báo cáo đơn giản
+  definePageMeta({
+    layout: 'admin',
+    middleware: 'auth',
+  })
+  // Trang báo cáo đơn giản
 </script>

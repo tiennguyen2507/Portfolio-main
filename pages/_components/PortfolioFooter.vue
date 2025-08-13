@@ -10,5 +10,5 @@
 </template>
 
 <script setup>
-// Component logic can be added here if needed
+  // Component logic can be added here if needed
 </script>

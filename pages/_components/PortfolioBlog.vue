@@ -108,7 +108,7 @@
             v-if="pending"
             class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white"
           ></span>
-          <span>{{ pending ? "Đang tải..." : "Xem thêm bài viết" }}</span>
+          <span>{{ pending ? 'Đang tải...' : 'Xem thêm bài viết' }}</span>
         </button>
       </div>
 
@@ -121,92 +121,92 @@
 </template>
 
 <script setup>
-import Card from "~/components/ui/Card.vue";
-import Badge from "~/components/ui/Badge.vue";
+  import Card from '~/components/ui/Card.vue'
+  import Badge from '~/components/ui/Badge.vue'
 
-// Pagination state
-const currentPage = ref(1);
-const limit = 6;
-const allPosts = ref([]);
-const hasMorePosts = ref(true);
-const pending = ref(false);
-const error = ref(null);
+  // Pagination state
+  const currentPage = ref(1)
+  const limit = 6
+  const allPosts = ref([])
+  const hasMorePosts = ref(true)
+  const pending = ref(false)
+  const error = ref(null)
 
-// Fetch blog data
-const fetchPosts = async () => {
-  try {
-    pending.value = true;
-    error.value = null;
-    const response = await $fetch(
-      `https://blog-data.up.railway.app/posts?page=${currentPage.value}&limit=${limit}`
-    );
+  // Fetch blog data
+  const fetchPosts = async () => {
+    try {
+      pending.value = true
+      error.value = null
+      const response = await $fetch(
+        `https://blog-data.up.railway.app/posts?page=${currentPage.value}&limit=${limit}`
+      )
 
-    if (response && response.data) {
-      if (currentPage.value === 1) {
-        allPosts.value = response.data;
-      } else {
-        allPosts.value = [...allPosts.value, ...response.data];
+      if (response && response.data) {
+        if (currentPage.value === 1) {
+          allPosts.value = response.data
+        } else {
+          allPosts.value = [...allPosts.value, ...response.data]
+        }
+        hasMorePosts.value = response.nextPage || false
       }
-      hasMorePosts.value = response.nextPage || false;
+    } catch (err) {
+      console.error('Error fetching posts:', err)
+      error.value = err
+    } finally {
+      pending.value = false
     }
-  } catch (err) {
-    console.error("Error fetching posts:", err);
-    error.value = err;
-  } finally {
-    pending.value = false;
   }
-};
 
-// Load initial data
-await fetchPosts();
+  // Load initial data
+  await fetchPosts()
 
-// Load more posts
-const loadMorePosts = async () => {
-  if (hasMorePosts.value && !pending.value) {
-    currentPage.value++;
-    await fetchPosts();
+  // Load more posts
+  const loadMorePosts = async () => {
+    if (hasMorePosts.value && !pending.value) {
+      currentPage.value++
+      await fetchPosts()
+    }
   }
-};
 
-// Refresh function
-const refresh = () => {
-  currentPage.value = 1;
-  fetchPosts();
-};
+  // Refresh function
+  const refresh = () => {
+    currentPage.value = 1
+    fetchPosts()
+  }
 
-// Helper function to strip HTML tags
-const stripHtmlTags = (html) => {
-  if (!html) return "";
-  return html
-    .replace(/<[^>]*>/g, "")
-    .replace(/\*\*/g, "")
-    .trim();
-};
+  // Helper function to strip HTML tags
+  const stripHtmlTags = html => {
+    if (!html) return ''
+    return html
+      .replace(/<[^>]*>/g, '')
+      .replace(/\*\*/g, '')
+      .trim()
+  }
 
-// Helper function to format date
-const formatDate = (dateString) => {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  return date.toLocaleDateString("vi-VN", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-};
+  // Helper function to format date
+  const formatDate = dateString => {
+    if (!dateString) return ''
+    const date = new Date(dateString)
+    return date.toLocaleDateString('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    })
+  }
 </script>
 
 <style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 </style>

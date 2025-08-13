@@ -181,161 +181,161 @@
 </template>
 
 <script setup>
-import { httpRequest } from "~/utils/httpRequest";
+  import { httpRequest } from '~/utils/httpRequest'
 
-definePageMeta({
-  layout: "default",
-});
+  definePageMeta({
+    layout: 'default',
+  })
 
-// Reactive data
-const formData = ref({
-  email: "",
-  password: "",
-  rememberMe: false,
-});
+  // Reactive data
+  const formData = ref({
+    email: '',
+    password: '',
+    rememberMe: false,
+  })
 
-const loading = ref(false);
-const error = ref("");
-const successMessage = ref("");
-const emailError = ref("");
-const passwordError = ref("");
+  const loading = ref(false)
+  const error = ref('')
+  const successMessage = ref('')
+  const emailError = ref('')
+  const passwordError = ref('')
 
-// Validation functions
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!email) {
-    return "Email là bắt buộc";
-  }
-  if (!emailRegex.test(email)) {
-    return "Email không hợp lệ";
-  }
-  return "";
-};
-
-const validatePassword = (password) => {
-  if (!password) {
-    return "Mật khẩu là bắt buộc";
-  }
-  if (password.length < 8) {
-    return "Mật khẩu phải có ít nhất 8 ký tự";
-  }
-  return "";
-};
-
-// Clear errors
-const clearErrors = () => {
-  error.value = "";
-  emailError.value = "";
-  passwordError.value = "";
-  successMessage.value = "";
-};
-
-// Real-time validation
-const validateEmailRealTime = () => {
-  if (formData.value.email) {
-    emailError.value = validateEmail(formData.value.email);
-  } else {
-    emailError.value = "";
-  }
-};
-
-const validatePasswordRealTime = () => {
-  if (formData.value.password) {
-    passwordError.value = validatePassword(formData.value.password);
-  } else {
-    passwordError.value = "";
-  }
-};
-
-// Handle form submission
-const handleLogin = async () => {
-  clearErrors();
-
-  // Validate form
-  const emailValidation = validateEmail(formData.value.email);
-  const passwordValidation = validatePassword(formData.value.password);
-
-  if (emailValidation) {
-    emailError.value = emailValidation;
-    return;
+  // Validation functions
+  const validateEmail = email => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email) {
+      return 'Email là bắt buộc'
+    }
+    if (!emailRegex.test(email)) {
+      return 'Email không hợp lệ'
+    }
+    return ''
   }
 
-  if (passwordValidation) {
-    passwordError.value = passwordValidation;
-    return;
+  const validatePassword = password => {
+    if (!password) {
+      return 'Mật khẩu là bắt buộc'
+    }
+    if (password.length < 8) {
+      return 'Mật khẩu phải có ít nhất 8 ký tự'
+    }
+    return ''
   }
 
-  loading.value = true;
+  // Clear errors
+  const clearErrors = () => {
+    error.value = ''
+    emailError.value = ''
+    passwordError.value = ''
+    successMessage.value = ''
+  }
 
-  try {
-    const response = await httpRequest.post("/auth/login", {
-      email: formData.value.email,
-      password: formData.value.password,
-    });
+  // Real-time validation
+  const validateEmailRealTime = () => {
+    if (formData.value.email) {
+      emailError.value = validateEmail(formData.value.email)
+    } else {
+      emailError.value = ''
+    }
+  }
 
-    // Handle successful login
-    if (response.access_token) {
-      // Store token in localStorage
-      localStorage.setItem("access_token", response.access_token);
+  const validatePasswordRealTime = () => {
+    if (formData.value.password) {
+      passwordError.value = validatePassword(formData.value.password)
+    } else {
+      passwordError.value = ''
+    }
+  }
 
-      // Store user info if available
-      if (response.user) {
-        localStorage.setItem("user", JSON.stringify(response.user));
-      }
+  // Handle form submission
+  const handleLogin = async () => {
+    clearErrors()
 
-      // Store remember me preference
-      if (formData.value.rememberMe) {
-        localStorage.setItem("remember_me", "true");
+    // Validate form
+    const emailValidation = validateEmail(formData.value.email)
+    const passwordValidation = validatePassword(formData.value.password)
+
+    if (emailValidation) {
+      emailError.value = emailValidation
+      return
+    }
+
+    if (passwordValidation) {
+      passwordError.value = passwordValidation
+      return
+    }
+
+    loading.value = true
+
+    try {
+      const response = await httpRequest.post('/auth/login', {
+        email: formData.value.email,
+        password: formData.value.password,
+      })
+
+      // Handle successful login
+      if (response.access_token) {
+        // Store token in localStorage
+        localStorage.setItem('access_token', response.access_token)
+
+        // Store user info if available
+        if (response.user) {
+          localStorage.setItem('user', JSON.stringify(response.user))
+        }
+
+        // Store remember me preference
+        if (formData.value.rememberMe) {
+          localStorage.setItem('remember_me', 'true')
+        } else {
+          localStorage.removeItem('remember_me')
+        }
+
+        // Set auth data in store
+        const userStore = useUserStore()
+        userStore.setAuth(response.access_token, response.user)
+
+        successMessage.value = 'Đăng nhập thành công! Đang chuyển hướng...'
+
+        // Redirect to admin dashboard or home page
+        setTimeout(() => {
+          navigateTo('/admin')
+        }, 1500)
       } else {
-        localStorage.removeItem("remember_me");
+        error.value = 'Đăng nhập thành công nhưng không nhận được token'
       }
+    } catch (err) {
+      console.error('Login error:', err)
 
-      // Set auth data in store
-      const userStore = useUserStore();
-      userStore.setAuth(response.access_token, response.user);
-
-      successMessage.value = "Đăng nhập thành công! Đang chuyển hướng...";
-
-      // Redirect to admin dashboard or home page
-      setTimeout(() => {
-        navigateTo("/admin");
-      }, 1500);
-    } else {
-      error.value = "Đăng nhập thành công nhưng không nhận được token";
+      // Handle different error scenarios
+      if (err.status === 401) {
+        error.value = 'Email hoặc mật khẩu không đúng'
+      } else if (err.status === 422) {
+        error.value = 'Dữ liệu không hợp lệ'
+      } else if (err.status === 429) {
+        error.value = 'Quá nhiều lần thử đăng nhập. Vui lòng thử lại sau'
+      } else if (err.status >= 500) {
+        error.value = 'Lỗi server. Vui lòng thử lại sau'
+      } else {
+        error.value = err.message || 'Có lỗi xảy ra khi đăng nhập'
+      }
+    } finally {
+      loading.value = false
     }
-  } catch (err) {
-    console.error("Login error:", err);
+  }
 
-    // Handle different error scenarios
-    if (err.status === 401) {
-      error.value = "Email hoặc mật khẩu không đúng";
-    } else if (err.status === 422) {
-      error.value = "Dữ liệu không hợp lệ";
-    } else if (err.status === 429) {
-      error.value = "Quá nhiều lần thử đăng nhập. Vui lòng thử lại sau";
-    } else if (err.status >= 500) {
-      error.value = "Lỗi server. Vui lòng thử lại sau";
-    } else {
-      error.value = err.message || "Có lỗi xảy ra khi đăng nhập";
+  // Social login handlers
+  const socialLogin = provider => {
+    // Implement social login logic here
+    console.log(`Social login with ${provider}`)
+    error.value = `Tính năng đăng nhập bằng ${provider} đang được phát triển`
+  }
+
+  // Check if user is already logged in
+  onMounted(() => {
+    const userStore = useUserStore()
+    if (userStore.isAuthenticated) {
+      // User is already logged in, redirect to admin
+      navigateTo('/admin')
     }
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Social login handlers
-const socialLogin = (provider) => {
-  // Implement social login logic here
-  console.log(`Social login with ${provider}`);
-  error.value = `Tính năng đăng nhập bằng ${provider} đang được phát triển`;
-};
-
-// Check if user is already logged in
-onMounted(() => {
-  const userStore = useUserStore();
-  if (userStore.isAuthenticated) {
-    // User is already logged in, redirect to admin
-    navigateTo("/admin");
-  }
-});
+  })
 </script>

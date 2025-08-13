@@ -256,251 +256,251 @@
 </template>
 
 <script setup>
-import { httpRequest } from "~/utils/httpRequest";
+  import { httpRequest } from '~/utils/httpRequest'
 
-definePageMeta({
-  layout: "default",
-});
+  definePageMeta({
+    layout: 'default',
+  })
 
-// Reactive data
-const formData = ref({
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  agreeTerms: false,
-});
+  // Reactive data
+  const formData = ref({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    agreeTerms: false,
+  })
 
-const loading = ref(false);
-const error = ref("");
-const successMessage = ref("");
-const firstNameError = ref("");
-const lastNameError = ref("");
-const emailError = ref("");
-const passwordError = ref("");
-const confirmPasswordError = ref("");
+  const loading = ref(false)
+  const error = ref('')
+  const successMessage = ref('')
+  const firstNameError = ref('')
+  const lastNameError = ref('')
+  const emailError = ref('')
+  const passwordError = ref('')
+  const confirmPasswordError = ref('')
 
-// Validation functions
-const validateFirstName = (firstName) => {
-  if (!firstName) {
-    return "Họ là bắt buộc";
-  }
-  if (firstName.length < 2) {
-    return "Họ phải có ít nhất 2 ký tự";
-  }
-  if (firstName.length > 50) {
-    return "Họ không được quá 50 ký tự";
-  }
-  return "";
-};
-
-const validateLastName = (lastName) => {
-  if (!lastName) {
-    return "Tên là bắt buộc";
-  }
-  if (lastName.length < 2) {
-    return "Tên phải có ít nhất 2 ký tự";
-  }
-  if (lastName.length > 50) {
-    return "Tên không được quá 50 ký tự";
-  }
-  return "";
-};
-
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!email) {
-    return "Email là bắt buộc";
-  }
-  if (!emailRegex.test(email)) {
-    return "Email không hợp lệ";
-  }
-  return "";
-};
-
-const validatePassword = (password) => {
-  if (!password) {
-    return "Mật khẩu là bắt buộc";
-  }
-  if (password.length < 8) {
-    return "Mật khẩu phải có ít nhất 8 ký tự";
-  }
-  // Check for at least one uppercase, one lowercase, one number
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
-  if (!passwordRegex.test(password)) {
-    return "Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 số";
-  }
-  return "";
-};
-
-const validateConfirmPassword = (confirmPassword) => {
-  if (!confirmPassword) {
-    return "Xác nhận mật khẩu là bắt buộc";
-  }
-  if (confirmPassword !== formData.value.password) {
-    return "Mật khẩu xác nhận không khớp";
-  }
-  return "";
-};
-
-// Clear errors
-const clearErrors = () => {
-  error.value = "";
-  firstNameError.value = "";
-  lastNameError.value = "";
-  emailError.value = "";
-  passwordError.value = "";
-  confirmPasswordError.value = "";
-  successMessage.value = "";
-};
-
-// Real-time validation
-const validateFirstNameRealTime = () => {
-  if (formData.value.firstName) {
-    firstNameError.value = validateFirstName(formData.value.firstName);
-  } else {
-    firstNameError.value = "";
-  }
-};
-
-const validateLastNameRealTime = () => {
-  if (formData.value.lastName) {
-    lastNameError.value = validateLastName(formData.value.lastName);
-  } else {
-    lastNameError.value = "";
-  }
-};
-
-const validateEmailRealTime = () => {
-  if (formData.value.email) {
-    emailError.value = validateEmail(formData.value.email);
-  } else {
-    emailError.value = "";
-  }
-};
-
-const validatePasswordRealTime = () => {
-  if (formData.value.password) {
-    passwordError.value = validatePassword(formData.value.password);
-  } else {
-    passwordError.value = "";
-  }
-  // Also validate confirm password when password changes
-  if (formData.value.confirmPassword) {
-    confirmPasswordError.value = validateConfirmPassword(
-      formData.value.confirmPassword
-    );
-  }
-};
-
-const validateConfirmPasswordRealTime = () => {
-  if (formData.value.confirmPassword) {
-    confirmPasswordError.value = validateConfirmPassword(
-      formData.value.confirmPassword
-    );
-  } else {
-    confirmPasswordError.value = "";
-  }
-};
-
-// Handle form submission
-const handleRegister = async () => {
-  clearErrors();
-
-  // Validate form
-  const firstNameValidation = validateFirstName(formData.value.firstName);
-  const lastNameValidation = validateLastName(formData.value.lastName);
-  const emailValidation = validateEmail(formData.value.email);
-  const passwordValidation = validatePassword(formData.value.password);
-  const confirmPasswordValidation = validateConfirmPassword(
-    formData.value.confirmPassword
-  );
-
-  if (firstNameValidation) {
-    firstNameError.value = firstNameValidation;
-    return;
-  }
-
-  if (lastNameValidation) {
-    lastNameError.value = lastNameValidation;
-    return;
-  }
-
-  if (emailValidation) {
-    emailError.value = emailValidation;
-    return;
-  }
-
-  if (passwordValidation) {
-    passwordError.value = passwordValidation;
-    return;
-  }
-
-  if (confirmPasswordValidation) {
-    confirmPasswordError.value = confirmPasswordValidation;
-    return;
-  }
-
-  if (!formData.value.agreeTerms) {
-    error.value = "Bạn phải đồng ý với điều khoản sử dụng";
-    return;
-  }
-
-  loading.value = true;
-
-  try {
-    const response = await httpRequest.post("/auth/register", {
-      firstName: formData.value.firstName,
-      lastName: formData.value.lastName,
-      email: formData.value.email,
-      password: formData.value.password,
-    });
-
-    // Handle successful registration
-    successMessage.value =
-      "Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...";
-
-    // Clear form
-    formData.value = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      agreeTerms: false,
-    };
-
-    // Redirect to login page after 2 seconds
-    setTimeout(() => {
-      navigateTo("/auth/login");
-    }, 2000);
-  } catch (err) {
-    console.error("Registration error:", err);
-
-    // Handle different error scenarios
-    if (err.status === 409) {
-      error.value = "Email đã tồn tại trong hệ thống";
-    } else if (err.status === 422) {
-      error.value = "Dữ liệu không hợp lệ";
-    } else if (err.status === 429) {
-      error.value = "Quá nhiều lần thử đăng ký. Vui lòng thử lại sau";
-    } else if (err.status >= 500) {
-      error.value = "Lỗi server. Vui lòng thử lại sau";
-    } else {
-      error.value = err.message || "Có lỗi xảy ra khi đăng ký";
+  // Validation functions
+  const validateFirstName = firstName => {
+    if (!firstName) {
+      return 'Họ là bắt buộc'
     }
-  } finally {
-    loading.value = false;
+    if (firstName.length < 2) {
+      return 'Họ phải có ít nhất 2 ký tự'
+    }
+    if (firstName.length > 50) {
+      return 'Họ không được quá 50 ký tự'
+    }
+    return ''
   }
-};
 
-// Check if user is already logged in
-onMounted(() => {
-  const token = localStorage.getItem("access_token");
-  if (token) {
-    // User is already logged in, redirect to admin
-    navigateTo("/admin");
+  const validateLastName = lastName => {
+    if (!lastName) {
+      return 'Tên là bắt buộc'
+    }
+    if (lastName.length < 2) {
+      return 'Tên phải có ít nhất 2 ký tự'
+    }
+    if (lastName.length > 50) {
+      return 'Tên không được quá 50 ký tự'
+    }
+    return ''
   }
-});
+
+  const validateEmail = email => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email) {
+      return 'Email là bắt buộc'
+    }
+    if (!emailRegex.test(email)) {
+      return 'Email không hợp lệ'
+    }
+    return ''
+  }
+
+  const validatePassword = password => {
+    if (!password) {
+      return 'Mật khẩu là bắt buộc'
+    }
+    if (password.length < 8) {
+      return 'Mật khẩu phải có ít nhất 8 ký tự'
+    }
+    // Check for at least one uppercase, one lowercase, one number
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/
+    if (!passwordRegex.test(password)) {
+      return 'Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 số'
+    }
+    return ''
+  }
+
+  const validateConfirmPassword = confirmPassword => {
+    if (!confirmPassword) {
+      return 'Xác nhận mật khẩu là bắt buộc'
+    }
+    if (confirmPassword !== formData.value.password) {
+      return 'Mật khẩu xác nhận không khớp'
+    }
+    return ''
+  }
+
+  // Clear errors
+  const clearErrors = () => {
+    error.value = ''
+    firstNameError.value = ''
+    lastNameError.value = ''
+    emailError.value = ''
+    passwordError.value = ''
+    confirmPasswordError.value = ''
+    successMessage.value = ''
+  }
+
+  // Real-time validation
+  const validateFirstNameRealTime = () => {
+    if (formData.value.firstName) {
+      firstNameError.value = validateFirstName(formData.value.firstName)
+    } else {
+      firstNameError.value = ''
+    }
+  }
+
+  const validateLastNameRealTime = () => {
+    if (formData.value.lastName) {
+      lastNameError.value = validateLastName(formData.value.lastName)
+    } else {
+      lastNameError.value = ''
+    }
+  }
+
+  const validateEmailRealTime = () => {
+    if (formData.value.email) {
+      emailError.value = validateEmail(formData.value.email)
+    } else {
+      emailError.value = ''
+    }
+  }
+
+  const validatePasswordRealTime = () => {
+    if (formData.value.password) {
+      passwordError.value = validatePassword(formData.value.password)
+    } else {
+      passwordError.value = ''
+    }
+    // Also validate confirm password when password changes
+    if (formData.value.confirmPassword) {
+      confirmPasswordError.value = validateConfirmPassword(
+        formData.value.confirmPassword
+      )
+    }
+  }
+
+  const validateConfirmPasswordRealTime = () => {
+    if (formData.value.confirmPassword) {
+      confirmPasswordError.value = validateConfirmPassword(
+        formData.value.confirmPassword
+      )
+    } else {
+      confirmPasswordError.value = ''
+    }
+  }
+
+  // Handle form submission
+  const handleRegister = async () => {
+    clearErrors()
+
+    // Validate form
+    const firstNameValidation = validateFirstName(formData.value.firstName)
+    const lastNameValidation = validateLastName(formData.value.lastName)
+    const emailValidation = validateEmail(formData.value.email)
+    const passwordValidation = validatePassword(formData.value.password)
+    const confirmPasswordValidation = validateConfirmPassword(
+      formData.value.confirmPassword
+    )
+
+    if (firstNameValidation) {
+      firstNameError.value = firstNameValidation
+      return
+    }
+
+    if (lastNameValidation) {
+      lastNameError.value = lastNameValidation
+      return
+    }
+
+    if (emailValidation) {
+      emailError.value = emailValidation
+      return
+    }
+
+    if (passwordValidation) {
+      passwordError.value = passwordValidation
+      return
+    }
+
+    if (confirmPasswordValidation) {
+      confirmPasswordError.value = confirmPasswordValidation
+      return
+    }
+
+    if (!formData.value.agreeTerms) {
+      error.value = 'Bạn phải đồng ý với điều khoản sử dụng'
+      return
+    }
+
+    loading.value = true
+
+    try {
+      const response = await httpRequest.post('/auth/register', {
+        firstName: formData.value.firstName,
+        lastName: formData.value.lastName,
+        email: formData.value.email,
+        password: formData.value.password,
+      })
+
+      // Handle successful registration
+      successMessage.value =
+        'Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...'
+
+      // Clear form
+      formData.value = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        agreeTerms: false,
+      }
+
+      // Redirect to login page after 2 seconds
+      setTimeout(() => {
+        navigateTo('/auth/login')
+      }, 2000)
+    } catch (err) {
+      console.error('Registration error:', err)
+
+      // Handle different error scenarios
+      if (err.status === 409) {
+        error.value = 'Email đã tồn tại trong hệ thống'
+      } else if (err.status === 422) {
+        error.value = 'Dữ liệu không hợp lệ'
+      } else if (err.status === 429) {
+        error.value = 'Quá nhiều lần thử đăng ký. Vui lòng thử lại sau'
+      } else if (err.status >= 500) {
+        error.value = 'Lỗi server. Vui lòng thử lại sau'
+      } else {
+        error.value = err.message || 'Có lỗi xảy ra khi đăng ký'
+      }
+    } finally {
+      loading.value = false
+    }
+  }
+
+  // Check if user is already logged in
+  onMounted(() => {
+    const token = localStorage.getItem('access_token')
+    if (token) {
+      // User is already logged in, redirect to admin
+      navigateTo('/admin')
+    }
+  })
 </script>

@@ -1,66 +1,66 @@
 // Helper function để tạo headers và baseURL
 const createRequestConfig = (options?: any) => {
-  const token = process.client ? localStorage.getItem("access_token") : null;
+  const token = process.client ? localStorage.getItem('access_token') : null
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     ...options?.headers,
-  };
+  }
 
   if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
+    headers['Authorization'] = `Bearer ${token}`
   }
 
   return {
     headers,
-    baseURL: "https://blog-data.up.railway.app",
+    baseURL: 'https://blog-data.up.railway.app',
     ...options,
-  };
-};
+  }
+}
 
 // Sử dụng $fetch của Nuxt thay vì axios
 export const httpRequest = {
   async get(url: string, options?: any): Promise<any> {
-    const config = createRequestConfig(options);
+    const config = createRequestConfig(options)
     return await $fetch(url, {
-      method: "GET",
+      method: 'GET',
       ...config,
-    });
+    })
   },
 
   async post(url: string, data?: any, options?: any): Promise<any> {
-    const config = createRequestConfig(options);
+    const config = createRequestConfig(options)
     return await $fetch(url, {
-      method: "POST",
+      method: 'POST',
       body: data,
       ...config,
-    });
+    })
   },
 
   async put(url: string, data?: any, options?: any): Promise<any> {
-    const config = createRequestConfig(options);
+    const config = createRequestConfig(options)
     return await $fetch(url, {
-      method: "PUT",
+      method: 'PUT',
       body: data,
       ...config,
-    });
+    })
   },
 
   async patch(url: string, data?: any, options?: any): Promise<any> {
-    const config = createRequestConfig(options);
+    const config = createRequestConfig(options)
     return await $fetch(url, {
-      method: "PATCH",
+      method: 'PATCH',
       body: data,
       ...config,
-    });
+    })
   },
 
   async delete(url: string, options?: any): Promise<any> {
-    const config = createRequestConfig(options);
+    const config = createRequestConfig(options)
     return await $fetch(url, {
-      method: "DELETE",
+      method: 'DELETE',
       ...config,
-    });
+    })
   },
-};
+}
 
-export default httpRequest;
+export default httpRequest

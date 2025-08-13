@@ -268,73 +268,73 @@
 </template>
 
 <script setup>
-// Component logic can be added here if needed
+  // Component logic can be added here if needed
 </script>
 
 <style scoped>
-/* Custom animations for background lines */
-@keyframes slideInFromLeft {
-  0% {
-    transform: translateX(-100%);
-    opacity: 0;
+  /* Custom animations for background lines */
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
   }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-}
 
-@keyframes slideInFromTop {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
+  @keyframes slideInFromTop {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
   }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-}
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
-  50% {
-    transform: translateY(-10px);
+
+  @keyframes glow {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.8;
+    }
   }
-}
 
-@keyframes glow {
-  0%,
-  100% {
-    opacity: 0.3;
+  /* Apply custom animations */
+  .animate-slide-left {
+    animation: slideInFromLeft 4s ease-in-out infinite;
   }
-  50% {
-    opacity: 0.8;
+
+  .animate-slide-top {
+    animation: slideInFromTop 4s ease-in-out infinite;
   }
-}
 
-/* Apply custom animations */
-.animate-slide-left {
-  animation: slideInFromLeft 4s ease-in-out infinite;
-}
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
 
-.animate-slide-top {
-  animation: slideInFromTop 4s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
-}
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
 </style>

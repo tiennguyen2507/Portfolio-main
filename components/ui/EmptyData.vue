@@ -1,11 +1,18 @@
 <template>
   <div class="text-center py-12">
-    <div class="mx-auto h-12 w-12 text-gray-400 flex items-center justify-center">
+    <div
+      class="mx-auto h-12 w-12 text-gray-400 flex items-center justify-center"
+    >
       <template v-if="isSvg(icon)">
         <span v-html="icon" />
       </template>
       <template v-else>
-        <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          class="h-12 w-12"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -16,8 +23,12 @@
       </template>
     </div>
 
-    <h3 v-if="title" class="mt-2 text-sm font-medium text-gray-900">{{ title }}</h3>
-    <p v-if="description" class="mt-1 text-sm text-gray-500">{{ description }}</p>
+    <h3 v-if="title" class="mt-2 text-sm font-medium text-gray-900">
+      {{ title }}
+    </h3>
+    <p v-if="description" class="mt-1 text-sm text-gray-500">
+      {{ description }}
+    </p>
 
     <div v-if="$slots.default" class="mt-6">
       <slot />
@@ -26,22 +37,22 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  title: {
-    type: String,
-    default: 'Không có dữ liệu',
-  },
-  description: {
-    type: String,
-    default: '',
-  },
-  icon: {
-    type: String,
-    default: '', // svg string optional
-  },
-});
+  const props = defineProps({
+    title: {
+      type: String,
+      default: 'Không có dữ liệu',
+    },
+    description: {
+      type: String,
+      default: '',
+    },
+    icon: {
+      type: String,
+      default: '', // svg string optional
+    },
+  })
 
-function isSvg(str) {
-  return typeof str === 'string' && str.trim().startsWith('<svg');
-}
+  function isSvg(str) {
+    return typeof str === 'string' && str.trim().startsWith('<svg')
+  }
 </script>

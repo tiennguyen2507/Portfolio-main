@@ -1,33 +1,33 @@
 // Font optimization
 @font-face {
-  font-family: "UTM-Hanzel";
-  src: url("/fonts/UTM-Hanzel.ttf") format("truetype");
+  font-family: 'UTM-Hanzel';
+  src: url('/fonts/UTM-Hanzel.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap; // Critical for performance
 }
 
 // Google Fonts optimization
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 // Font fallbacks
 .font-primary {
   font-family:
-    "Inter",
+    'Inter',
     -apple-system,
     BlinkMacSystemFont,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     sans-serif;
 }
 
 .font-secondary {
   font-family:
-    "UTM-Hanzel",
-    "Inter",
+    'UTM-Hanzel',
+    'Inter',
     -apple-system,
     BlinkMacSystemFont,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     sans-serif;
 }

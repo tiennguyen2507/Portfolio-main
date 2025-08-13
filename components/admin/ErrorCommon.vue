@@ -32,24 +32,24 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  title: {
-    type: String,
-    default: 'Lỗi khi tải dữ liệu'
-  },
-  message: {
-    type: String,
-    required: true
-  },
-  showRetry: {
-    type: Boolean,
-    default: true
-  },
-  retryText: {
-    type: String,
-    default: 'Thử lại'
-  }
-});
+  const props = defineProps({
+    title: {
+      type: String,
+      default: 'Lỗi khi tải dữ liệu',
+    },
+    message: {
+      type: String,
+      required: true,
+    },
+    showRetry: {
+      type: Boolean,
+      default: true,
+    },
+    retryText: {
+      type: String,
+      default: 'Thử lại',
+    },
+  })
 
-const emit = defineEmits(['retry']);
+  const emit = defineEmits(['retry'])
 </script>

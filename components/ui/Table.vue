@@ -18,7 +18,7 @@
                 'table-header-cell',
                 column.className,
                 column.fixed && `fixed-${column.fixed}`,
-                column.width && 'has-width'
+                column.width && 'has-width',
               ]"
               :style="column.width ? { width: column.width } : {}"
             >
@@ -42,7 +42,7 @@
             :class="[
               'table-row',
               { 'hover:bg-gray-50': hoverable },
-              rowClassName && rowClassName(record, index)
+              rowClassName && rowClassName(record, index),
             ]"
             @click="handleRowClick(record, index)"
           >
@@ -53,7 +53,7 @@
                 'table-cell',
                 column.className,
                 column.fixed && `fixed-${column.fixed}`,
-                column.width && 'has-width'
+                column.width && 'has-width',
               ]"
               :style="column.width ? { width: column.width } : {}"
             >
@@ -81,9 +81,16 @@
 
               <!-- Default Cell Content (Priority 3) -->
               <template v-else>
-                <span 
+                <span
                   class="cell-content"
-                  v-html="formatCellValue(getCellValue(record, column), column, record, index)"
+                  v-html="
+                    formatCellValue(
+                      getCellValue(record, column),
+                      column,
+                      record,
+                      index
+                    )
+                  "
                 ></span>
               </template>
             </td>
@@ -92,198 +99,185 @@
       </table>
 
       <!-- Empty State -->
-      <div
-        v-if="dataSource.length === 0 && !loading"
-        class="table-empty"
-      >
+      <div v-if="dataSource.length === 0 && !loading" class="table-empty">
         <slot name="empty">
           <EmptyData :title="emptyText" />
         </slot>
       </div>
     </div>
-
-
   </div>
 </template>
 
 <script setup>
-import Loading from './Loading.vue'
-import EmptyData from './EmptyData.vue'
+  import Loading from './Loading.vue'
+  import EmptyData from './EmptyData.vue'
 
-const props = defineProps({
-  // Data
-  dataSource: {
-    type: Array,
-    default: () => []
-  },
-  columns: {
-    type: Array,
-    default: () => []
-  },
+  const props = defineProps({
+    // Data
+    dataSource: {
+      type: Array,
+      default: () => [],
+    },
+    columns: {
+      type: Array,
+      default: () => [],
+    },
 
-  // Loading
-  loading: {
-    type: Boolean,
-    default: false
-  },
-  loadingText: {
-    type: String,
-    default: 'Đang tải dữ liệu...'
-  },
+    // Loading
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    loadingText: {
+      type: String,
+      default: 'Đang tải dữ liệu...',
+    },
 
-  // Styling
-  hoverable: {
-    type: Boolean,
-    default: true
-  },
-  rowClassName: {
-    type: Function,
-    default: null
-  },
+    // Styling
+    hoverable: {
+      type: Boolean,
+      default: true,
+    },
+    rowClassName: {
+      type: Function,
+      default: null,
+    },
 
-  // Empty state
-  emptyText: {
-    type: String,
-    default: 'Không có dữ liệu'
-  },
+    // Empty state
+    emptyText: {
+      type: String,
+      default: 'Không có dữ liệu',
+    },
+  })
 
+  const emit = defineEmits(['row-click', 'cell-click'])
 
-  
+  // Computed
+  const visibleColumns = computed(() => {
+    return props.columns.filter(column => column.hidden !== true)
+  })
 
-})
-
-const emit = defineEmits(['row-click', 'cell-click'])
-
-// Computed
-const visibleColumns = computed(() => {
-  return props.columns.filter(column => column.hidden !== true)
-})
-
-// Methods
-const getCellValue = (record, column) => {
-  if (column.dataIndex) {
-    return column.dataIndex.split('.').reduce((obj, key) => obj?.[key], record)
+  // Methods
+  const getCellValue = (record, column) => {
+    if (column.dataIndex) {
+      return column.dataIndex
+        .split('.')
+        .reduce((obj, key) => obj?.[key], record)
+    }
+    return null
   }
-  return null
-}
 
-const formatCellValue = (value, column, record, index) => {
-  if (column.formatter) {
-    return column.formatter(value, record, index)
+  const formatCellValue = (value, column, record, index) => {
+    if (column.formatter) {
+      return column.formatter(value, record, index)
+    }
+
+    if (value === null || value === undefined) {
+      return '-'
+    }
+
+    return value
   }
-  
-  if (value === null || value === undefined) {
-    return '-'
+
+  const handleRowClick = (record, index) => {
+    emit('row-click', { record, index })
   }
-  
-  return value
-}
 
-const handleRowClick = (record, index) => {
-  emit('row-click', { record, index })
-}
-
-
-
-const handleCellClick = (event, record, column, index) => {
-  // Emit cell click event for parent to handle
-  emit('cell-click', { event, record, column, index })
-}
+  const handleCellClick = (event, record, column, index) => {
+    // Emit cell click event for parent to handle
+    emit('cell-click', { event, record, column, index })
+  }
 </script>
 
 <style scoped>
-.table-container {
-  @apply relative;
-  margin-bottom: 1rem;
-}
+  .table-container {
+    @apply relative;
+    margin-bottom: 1rem;
+  }
 
-.table-loading {
-  @apply flex items-center justify-center py-12;
-}
+  .table-loading {
+    @apply flex items-center justify-center py-12;
+  }
 
-.table-wrapper {
-  @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
-  border-bottom: none;
-}
+  .table-wrapper {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+    border-bottom: none;
+  }
 
-.table {
-  @apply min-w-full divide-y divide-gray-200;
-}
+  .table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
 
-.table-header {
-  @apply bg-gray-50;
-}
+  .table-header {
+    @apply bg-gray-50;
+  }
 
-.table-header-cell {
-  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
-}
+  .table-header-cell {
+    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+  }
 
-.table-header-cell.has-width {
-  @apply whitespace-nowrap;
-}
+  .table-header-cell.has-width {
+    @apply whitespace-nowrap;
+  }
 
-.header-content {
-  @apply flex items-center justify-between;
-}
+  .header-content {
+    @apply flex items-center justify-between;
+  }
 
-.header-title {
-  @apply font-medium;
-}
+  .header-title {
+    @apply font-medium;
+  }
 
-.table-body {
-  @apply bg-white divide-y divide-gray-200;
-}
+  .table-body {
+    @apply bg-white divide-y divide-gray-200;
+  }
 
-.table-body tr:last-child td:first-child {
-  border-bottom-left-radius: 0.5rem;
-}
+  .table-body tr:last-child td:first-child {
+    border-bottom-left-radius: 0.5rem;
+  }
 
-.table-body tr:last-child td:last-child {
-  border-bottom-right-radius: 0.5rem;
-}
+  .table-body tr:last-child td:last-child {
+    border-bottom-right-radius: 0.5rem;
+  }
 
-.table-row {
-  @apply transition-colors duration-150;
-}
+  .table-row {
+    @apply transition-colors duration-150;
+  }
 
-.table-row:hover {
-  @apply bg-gray-50;
-}
+  .table-row:hover {
+    @apply bg-gray-50;
+  }
 
-.table-cell {
-  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
-}
-
-.table-cell.has-width {
-  @apply whitespace-nowrap;
-}
-
-.cell-content {
-  @apply block;
-}
-
-
-
-
-
-/* Fixed columns support */
-.fixed-left {
-  @apply sticky left-0 z-10 bg-white;
-}
-
-.fixed-right {
-  @apply sticky right-0 z-10 bg-white;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .table-header-cell,
   .table-cell {
-    @apply px-3 py-2;
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
   }
-  
-  .table-pagination {
-    @apply px-3 py-2;
+
+  .table-cell.has-width {
+    @apply whitespace-nowrap;
   }
-}
+
+  .cell-content {
+    @apply block;
+  }
+
+  /* Fixed columns support */
+  .fixed-left {
+    @apply sticky left-0 z-10 bg-white;
+  }
+
+  .fixed-right {
+    @apply sticky right-0 z-10 bg-white;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .table-header-cell,
+    .table-cell {
+      @apply px-3 py-2;
+    }
+
+    .table-pagination {
+      @apply px-3 py-2;
+    }
+  }
 </style>

@@ -252,42 +252,42 @@
 </template>
 
 <script setup>
-import HeaderContent from "~/components/admin/HeaderContent.vue";
+  import HeaderContent from '~/components/admin/HeaderContent.vue'
 
-definePageMeta({
-  layout: "admin",
-  middleware: "auth",
-});
+  definePageMeta({
+    layout: 'admin',
+    middleware: 'auth',
+  })
 
-// Mock data for recent leads
-const recentLeads = ref([
-  {
-    id: 1,
-    name: "Nguyễn Văn A",
-    email: "nguyenvana@email.com",
-    source: "Website",
-    date: "2 giờ trước",
-  },
-  {
-    id: 2,
-    name: "Trần Thị B",
-    email: "tranthib@email.com",
-    source: "Facebook",
-    date: "4 giờ trước",
-  },
-  {
-    id: 3,
-    name: "Lê Văn C",
-    email: "levanc@email.com",
-    source: "Google Ads",
-    date: "6 giờ trước",
-  },
-  {
-    id: 4,
-    name: "Phạm Thị D",
-    email: "phamthid@email.com",
-    source: "Website",
-    date: "8 giờ trước",
-  },
-]);
+  // Mock data for recent leads
+  const recentLeads = ref([
+    {
+      id: 1,
+      name: 'Nguyễn Văn A',
+      email: 'nguyenvana@email.com',
+      source: 'Website',
+      date: '2 giờ trước',
+    },
+    {
+      id: 2,
+      name: 'Trần Thị B',
+      email: 'tranthib@email.com',
+      source: 'Facebook',
+      date: '4 giờ trước',
+    },
+    {
+      id: 3,
+      name: 'Lê Văn C',
+      email: 'levanc@email.com',
+      source: 'Google Ads',
+      date: '6 giờ trước',
+    },
+    {
+      id: 4,
+      name: 'Phạm Thị D',
+      email: 'phamthid@email.com',
+      source: 'Website',
+      date: '8 giờ trước',
+    },
+  ])
 </script>

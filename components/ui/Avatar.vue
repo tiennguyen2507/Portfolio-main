@@ -85,74 +85,74 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onBeforeUnmount } from "vue";
+  import { computed, ref, watch, onBeforeUnmount } from 'vue'
 
-const props = defineProps({
-  modelValue: { type: String, default: "" },
-  src: { type: String, default: "" },
-  readOnly: { type: Boolean, default: false },
-  size: { type: [Number, String], default: 80 }, // px
-  ring: { type: Boolean, default: true },
-  ringColorClass: { type: String, default: "ring-orange-500" },
-  ringWidthClass: { type: String, default: "ring-2" },
-  disabled: { type: Boolean, default: false },
-});
+  const props = defineProps({
+    modelValue: { type: String, default: '' },
+    src: { type: String, default: '' },
+    readOnly: { type: Boolean, default: false },
+    size: { type: [Number, String], default: 80 }, // px
+    ring: { type: Boolean, default: true },
+    ringColorClass: { type: String, default: 'ring-orange-500' },
+    ringWidthClass: { type: String, default: 'ring-2' },
+    disabled: { type: Boolean, default: false },
+  })
 
-const emit = defineEmits(["update:modelValue", "change"]);
+  const emit = defineEmits(['update:modelValue', 'change'])
 
-const fileInputRef = ref(null);
-const objectUrl = ref("");
-const imageError = ref(false);
+  const fileInputRef = ref(null)
+  const objectUrl = ref('')
+  const imageError = ref(false)
 
-const sizePx = computed(() => `${Number(props.size)}px`);
-const iconSizePx = computed(
-  () => `${Math.max(20, Math.floor(Number(props.size) * 0.45))}px`
-);
+  const sizePx = computed(() => `${Number(props.size)}px`)
+  const iconSizePx = computed(
+    () => `${Math.max(20, Math.floor(Number(props.size) * 0.45))}px`
+  )
 
-const ringClass = computed(() =>
-  props.ring ? `${props.ringWidthClass} ring ${props.ringColorClass}` : ""
-);
+  const ringClass = computed(() =>
+    props.ring ? `${props.ringWidthClass} ring ${props.ringColorClass}` : ''
+  )
 
-// If readOnly, prefer src. Otherwise, prefer modelValue or selected file URL
-const effectiveImageSrc = computed(() =>
-  props.readOnly ? props.src : props.modelValue || objectUrl.value
-);
+  // If readOnly, prefer src. Otherwise, prefer modelValue or selected file URL
+  const effectiveImageSrc = computed(() =>
+    props.readOnly ? props.src : props.modelValue || objectUrl.value
+  )
 
-const isInteractive = computed(() => !props.readOnly && !props.disabled);
+  const isInteractive = computed(() => !props.readOnly && !props.disabled)
 
-const triggerSelectFile = () => {
-  if (!isInteractive.value) return;
-  fileInputRef.value?.click();
-};
-
-const handleFileChange = (event) => {
-  const file = event.target.files && event.target.files[0];
-  if (!file) return;
-
-  if (objectUrl.value) URL.revokeObjectURL(objectUrl.value);
-  objectUrl.value = URL.createObjectURL(file);
-  imageError.value = false;
-
-  emit("update:modelValue", objectUrl.value);
-  emit("change", file);
-};
-
-const onImgError = () => {
-  imageError.value = true;
-};
-
-watch(
-  () => effectiveImageSrc.value,
-  () => {
-    imageError.value = false;
+  const triggerSelectFile = () => {
+    if (!isInteractive.value) return
+    fileInputRef.value?.click()
   }
-);
 
-onBeforeUnmount(() => {
-  if (objectUrl.value) URL.revokeObjectURL(objectUrl.value);
-});
+  const handleFileChange = event => {
+    const file = event.target.files && event.target.files[0]
+    if (!file) return
+
+    if (objectUrl.value) URL.revokeObjectURL(objectUrl.value)
+    objectUrl.value = URL.createObjectURL(file)
+    imageError.value = false
+
+    emit('update:modelValue', objectUrl.value)
+    emit('change', file)
+  }
+
+  const onImgError = () => {
+    imageError.value = true
+  }
+
+  watch(
+    () => effectiveImageSrc.value,
+    () => {
+      imageError.value = false
+    }
+  )
+
+  onBeforeUnmount(() => {
+    if (objectUrl.value) URL.revokeObjectURL(objectUrl.value)
+  })
 </script>
 
 <style scoped>
-/* No additional CSS; using Tailwind classes. */
+  /* No additional CSS; using Tailwind classes. */
 </style>

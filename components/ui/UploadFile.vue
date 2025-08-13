@@ -47,51 +47,51 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+  import { ref } from 'vue'
 
-// Props
-const props = defineProps({
-  onChange: {
-    type: Function,
-    default: null,
-  },
-});
+  // Props
+  const props = defineProps({
+    onChange: {
+      type: Function,
+      default: null,
+    },
+  })
 
-// Reactive data
-const preview = ref(null);
-const inputRef = ref(null);
+  // Reactive data
+  const preview = ref(null)
+  const inputRef = ref(null)
 
-// Methods
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    if (props.onChange) props.onChange(file);
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      preview.value = ev.target.result;
-    };
-    reader.readAsDataURL(file);
+  // Methods
+  const handleFileChange = event => {
+    const file = event.target.files[0]
+    if (file) {
+      if (props.onChange) props.onChange(file)
+      const reader = new FileReader()
+      reader.onload = ev => {
+        preview.value = ev.target.result
+      }
+      reader.readAsDataURL(file)
+    }
   }
-};
 
-const handleDrop = (event) => {
-  event.preventDefault();
-  const file = event.dataTransfer.files[0];
-  if (file) {
-    if (props.onChange) props.onChange(file);
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      preview.value = ev.target.result;
-    };
-    reader.readAsDataURL(file);
+  const handleDrop = event => {
+    event.preventDefault()
+    const file = event.dataTransfer.files[0]
+    if (file) {
+      if (props.onChange) props.onChange(file)
+      const reader = new FileReader()
+      reader.onload = ev => {
+        preview.value = ev.target.result
+      }
+      reader.readAsDataURL(file)
+    }
   }
-};
 
-const handleDragOver = (event) => {
-  event.preventDefault();
-};
+  const handleDragOver = event => {
+    event.preventDefault()
+  }
 </script>
 
 <style scoped>
-/* Custom styles if needed */
+  /* Custom styles if needed */
 </style>

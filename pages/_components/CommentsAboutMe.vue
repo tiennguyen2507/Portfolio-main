@@ -138,7 +138,7 @@
           :disabled="isUploadingAvatar || loading"
           class="shrink-0 w-full sm:w-auto px-5 py-2 rounded bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow transition disabled:opacity-60 whitespace-nowrap"
         >
-          {{ isUploadingAvatar ? "Đang tải ảnh..." : "Xác nhận" }}
+          {{ isUploadingAvatar ? 'Đang tải ảnh...' : 'Xác nhận' }}
         </button>
       </form>
 
@@ -236,172 +236,174 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { httpRequest } from "~/utils/httpRequest";
-import Avatar from "~/components/ui/Avatar.vue";
-import handleUpdateImage from "~/utils/handleUpdateImage";
+  import { ref, onMounted, computed } from 'vue'
+  import { httpRequest } from '~/utils/httpRequest'
+  import Avatar from '~/components/ui/Avatar.vue'
+  import handleUpdateImage from '~/utils/handleUpdateImage'
 
-const comments = ref([]);
-const loading = ref(true);
-const showForm = ref(false);
-const avatarPreviewUrl = ref("");
-const isUploadingAvatar = ref(false);
-const form = ref({
-  avatar: "",
-  name: "",
-  relationship: "",
-  comment: "",
-});
-const errors = ref({ avatar: "", name: "", relationship: "", comment: "" });
-const hasAnyError = computed(() =>
-  Boolean(
-    errors.value.avatar ||
-      errors.value.name ||
-      errors.value.relationship ||
-      errors.value.comment
+  const comments = ref([])
+  const loading = ref(true)
+  const showForm = ref(false)
+  const avatarPreviewUrl = ref('')
+  const isUploadingAvatar = ref(false)
+  const form = ref({
+    avatar: '',
+    name: '',
+    relationship: '',
+    comment: '',
+  })
+  const errors = ref({ avatar: '', name: '', relationship: '', comment: '' })
+  const hasAnyError = computed(() =>
+    Boolean(
+      errors.value.avatar ||
+        errors.value.name ||
+        errors.value.relationship ||
+        errors.value.comment
+    )
   )
-);
 
-const pagination = ref({
-  total: 0,
-  page: 1,
-  limit: 4,
-  nextPage: false,
-  prePage: false,
-});
-const limit = 4;
+  const pagination = ref({
+    total: 0,
+    page: 1,
+    limit: 4,
+    nextPage: false,
+    prePage: false,
+  })
+  const limit = 4
 
-const totalPages = computed(() => Math.ceil(pagination.value.total / limit));
+  const totalPages = computed(() => Math.ceil(pagination.value.total / limit))
 
-const fetchComments = async (page = 1) => {
-  loading.value = true;
-  try {
-    const res = await httpRequest.get(
-      `/comments-about-me?page=${page}&limit=${limit}`
-    );
-    comments.value = res.data || [];
-    pagination.value = {
-      total: res.total,
-      page: res.page,
-      limit: res.limit,
-      nextPage: res.nextPage,
-      prePage: res.prePage,
-    };
-  } catch (e) {
-    comments.value = [];
-    pagination.value = {
-      total: 0,
-      page: 1,
-      limit,
-      nextPage: false,
-      prePage: false,
-    };
-  } finally {
-    loading.value = false;
+  const fetchComments = async (page = 1) => {
+    loading.value = true
+    try {
+      const res = await httpRequest.get(
+        `/comments-about-me?page=${page}&limit=${limit}`
+      )
+      comments.value = res.data || []
+      pagination.value = {
+        total: res.total,
+        page: res.page,
+        limit: res.limit,
+        nextPage: res.nextPage,
+        prePage: res.prePage,
+      }
+    } catch (e) {
+      comments.value = []
+      pagination.value = {
+        total: 0,
+        page: 1,
+        limit,
+        nextPage: false,
+        prePage: false,
+      }
+    } finally {
+      loading.value = false
+    }
   }
-};
 
-const prevPage = () => {
-  if (pagination.value.page > 1) {
-    fetchComments(pagination.value.page - 1);
+  const prevPage = () => {
+    if (pagination.value.page > 1) {
+      fetchComments(pagination.value.page - 1)
+    }
   }
-};
 
-const nextPage = () => {
-  if (pagination.value.nextPage) {
-    fetchComments(pagination.value.page + 1);
+  const nextPage = () => {
+    if (pagination.value.nextPage) {
+      fetchComments(pagination.value.page + 1)
+    }
   }
-};
 
-const handleAvatarChange = async (file) => {
-  if (!file) return;
-  isUploadingAvatar.value = true;
-  try {
-    const url = await handleUpdateImage(file, "comments-about-me");
-    form.value.avatar = url || "";
-    errors.value.avatar = form.value.avatar ? "" : "Vui lòng chọn ảnh đại diện";
-  } catch (e) {
-    form.value.avatar = "";
-    errors.value.avatar = "Tải ảnh thất bại, vui lòng thử lại";
-  } finally {
-    isUploadingAvatar.value = false;
+  const handleAvatarChange = async file => {
+    if (!file) return
+    isUploadingAvatar.value = true
+    try {
+      const url = await handleUpdateImage(file, 'comments-about-me')
+      form.value.avatar = url || ''
+      errors.value.avatar = form.value.avatar
+        ? ''
+        : 'Vui lòng chọn ảnh đại diện'
+    } catch (e) {
+      form.value.avatar = ''
+      errors.value.avatar = 'Tải ảnh thất bại, vui lòng thử lại'
+    } finally {
+      isUploadingAvatar.value = false
+    }
   }
-};
 
-const validateField = (field) => {
-  const value = (form.value[field] || "").trim();
-  switch (field) {
-    case "avatar":
-      errors.value.avatar = value ? "" : "Vui lòng chọn ảnh đại diện";
-      break;
-    case "name":
-      errors.value.name = value.length > 50 ? "Tên tối đa 50 ký tự" : "";
-      break;
-    case "relationship":
-      errors.value.relationship =
-        value.length > 50 ? "Mối quan hệ tối đa 50 ký tự" : "";
-      break;
-    case "comment":
-      errors.value.comment =
-        value.length < 20 ? "Mô tả/nhận xét cần ít nhất 20 ký tự" : "";
-      break;
+  const validateField = field => {
+    const value = (form.value[field] || '').trim()
+    switch (field) {
+      case 'avatar':
+        errors.value.avatar = value ? '' : 'Vui lòng chọn ảnh đại diện'
+        break
+      case 'name':
+        errors.value.name = value.length > 50 ? 'Tên tối đa 50 ký tự' : ''
+        break
+      case 'relationship':
+        errors.value.relationship =
+          value.length > 50 ? 'Mối quan hệ tối đa 50 ký tự' : ''
+        break
+      case 'comment':
+        errors.value.comment =
+          value.length < 20 ? 'Mô tả/nhận xét cần ít nhất 20 ký tự' : ''
+        break
+    }
   }
-};
 
-const validateForm = () => {
-  validateField("avatar");
-  validateField("name");
-  validateField("relationship");
-  validateField("comment");
-  return (
-    !hasAnyError.value &&
-    !!form.value.avatar &&
-    !!form.value.name &&
-    !!form.value.relationship &&
-    !!form.value.comment
-  );
-};
-
-const handleSubmit = async () => {
-  if (!validateForm()) return;
-  loading.value = true;
-  try {
-    await httpRequest.post("/comments-about-me", {
-      avatar: form.value.avatar,
-      name: form.value.name,
-      relationship: form.value.relationship,
-      comment: form.value.comment,
-      status: true,
-    });
-    showForm.value = false;
-    avatarPreviewUrl.value = "";
-    form.value = { avatar: "", name: "", relationship: "", comment: "" };
-    errors.value = { name: "", relationship: "", comment: "" };
-    fetchComments(1);
-  } catch (e) {
-    // handle error toast if needed
-  } finally {
-    loading.value = false;
+  const validateForm = () => {
+    validateField('avatar')
+    validateField('name')
+    validateField('relationship')
+    validateField('comment')
+    return (
+      !hasAnyError.value &&
+      !!form.value.avatar &&
+      !!form.value.name &&
+      !!form.value.relationship &&
+      !!form.value.comment
+    )
   }
-};
 
-const formatDate = (dateString) => {
-  const d = new Date(dateString);
-  return d.toLocaleString("vi-VN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-};
+  const handleSubmit = async () => {
+    if (!validateForm()) return
+    loading.value = true
+    try {
+      await httpRequest.post('/comments-about-me', {
+        avatar: form.value.avatar,
+        name: form.value.name,
+        relationship: form.value.relationship,
+        comment: form.value.comment,
+        status: true,
+      })
+      showForm.value = false
+      avatarPreviewUrl.value = ''
+      form.value = { avatar: '', name: '', relationship: '', comment: '' }
+      errors.value = { name: '', relationship: '', comment: '' }
+      fetchComments(1)
+    } catch (e) {
+      // handle error toast if needed
+    } finally {
+      loading.value = false
+    }
+  }
 
-onMounted(() => fetchComments(1));
+  const formatDate = dateString => {
+    const d = new Date(dateString)
+    return d.toLocaleString('vi-VN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    })
+  }
+
+  onMounted(() => fetchComments(1))
 </script>
 
 <style scoped>
-.bg-gray-900\/80 {
-  background: rgba(17, 24, 39, 0.8);
-}
+  .bg-gray-900\/80 {
+    background: rgba(17, 24, 39, 0.8);
+  }
 </style>

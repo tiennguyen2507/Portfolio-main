@@ -17,7 +17,9 @@
         class="flex items-center justify-center min-h-screen"
       >
         <div class="text-center">
-          <p class="text-red-600 mb-4 text-lg">{{ fetchError.message || 'Đã xảy ra lỗi' }}</p>
+          <p class="text-red-600 mb-4 text-lg">
+            {{ fetchError.message || 'Đã xảy ra lỗi' }}
+          </p>
           <button
             @click="refresh"
             class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
@@ -52,7 +54,11 @@
               itemscope
               itemtype="https://schema.org/ListItem"
             >
-              <NuxtLink to="/" class="hover:text-orange-500 transition-colors" itemprop="item">
+              <NuxtLink
+                to="/"
+                class="hover:text-orange-500 transition-colors"
+                itemprop="item"
+              >
                 <span itemprop="name">Trang chủ</span>
               </NuxtLink>
               <meta itemprop="position" content="1" />
@@ -76,7 +82,11 @@
               itemscope
               itemtype="https://schema.org/ListItem"
             >
-              <NuxtLink to="/blogs" class="hover:text-orange-500 transition-colors" itemprop="item">
+              <NuxtLink
+                to="/blogs"
+                class="hover:text-orange-500 transition-colors"
+                itemprop="item"
+              >
                 <span itemprop="name">Blog</span>
               </NuxtLink>
               <meta itemprop="position" content="2" />
@@ -157,13 +167,15 @@
                   :class="blogData.status ? 'bg-green-500' : 'bg-gray-500'"
                   class="text-white px-2 py-1 rounded text-xs font-medium"
                 >
-                  {{ blogData.status ? "Hoạt động" : "Không hoạt động" }}
+                  {{ blogData.status ? 'Hoạt động' : 'Không hoạt động' }}
                 </span>
               </div>
               <!-- Reading time estimate -->
               <div class="flex items-center">
                 <span class="text-gray-500 mr-2">Thời gian đọc:</span>
-                <span class="text-gray-900 font-medium">{{ calculateReadingTime(blogData.description) }} phút</span>
+                <span class="text-gray-900 font-medium"
+                  >{{ calculateReadingTime(blogData.description) }} phút</span
+                >
               </div>
             </div>
           </header>
@@ -200,7 +212,9 @@
             <div>
               <span>Cập nhật lần cuối: </span>
               <time
-                :datetime="formatDateISO(blogData.updatedAt || blogData.createdAt)"
+                :datetime="
+                  formatDateISO(blogData.updatedAt || blogData.createdAt)
+                "
                 itemprop="dateModified"
                 class="font-medium"
               >
@@ -259,512 +273,533 @@
 </template>
 
 <script setup>
-import { computed, watch } from "vue";
-import httpRequest from "~/utils/httpRequest";
+  import { computed, watch } from 'vue'
+  import httpRequest from '~/utils/httpRequest'
 
-// Get route params
-const route = useRoute();
-const blogId = computed(() => route.params.id);
+  // Get route params
+  const route = useRoute()
+  const blogId = computed(() => route.params.id)
 
-// Server-side data fetching with useAsyncData
-const { data: blogData, pending, error: fetchError, refresh } = await useAsyncData(
-  `blog-${blogId.value}`,
-  async () => {
-    try {
-      const data = await httpRequest.get(`/posts/${blogId.value}`);
-      return data;
-    } catch (err) {
-      console.error("Error fetching blog detail:", err);
-      throw new Error("Không thể tải bài viết. Vui lòng thử lại sau.");
-    }
-  },
-  {
-    server: true, // Enable SSR
-    client: true, // Enable client-side hydration
-    key: `blog-${blogId.value}`, // Unique key for caching
-    transform: (data) => {
-      // Transform data if needed
-      return data;
+  // Server-side data fetching with useAsyncData
+  const {
+    data: blogData,
+    pending,
+    error: fetchError,
+    refresh,
+  } = await useAsyncData(
+    `blog-${blogId.value}`,
+    async () => {
+      try {
+        const data = await httpRequest.get(`/posts/${blogId.value}`)
+        return data
+      } catch (err) {
+        console.error('Error fetching blog detail:', err)
+        throw new Error('Không thể tải bài viết. Vui lòng thử lại sau.')
+      }
     },
-    watch: [blogId], // Watch for route changes
+    {
+      server: true, // Enable SSR
+      client: true, // Enable client-side hydration
+      key: `blog-${blogId.value}`, // Unique key for caching
+      transform: data => {
+        // Transform data if needed
+        return data
+      },
+      watch: [blogId], // Watch for route changes
+    }
+  )
+
+  // Calculate reading time
+  const calculateReadingTime = content => {
+    if (!content) return 1
+    const wordsPerMinute = 200
+    const wordCount = stripHtml(content).split(' ').length
+    return Math.ceil(wordCount / wordsPerMinute)
   }
-);
 
-// Calculate reading time
-const calculateReadingTime = (content) => {
-  if (!content) return 1;
-  const wordsPerMinute = 200;
-  const wordCount = stripHtml(content).split(' ').length;
-  return Math.ceil(wordCount / wordsPerMinute);
-};
+  // Format date
+  const formatDate = dateString => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('vi-VN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
 
-// Format date
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("vi-VN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
+  // Format date for SEO (ISO format)
+  const formatDateISO = dateString => {
+    return new Date(dateString).toISOString()
+  }
 
-// Format date for SEO (ISO format)
-const formatDateISO = (dateString) => {
-  return new Date(dateString).toISOString();
-};
+  // Strip HTML tags for meta description
+  const stripHtml = html => {
+    return html
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+  }
 
-// Strip HTML tags for meta description
-const stripHtml = (html) => {
-  return html
-    .replace(/<[^>]*>/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-};
+  // Handle image error
+  const handleImageError = event => {
+    event.target.src = '/images/blog-1.webp' // Fallback image
+  }
 
-// Handle image error
-const handleImageError = (event) => {
-  event.target.src = "/images/blog-1.webp"; // Fallback image
-};
+  // Handle avatar error
+  const handleAvatarError = event => {
+    event.target.src = '/images/ab-1.webp' // Fallback avatar
+  }
 
-// Handle avatar error
-const handleAvatarError = (event) => {
-  event.target.src = "/images/ab-1.webp"; // Fallback avatar
-};
+  // Enhanced SEO Meta Tags with SSR support
+  useHead(() => {
+    if (!blogData.value) {
+      return {
+        title: 'Chi tiết bài viết - Nguyễn Lê Đình Tiên',
+        meta: [
+          {
+            name: 'description',
+            content:
+              'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.',
+          },
+          {
+            name: 'robots',
+            content: 'noindex, nofollow',
+          },
+        ],
+      }
+    }
 
-// Enhanced SEO Meta Tags with SSR support
-useHead(() => {
-  if (!blogData.value) {
+    const title = `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`
+    const description = stripHtml(blogData.value.description).substring(0, 160)
+    const imageUrl = blogData.value.thumbnail || '/images/blog-1.webp'
+    const authorName = `${blogData.value.createdBy.firstName} ${blogData.value.createdBy.lastName}`
+    const publishedDate = formatDateISO(blogData.value.createdAt)
+    const modifiedDate = formatDateISO(
+      blogData.value.updatedAt || blogData.value.createdAt
+    )
+    const url = `https://your-domain.com/blogs/${blogData.value._id}`
+    const readingTime = calculateReadingTime(blogData.value.description)
+
     return {
-      title: "Chi tiết bài viết - Nguyễn Lê Đình Tiên",
+      title,
       meta: [
+        // Basic SEO
         {
-          name: "description",
-          content: "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.",
+          name: 'description',
+          content: description,
         },
         {
-          name: "robots",
-          content: "noindex, nofollow",
+          name: 'keywords',
+          content: `${blogData.value.title}, blog, bài viết, công nghệ, phát triển web, lập trình, React, Vue.js, Node.js, Nguyễn Lê Đình Tiên`,
+        },
+        {
+          name: 'author',
+          content: authorName,
+        },
+        {
+          name: 'robots',
+          content:
+            'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+        },
+        {
+          name: 'googlebot',
+          content: 'index, follow',
+        },
+        {
+          name: 'article:reading_time',
+          content: readingTime.toString(),
+        },
+
+        // Open Graph (Facebook, LinkedIn)
+        {
+          property: 'og:type',
+          content: 'article',
+        },
+        {
+          property: 'og:title',
+          content: title,
+        },
+        {
+          property: 'og:description',
+          content: description,
+        },
+        {
+          property: 'og:image',
+          content: imageUrl,
+        },
+        {
+          property: 'og:image:width',
+          content: '1200',
+        },
+        {
+          property: 'og:image:height',
+          content: '630',
+        },
+        {
+          property: 'og:url',
+          content: url,
+        },
+        {
+          property: 'og:site_name',
+          content: 'Nguyễn Lê Đình Tiên - Portfolio & Blog',
+        },
+        {
+          property: 'og:locale',
+          content: 'vi_VN',
+        },
+        {
+          property: 'article:published_time',
+          content: publishedDate,
+        },
+        {
+          property: 'article:modified_time',
+          content: modifiedDate,
+        },
+        {
+          property: 'article:author',
+          content: authorName,
+        },
+        {
+          property: 'article:section',
+          content: 'Blog',
+        },
+        {
+          property: 'article:tag',
+          content: 'công nghệ, phát triển web, lập trình',
+        },
+
+        // Twitter Card
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
+        {
+          name: 'twitter:title',
+          content: title,
+        },
+        {
+          name: 'twitter:description',
+          content: description,
+        },
+        {
+          name: 'twitter:image',
+          content: imageUrl,
+        },
+        {
+          name: 'twitter:site',
+          content: '@yourusername',
+        },
+        {
+          name: 'twitter:creator',
+          content: '@yourusername',
+        },
+
+        // Additional SEO
+        {
+          name: 'canonical',
+          content: url,
+        },
+        {
+          name: 'article:publisher',
+          content: 'https://your-domain.com',
+        },
+        {
+          name: 'article:section',
+          content: 'Blog',
+        },
+        {
+          name: 'article:tag',
+          content:
+            'công nghệ, phát triển web, lập trình, React, Vue.js, Node.js',
         },
       ],
-    };
-  }
-
-  const title = `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`;
-  const description = stripHtml(blogData.value.description).substring(0, 160);
-  const imageUrl = blogData.value.thumbnail || "/images/blog-1.webp";
-  const authorName = `${blogData.value.createdBy.firstName} ${blogData.value.createdBy.lastName}`;
-  const publishedDate = formatDateISO(blogData.value.createdAt);
-  const modifiedDate = formatDateISO(
-    blogData.value.updatedAt || blogData.value.createdAt
-  );
-  const url = `https://your-domain.com/blogs/${blogData.value._id}`;
-  const readingTime = calculateReadingTime(blogData.value.description);
-
-  return {
-    title,
-    meta: [
-      // Basic SEO
-      {
-        name: "description",
-        content: description,
-      },
-      {
-        name: "keywords",
-        content: `${blogData.value.title}, blog, bài viết, công nghệ, phát triển web, lập trình, React, Vue.js, Node.js, Nguyễn Lê Đình Tiên`,
-      },
-      {
-        name: "author",
-        content: authorName,
-      },
-      {
-        name: "robots",
-        content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-      },
-      {
-        name: "googlebot",
-        content: "index, follow",
-      },
-      {
-        name: "article:reading_time",
-        content: readingTime.toString(),
-      },
-
-      // Open Graph (Facebook, LinkedIn)
-      {
-        property: "og:type",
-        content: "article",
-      },
-      {
-        property: "og:title",
-        content: title,
-      },
-      {
-        property: "og:description",
-        content: description,
-      },
-      {
-        property: "og:image",
-        content: imageUrl,
-      },
-      {
-        property: "og:image:width",
-        content: "1200",
-      },
-      {
-        property: "og:image:height",
-        content: "630",
-      },
-      {
-        property: "og:url",
-        content: url,
-      },
-      {
-        property: "og:site_name",
-        content: "Nguyễn Lê Đình Tiên - Portfolio & Blog",
-      },
-      {
-        property: "og:locale",
-        content: "vi_VN",
-      },
-      {
-        property: "article:published_time",
-        content: publishedDate,
-      },
-      {
-        property: "article:modified_time",
-        content: modifiedDate,
-      },
-      {
-        property: "article:author",
-        content: authorName,
-      },
-      {
-        property: "article:section",
-        content: "Blog",
-      },
-      {
-        property: "article:tag",
-        content: "công nghệ, phát triển web, lập trình",
-      },
-
-      // Twitter Card
-      {
-        name: "twitter:card",
-        content: "summary_large_image",
-      },
-      {
-        name: "twitter:title",
-        content: title,
-      },
-      {
-        name: "twitter:description",
-        content: description,
-      },
-      {
-        name: "twitter:image",
-        content: imageUrl,
-      },
-      {
-        name: "twitter:site",
-        content: "@yourusername",
-      },
-      {
-        name: "twitter:creator",
-        content: "@yourusername",
-      },
-
-      // Additional SEO
-      {
-        name: "canonical",
-        content: url,
-      },
-      {
-        name: "article:publisher",
-        content: "https://your-domain.com",
-      },
-      {
-        name: "article:section",
-        content: "Blog",
-      },
-      {
-        name: "article:tag",
-        content: "công nghệ, phát triển web, lập trình, React, Vue.js, Node.js",
-      },
-    ],
-    link: [
-      {
-        rel: "canonical",
-        href: url,
-      },
-      {
-        rel: "preload",
-        href: imageUrl,
-        as: "image",
-      },
-    ],
-    script: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          headline: blogData.value.title,
-          description: description,
-          image: {
-            "@type": "ImageObject",
-            url: imageUrl,
-            width: 1200,
-            height: 630,
-          },
-          author: {
-            "@type": "Person",
-            name: authorName,
-            image: blogData.value.createdBy.avatar,
-            url: "https://your-domain.com",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "Nguyễn Lê Đình Tiên",
-            logo: {
-              "@type": "ImageObject",
-              url: "https://your-domain.com/images/logo.webp",
-              width: 200,
-              height: 200,
+      link: [
+        {
+          rel: 'canonical',
+          href: url,
+        },
+        {
+          rel: 'preload',
+          href: imageUrl,
+          as: 'image',
+        },
+      ],
+      script: [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: blogData.value.title,
+            description: description,
+            image: {
+              '@type': 'ImageObject',
+              url: imageUrl,
+              width: 1200,
+              height: 630,
             },
-            url: "https://your-domain.com",
-          },
-          datePublished: publishedDate,
-          dateModified: modifiedDate,
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": url,
-          },
-          url: url,
-          isPartOf: {
-            "@type": "Blog",
-            name: "Nguyễn Lê Đình Tiên Blog",
-            url: "https://your-domain.com/blogs",
-            description: "Blog về công nghệ, phát triển web và lập trình",
-          },
-          articleSection: "Blog",
-          articleBody: stripHtml(blogData.value.description),
-          wordCount: stripHtml(blogData.value.description).split(' ').length,
-          timeRequired: `PT${readingTime}M`,
-          inLanguage: "vi-VN",
-          isAccessibleForFree: true,
-          license: "https://creativecommons.org/licenses/by/4.0/",
-        }),
-      },
-      // BreadcrumbList Schema
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: "Trang chủ",
-              item: "https://your-domain.com",
+            author: {
+              '@type': 'Person',
+              name: authorName,
+              image: blogData.value.createdBy.avatar,
+              url: 'https://your-domain.com',
             },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: "Blog",
-              item: "https://your-domain.com/blogs",
+            publisher: {
+              '@type': 'Organization',
+              name: 'Nguyễn Lê Đình Tiên',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://your-domain.com/images/logo.webp',
+                width: 200,
+                height: 200,
+              },
+              url: 'https://your-domain.com',
             },
-            {
-              "@type": "ListItem",
-              position: 3,
-              name: blogData.value.title,
-              item: url,
+            datePublished: publishedDate,
+            dateModified: modifiedDate,
+            mainEntityOfPage: {
+              '@type': 'WebPage',
+              '@id': url,
             },
-          ],
-        }),
-      },
-    ],
-  };
-});
+            url: url,
+            isPartOf: {
+              '@type': 'Blog',
+              name: 'Nguyễn Lê Đình Tiên Blog',
+              url: 'https://your-domain.com/blogs',
+              description: 'Blog về công nghệ, phát triển web và lập trình',
+            },
+            articleSection: 'Blog',
+            articleBody: stripHtml(blogData.value.description),
+            wordCount: stripHtml(blogData.value.description).split(' ').length,
+            timeRequired: `PT${readingTime}M`,
+            inLanguage: 'vi-VN',
+            isAccessibleForFree: true,
+            license: 'https://creativecommons.org/licenses/by/4.0/',
+          }),
+        },
+        // BreadcrumbList Schema
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Trang chủ',
+                item: 'https://your-domain.com',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Blog',
+                item: 'https://your-domain.com/blogs',
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: blogData.value.title,
+                item: url,
+              },
+            ],
+          }),
+        },
+      ],
+    }
+  })
 
-// Set page title for better SEO
-useSeoMeta({
-  title: computed(() => blogData.value ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên` : "Chi tiết bài viết - Nguyễn Lê Đình Tiên"),
-  description: computed(() => blogData.value ? stripHtml(blogData.value.description).substring(0, 160) : "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên."),
-  ogTitle: computed(() => blogData.value ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên` : "Chi tiết bài viết - Nguyễn Lê Đình Tiên"),
-  ogDescription: computed(() => blogData.value ? stripHtml(blogData.value.description).substring(0, 160) : "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên."),
-  ogImage: computed(() => blogData.value?.thumbnail || "/images/blog-1.webp"),
-  twitterCard: "summary_large_image",
-});
+  // Set page title for better SEO
+  useSeoMeta({
+    title: computed(() =>
+      blogData.value
+        ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`
+        : 'Chi tiết bài viết - Nguyễn Lê Đình Tiên'
+    ),
+    description: computed(() =>
+      blogData.value
+        ? stripHtml(blogData.value.description).substring(0, 160)
+        : 'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.'
+    ),
+    ogTitle: computed(() =>
+      blogData.value
+        ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`
+        : 'Chi tiết bài viết - Nguyễn Lê Đình Tiên'
+    ),
+    ogDescription: computed(() =>
+      blogData.value
+        ? stripHtml(blogData.value.description).substring(0, 160)
+        : 'Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.'
+    ),
+    ogImage: computed(() => blogData.value?.thumbnail || '/images/blog-1.webp'),
+    twitterCard: 'summary_large_image',
+  })
 
-// Handle route changes for SPA navigation
-watch(
-  blogId,
-  async (newId) => {
+  // Handle route changes for SPA navigation
+  watch(blogId, async newId => {
     if (newId) {
       // Refresh data when route changes
-      await refresh();
+      await refresh()
     }
-  }
-);
+  })
 </script>
 
 <style>
-/* Enhanced Prose styling for blog content */
-.prose {
-  color: #374151;
-  line-height: 1.75;
-  font-size: 1.125rem;
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-  color: #111827;
-  font-weight: 700;
-  margin-top: 2.5rem;
-  margin-bottom: 1.25rem;
-  line-height: 1.3;
-}
-
-.prose h1 {
-  font-size: 2.25rem;
-  border-bottom: 3px solid #f97316;
-  padding-bottom: 0.5rem;
-}
-
-.prose h2 {
-  font-size: 1.875rem;
-  border-bottom: 2px solid #fbbf24;
-  padding-bottom: 0.25rem;
-}
-
-.prose h3 {
-  font-size: 1.5rem;
-  color: #f97316;
-}
-
-.prose p {
-  margin-bottom: 1.5rem;
-  text-align: justify;
-}
-
-.prose ul,
-.prose ol {
-  margin-bottom: 1.5rem;
-  padding-left: 1.5rem;
-}
-
-.prose li {
-  margin-bottom: 0.5rem;
-}
-
-.prose blockquote {
-  border-left: 4px solid #f97316;
-  padding: 1rem 1.5rem;
-  margin: 2rem 0;
-  font-style: italic;
-  color: #6b7280;
-  background-color: #f9fafb;
-  border-radius: 0 0.5rem 0.5rem 0;
-}
-
-.prose code {
-  background-color: #f3f4f6;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  color: #374151;
-  border: 1px solid #e5e7eb;
-}
-
-.prose pre {
-  background-color: #1f2937;
-  color: #f9fafb;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-  margin: 2rem 0;
-  border: 1px solid #374151;
-}
-
-.prose a {
-  color: #f97316;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
-.prose a:hover {
-  border-bottom-color: #f97316;
-}
-
-.prose img {
-  border-radius: 0.5rem;
-  margin: 2rem 0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.prose table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 2rem 0;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.prose th,
-.prose td {
-  border: 1px solid #e5e7eb;
-  padding: 0.75rem;
-  text-align: left;
-}
-
-.prose th {
-  background-color: #f9fafb;
-  font-weight: 600;
-  color: #374151;
-}
-
-.prose th:first-child {
-  border-top-left-radius: 0.5rem;
-}
-
-.prose th:last-child {
-  border-top-right-radius: 0.5rem;
-}
-
-/* Enhanced responsive design */
-@media (max-width: 768px) {
+  /* Enhanced Prose styling for blog content */
   .prose {
-    font-size: 1rem;
+    color: #374151;
+    line-height: 1.75;
+    font-size: 1.125rem;
   }
-  
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    color: #111827;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.3;
+  }
+
   .prose h1 {
-    font-size: 1.875rem;
+    font-size: 2.25rem;
+    border-bottom: 3px solid #f97316;
+    padding-bottom: 0.5rem;
   }
-  
+
   .prose h2 {
-    font-size: 1.5rem;
+    font-size: 1.875rem;
+    border-bottom: 2px solid #fbbf24;
+    padding-bottom: 0.25rem;
   }
-  
+
   .prose h3 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    color: #f97316;
   }
-}
 
-/* Smooth transitions */
-.prose * {
-  transition: all 0.2s ease;
-}
+  .prose p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+  }
 
-/* Focus states for accessibility */
-.prose a:focus {
-  outline: 2px solid #f97316;
-  outline-offset: 2px;
-}
+  .prose ul,
+  .prose ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid #f97316;
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: #6b7280;
+    background-color: #f9fafb;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .prose code {
+    background-color: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+  }
+
+  .prose pre {
+    background-color: #1f2937;
+    color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 2rem 0;
+    border: 1px solid #374151;
+  }
+
+  .prose a {
+    color: #f97316;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .prose a:hover {
+    border-bottom-color: #f97316;
+  }
+
+  .prose img {
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .prose th,
+  .prose td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .prose th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .prose th:first-child {
+    border-top-left-radius: 0.5rem;
+  }
+
+  .prose th:last-child {
+    border-top-right-radius: 0.5rem;
+  }
+
+  /* Enhanced responsive design */
+  @media (max-width: 768px) {
+    .prose {
+      font-size: 1rem;
+    }
+
+    .prose h1 {
+      font-size: 1.875rem;
+    }
+
+    .prose h2 {
+      font-size: 1.5rem;
+    }
+
+    .prose h3 {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Smooth transitions */
+  .prose * {
+    transition: all 0.2s ease;
+  }
+
+  /* Focus states for accessibility */
+  .prose a:focus {
+    outline: 2px solid #f97316;
+    outline-offset: 2px;
+  }
 </style>

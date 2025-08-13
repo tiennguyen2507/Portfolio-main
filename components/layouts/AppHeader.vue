@@ -270,85 +270,85 @@
 </template>
 
 <script setup>
-import { navigationItems } from "~/constants/navigation";
+  import { navigationItems } from '~/constants/navigation'
 
-const route = useRoute();
-const showMobileMenu = ref(false);
-const isScrolled = ref(false);
+  const route = useRoute()
+  const showMobileMenu = ref(false)
+  const isScrolled = ref(false)
 
-// Function to check if current route is active
-const isActiveRoute = (path) => {
-  const isActive =
-    (path === "/" && route.path === "/") ||
-    (path !== "/" && route.path.startsWith(path));
+  // Function to check if current route is active
+  const isActiveRoute = path => {
+    const isActive =
+      (path === '/' && route.path === '/') ||
+      (path !== '/' && route.path.startsWith(path))
 
-  return isActive;
-};
+    return isActive
+  }
 
-// Separate main navigation items from action buttons
-const mainNavigationItems = computed(() => {
-  return navigationItems.filter((item) =>
-    [
-      "HOME",
-      "ADVERTISERS",
-      "PUBLISHERS",
-      "ABOUT",
-      "BLOGS",
-      "FAQS",
-      "CAREERS",
-      "CONTACT US",
-    ].includes(item.label)
-  );
-});
+  // Separate main navigation items from action buttons
+  const mainNavigationItems = computed(() => {
+    return navigationItems.filter(item =>
+      [
+        'HOME',
+        'ADVERTISERS',
+        'PUBLISHERS',
+        'ABOUT',
+        'BLOGS',
+        'FAQS',
+        'CAREERS',
+        'CONTACT US',
+      ].includes(item.label)
+    )
+  })
 
-const actionButtons = computed(() => {
-  return navigationItems.filter((item) =>
-    ["SIGN UP", "LOGIN"].includes(item.label)
-  );
-});
+  const actionButtons = computed(() => {
+    return navigationItems.filter(item =>
+      ['SIGN UP', 'LOGIN'].includes(item.label)
+    )
+  })
 
-// Get external URL from environment variables
-const getExternalUrl = (envKey) => {
-  const config = useRuntimeConfig();
-  return config.public[envKey] || "#";
-};
+  // Get external URL from environment variables
+  const getExternalUrl = envKey => {
+    const config = useRuntimeConfig()
+    return config.public[envKey] || '#'
+  }
 
-const toggleMobileMenu = () => {
-  showMobileMenu.value = !showMobileMenu.value;
-};
+  const toggleMobileMenu = () => {
+    showMobileMenu.value = !showMobileMenu.value
+  }
 
-// Handle scroll and click outside
-onMounted(() => {
-  const onScroll = () => {
-    isScrolled.value = window.scrollY > 50;
-  };
-
-  const handleClickOutside = (e) => {
-    if (!e.target.closest("header")) {
-      showMobileMenu.value = false;
+  // Handle scroll and click outside
+  onMounted(() => {
+    const onScroll = () => {
+      isScrolled.value = window.scrollY > 50
     }
-  };
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  document.addEventListener("click", handleClickOutside);
+    const handleClickOutside = e => {
+      if (!e.target.closest('header')) {
+        showMobileMenu.value = false
+      }
+    }
 
-  // Initial check
-  onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true })
+    document.addEventListener('click', handleClickOutside)
 
-  onUnmounted(() => {
-    window.removeEventListener("scroll", onScroll);
-    document.removeEventListener("click", handleClickOutside);
-  });
-});
+    // Initial check
+    onScroll()
 
-const headerClass = computed(() => {
-  const classes = [
-    "text-white py-4 transition-all duration-300 fixed w-full z-30 top-0 left-0",
-    isScrolled.value || showMobileMenu.value
-      ? "bg-black/95 backdrop-blur-sm shadow-lg"
-      : "bg-transparent",
-  ];
+    onUnmounted(() => {
+      window.removeEventListener('scroll', onScroll)
+      document.removeEventListener('click', handleClickOutside)
+    })
+  })
 
-  return classes.join(" ");
-});
+  const headerClass = computed(() => {
+    const classes = [
+      'text-white py-4 transition-all duration-300 fixed w-full z-30 top-0 left-0',
+      isScrolled.value || showMobileMenu.value
+        ? 'bg-black/95 backdrop-blur-sm shadow-lg'
+        : 'bg-transparent',
+    ]
+
+    return classes.join(' ')
+  })
 </script>

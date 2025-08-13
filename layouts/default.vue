@@ -14,6 +14,6 @@
 </template>
 
 <script setup>
-import PortfolioHeader from "~/pages/_components/PortfolioHeader.vue";
-import PortfolioFooter from "~/pages/_components/PortfolioFooter.vue";
+  import PortfolioHeader from '~/pages/_components/PortfolioHeader.vue'
+  import PortfolioFooter from '~/pages/_components/PortfolioFooter.vue'
 </script>

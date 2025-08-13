@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./components/**/*.{js,vue,ts}",
-    "./layouts/**/*.vue",
-    "./pages/**/*.vue",
-    "./plugins/**/*.{js,ts}",
-    "./app.vue",
-    "./error.vue"
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './app.vue',
+    './error.vue',
   ],
   theme: {
     extend: {
@@ -116,11 +116,11 @@ export default {
     },
   },
   plugins: [
-    function({ addBase }) {
+    function ({ addBase }) {
       addBase({
-        'a': { outline: 'none' },
-        'a:focus': { outline: 'none' }
+        a: { outline: 'none' },
+        'a:focus': { outline: 'none' },
       })
-    }
+    },
   ],
-} 
+}

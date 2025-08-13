@@ -32,7 +32,9 @@
           </button>
         </div>
         <!-- Content -->
-        <div class="px-6 py-6 text-gray-700 text-base flex-1 overflow-y-auto bg-white">
+        <div
+          class="px-6 py-6 text-gray-700 text-base flex-1 overflow-y-auto bg-white"
+        >
           <slot />
         </div>
         <!-- Footer -->
@@ -48,54 +50,54 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    default: false,
-  },
-  width: {
-    type: String,
-    default: "lg",
-    validator: (v) => ["sm", "md", "lg", "xl", "2xl", "full"].includes(v),
-  },
-  maxHeight: {
-    type: String,
-    default: "90vh",
-  },
-});
-const emit = defineEmits(["close"]);
+  const props = defineProps({
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
+    width: {
+      type: String,
+      default: 'lg',
+      validator: v => ['sm', 'md', 'lg', 'xl', '2xl', 'full'].includes(v),
+    },
+    maxHeight: {
+      type: String,
+      default: '90vh',
+    },
+  })
+  const emit = defineEmits(['close'])
 
-const modalClasses = computed(() => {
-  const base =
-    "relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full overflow-hidden flex flex-col transition-all duration-300";
-  const widthMap = {
-    sm: "max-w-sm",
-    md: "max-w-lg",
-    lg: "max-w-2xl",
-    xl: "max-w-3xl",
-    "2xl": "max-w-5xl",
-    full: "max-w-[96vw]",
-  };
-  return `${base} ${widthMap[props.width]}`;
-});
+  const modalClasses = computed(() => {
+    const base =
+      'relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full overflow-hidden flex flex-col transition-all duration-300'
+    const widthMap = {
+      sm: 'max-w-sm',
+      md: 'max-w-lg',
+      lg: 'max-w-2xl',
+      xl: 'max-w-3xl',
+      '2xl': 'max-w-5xl',
+      full: 'max-w-[96vw]',
+    }
+    return `${base} ${widthMap[props.width]}`
+  })
 
-const modalStyle = computed(() => ({
-  zIndex: 10,
-  maxHeight: props.maxHeight,
-}));
+  const modalStyle = computed(() => ({
+    zIndex: 10,
+    maxHeight: props.maxHeight,
+  }))
 
-function close() {
-  emit("close");
-}
+  function close() {
+    emit('close')
+  }
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
 </style>

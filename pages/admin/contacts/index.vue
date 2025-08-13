@@ -122,7 +122,7 @@
                     'bg-yellow-100 text-yellow-800': contact.status === false,
                   }"
                 >
-                  {{ contact.status ? "Đã xử lý" : "Chưa xử lý" }}
+                  {{ contact.status ? 'Đã xử lý' : 'Chưa xử lý' }}
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -141,8 +141,8 @@
                   >
                     {{
                       contact.status
-                        ? "Đánh dấu chưa xử lý"
-                        : "Đánh dấu đã xử lý"
+                        ? 'Đánh dấu chưa xử lý'
+                        : 'Đánh dấu đã xử lý'
                     }}
                   </button>
                   <button
@@ -182,14 +182,22 @@
       </div>
 
       <!-- Pagination -->
-      <div v-if="contacts.length > 0" class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+      <div
+        v-if="contacts.length > 0"
+        class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6"
+      >
         <Pagination
           :page="currentPage"
           :total="pagination.total"
           :limit="limit"
           :show-info="true"
           :split="true"
-          @update:page="(p) => { currentPage = p; fetchContacts(); }"
+          @update:page="
+            p => {
+              currentPage = p
+              fetchContacts()
+            }
+          "
         />
       </div>
     </div>
@@ -197,128 +205,126 @@
 </template>
 
 <script setup>
-import { httpRequest } from "~/utils/httpRequest";
-import HeaderContent from "~/components/admin/HeaderContent.vue";
-import Loading from "~/components/ui/Loading.vue";
-import Pagination from "~/components/ui/Pagination.vue";
+  import { httpRequest } from '~/utils/httpRequest'
+  import HeaderContent from '~/components/admin/HeaderContent.vue'
+  import Loading from '~/components/ui/Loading.vue'
+  import Pagination from '~/components/ui/Pagination.vue'
 
-definePageMeta({
-  layout: "admin",
-  middleware: "auth",
-});
+  definePageMeta({
+    layout: 'admin',
+    middleware: 'auth',
+  })
 
-// Reactive data
-const searchQuery = ref("");
-const selectedStatus = ref("");
-const currentPage = ref(1);
-const limit = 10;
-const loading = ref(false);
-const contacts = ref([]);
-const pagination = ref({
-  total: 0,
-  page: 1,
-  limit: 10,
-  nextPage: false,
-  prePage: false,
-});
+  // Reactive data
+  const searchQuery = ref('')
+  const selectedStatus = ref('')
+  const currentPage = ref(1)
+  const limit = 10
+  const loading = ref(false)
+  const contacts = ref([])
+  const pagination = ref({
+    total: 0,
+    page: 1,
+    limit: 10,
+    nextPage: false,
+    prePage: false,
+  })
 
-// Debounced search
-let searchTimeout;
-const debouncedSearch = () => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    currentPage.value = 1;
-    fetchContacts();
-  }, 500);
-};
-
-// Fetch contacts from API
-const fetchContacts = async () => {
-  loading.value = true;
-  try {
-    const params = new URLSearchParams({
-      page: currentPage.value.toString(),
-      limit: limit.toString(),
-    });
-
-    if (searchQuery.value) {
-      params.append("search", searchQuery.value);
-    }
-
-    if (selectedStatus.value !== "") {
-      params.append("status", selectedStatus.value);
-    }
-
-    const response = await httpRequest.get(`/contact?${params.toString()}`);
-
-    contacts.value = response.data;
-    pagination.value = {
-      total: response.total,
-      page: response.page,
-      limit: response.limit,
-      nextPage: response.nextPage,
-      prePage: response.prePage,
-    };
-  } catch (error) {
-    console.error("Error fetching contacts:", error);
-    // You might want to show a toast notification here
-  } finally {
-    loading.value = false;
+  // Debounced search
+  let searchTimeout
+  const debouncedSearch = () => {
+    clearTimeout(searchTimeout)
+    searchTimeout = setTimeout(() => {
+      currentPage.value = 1
+      fetchContacts()
+    }, 500)
   }
-};
 
-// Toggle contact status
-const toggleStatus = async (id, currentStatus) => {
-  try {
-    await httpRequest.put(`/contact/${id}`, {
-      status: !currentStatus,
-    });
-
-    // Update local state
-    const contact = contacts.value.find((c) => c._id === id);
-    if (contact) {
-      contact.status = !currentStatus;
-    }
-  } catch (error) {
-    console.error("Error updating contact status:", error);
-  }
-};
-
-// Delete contact
-const deleteContact = async (id) => {
-  if (confirm("Bạn có chắc chắn muốn xóa liên hệ này?")) {
+  // Fetch contacts from API
+  const fetchContacts = async () => {
+    loading.value = true
     try {
-      await httpRequest.delete(`/contact/${id}`);
+      const params = new URLSearchParams({
+        page: currentPage.value.toString(),
+        limit: limit.toString(),
+      })
 
-      // Remove from local state
-      contacts.value = contacts.value.filter((contact) => contact._id !== id);
+      if (searchQuery.value) {
+        params.append('search', searchQuery.value)
+      }
 
-      // Refresh data if current page is empty
-      if (contacts.value.length === 0 && currentPage.value > 1) {
-        currentPage.value--;
-        fetchContacts();
+      if (selectedStatus.value !== '') {
+        params.append('status', selectedStatus.value)
+      }
+
+      const response = await httpRequest.get(`/contact?${params.toString()}`)
+
+      contacts.value = response.data
+      pagination.value = {
+        total: response.total,
+        page: response.page,
+        limit: response.limit,
+        nextPage: response.nextPage,
+        prePage: response.prePage,
       }
     } catch (error) {
-      console.error("Error deleting contact:", error);
+      console.error('Error fetching contacts:', error)
+      // You might want to show a toast notification here
+    } finally {
+      loading.value = false
     }
   }
-};
 
+  // Toggle contact status
+  const toggleStatus = async (id, currentStatus) => {
+    try {
+      await httpRequest.put(`/contact/${id}`, {
+        status: !currentStatus,
+      })
 
+      // Update local state
+      const contact = contacts.value.find(c => c._id === id)
+      if (contact) {
+        contact.status = !currentStatus
+      }
+    } catch (error) {
+      console.error('Error updating contact status:', error)
+    }
+  }
 
-// Utility methods
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString("vi-VN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};
+  // Delete contact
+  const deleteContact = async id => {
+    if (confirm('Bạn có chắc chắn muốn xóa liên hệ này?')) {
+      try {
+        await httpRequest.delete(`/contact/${id}`)
 
-// Fetch data on mount
-onMounted(() => {
-  fetchContacts();
-});
+        // Remove from local state
+        contacts.value = contacts.value.filter(contact => contact._id !== id)
+
+        // Refresh data if current page is empty
+        if (contacts.value.length === 0 && currentPage.value > 1) {
+          currentPage.value--
+          fetchContacts()
+        }
+      } catch (error) {
+        console.error('Error deleting contact:', error)
+      }
+    }
+  }
+
+  // Utility methods
+  const formatDate = dateString => {
+    return new Date(dateString).toLocaleDateString('vi-VN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  }
+
+  // Fetch data on mount
+  onMounted(() => {
+    fetchContacts()
+  })
 </script>

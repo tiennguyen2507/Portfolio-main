@@ -14,8 +14,8 @@ export const useScrollAnimation = () => {
     if (!elementRef.value) return
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             startAnimation()
             // Stop observing after animation starts
@@ -25,7 +25,7 @@ export const useScrollAnimation = () => {
       },
       {
         threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -50px 0px',
       }
     )
 
@@ -43,6 +43,6 @@ export const useScrollAnimation = () => {
     isVisible,
     elementRef,
     startAnimation,
-    stopAnimation
+    stopAnimation,
   }
-} 
+}
