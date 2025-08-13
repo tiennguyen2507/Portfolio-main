@@ -2,45 +2,45 @@
   <div>
     <div class="min-h-screen mt-2 bg-white">
       <!-- Loading State -->
-      <div v-if="loading" class="flex items-center justify-center min-h-screen">
+      <div v-if="pending" class="flex items-center justify-center min-h-screen">
         <div class="text-center">
           <div
             class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"
           ></div>
-          <p class="mt-4 text-gray-600">Loading article...</p>
+          <p class="mt-4 text-gray-600">Đang tải bài viết...</p>
         </div>
       </div>
 
       <!-- Error State -->
       <div
-        v-else-if="error"
+        v-else-if="fetchError"
         class="flex items-center justify-center min-h-screen"
       >
         <div class="text-center">
-          <p class="text-red-600 mb-4 text-lg">{{ error }}</p>
+          <p class="text-red-600 mb-4 text-lg">{{ fetchError.message || 'Đã xảy ra lỗi' }}</p>
           <button
-            @click="fetchBlogDetail"
-            class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg"
+            @click="refresh"
+            class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
           >
-            Try Again
+            Thử lại
           </button>
           <NuxtLink
             to="/blogs"
-            class="block mt-4 text-orange-500 hover:text-orange-600"
+            class="block mt-4 text-orange-500 hover:text-orange-600 transition-colors"
           >
-            ← Back to Blogs
+            ← Về danh sách bài viết
           </NuxtLink>
         </div>
       </div>
 
       <!-- Blog Detail Content -->
       <article
-        v-else-if="blog"
+        v-else-if="blogData"
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
         itemscope
         itemtype="https://schema.org/BlogPosting"
       >
-        <!-- Breadcrumbs -->
+        <!-- Enhanced Breadcrumbs with Schema -->
         <nav class="mb-8" aria-label="Breadcrumb">
           <ol
             class="flex items-center space-x-2 text-sm text-gray-500"
@@ -52,8 +52,8 @@
               itemscope
               itemtype="https://schema.org/ListItem"
             >
-              <NuxtLink to="/" class="hover:text-orange-500" itemprop="item">
-                <span itemprop="name">Home</span>
+              <NuxtLink to="/" class="hover:text-orange-500 transition-colors" itemprop="item">
+                <span itemprop="name">Trang chủ</span>
               </NuxtLink>
               <meta itemprop="position" content="1" />
             </li>
@@ -76,8 +76,8 @@
               itemscope
               itemtype="https://schema.org/ListItem"
             >
-              <NuxtLink to="/" class="hover:text-orange-500" itemprop="item">
-                <span itemprop="name">Portfolio</span>
+              <NuxtLink to="/blogs" class="hover:text-orange-500 transition-colors" itemprop="item">
+                <span itemprop="name">Blog</span>
               </NuxtLink>
               <meta itemprop="position" content="2" />
             </li>
@@ -101,7 +101,7 @@
               itemscope
               itemtype="https://schema.org/ListItem"
             >
-              <span itemprop="name">{{ blog.title }}</span>
+              <span itemprop="name">{{ blogData.title }}</span>
               <meta itemprop="position" content="3" />
             </li>
           </ol>
@@ -109,100 +109,109 @@
 
         <!-- Blog Content - Seamless Layout -->
         <div class="bg-white">
-          <!-- Title -->
+          <!-- Enhanced Title with better typography -->
           <header>
             <h1
-              class="text-4xl font-bold text-gray-900 mb-6 leading-tight"
+              class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
               itemprop="headline"
             >
-              {{ blog.title }}
+              {{ blogData.title }}
             </h1>
 
-            <!-- Meta Info -->
+            <!-- Enhanced Meta Info with better accessibility -->
             <div class="flex flex-wrap items-center gap-6 mb-8 text-sm">
               <div class="flex items-center">
-                <span class="text-gray-500 mr-2">Published on:</span>
+                <span class="text-gray-500 mr-2">Ngày đăng:</span>
                 <time
-                  :datetime="formatDateISO(blog.createdAt)"
-                  class="text-gray-900"
+                  :datetime="formatDateISO(blogData.createdAt)"
+                  class="text-gray-900 font-medium"
                   itemprop="datePublished"
                 >
-                  {{ formatDate(blog.createdAt) }}
+                  {{ formatDate(blogData.createdAt) }}
                 </time>
               </div>
               <div class="flex items-center">
-                <span class="text-gray-500 mr-2">By:</span>
+                <span class="text-gray-500 mr-2">Tác giả:</span>
                 <img
-                  :src="blog.createdBy.avatar"
-                  :alt="`${blog.createdBy.firstName} ${blog.createdBy.lastName}`"
+                  :src="blogData.createdBy.avatar"
+                  :alt="`Avatar của ${blogData.createdBy.firstName} ${blogData.createdBy.lastName}`"
                   class="w-6 h-6 rounded-full mr-2"
                   @error="handleAvatarError"
+                  loading="lazy"
                 />
                 <span
-                  class="text-gray-900"
+                  class="text-gray-900 font-medium"
                   itemprop="author"
                   itemscope
                   itemtype="https://schema.org/Person"
                 >
                   <span itemprop="name"
-                    >{{ blog.createdBy.firstName }}
-                    {{ blog.createdBy.lastName }}</span
+                    >{{ blogData.createdBy.firstName }}
+                    {{ blogData.createdBy.lastName }}</span
                   >
                 </span>
               </div>
               <div class="flex items-center">
-                <span class="text-gray-500 mr-2">Status:</span>
+                <span class="text-gray-500 mr-2">Trạng thái:</span>
                 <span
-                  :class="blog.status ? 'bg-green-500' : 'bg-gray-500'"
+                  :class="blogData.status ? 'bg-green-500' : 'bg-gray-500'"
                   class="text-white px-2 py-1 rounded text-xs font-medium"
                 >
-                  {{ blog.status ? "Active" : "Inactive" }}
+                  {{ blogData.status ? "Hoạt động" : "Không hoạt động" }}
                 </span>
+              </div>
+              <!-- Reading time estimate -->
+              <div class="flex items-center">
+                <span class="text-gray-500 mr-2">Thời gian đọc:</span>
+                <span class="text-gray-900 font-medium">{{ calculateReadingTime(blogData.description) }} phút</span>
               </div>
             </div>
           </header>
 
-          <!-- Featured Image -->
+          <!-- Enhanced Featured Image with lazy loading -->
           <figure class="relative mb-8">
             <img
-              :src="blog.thumbnail"
-              :alt="`Featured image for: ${blog.title}`"
-              class="w-full h-96 object-cover"
+              :src="blogData.thumbnail"
+              :alt="`Hình ảnh chính cho bài viết: ${blogData.title}`"
+              class="w-full h-96 object-cover rounded-lg shadow-lg"
               @error="handleImageError"
               itemprop="image"
+              loading="lazy"
+              decoding="async"
             />
             <figcaption
               class="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm"
             >
-              Featured image for: {{ blog.title }}
+              Hình ảnh chính: {{ blogData.title }}
             </figcaption>
           </figure>
 
-          <!-- Blog Content -->
+          <!-- Enhanced Blog Content with better typography -->
           <div
             class="prose prose-lg max-w-none mb-8"
             itemprop="articleBody"
-            v-html="blog.description"
+            v-html="blogData.description"
           ></div>
 
-          <!-- Footer -->
+          <!-- Enhanced Footer with better navigation -->
           <footer
-            class="flex items-center justify-between text-sm text-gray-500 pt-8 border-t border-gray-200"
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between text-sm text-gray-500 pt-8 border-t border-gray-200 gap-4"
           >
             <div>
-              <span>Last updated: </span>
+              <span>Cập nhật lần cuối: </span>
               <time
-                :datetime="formatDateISO(blog.updatedAt || blog.createdAt)"
+                :datetime="formatDateISO(blogData.updatedAt || blogData.createdAt)"
                 itemprop="dateModified"
+                class="font-medium"
               >
-                {{ formatDate(blog.updatedAt || blog.createdAt) }}
+                {{ formatDate(blogData.updatedAt || blogData.createdAt) }}
               </time>
             </div>
-            <div>
+            <div class="flex gap-3">
               <NuxtLink
-                to="/"
-                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                aria-label="Back to portfolio"
+                to="/blogs"
+                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                aria-label="Xem tất cả bài viết"
               >
                 <svg
                   class="w-4 h-4 mr-2"
@@ -215,10 +224,31 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M15 19l-7-7 7-7"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
                   ></path>
                 </svg>
-                Back to Portfolio
+                Tất cả bài viết
+              </NuxtLink>
+              <NuxtLink
+                to="/"
+                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                aria-label="Về trang chủ"
+              >
+                <svg
+                  class="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  ></path>
+                </svg>
+                Về trang chủ
               </NuxtLink>
             </div>
           </footer>
@@ -229,38 +259,49 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { computed, watch } from "vue";
 import httpRequest from "~/utils/httpRequest";
 
 // Get route params
 const route = useRoute();
 const blogId = computed(() => route.params.id);
 
-// Reactive data
-const blog = ref(null);
-const loading = ref(true);
-const error = ref(null);
-
-// Fetch blog detail from API
-const fetchBlogDetail = async () => {
-  try {
-    loading.value = true;
-    error.value = null;
-
-    const data = await httpRequest.get(`/posts/${blogId.value}`);
-    blog.value = data;
-  } catch (err) {
-    console.error("Error fetching blog detail:", err);
-    error.value = "Failed to load article. Please try again later.";
-  } finally {
-    loading.value = false;
+// Server-side data fetching with useAsyncData
+const { data: blogData, pending, error: fetchError, refresh } = await useAsyncData(
+  `blog-${blogId.value}`,
+  async () => {
+    try {
+      const data = await httpRequest.get(`/posts/${blogId.value}`);
+      return data;
+    } catch (err) {
+      console.error("Error fetching blog detail:", err);
+      throw new Error("Không thể tải bài viết. Vui lòng thử lại sau.");
+    }
+  },
+  {
+    server: true, // Enable SSR
+    client: true, // Enable client-side hydration
+    key: `blog-${blogId.value}`, // Unique key for caching
+    transform: (data) => {
+      // Transform data if needed
+      return data;
+    },
+    watch: [blogId], // Watch for route changes
   }
+);
+
+// Calculate reading time
+const calculateReadingTime = (content) => {
+  if (!content) return 1;
+  const wordsPerMinute = 200;
+  const wordCount = stripHtml(content).split(' ').length;
+  return Math.ceil(wordCount / wordsPerMinute);
 };
 
 // Format date
 const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString("vi-VN", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -290,30 +331,34 @@ const handleAvatarError = (event) => {
   event.target.src = "/images/ab-1.webp"; // Fallback avatar
 };
 
-// SEO Meta Tags
+// Enhanced SEO Meta Tags with SSR support
 useHead(() => {
-  if (!blog.value) {
+  if (!blogData.value) {
     return {
-      title: "Blog Detail - Nguyễn Lê Đình Tiên",
+      title: "Chi tiết bài viết - Nguyễn Lê Đình Tiên",
       meta: [
         {
           name: "description",
-          content:
-            "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình.",
+          content: "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên.",
+        },
+        {
+          name: "robots",
+          content: "noindex, nofollow",
         },
       ],
     };
   }
 
-  const title = `${blog.value.title} - Nguyễn Lê Đình Tiên`;
-  const description = stripHtml(blog.value.description).substring(0, 160);
-  const imageUrl = blog.value.thumbnail || "/images/blog-1.webp";
-  const authorName = `${blog.value.createdBy.firstName} ${blog.value.createdBy.lastName}`;
-  const publishedDate = formatDateISO(blog.value.createdAt);
+  const title = `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên`;
+  const description = stripHtml(blogData.value.description).substring(0, 160);
+  const imageUrl = blogData.value.thumbnail || "/images/blog-1.webp";
+  const authorName = `${blogData.value.createdBy.firstName} ${blogData.value.createdBy.lastName}`;
+  const publishedDate = formatDateISO(blogData.value.createdAt);
   const modifiedDate = formatDateISO(
-    blog.value.updatedAt || blog.value.createdAt
+    blogData.value.updatedAt || blogData.value.createdAt
   );
-  const url = `https://your-domain.com/blogs/${blog.value._id}`;
+  const url = `https://your-domain.com/blogs/${blogData.value._id}`;
+  const readingTime = calculateReadingTime(blogData.value.description);
 
   return {
     title,
@@ -325,8 +370,7 @@ useHead(() => {
       },
       {
         name: "keywords",
-        content:
-          "blog, article, technology, web development, programming, React, Vue.js, Node.js, Nguyễn Lê Đình Tiên",
+        content: `${blogData.value.title}, blog, bài viết, công nghệ, phát triển web, lập trình, React, Vue.js, Node.js, Nguyễn Lê Đình Tiên`,
       },
       {
         name: "author",
@@ -334,12 +378,15 @@ useHead(() => {
       },
       {
         name: "robots",
-        content:
-          "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
       },
       {
         name: "googlebot",
         content: "index, follow",
+      },
+      {
+        name: "article:reading_time",
+        content: readingTime.toString(),
       },
 
       // Open Graph (Facebook, LinkedIn)
@@ -373,11 +420,11 @@ useHead(() => {
       },
       {
         property: "og:site_name",
-        content: "Nguyễn Lê Đình Tiên - Portfolio",
+        content: "Nguyễn Lê Đình Tiên - Portfolio & Blog",
       },
       {
         property: "og:locale",
-        content: "en_US",
+        content: "vi_VN",
       },
       {
         property: "article:published_time",
@@ -394,6 +441,10 @@ useHead(() => {
       {
         property: "article:section",
         content: "Blog",
+      },
+      {
+        property: "article:tag",
+        content: "công nghệ, phát triển web, lập trình",
       },
 
       // Twitter Card
@@ -431,11 +482,24 @@ useHead(() => {
         name: "article:publisher",
         content: "https://your-domain.com",
       },
+      {
+        name: "article:section",
+        content: "Blog",
+      },
+      {
+        name: "article:tag",
+        content: "công nghệ, phát triển web, lập trình, React, Vue.js, Node.js",
+      },
     ],
     link: [
       {
         rel: "canonical",
         href: url,
+      },
+      {
+        rel: "preload",
+        href: imageUrl,
+        as: "image",
       },
     ],
     script: [
@@ -444,13 +508,19 @@ useHead(() => {
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          headline: blog.value.title,
+          headline: blogData.value.title,
           description: description,
-          image: imageUrl,
+          image: {
+            "@type": "ImageObject",
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+          },
           author: {
             "@type": "Person",
             name: authorName,
-            image: blog.value.createdBy.avatar,
+            image: blogData.value.createdBy.avatar,
+            url: "https://your-domain.com",
           },
           publisher: {
             "@type": "Organization",
@@ -458,7 +528,10 @@ useHead(() => {
             logo: {
               "@type": "ImageObject",
               url: "https://your-domain.com/images/logo.webp",
+              width: 200,
+              height: 200,
             },
+            url: "https://your-domain.com",
           },
           datePublished: publishedDate,
           dateModified: modifiedDate,
@@ -471,40 +544,77 @@ useHead(() => {
             "@type": "Blog",
             name: "Nguyễn Lê Đình Tiên Blog",
             url: "https://your-domain.com/blogs",
+            description: "Blog về công nghệ, phát triển web và lập trình",
           },
+          articleSection: "Blog",
+          articleBody: stripHtml(blogData.value.description),
+          wordCount: stripHtml(blogData.value.description).split(' ').length,
+          timeRequired: `PT${readingTime}M`,
+          inLanguage: "vi-VN",
+          isAccessibleForFree: true,
+          license: "https://creativecommons.org/licenses/by/4.0/",
+        }),
+      },
+      // BreadcrumbList Schema
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Trang chủ",
+              item: "https://your-domain.com",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Blog",
+              item: "https://your-domain.com/blogs",
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: blogData.value.title,
+              item: url,
+            },
+          ],
         }),
       },
     ],
   };
 });
 
-// Watch for route changes
+// Set page title for better SEO
+useSeoMeta({
+  title: computed(() => blogData.value ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên` : "Chi tiết bài viết - Nguyễn Lê Đình Tiên"),
+  description: computed(() => blogData.value ? stripHtml(blogData.value.description).substring(0, 160) : "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên."),
+  ogTitle: computed(() => blogData.value ? `${blogData.value.title} - Blog Nguyễn Lê Đình Tiên` : "Chi tiết bài viết - Nguyễn Lê Đình Tiên"),
+  ogDescription: computed(() => blogData.value ? stripHtml(blogData.value.description).substring(0, 160) : "Đọc các bài viết mới nhất về công nghệ, phát triển web và kinh nghiệm lập trình từ Nguyễn Lê Đình Tiên."),
+  ogImage: computed(() => blogData.value?.thumbnail || "/images/blog-1.webp"),
+  twitterCard: "summary_large_image",
+});
+
+// Handle route changes for SPA navigation
 watch(
   blogId,
-  (newId) => {
+  async (newId) => {
     if (newId) {
-      fetchBlogDetail();
+      // Refresh data when route changes
+      await refresh();
     }
-  },
-  { immediate: true }
-);
-
-// Fetch blog detail on component mount
-onMounted(() => {
-  if (blogId.value) {
-    fetchBlogDetail();
-  } else {
-    error.value = "Blog ID not found";
-    loading.value = false;
   }
-});
+);
 </script>
 
 <style scoped>
-/* Prose styling for blog content */
+/* Enhanced Prose styling for blog content */
 .prose {
   color: #374151;
   line-height: 1.75;
+  font-size: 1.125rem;
 }
 
 .prose h1,
@@ -515,24 +625,31 @@ onMounted(() => {
 .prose h6 {
   color: #111827;
   font-weight: 700;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.3;
 }
 
 .prose h1 {
   font-size: 2.25rem;
+  border-bottom: 3px solid #f97316;
+  padding-bottom: 0.5rem;
 }
 
 .prose h2 {
   font-size: 1.875rem;
+  border-bottom: 2px solid #fbbf24;
+  padding-bottom: 0.25rem;
 }
 
 .prose h3 {
   font-size: 1.5rem;
+  color: #f97316;
 }
 
 .prose p {
   margin-bottom: 1.5rem;
+  text-align: justify;
 }
 
 .prose ul,
@@ -547,10 +664,12 @@ onMounted(() => {
 
 .prose blockquote {
   border-left: 4px solid #f97316;
-  padding-left: 1.5rem;
+  padding: 1rem 1.5rem;
   margin: 2rem 0;
   font-style: italic;
   color: #6b7280;
+  background-color: #f9fafb;
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .prose code {
@@ -559,6 +678,7 @@ onMounted(() => {
   border-radius: 0.375rem;
   font-size: 0.875rem;
   color: #374151;
+  border: 1px solid #e5e7eb;
 }
 
 .prose pre {
@@ -568,26 +688,33 @@ onMounted(() => {
   border-radius: 0.5rem;
   overflow-x: auto;
   margin: 2rem 0;
+  border: 1px solid #374151;
 }
 
 .prose a {
   color: #f97316;
   text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
 }
 
 .prose a:hover {
-  text-decoration: underline;
+  border-bottom-color: #f97316;
 }
 
 .prose img {
   border-radius: 0.5rem;
   margin: 2rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .prose table {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .prose th,
@@ -600,5 +727,44 @@ onMounted(() => {
 .prose th {
   background-color: #f9fafb;
   font-weight: 600;
+  color: #374151;
+}
+
+.prose th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+.prose th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+/* Enhanced responsive design */
+@media (max-width: 768px) {
+  .prose {
+    font-size: 1rem;
+  }
+  
+  .prose h1 {
+    font-size: 1.875rem;
+  }
+  
+  .prose h2 {
+    font-size: 1.5rem;
+  }
+  
+  .prose h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Smooth transitions */
+.prose * {
+  transition: all 0.2s ease;
+}
+
+/* Focus states for accessibility */
+.prose a:focus {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
 }
 </style>

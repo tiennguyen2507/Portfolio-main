@@ -117,7 +117,6 @@ const editorOptions = {
   placeholder: "Nhập nội dung bài viết...",
 };
 
-const formatDate = (dateString) => new Date(dateString).toLocaleDateString("vi-VN");
 
 const fetchPosts = async () => {
   loading.value = true;
