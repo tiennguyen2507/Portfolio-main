@@ -48,8 +48,9 @@
             :key="project._id"
             variant="elevated"
             hover
-            class="h-full"
+            class="h-full cursor-pointer transition-transform hover:scale-105"
             padding="sm"
+            @click="goToProjectDetail(project._id)"
           >
             <img
               :src="project.thumbnail || '/images/blog-1.webp'"
@@ -59,7 +60,7 @@
             />
             <div class="p-4 sm:p-2 flex flex-col h-full">
               <h3
-                class="text-xl font-semibold text-white mb-2 line-clamp-1 min-h-[1.5rem]"
+                class="text-xl font-semibold text-white mb-2 line-clamp-1 min-h-[1.5rem] hover:text-orange-400 transition-colors"
               >
                 {{ project.title }}
               </h3>
@@ -82,6 +83,24 @@
                 >
                   +{{ project.skill.length - 3 }}
                 </Badge>
+              </div>
+
+              <!-- View Details Button -->
+              <div class="mt-4 pt-3 border-t border-gray-700">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-400">Xem chi tiết</span>
+                  <svg
+                    class="w-4 h-4 text-orange-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </Card>
@@ -206,6 +225,13 @@
       document
         .getElementById('projects')
         ?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  // Go to project detail page
+  const goToProjectDetail = projectId => {
+    if (projectId) {
+      navigateTo(`/projects/${projectId}`)
     }
   }
 

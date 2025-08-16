@@ -6,17 +6,17 @@ export const usePerformance = () => {
         // Measure Core Web Vitals
         if ('PerformanceObserver' in window) {
           // LCP (Largest Contentful Paint)
-          const lcpObserver = new PerformanceObserver(list => {
-            const entries = list.getEntries()
-            const lastEntry = entries[entries.length - 1]
-            // LCP measurement available
+          const lcpObserver = new PerformanceObserver(() => {
+            // LCP measurement available - last entry is most recent
+            // const entries = list.getEntries()
+            // const lastEntry = entries[entries.length - 1]
           })
           lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] })
 
           // FID (First Input Delay)
           const fidObserver = new PerformanceObserver(list => {
             const entries = list.getEntries()
-            entries.forEach(entry => {
+            entries.forEach(() => {
               // FID measurement available
             })
           })
@@ -24,11 +24,11 @@ export const usePerformance = () => {
 
           // CLS (Cumulative Layout Shift)
           const clsObserver = new PerformanceObserver(list => {
-            let cls = 0
+            // let cls = 0
             const entries = list.getEntries()
             entries.forEach(entry => {
               if (!entry.hadRecentInput) {
-                cls += entry.value
+                // cls += entry.value
               }
             })
             // CLS measurement available

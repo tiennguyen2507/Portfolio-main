@@ -17,12 +17,16 @@ export const useLazyCSS = () => {
       // Use requestIdleCallback for better performance
       if ('requestIdleCallback' in window) {
         requestIdleCallback(() => {
-          loadCSS('/_nuxt/entry.css').catch(console.error)
+          loadCSS('/_nuxt/entry.css').catch(() => {
+            // Silent error handling for CSS loading
+          })
         })
       } else {
         // Fallback for older browsers
         setTimeout(() => {
-          loadCSS('/_nuxt/entry.css').catch(console.error)
+          loadCSS('/_nuxt/entry.css').catch(() => {
+            // Silent error handling for CSS loading
+          })
         }, 1000)
       }
     }

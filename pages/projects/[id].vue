@@ -202,9 +202,16 @@
             </span>
           </div>
         </section>
-        <p class="text-xl text-gray-600 leading-relaxed" itemprop="description">
-          {{ projectData.description }}
-        </p>
+
+        <!-- Project Description -->
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Mô tả dự án</h2>
+          <div
+            class="prose prose-lg max-w-none text-gray-700 leading-relaxed"
+            itemprop="description"
+            v-html="projectData.description"
+          ></div>
+        </section>
 
         <!-- Project Content -->
         <section v-if="projectData.content" class="mb-8">

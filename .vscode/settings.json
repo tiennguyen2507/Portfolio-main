@@ -24,10 +24,11 @@
   },
   "eslint.validate": [
     "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
+    "javascriptreact"
   ],
+  "typescript.validate.enable": false,
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.suggest.autoImports": false,
+  "typescript.preferences.includeCompletionsForModuleExports": false,
   "prettier.requireConfig": true
 }

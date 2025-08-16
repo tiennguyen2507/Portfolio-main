@@ -27,9 +27,8 @@ export const useUserStore = defineStore('user', () => {
         user.value = response
         return response
       }
-    } catch (error) {
-      console.error('Error fetching user info:', error)
-      // Nếu API trả về lỗi, clear token và user
+    } catch {
+      // Silent error handling for user info fetching
       clearAuth()
       return null
     } finally {

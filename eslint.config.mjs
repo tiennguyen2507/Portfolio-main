@@ -94,9 +94,6 @@ export default [
       '.output/**',
       'public/**',
       'assets/**',
-      '**/*.vue',
-      '**/*.ts',
-      '**/*.tsx',
     ],
   },
 ]

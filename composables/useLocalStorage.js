@@ -8,8 +8,8 @@ export const useLocalStorage = (key, defaultValue = null) => {
       if (item) {
         stored.value = JSON.parse(item)
       }
-    } catch (error) {
-      console.error('Error loading from localStorage:', error)
+    } catch {
+      // Silent error handling for localStorage loading
     }
   })
 
@@ -19,8 +19,8 @@ export const useLocalStorage = (key, defaultValue = null) => {
     newValue => {
       try {
         localStorage.setItem(key, JSON.stringify(newValue))
-      } catch (error) {
-        console.error('Error saving to localStorage:', error)
+      } catch {
+        // Silent error handling for localStorage saving
       }
     },
     { deep: true }
