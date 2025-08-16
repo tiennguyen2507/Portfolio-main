@@ -42,7 +42,12 @@
           :to="`/blogs/${post._id}`"
           class="block"
         >
-          <Card variant="elevated" hover class="group cursor-pointer">
+          <Card
+            variant="elevated"
+            hover
+            class="group cursor-pointer"
+            padding="sm"
+          >
             <div class="relative overflow-hidden">
               <img
                 :src="post.thumbnail"
