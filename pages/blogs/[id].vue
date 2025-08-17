@@ -205,9 +205,114 @@
             custom-class="mb-8"
           />
 
+          <!-- Recommended Articles Section -->
+          <section class="mt-16 pt-8 border-t border-gray-200">
+            <div class="flex items-center justify-between mb-8">
+              <h2 class="text-2xl font-bold text-gray-900">Recommended</h2>
+              <NuxtLink
+                to="/blogs"
+                class="text-orange-500 hover:text-orange-600 font-medium transition-colors"
+              >
+                See all >
+              </NuxtLink>
+            </div>
+
+            <!-- Loading State for Recommended -->
+            <div v-if="recommendedPending" class="grid grid-cols-3 gap-6">
+              <div v-for="i in 6" :key="i" class="animate-pulse">
+                <div class="flex gap-4">
+                  <!-- Left Content Skeleton -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between mb-3">
+                      <div class="bg-gray-200 h-6 w-20 rounded"></div>
+                      <div class="bg-gray-200 h-4 w-16 rounded"></div>
+                    </div>
+                    <div class="space-y-2 mb-3">
+                      <div class="bg-gray-200 h-4 rounded w-full"></div>
+                      <div class="bg-gray-200 h-4 rounded w-3/4"></div>
+                      <div class="bg-gray-200 h-4 rounded w-1/2"></div>
+                    </div>
+                    <div class="bg-gray-200 h-3 rounded w-2/3"></div>
+                  </div>
+                  <!-- Right Image Skeleton -->
+                  <div class="flex-shrink-0">
+                    <div class="bg-gray-200 w-24 h-24 rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recommended Articles Grid - 3 columns with horizontal layout per article -->
+            <div
+              v-else-if="recommendedPosts.length"
+              class="grid grid-cols-3 gap-6"
+            >
+              <article
+                v-for="post in recommendedPosts"
+                :key="post._id"
+                class="group cursor-pointer border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors"
+                itemscope
+                itemtype="https://schema.org/BlogPosting"
+              >
+                <NuxtLink :to="`/blogs/${post._id}`" class="block h-full">
+                  <div class="flex gap-4">
+                    <!-- Left Content -->
+                    <div class="flex-1">
+                      <!-- Source Tag and Time -->
+                      <div class="flex items-center justify-between mb-3">
+                        <span
+                          class="text-xs font-medium text-gray-700 bg-white px-2 py-1 rounded border"
+                        >
+                          {{ post.createdBy?.firstName || 'Blog' }} News
+                        </span>
+                        <span class="text-xs text-gray-400">4 hours ago</span>
+                      </div>
+
+                      <!-- Article Title -->
+                      <h3
+                        class="text-sm font-semibold text-gray-900 mb-3 line-clamp-3 group-hover:text-orange-500 transition-colors"
+                        itemprop="headline"
+                      >
+                        {{ post.title }}
+                      </h3>
+
+                      <!-- Author and Reading Time -->
+                      <div class="flex items-center text-xs text-gray-500">
+                        <span
+                          >by {{ post.createdBy?.firstName || 'Author' }} |
+                          {{ calculateReadingTime(post.description) }} min |
+                          {{ formatDate(post.createdAt) }}</span
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Right Image -->
+                    <div class="flex-shrink-0">
+                      <div
+                        class="relative overflow-hidden rounded-lg w-24 h-24"
+                      >
+                        <img
+                          :src="post.thumbnail"
+                          :alt="post.title"
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </NuxtLink>
+              </article>
+            </div>
+
+            <!-- Empty State for Recommended -->
+            <div v-else class="text-center py-8">
+              <p class="text-gray-500">Không có bài viết liên quan</p>
+            </div>
+          </section>
+
           <!-- Enhanced Footer with better navigation -->
           <footer
-            class="flex flex-col sm:flex-row items-start sm:items-center justify-between text-sm text-gray-500 pt-8 border-t border-gray-200 gap-4"
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between text-sm text-gray-500 pt-8 border-t border-gray-200 gap-4 mt-8"
           >
             <div>
               <span>Cập nhật lần cuối: </span>
@@ -685,11 +790,108 @@
     ),
   })
 
+  // Recommended posts state
+  const recommendedPosts = ref([])
+  const recommendedPending = ref(false)
+
+  // Fetch recommended posts
+  const fetchRecommendedPosts = async () => {
+    try {
+      console.log('Starting to fetch recommended posts...')
+      recommendedPending.value = true
+      // Lấy nhiều hơn để đảm bảo có đủ 6 bài sau khi filter
+      const response = await httpRequest.get('/posts?limit=10&page=1')
+
+      console.log('API Response:', response)
+
+      if (response && response.data && Array.isArray(response.data)) {
+        console.log('Total posts from API:', response.data.length)
+
+        // Filter out current post and get 6 recommended posts
+        const filteredPosts = response.data
+          .filter(post => post._id !== blogId.value)
+          .slice(0, 6)
+
+        console.log('Filtered posts (excluding current):', filteredPosts.length)
+        console.log('Current blogId:', blogId.value)
+        recommendedPosts.value = filteredPosts
+      } else {
+        console.log('Invalid response format:', response)
+        recommendedPosts.value = []
+      }
+    } catch (err) {
+      console.error('Error fetching recommended posts:', err)
+      recommendedPosts.value = []
+    } finally {
+      console.log('Setting recommendedPending to false')
+      recommendedPending.value = false
+    }
+  }
+
+  // Fetch recommended posts when blog data is loaded
+  watch(
+    blogData,
+    newBlogData => {
+      console.log('blogData changed:', newBlogData)
+      if (newBlogData) {
+        console.log('Calling fetchRecommendedPosts from blogData watch')
+        fetchRecommendedPosts()
+      }
+    },
+    { immediate: true }
+  )
+
   // Handle route changes for SPA navigation
   watch(blogId, async newId => {
+    console.log('blogId changed:', newId)
     if (newId) {
       // Refresh data when route changes
       await refresh()
+      // Also fetch recommended posts for new blog
+      console.log('Calling fetchRecommendedPosts from blogId watch')
+      fetchRecommendedPosts()
     }
   })
+
+  // Fallback: fetch recommended posts after a short delay if not already fetched
+  onMounted(() => {
+    console.log('Component mounted, blogId:', blogId.value)
+    setTimeout(() => {
+      if (recommendedPosts.value.length === 0 && !recommendedPending.value) {
+        console.log('Fallback: fetching recommended posts')
+        fetchRecommendedPosts()
+      }
+    }, 1000)
+  })
 </script>
+
+<style scoped>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Smooth transitions */
+  .transition-shadow {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .transition-transform {
+    transition: transform 0.3s ease;
+  }
+
+  /* Focus states for accessibility */
+  a:focus {
+    outline: 2px solid #f97316;
+    outline-offset: 2px;
+  }
+</style>
