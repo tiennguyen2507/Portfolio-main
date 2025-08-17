@@ -128,12 +128,15 @@
                   >
                     {{ post.title }}
                   </h2>
-                  <p
-                    class="text-gray-400 mb-4 line-clamp-3 text-sm"
+                  <ViewEdior
+                    :content="post.description"
+                    :strip-html="true"
+                    :truncate="true"
+                    :max-length="120"
+                    custom-class="text-gray-400 mb-4 line-clamp-3 text-sm"
                     itemprop="description"
-                  >
-                    {{ stripHtmlTags(post.description) }}
-                  </p>
+                    variant="dark"
+                  />
 
                   <!-- Author Info -->
                   <div class="flex items-center justify-between">

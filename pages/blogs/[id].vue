@@ -199,11 +199,11 @@
           </figure>
 
           <!-- Enhanced Blog Content with better typography -->
-          <div
-            class="prose prose-lg max-w-none mb-8"
+          <ViewEdior
+            :content="blogData.description"
             itemprop="articleBody"
-            v-html="blogData.description"
-          ></div>
+            custom-class="mb-8"
+          />
 
           <!-- Enhanced Footer with better navigation -->
           <footer
@@ -275,6 +275,7 @@
 <script setup>
   import { computed, watch } from 'vue'
   import httpRequest from '~/utils/httpRequest'
+  // ViewEditor component is auto-imported from components/ui/ViewEdior.vue
 
   // Get route params
   const route = useRoute()
@@ -692,163 +693,3 @@
     }
   })
 </script>
-
-<style>
-  /* Enhanced Prose styling for blog content */
-  .prose {
-    color: #374151;
-    line-height: 1.75;
-    font-size: 1.125rem;
-  }
-
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    color: #111827;
-    font-weight: 700;
-    margin-top: 2.5rem;
-    margin-bottom: 1.25rem;
-    line-height: 1.3;
-  }
-
-  .prose h1 {
-    font-size: 2.25rem;
-    border-bottom: 3px solid #f97316;
-    padding-bottom: 0.5rem;
-  }
-
-  .prose h2 {
-    font-size: 1.875rem;
-    border-bottom: 2px solid #fbbf24;
-    padding-bottom: 0.25rem;
-  }
-
-  .prose h3 {
-    font-size: 1.5rem;
-    color: #f97316;
-  }
-
-  .prose p {
-    margin-bottom: 1.5rem;
-    text-align: justify;
-  }
-
-  .prose ul,
-  .prose ol {
-    margin-bottom: 1.5rem;
-    padding-left: 1.5rem;
-  }
-
-  .prose li {
-    margin-bottom: 0.5rem;
-  }
-
-  .prose blockquote {
-    border-left: 4px solid #f97316;
-    padding: 1rem 1.5rem;
-    margin: 2rem 0;
-    font-style: italic;
-    color: #6b7280;
-    background-color: #f9fafb;
-    border-radius: 0 0.5rem 0.5rem 0;
-  }
-
-  .prose code {
-    background-color: #f3f4f6;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    color: #374151;
-    border: 1px solid #e5e7eb;
-  }
-
-  .prose pre {
-    background-color: #1f2937;
-    color: #f9fafb;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    overflow-x: auto;
-    margin: 2rem 0;
-    border: 1px solid #374151;
-  }
-
-  .prose a {
-    color: #f97316;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease;
-  }
-
-  .prose a:hover {
-    border-bottom-color: #f97316;
-  }
-
-  .prose img {
-    border-radius: 0.5rem;
-    margin: 2rem 0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  .prose table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  }
-
-  .prose th,
-  .prose td {
-    border: 1px solid #e5e7eb;
-    padding: 0.75rem;
-    text-align: left;
-  }
-
-  .prose th {
-    background-color: #f9fafb;
-    font-weight: 600;
-    color: #374151;
-  }
-
-  .prose th:first-child {
-    border-top-left-radius: 0.5rem;
-  }
-
-  .prose th:last-child {
-    border-top-right-radius: 0.5rem;
-  }
-
-  /* Enhanced responsive design */
-  @media (max-width: 768px) {
-    .prose {
-      font-size: 1rem;
-    }
-
-    .prose h1 {
-      font-size: 1.875rem;
-    }
-
-    .prose h2 {
-      font-size: 1.5rem;
-    }
-
-    .prose h3 {
-      font-size: 1.25rem;
-    }
-  }
-
-  /* Smooth transitions */
-  .prose * {
-    transition: all 0.2s ease;
-  }
-
-  /* Focus states for accessibility */
-  .prose a:focus {
-    outline: 2px solid #f97316;
-    outline-offset: 2px;
-  }
-</style>

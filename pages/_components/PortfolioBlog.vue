@@ -68,11 +68,14 @@
                 {{ post.title }}
               </h3>
 
-              <p
-                class="text-gray-400 mb-4 line-clamp-3 text-sm h-[60px] overflow-hidden"
-              >
-                {{ stripHtmlTags(post.description) }}
-              </p>
+              <ViewEdior
+                :content="post.description"
+                :strip-html="true"
+                :truncate="true"
+                :max-length="120"
+                custom-class="text-gray-400 mb-4 line-clamp-3 text-sm h-[60px] overflow-hidden"
+                variant="light"
+              />
 
               <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
@@ -177,15 +180,6 @@
   const refresh = () => {
     currentPage.value = 1
     fetchPosts()
-  }
-
-  // Helper function to strip HTML tags
-  const stripHtmlTags = html => {
-    if (!html) return ''
-    return html
-      .replace(/<[^>]*>/g, '')
-      .replace(/\*\*/g, '')
-      .trim()
   }
 
   // Helper function to format date

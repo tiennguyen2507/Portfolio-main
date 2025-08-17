@@ -222,7 +222,7 @@
               to="/projects"
               class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 text-center"
             >
-              My p rojects
+              My projects
             </NuxtLink>
           </div>
         </div>

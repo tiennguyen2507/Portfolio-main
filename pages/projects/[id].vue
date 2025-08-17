@@ -206,21 +206,21 @@
         <!-- Project Description -->
         <section class="mb-8">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Mô tả dự án</h2>
-          <div
-            class="prose prose-lg max-w-none text-gray-700 leading-relaxed"
+          <ViewEdior
+            :content="projectData.description"
             itemprop="description"
-            v-html="projectData.description"
-          ></div>
+            variant="default"
+          />
         </section>
 
         <!-- Project Content -->
         <section v-if="projectData.content" class="mb-8">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Chi tiết dự án</h2>
-          <div
-            class="prose prose-lg max-w-none text-gray-700 leading-relaxed"
+          <ViewEdior
+            :content="projectData.content"
             itemprop="text"
-            v-html="projectData.content"
-          ></div>
+            variant="default"
+          />
         </section>
 
         <!-- Project Actions -->
@@ -259,6 +259,7 @@
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
+  // ViewEditor component is auto-imported from components/ui/ViewEdior.vue
 
   // Get project ID from route
   const route = useRoute()
@@ -526,75 +527,3 @@
     ssr: true,
   })
 </script>
-
-<style scoped>
-  .prose {
-    color: #374151;
-  }
-
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    color: #111827;
-    font-weight: 600;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-  }
-
-  .prose p {
-    margin-bottom: 1em;
-  }
-
-  .prose ul,
-  .prose ol {
-    margin-bottom: 1em;
-    padding-left: 1.5em;
-  }
-
-  .prose li {
-    margin-bottom: 0.5em;
-  }
-
-  .prose a {
-    color: #f97316;
-    text-decoration: underline;
-  }
-
-  .prose a:hover {
-    color: #ea580c;
-  }
-
-  .prose blockquote {
-    border-left: 4px solid #f97316;
-    padding-left: 1em;
-    margin: 1em 0;
-    font-style: italic;
-    color: #6b7280;
-  }
-
-  .prose code {
-    background-color: #f3f4f6;
-    padding: 0.2em 0.4em;
-    border-radius: 0.25rem;
-    font-size: 0.875em;
-    color: #dc2626;
-  }
-
-  .prose pre {
-    background-color: #1f2937;
-    color: #f9fafb;
-    padding: 1em;
-    border-radius: 0.5rem;
-    overflow-x: auto;
-    margin: 1em 0;
-  }
-
-  .prose pre code {
-    background-color: transparent;
-    color: inherit;
-    padding: 0;
-  }
-</style>

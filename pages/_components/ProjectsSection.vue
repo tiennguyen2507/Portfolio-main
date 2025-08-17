@@ -64,11 +64,14 @@
               >
                 {{ project.title }}
               </h3>
-              <p
-                class="text-gray-400 mb-4 line-clamp-3 min-h-[4.5rem] flex-grow"
-              >
-                {{ project.description }}
-              </p>
+              <ViewEdior
+                :content="project.description"
+                :strip-html="true"
+                :truncate="true"
+                :max-length="120"
+                custom-class="text-gray-400 mb-4 line-clamp-3 min-h-[4.5rem] flex-grow"
+                variant="light"
+              />
               <div class="flex flex-wrap gap-2 mt-auto">
                 <Badge
                   v-for="skill in project.skill?.slice(0, 3)"

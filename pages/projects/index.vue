@@ -128,12 +128,15 @@
                   >
                     {{ project.title }}
                   </h3>
-                  <p
-                    class="text-gray-400 mb-4 line-clamp-3 text-sm"
+                  <ViewEdior
+                    :content="project.description"
+                    :strip-html="true"
+                    :truncate="true"
+                    :max-length="120"
+                    custom-class="text-gray-500 mb-4 line-clamp-3 text-sm"
                     itemprop="description"
-                  >
-                    {{ project.description }}
-                  </p>
+                    variant="light"
+                  />
 
                   <!-- Skills -->
                   <div class="flex flex-wrap gap-2 mb-4">
