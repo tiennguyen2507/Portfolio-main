@@ -206,7 +206,7 @@
         <!-- Project Description -->
         <section class="mb-8">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Mô tả dự án</h2>
-          <ViewEdior
+          <ViewEditor
             :content="projectData.description"
             itemprop="description"
             variant="default"
@@ -216,7 +216,7 @@
         <!-- Project Content -->
         <section v-if="projectData.content" class="mb-8">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Chi tiết dự án</h2>
-          <ViewEdior
+          <ViewEditor
             :content="projectData.content"
             itemprop="text"
             variant="default"
@@ -259,7 +259,7 @@
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
-  // ViewEditor component is auto-imported from components/ui/ViewEdior.vue
+  // ViewEditor component is auto-imported from components/ui/ViewEditor.vue
 
   // Get project ID from route
   const route = useRoute()

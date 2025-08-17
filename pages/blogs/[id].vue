@@ -199,7 +199,7 @@
           </figure>
 
           <!-- Enhanced Blog Content with better typography -->
-          <ViewEdior
+          <ViewEditor
             :content="blogData.description"
             itemprop="articleBody"
             custom-class="mb-8"
@@ -275,7 +275,7 @@
 <script setup>
   import { computed, watch } from 'vue'
   import httpRequest from '~/utils/httpRequest'
-  // ViewEditor component is auto-imported from components/ui/ViewEdior.vue
+  // ViewEditor component is auto-imported from components/ui/ViewEditor.vue
 
   // Get route params
   const route = useRoute()

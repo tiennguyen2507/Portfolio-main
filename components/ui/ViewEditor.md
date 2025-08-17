@@ -28,7 +28,7 @@ A reusable Vue component for displaying HTML content with responsive typography 
 
 ```vue
 <template>
-  <ViewEdior :content="htmlContent" />
+  <ViewEditor :content="htmlContent" />
 </template>
 ```
 
@@ -36,7 +36,7 @@ A reusable Vue component for displaying HTML content with responsive typography 
 
 ```vue
 <template>
-  <ViewEdior
+  <ViewEditor
     :content="blogData.description"
     itemprop="articleBody"
     custom-class="mb-8"
@@ -49,13 +49,13 @@ A reusable Vue component for displaying HTML content with responsive typography 
 ```vue
 <template>
   <!-- Default variant -->
-  <ViewEdior :content="content" variant="default" />
+  <ViewEditor :content="content" variant="default" />
 
   <!-- Dark variant -->
-  <ViewEdior :content="content" variant="dark" />
+  <ViewEditor :content="content" variant="dark" />
 
   <!-- Light variant -->
-  <ViewEdior :content="content" variant="light" />
+  <ViewEditor :content="content" variant="light" />
 </template>
 ```
 
@@ -64,7 +64,7 @@ A reusable Vue component for displaying HTML content with responsive typography 
 ```vue
 <template>
   <!-- Truncated content with HTML stripped -->
-  <ViewEdior
+  <ViewEditor
     :content="post.description"
     :strip-html="true"
     :truncate="true"

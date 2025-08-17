@@ -64,7 +64,7 @@
               >
                 {{ project.title }}
               </h3>
-              <ViewEdior
+              <ViewEditor
                 :content="project.description"
                 :strip-html="true"
                 :truncate="true"

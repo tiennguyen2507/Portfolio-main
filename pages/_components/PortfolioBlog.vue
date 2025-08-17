@@ -68,7 +68,7 @@
                 {{ post.title }}
               </h3>
 
-              <ViewEdior
+              <ViewEditor
                 :content="post.description"
                 :strip-html="true"
                 :truncate="true"
