@@ -1,15 +1,21 @@
 <template>
   <div
-    class="min-h-screen bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+    class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
     <div class="max-w-md w-full space-y-8">
       <!-- Logo/Brand -->
       <div class="text-center">
-        <img class="mx-auto h-16 w-auto" src="/images/logo.webp" alt="Logo" />
-        <h2 class="mt-6 text-3xl font-extrabold text-white">
+        <NuxtLink to="/" aria-label="Trang chủ">
+          <img
+            class="mx-auto h-16 w-auto"
+            src="/assets/images/logo-main.webp"
+            alt="Logo"
+          />
+        </NuxtLink>
+        <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
           Đăng ký tài khoản mới
         </h2>
-        <p class="mt-2 text-sm text-gray-400">
+        <p class="mt-2 text-sm text-gray-600">
           Hoặc
           <NuxtLink
             to="/auth/login"
@@ -21,15 +27,18 @@
       </div>
 
       <!-- Register Form -->
-      <form class="mt-8 space-y-6" @submit.prevent="handleRegister">
+      <form
+        class="mt-8 space-y-6 bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+        @submit.prevent="handleRegister"
+      >
         <!-- Error Message -->
         <div
           v-if="error"
-          class="bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg"
+          class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg"
         >
           <div class="flex items-center">
             <svg
-              class="w-5 h-5 mr-2"
+              class="w-5 h-5 mr-2 text-red-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -48,11 +57,11 @@
         <!-- Success Message -->
         <div
           v-if="successMessage"
-          class="bg-green-900/50 border border-green-500 text-green-200 px-4 py-3 rounded-lg"
+          class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg"
         >
           <div class="flex items-center">
             <svg
-              class="w-5 h-5 mr-2"
+              class="w-5 h-5 mr-2 text-green-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -73,22 +82,22 @@
           <div>
             <label
               for="firstName"
-              class="block text-sm font-medium text-gray-300 mb-2"
+              class="block text-sm font-medium text-gray-700 mb-2"
             >
               Họ
             </label>
-            <Input
+            <AdminUiInput
               id="firstName"
               v-model="formData.firstName"
               type="text"
               placeholder="Nhập họ của bạn"
               required
-              :variant="firstNameError ? 'error' : 'default'"
+              :variant="firstNameError ? 'danger' : 'primary'"
               size="lg"
               @blur="validateFirstNameRealTime"
               @input="validateFirstNameRealTime"
             />
-            <p v-if="firstNameError" class="mt-1 text-sm text-red-400">
+            <p v-if="firstNameError" class="mt-1 text-sm text-red-600">
               {{ firstNameError }}
             </p>
           </div>
@@ -97,22 +106,22 @@
           <div>
             <label
               for="lastName"
-              class="block text-sm font-medium text-gray-300 mb-2"
+              class="block text-sm font-medium text-gray-700 mb-2"
             >
               Tên
             </label>
-            <Input
+            <AdminUiInput
               id="lastName"
               v-model="formData.lastName"
               type="text"
               placeholder="Nhập tên của bạn"
               required
-              :variant="lastNameError ? 'error' : 'default'"
+              :variant="lastNameError ? 'danger' : 'primary'"
               size="lg"
               @blur="validateLastNameRealTime"
               @input="validateLastNameRealTime"
             />
-            <p v-if="lastNameError" class="mt-1 text-sm text-red-400">
+            <p v-if="lastNameError" class="mt-1 text-sm text-red-600">
               {{ lastNameError }}
             </p>
           </div>
@@ -121,22 +130,22 @@
           <div>
             <label
               for="email"
-              class="block text-sm font-medium text-gray-300 mb-2"
+              class="block text-sm font-medium text-gray-700 mb-2"
             >
               Email
             </label>
-            <Input
+            <AdminUiInput
               id="email"
               v-model="formData.email"
               type="email"
               placeholder="Nhập email của bạn"
               required
-              :variant="emailError ? 'error' : 'default'"
+              :variant="emailError ? 'danger' : 'primary'"
               size="lg"
               @blur="validateEmailRealTime"
               @input="validateEmailRealTime"
             />
-            <p v-if="emailError" class="mt-1 text-sm text-red-400">
+            <p v-if="emailError" class="mt-1 text-sm text-red-600">
               {{ emailError }}
             </p>
           </div>
@@ -145,22 +154,22 @@
           <div>
             <label
               for="password"
-              class="block text-sm font-medium text-gray-300 mb-2"
+              class="block text-sm font-medium text-gray-700 mb-2"
             >
               Mật khẩu
             </label>
-            <Input
+            <AdminUiInput
               id="password"
               v-model="formData.password"
               type="password"
               placeholder="Nhập mật khẩu của bạn"
               required
-              :variant="passwordError ? 'error' : 'default'"
+              :variant="passwordError ? 'danger' : 'primary'"
               size="lg"
               @blur="validatePasswordRealTime"
               @input="validatePasswordRealTime"
             />
-            <p v-if="passwordError" class="mt-1 text-sm text-red-400">
+            <p v-if="passwordError" class="mt-1 text-sm text-red-600">
               {{ passwordError }}
             </p>
           </div>
@@ -169,22 +178,22 @@
           <div>
             <label
               for="confirmPassword"
-              class="block text-sm font-medium text-gray-300 mb-2"
+              class="block text-sm font-medium text-gray-700 mb-2"
             >
               Xác nhận mật khẩu
             </label>
-            <Input
+            <AdminUiInput
               id="confirmPassword"
               v-model="formData.confirmPassword"
               type="password"
               placeholder="Nhập lại mật khẩu"
               required
-              :variant="confirmPasswordError ? 'error' : 'default'"
+              :variant="confirmPasswordError ? 'danger' : 'primary'"
               size="lg"
               @blur="validateConfirmPasswordRealTime"
               @input="validateConfirmPasswordRealTime"
             />
-            <p v-if="confirmPasswordError" class="mt-1 text-sm text-red-400">
+            <p v-if="confirmPasswordError" class="mt-1 text-sm text-red-600">
               {{ confirmPasswordError }}
             </p>
           </div>
@@ -196,9 +205,9 @@
             id="agree-terms"
             v-model="formData.agreeTerms"
             type="checkbox"
-            class="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-600 rounded bg-gray-800"
+            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded bg-white"
           />
-          <label for="agree-terms" class="ml-2 block text-sm text-gray-300">
+          <label for="agree-terms" class="ml-2 block text-sm text-gray-700">
             Tôi đồng ý với
             <NuxtLink
               to="/terms"
@@ -218,37 +227,16 @@
 
         <!-- Submit Button -->
         <div>
-          <Button
+          <AdminUiButton
             type="submit"
             :disabled="loading || !formData.agreeTerms"
             :loading="loading"
             full-width
             size="lg"
+            variant="primary"
           >
-            <span v-if="!loading">Đăng ký</span>
-            <span v-else class="flex items-center">
-              <svg
-                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                />
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
-              Đang đăng ký...
-            </span>
-          </Button>
+            Đăng ký
+          </AdminUiButton>
         </div>
       </form>
     </div>
@@ -257,6 +245,8 @@
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
+  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
+  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
 
   definePageMeta({
     layout: 'default',

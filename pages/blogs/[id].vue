@@ -672,7 +672,7 @@
               name: 'Nguyễn Lê Đình Tiên',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://nguyenledinhtien.io.vn/images/logo.webp',
+                url: 'https://nguyenledinhtien.io.vn/images/logo-main.webp',
                 width: 200,
                 height: 200,
               },

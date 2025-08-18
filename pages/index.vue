@@ -424,7 +424,7 @@
   })
 
   definePageMeta({
-    layout: 'default', // Sử dụng layout default với header và footer
+    layout: 'portfolio', // Sử dụng layout default với header và footer
   })
 
   // Handle contact form submission

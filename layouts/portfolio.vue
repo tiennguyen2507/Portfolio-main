@@ -1,8 +1,15 @@
 <template>
   <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <PortfolioHeader />
+
+    <!-- Main Content -->
     <main class="flex-1">
       <slot />
     </main>
+
+    <!-- Footer -->
+    <PortfolioFooter />
   </div>
 </template>
 

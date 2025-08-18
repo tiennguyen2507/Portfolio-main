@@ -304,7 +304,7 @@
             url: 'https://nguyenledinhtien.io.vn',
             image: {
               '@type': 'ImageObject',
-              url: 'https://nguyenledinhtien.io.vn/images/logo.webp',
+              url: 'https://nguyenledinhtien.io.vn/images/logo-main.webp',
               width: 200,
               height: 200,
             },

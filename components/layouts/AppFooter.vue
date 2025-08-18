@@ -9,7 +9,7 @@
             <div class="flex items-center space-x-3">
               <!-- Logo Image -->
               <img
-                src="/assets/images/logo.webp"
+                src="/assets/images/logo-main.webp"
                 alt="Leadsmax Network Logo"
                 class="h-12 w-auto"
               />
