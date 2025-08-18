@@ -6,62 +6,17 @@
       subtitle="Quản lý và theo dõi tất cả users trong hệ thống"
     >
       <template #action>
-        <NuxtLink
-          to="/admin/users/new"
-          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-        >
-          <svg
-            class="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
+        <AdminUiButton variant="secondary" size="md" @click="noop">
           Thêm User mới
-        </NuxtLink>
+          <template #suffix>
+            <AdminUiIcon name="plus" size="md" color="text-white" />
+          </template>
+        </AdminUiButton>
       </template>
     </HeaderContent>
 
     <!-- Loading State -->
     <Loading v-if="loading" size="lg" />
-
-    <!-- Error State -->
-    <div
-      v-else-if="error"
-      class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6"
-    >
-      <div class="flex items-center">
-        <svg
-          class="w-6 h-6 text-red-600 mr-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-        <div>
-          <h3 class="text-lg font-medium text-red-800">Lỗi khi tải dữ liệu</h3>
-          <p class="text-red-600 mt-1">{{ error }}</p>
-        </div>
-      </div>
-      <button
-        @click="fetchUsers"
-        class="mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
-      >
-        Thử lại
-      </button>
-    </div>
 
     <!-- Content -->
     <div v-else>
@@ -71,273 +26,47 @@
       >
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Tìm kiếm</label
-            >
-            <input
+            <AdminUiInput
               v-model="searchQuery"
+              label="Tìm kiếm"
               type="text"
               placeholder="Tìm theo tên, email..."
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Trạng thái</label
-            >
-            <select
+            <AdminUiSelect
               v-model="selectedStatus"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Tất cả trạng thái</option>
-              <option value="1">Hoạt động</option>
-              <option value="0">Không hoạt động</option>
-            </select>
+              label="Trạng thái"
+              placeholder="Tất cả trạng thái"
+              :options="[
+                { label: 'Hoạt động', value: '1' },
+                { label: 'Không hoạt động', value: '0' },
+              ]"
+            />
           </div>
           <div class="flex items-end">
-            <button
-              @click="applyFilters"
-              class="w-full bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
-            >
-              Lọc
-            </button>
+            <AdminUiButton fullWidth @click="applyFilters"> Lọc </AdminUiButton>
           </div>
         </div>
       </div>
 
       <!-- Users Table -->
-      <div
-        class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
-      >
-        <!-- Table Header with Bulk Actions -->
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-              <span class="text-sm text-gray-500">
-                {{ selectedUsers.length }} users được chọn
-              </span>
-            </div>
-            <div v-if="selectedUsers.length > 0" class="flex space-x-2">
-              <button
-                @click="bulkActivate"
-                class="p-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
-                title="Kích hoạt tất cả"
-              >
-                <img
-                  src="/assets/icons/bulk-activate.svg"
-                  alt="Kích hoạt"
-                  class="w-4 h-4"
-                />
-              </button>
-              <button
-                @click="bulkDeactivate"
-                class="p-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 transition-colors"
-                title="Vô hiệu tất cả"
-              >
-                <img
-                  src="/assets/icons/bulk-deactivate.svg"
-                  alt="Vô hiệu"
-                  class="w-4 h-4"
-                />
-              </button>
-              <button
-                @click="bulkDelete"
-                class="p-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-                title="Xóa tất cả"
-              >
-                <img
-                  src="/assets/icons/bulk-delete.svg"
-                  alt="Xóa"
-                  class="w-4 h-4"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
 
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  <div class="flex items-center">
-                    <input
-                      type="checkbox"
-                      v-model="selectAll"
-                      @change="toggleSelectAll"
-                      class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
-                    />
-                    <span
-                      >LEAD
-                      <span class="text-red-600 font-bold">user</span></span
-                    >
-                  </div>
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  NGUỒN
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  TRẠNG THÁI
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  NGÀY TẠO
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Thao tác
-                </th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr
-                v-for="user in paginatedUsers"
-                :key="user._id"
-                class="hover:bg-gray-50 transition-colors"
-              >
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex items-center">
-                    <input
-                      type="checkbox"
-                      v-model="selectedUsers"
-                      :value="user._id"
-                      class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3"
-                    />
-                    <div class="flex items-center">
-                      <div
-                        v-if="user.avatar"
-                        class="w-10 h-10 rounded-full overflow-hidden mr-3"
-                      >
-                        <img
-                          :src="user.avatar"
-                          :alt="user.fullName"
-                          class="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div
-                        v-else
-                        class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3"
-                      >
-                        <span class="text-sm font-medium text-gray-600">{{
-                          user.fullName
-                            ? user.fullName.charAt(0).toUpperCase()
-                            : 'U'
-                        }}</span>
-                      </div>
-                      <div>
-                        <div class="text-sm font-bold text-gray-900">
-                          {{ user.fullName || 'N/A' }}
-                        </div>
-                        <div class="text-sm text-gray-500">
-                          {{ user.email }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span
-                    class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
-                  >
-                    Website
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span
-                    class="inline-flex px-3 py-1 text-xs font-semibold rounded-full"
-                    :class="{
-                      'bg-green-100 text-green-800': user.status === 1,
-                      'bg-gray-100 text-gray-800': user.status === 0,
-                    }"
-                  >
-                    {{ user.status === 1 ? 'Hoạt động' : 'Mới' }}
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ formatDate(user.createdAt) }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div class="flex items-center space-x-2">
-                    <button
-                      @click="editUser(user._id)"
-                      class="p-1.5 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors"
-                      title="Sửa user"
-                    >
-                      <img
-                        src="/assets/icons/edit.svg"
-                        alt="Sửa"
-                        class="w-4 h-4"
-                      />
-                    </button>
-
-                    <button
-                      @click="deleteUser(user._id)"
-                      class="p-1.5 text-red-600 hover:text-red-900 hover:bg-red-50 rounded transition-colors"
-                      title="Xóa user"
-                    >
-                      <img
-                        src="/assets/icons/delete.svg"
-                        alt="Xóa"
-                        class="w-4 h-4"
-                      />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Empty State -->
-        <div
-          v-if="filteredUsers.length === 0 && !loading"
-          class="text-center py-12"
-        >
-          <svg
-            class="mx-auto h-12 w-12 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-            ></path>
-          </svg>
-          <h3 class="mt-2 text-sm font-medium text-gray-900">Không có users</h3>
-          <p class="mt-1 text-sm text-gray-500">
-            Không tìm thấy users nào phù hợp với bộ lọc.
-          </p>
-        </div>
-
-        <!-- Pagination -->
-        <div
-          v-if="filteredUsers.length > 0"
-          class="bg-white px-6 py-3 border-t border-gray-200"
-        >
-          <Pagination
-            :page="currentPage"
-            :total="filteredUsers.length"
-            :limit="itemsPerPage"
-            :show-info="true"
-            :split="true"
-            @update:page="
-              p => {
-                currentPage = p
-              }
-            "
-          />
-        </div>
+      <TableAdminUsers :users="paginatedUsers" :loading="loading" />
+      <!-- Pagination -->
+      <div class="bg-white px-6 py-3 border-t border-gray-200">
+        <Pagination
+          :page="currentPage"
+          :total="filteredUsers.length"
+          :limit="itemsPerPage"
+          :show-info="true"
+          :split="true"
+          @update:page="
+            p => {
+              currentPage = p
+            }
+          "
+        />
       </div>
     </div>
   </div>
@@ -348,6 +77,11 @@
   import HeaderContent from '~/components/admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Pagination from '~/components/ui/Pagination.vue'
+  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
+  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
+  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
+  import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
+  import TableAdminUsers from './_components/TableAdminUsers.vue'
 
   definePageMeta({
     layout: 'admin',
@@ -362,8 +96,7 @@
   const loading = ref(false)
   const error = ref(null)
   const users = ref([])
-  const selectedUsers = ref([])
-  const selectAll = ref(false)
+  // Removed multi-select state
 
   // Computed properties
   const filteredUsers = computed(() => {
@@ -414,6 +147,7 @@
     } catch (err) {
       console.error('Error fetching users:', err)
       error.value = err.message || 'Có lỗi xảy ra khi tải danh sách users'
+      users.value = []
     } finally {
       loading.value = false
     }
@@ -421,8 +155,8 @@
 
   const applyFilters = () => {
     currentPage.value = 1
-    selectedUsers.value = []
-    selectAll.value = false
+    // Removed selectedUsers.value = []
+    // Removed selectAll.value = false
   }
 
   const formatDate = dateString => {
@@ -463,9 +197,9 @@
 
         // Remove from local state
         users.value = users.value.filter(user => user._id !== id)
-        selectedUsers.value = selectedUsers.value.filter(
-          userId => userId !== id
-        )
+        // Removed selectedUsers.value = selectedUsers.value.filter(
+        //   userId => userId !== id
+        // )
       } catch (err) {
         console.error('Error deleting user:', err)
         alert('Có lỗi xảy ra khi xóa user')
@@ -473,90 +207,7 @@
     }
   }
 
-  // Bulk actions
-  const toggleSelectAll = () => {
-    if (selectAll.value) {
-      selectedUsers.value = paginatedUsers.value.map(user => user._id)
-    } else {
-      selectedUsers.value = []
-    }
-  }
-
-  const bulkActivate = async () => {
-    if (selectedUsers.value.length === 0) return
-
-    try {
-      await Promise.all(
-        selectedUsers.value.map(id =>
-          httpRequest.put(`/users/${id}`, { status: 1 })
-        )
-      )
-
-      // Update local state
-      users.value.forEach(user => {
-        if (selectedUsers.value.includes(user._id)) {
-          user.status = 1
-        }
-      })
-
-      selectedUsers.value = []
-      selectAll.value = false
-    } catch (err) {
-      console.error('Error bulk activating users:', err)
-      alert('Có lỗi xảy ra khi kích hoạt users')
-    }
-  }
-
-  const bulkDeactivate = async () => {
-    if (selectedUsers.value.length === 0) return
-
-    try {
-      await Promise.all(
-        selectedUsers.value.map(id =>
-          httpRequest.put(`/users/${id}`, { status: 0 })
-        )
-      )
-
-      // Update local state
-      users.value.forEach(user => {
-        if (selectedUsers.value.includes(user._id)) {
-          user.status = 0
-        }
-      })
-
-      selectedUsers.value = []
-      selectAll.value = false
-    } catch (err) {
-      console.error('Error bulk deactivating users:', err)
-      alert('Có lỗi xảy ra khi vô hiệu users')
-    }
-  }
-
-  const bulkDelete = async () => {
-    if (selectedUsers.value.length === 0) return
-
-    if (
-      confirm(
-        `Bạn có chắc chắn muốn xóa ${selectedUsers.value.length} users này?`
-      )
-    ) {
-      try {
-        await Promise.all(
-          selectedUsers.value.map(id => httpRequest.delete(`/users/${id}`))
-        )
-
-        // Remove from local state
-        users.value = users.value.filter(
-          user => !selectedUsers.value.includes(user._id)
-        )
-        selectedUsers.value = []
-        selectAll.value = false
-      } catch (err) {
-        console.error('Error bulk deleting users:', err)
-        alert('Có lỗi xảy ra khi xóa users')
-      }
-    }
-  }
+  // Removed bulk actions
 
   // Lifecycle
   onMounted(() => {

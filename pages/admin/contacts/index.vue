@@ -9,38 +9,28 @@
     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Tìm kiếm</label
-          >
-          <input
+          <AdminUiInput
             v-model="searchQuery"
+            label="Tìm kiếm"
             type="text"
             placeholder="Tìm theo tên, email..."
-            class="w-full px-3 py-2 border border-gray-300 rounded-md"
             @input="debouncedSearch"
           />
         </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Trạng thái</label
-          >
-          <select
-            v-model="selectedStatus"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md"
-            @change="fetchContacts"
-          >
-            <option value="">Tất cả trạng thái</option>
-            <option value="true">Đã xử lý</option>
-            <option value="false">Chưa xử lý</option>
-          </select>
-        </div>
+        <AdminUiSelect
+          v-model="selectedStatus"
+          label="Trạng thái"
+          placeholder="Tất cả trạng thái"
+          :options="[
+            { label: 'Đã xử lý', value: 'true' },
+            { label: 'Chưa xử lý', value: 'false' },
+          ]"
+          @change="fetchContacts"
+        />
         <div class="flex items-end">
-          <button
-            @click="fetchContacts"
-            class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-          >
+          <AdminUiButton fullWidth variant="primary" @click="fetchContacts">
             Lọc
-          </button>
+          </AdminUiButton>
         </div>
       </div>
     </div>
@@ -209,6 +199,9 @@
   import HeaderContent from '~/components/admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Pagination from '~/components/ui/Pagination.vue'
+  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
+  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
+  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
 
   definePageMeta({
     layout: 'admin',

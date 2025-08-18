@@ -90,7 +90,7 @@
             >
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                  <Avatar
+                  <AdminUiAvatar
                     :src="comment.avatar"
                     :size="40"
                     :ring="false"
@@ -183,7 +183,7 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import { httpRequest } from '~/utils/httpRequest'
-  import Avatar from '~/components/ui/Avatar.vue'
+  import AdminUiAvatar from '~/components/admin/ui/AdminUiAvatar.vue'
   import ButtonIcon from '~/components/ui/ButtonIcon.vue'
   import EmptyData from '~/components/ui/EmptyData.vue'
   import Pagination from '~/components/ui/Pagination.vue'
