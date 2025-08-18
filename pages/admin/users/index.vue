@@ -93,7 +93,7 @@
   const selectedStatus = ref('')
   const currentPage = ref(1)
   const itemsPerPage = 10
-  const loading = ref(false)
+  const loading = ref(true)
   const error = ref(null)
   const users = ref([])
   // Removed multi-select state
@@ -206,8 +206,6 @@
       }
     }
   }
-
-  // Removed bulk actions
 
   // Lifecycle
   onMounted(() => {
