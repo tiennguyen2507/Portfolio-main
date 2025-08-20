@@ -28,10 +28,10 @@
           <div
             class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
-            <NuxtLink to="/order" class="btn btn-primary btn-lg">
+            <NuxtLink to="shop/order" class="btn btn-primary btn-lg">
               Đặt hàng
             </NuxtLink>
-            <NuxtLink to="/locations" class="btn btn-outline btn-lg">
+            <NuxtLink to="shop/locations" class="btn btn-outline btn-lg">
               Xem vị trí Shop
             </NuxtLink>
           </div>
