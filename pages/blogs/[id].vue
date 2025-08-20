@@ -199,11 +199,7 @@
           </figure>
 
           <!-- Enhanced Blog Content with better typography -->
-          <ViewEditor
-            :content="blogData.description"
-            itemprop="articleBody"
-            custom-class="mb-8"
-          />
+          <ViewEditor :content="blogData.description" itemprop="articleBody" />
 
           <!-- Recommended Articles Section -->
           <section class="mt-16 pt-8 border-t border-gray-200">
