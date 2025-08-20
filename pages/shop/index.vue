@@ -14,7 +14,7 @@
 
   const { setPageSEO, addStructuredData } = useSEO()
 
-  const pageUrl = 'https://tienhanh.shop/shop'
+  const pageUrl = 'https://nguyenledinhtien.io.vn/shop'
   const coverImage =
     'https://res.cloudinary.com/daqwg8oql/image/upload/v1755689053/tien-hanh-shop/dia-khoai-bap_hdnt2c.png'
 
