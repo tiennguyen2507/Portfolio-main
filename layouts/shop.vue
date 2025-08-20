@@ -6,9 +6,11 @@
     <main class="flex-1">
       <slot />
     </main>
+    <FooterShop />
   </div>
 </template>
 
 <script setup>
   import HeaderShop from '~/pages/shop/_components/HeaderShop.vue'
+  import FooterShop from '~/pages/shop/_components/FooterShop.vue'
 </script>
