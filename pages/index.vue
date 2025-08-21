@@ -5,12 +5,10 @@
     <StructuredData />
     <PortfolioHero />
     <TechnologiesSection />
-
     <!-- About & Services Section -->
     <PortfolioAbout />
-
     <ProjectsSection />
-
+    <PortfolioShop />
     <PortfolioBlog />
     <CommentsAboutMe />
 
@@ -22,6 +20,7 @@
   import PortfolioHero from '~/pages/_components/PortfolioHero.vue'
   import TechnologiesSection from '~/pages/_components/TechnologiesSection.vue'
   import ProjectsSection from '~/pages/_components/ProjectsSection.vue'
+  import PortfolioShop from '~/pages/_components/PortfolioShop.vue'
   import PortfolioBlog from '~/pages/_components/PortfolioBlog.vue'
   import StructuredData from '~/components/StructuredData.vue'
   import CommentsAboutMe from '~/pages/_components/CommentsAboutMe.vue'

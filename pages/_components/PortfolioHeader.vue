@@ -89,6 +89,14 @@
       path: '#projects',
     },
     {
+      label: 'Blog',
+      path: '#blogs',
+    },
+    {
+      label: 'Shop',
+      path: '/shop',
+    },
+    {
       label: 'Contact',
       path: '#contact',
     },

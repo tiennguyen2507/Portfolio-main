@@ -1,6 +1,6 @@
 <template>
   <!-- Blog Section -->
-  <section id="blog" class="py-12 sm:py-16 md:py-20 bg-gray-800/30">
+  <section id="blogs" class="py-12 sm:py-16 md:py-20 bg-gray-800/30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-8 sm:mb-12 md:mb-16">
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
