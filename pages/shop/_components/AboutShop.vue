@@ -5,10 +5,10 @@
         <!-- Image with brush mask -->
         <div class="lg:col-span-6">
           <div class="brush-wrapper">
-            <img
+            <Image
               src="https://i.vietgiaitri.com/2021/6/15/con-song-o-thanh-pho-nhung-van-nhan-tiep-te-do-que-do-khong-phai-yeu-thuong-ma-la-bat-hieu-d11-5824841.jpg"
               alt="Món quê - khoai, sắn, đậu"
-              class="w-full h-auto object-cover brush-mask"
+              custom-class="w-full h-auto object-cover brush-mask"
               loading="lazy"
             />
           </div>
@@ -48,6 +48,8 @@
 </template>
 
 <script setup>
+  import Image from '~/components/ui/Image.vue'
+
   const highlights = [
     'Nguyên liệu sạch mỗi ngày: khoai lang, sắn, đậu phộng, bánh quê…',
     'Chế biến thủ công tại bếp nhà, giữ trọn vị bùi – dẻo – thơm',

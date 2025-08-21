@@ -40,10 +40,10 @@
         <!-- Right: Decorative image -->
         <div class="lg:col-span-5 relative block mt-8 lg:mt-0">
           <div class="relative mx-auto w-full max-w-md">
-            <img
+            <Image
               :src="heroImageUrl"
               alt="Signature Dish"
-              class="w-full h-auto rounded-2xl shadow-2xl ring-1 ring-black/5"
+              custom-class="w-full h-auto rounded-2xl shadow-2xl ring-1 ring-black/5"
               loading="eager"
               fetchpriority="high"
             />
@@ -59,6 +59,7 @@
 
 <script setup>
   import logoSrc from '~/assets/images/Tien-hanh-shop-logo-no-bg.webp'
+  import Image from '~/components/ui/Image.vue'
   const heroImageUrl =
     'https://res.cloudinary.com/daqwg8oql/image/upload/v1755689053/tien-hanh-shop/dia-khoai-bap_hdnt2c.png'
 </script>

@@ -3,10 +3,10 @@
     class="rounded-xl sm:rounded-2xl bg-[#f6eadb] ring-1 ring-[#e8dccd] shadow-sm overflow-hidden"
   >
     <div class="sm:w-full overflow-hidden flex items-center justify-center">
-      <img
+      <Image
         :src="item.image"
         :alt="item.name"
-        class="w-20 sm:w-full h-full object-cover"
+        custom-class="w-20 sm:w-full h-full object-cover"
       />
     </div>
 
@@ -50,6 +50,7 @@
 
 <script setup>
   import QuantityInput from '~/pages/shop/_components/QuantityInput.vue'
+  import Image from '~/components/ui/Image.vue'
   const props = defineProps({
     item: { type: Object, required: true },
     modelValue: { type: Number, default: 0 },

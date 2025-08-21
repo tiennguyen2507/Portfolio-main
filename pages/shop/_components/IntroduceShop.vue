@@ -7,10 +7,10 @@
           <div
             class="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-xl"
           >
-            <img
+            <Image
               src="https://www.vinmec.com/static/uploads/large_20210516_113632_727988_an_khoai_lang_moi_n_max_1800x1800_jpg_28f7417de4.jpg"
               alt="Khoai lang – đồ quê làm thủ công mỗi ngày"
-              class="w-full h-full object-cover"
+              custom-class="w-full h-full object-cover"
               loading="lazy"
             />
           </div>
@@ -68,10 +68,10 @@
           <div
             class="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-xl"
           >
-            <img
+            <Image
               src="https://nutrihome.vn/wp-content/uploads/2024/06/tieu-duong-co-an-khoai-mi-duoc-khong.jpg"
               alt="Sắn – món quê dân dã nhưng đầy yêu thương"
-              class="w-full h-full object-cover"
+              custom-class="w-full h-full object-cover"
               loading="lazy"
             />
           </div>
@@ -81,7 +81,9 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+  import Image from '~/components/ui/Image.vue'
+</script>
 
 <style scoped>
   .btn-dark {

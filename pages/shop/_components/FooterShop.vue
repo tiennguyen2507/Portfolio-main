@@ -7,7 +7,11 @@
         <div class="lg:col-span-6">
           <div class="flex items-center gap-4">
             <div class="bg-[#fdf6ee] rounded-xl px-2">
-              <img :src="logoSrc" alt="Tien Hanh Shop" class="h-12 w-auto" />
+              <Image
+                :src="logoSrc"
+                alt="Tien Hanh Shop"
+                custom-class="h-12 w-auto"
+              />
             </div>
             <div class="text-sm text-[#cdbfaa]">
               Đồ quê ngon – ấm vị tuổi thơ
@@ -82,6 +86,7 @@
 
 <script setup>
   import logoSrc from '~/assets/images/Tien-hanh-shop-logo-no-bg.webp'
+  import Image from '~/components/ui/Image.vue'
 
   const email = ref('')
   const year = new Date().getFullYear()

@@ -10,10 +10,10 @@
             class="inline-flex items-center"
             aria-label="Trang chủ shop"
           >
-            <img
+            <Image
               :src="logoSrc"
               alt="Tien Hanh Shop"
-              class="h-12 sm:h-12 w-auto"
+              custom-class="h-12 sm:h-12 w-auto"
             />
           </NuxtLink>
         </div>
@@ -121,6 +121,7 @@
 
 <script setup>
   import logoSrc from '~/assets/images/Tien-hanh-shop-logo-no-bg.webp'
+  import Image from '~/components/ui/Image.vue'
   const showMobileMenu = ref(false)
   const route = useRoute()
   const cart = useLocalStorage('th_shop_cart', {})

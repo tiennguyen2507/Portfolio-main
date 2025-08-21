@@ -27,10 +27,10 @@
           <!-- Mobile friendly card -->
           <div class="sm:hidden">
             <div class="flex gap-3">
-              <img
+              <Image
                 :src="row.image"
                 :alt="row.name"
-                class="h-12 w-12 rounded-lg object-cover"
+                custom-class="h-12 w-12 rounded-lg object-cover"
               />
               <div class="flex-1 min-w-0">
                 <div class="text-base font-semibold text-[#3b2b23] truncate">
@@ -69,10 +69,10 @@
           <!-- Desktop row -->
           <div class="hidden sm:grid grid-cols-12 gap-4 items-center">
             <div class="col-span-6 flex items-center gap-3">
-              <img
+              <Image
                 :src="row.image"
                 :alt="row.name"
-                class="h-12 w-12 rounded-lg object-cover"
+                custom-class="h-12 w-12 rounded-lg object-cover"
               />
               <div>
                 <div class="font-medium text-[#3b2b23]">{{ row.name }}</div>
@@ -181,6 +181,7 @@
   import { useSEO } from '~/composables/useSEO'
   const { setPageSEO, addStructuredData } = useSEO()
   import QuantityInput from '~/pages/shop/_components/QuantityInput.vue'
+  import Image from '~/components/ui/Image.vue'
   const cart = useLocalStorage('th_shop_cart', {})
 
   const rows = computed(() =>
