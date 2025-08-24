@@ -194,10 +194,36 @@
                 Nẵng" ,vì vậy vui lòng kiểm tra khoảng cách trước khi đặt hàng.
               </p>
             </div>
+
+            <!-- Distance Confirmation Checkbox -->
+            <div class="sm:col-span-2">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input
+                  v-model="form.distanceConfirmed"
+                  type="checkbox"
+                  class="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                  :class="{ 'border-red-500': showDistanceError }"
+                />
+                <div class="text-sm text-gray-700 leading-relaxed">
+                  <span class="font-medium"
+                    >Bạn đã kiểm tra khoảng cách từ bạn đến chúng tôi dưới 12km
+                    phải không?</span
+                  >
+                  <span
+                    v-if="showDistanceError"
+                    class="block text-red-500 text-xs mt-1"
+                  >
+                    *Vui lòng xác nhận bạn đã kiểm tra khoảng cách trước khi đặt
+                    hàng
+                  </span>
+                </div>
+              </label>
+            </div>
+
             <button
               type="submit"
               class="btn-place sm:col-span-2"
-              :disabled="isSubmitting"
+              :disabled="isSubmitting || !form.distanceConfirmed"
             >
               <Loading
                 v-if="isSubmitting"
@@ -298,8 +324,15 @@
     )
   })
 
-  const form = reactive({ name: '', phone: '', address: '', note: '' })
+  const form = reactive({
+    name: '',
+    phone: '',
+    address: '',
+    note: '',
+    distanceConfirmed: false,
+  })
   const errors = reactive({ name: '', phone: '', address: '' })
+  const showDistanceError = ref(false)
   const sync = () => (cart.value = { ...(cart.value || {}) })
 
   // Cleanup invalid cart items
@@ -359,6 +392,7 @@
     errors.name = ''
     errors.phone = ''
     errors.address = ''
+    showDistanceError.value = false
 
     if (!form.name || form.name.trim().length < 2) {
       errors.name = 'Vui lòng nhập họ và tên hợp lệ.'
@@ -372,6 +406,11 @@
 
     if (!form.address || form.address.trim().length < 6) {
       errors.address = 'Vui lòng nhập địa chỉ giao hàng chi tiết.'
+    }
+
+    if (!form.distanceConfirmed) {
+      showDistanceError.value = true
+      return false
     }
 
     return !errors.name && !errors.phone && !errors.address
@@ -429,6 +468,7 @@
         form.phone = ''
         form.address = ''
         form.note = ''
+        form.distanceConfirmed = false
 
         // Redirect về trang order
         await navigateTo('/shop/order')
