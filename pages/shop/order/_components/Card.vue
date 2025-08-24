@@ -41,9 +41,16 @@
         <button
           class="add-btn px-3 py-1.5 sm:px-4 sm:py-2 text-sm w-full sm:w-auto"
           @click="addToCart"
-          :disabled="localQty <= 0"
+          :disabled="localQty <= 0 || isAdding"
         >
-          Thêm
+          <Loading
+            v-if="isAdding"
+            size="xs"
+            color="white"
+            text=""
+            container-class="py-0"
+          />
+          <span v-else>Thêm</span>
         </button>
       </div>
     </div>
@@ -53,6 +60,7 @@
 <script setup>
   import QuantityInput from '~/pages/shop/_components/QuantityInput.vue'
   import Image from '~/components/ui/Image.vue'
+  import Loading from '~/components/ui/Loading.vue'
   const props = defineProps({
     item: { type: Object, required: true },
     modelValue: { type: Number, default: 0 },
@@ -62,6 +70,7 @@
   const cart = useLocalStorage('th_shop_cart', {})
   const localQty = ref(props.modelValue)
   const invalidQty = ref(false)
+  const isAdding = ref(false)
   watch(
     () => props.modelValue,
     v => {
@@ -78,17 +87,37 @@
     Math.min(props.max, Math.max(0, Number.isFinite(v) ? v : 0))
   const decrease = () => (localQty.value = sanitize(localQty.value - 1))
   const increase = () => (localQty.value = sanitize(localQty.value + 1))
-  const addToCart = () => {
+  const addToCart = async () => {
     const qty = sanitize(localQty.value) || 1
     if (qty <= 0) {
       invalidQty.value = true
       return
     }
-    const current = cart.value?.[props.item._id] || 0
-    cart.value = { ...(cart.value || {}), [props.item._id]: current + qty }
-    emit('add', { item: props.item, quantity: qty })
-    alert('Đã thêm vào giỏ hàng!')
-    localQty.value = 0
+
+    // Bắt đầu loading
+    isAdding.value = true
+
+    try {
+      // Delay 1 giây để hiển thị loading
+      await new Promise(resolve => setTimeout(resolve, 500))
+
+      // Thực hiện action thêm vào giỏ hàng
+      const current = cart.value?.[props.item._id] || 0
+      cart.value = { ...(cart.value || {}), [props.item._id]: current + qty }
+      emit('add', { item: props.item, quantity: qty })
+
+      // Reset số lượng về 0
+      localQty.value = 0
+
+      // Hiển thị thông báo thành công
+      alert('Đã thêm vào giỏ hàng!')
+    } catch (error) {
+      console.error('Error adding to cart:', error)
+      alert('Có lỗi xảy ra khi thêm vào giỏ hàng!')
+    } finally {
+      // Kết thúc loading
+      isAdding.value = false
+    }
   }
 
   const formatPrice = v =>

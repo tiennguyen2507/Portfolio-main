@@ -18,7 +18,7 @@
     size: {
       type: String,
       default: 'md',
-      validator: value => ['sm', 'md', 'lg'].includes(value),
+      validator: value => ['xs', 'sm', 'md', 'lg'].includes(value),
     },
     color: {
       type: String,
@@ -36,12 +36,14 @@
   })
 
   const sizeClasses = {
+    xs: 'h-4 w-4',
     sm: 'h-6 w-6',
     md: 'h-8 w-8',
     lg: 'h-12 w-12',
   }
 
   const textSizeClasses = {
+    xs: 'text-xs',
     sm: 'text-sm',
     md: 'text-sm',
     lg: 'text-base',
