@@ -122,6 +122,7 @@
   const showModal = ref(false)
   const isEditing = ref(false)
   const submitting = ref(false)
+  const editingProductId = ref(null)
   const form = ref({
     title: '',
     description: '',
@@ -216,6 +217,7 @@
     showModal.value = false
     isEditing.value = false
     error.value = ''
+    editingProductId.value = null // Reset editingProductId
     form.value = {
       title: '',
       description: '',
@@ -232,6 +234,7 @@
     isEditing.value = true
     showModal.value = true
     error.value = ''
+    editingProductId.value = product._id // Lưu trữ ID để edit
     form.value = {
       title: product.title || '',
       description: product.description || '',
@@ -262,7 +265,7 @@
 
   const toggleProductStatus = async (id, currentStatus) => {
     try {
-      await httpRequest.put(`/products/${id}`, {
+      await httpRequest.patch(`/products/${id}`, {
         status: currentStatus === 1 ? 0 : 1,
       })
 
@@ -321,24 +324,22 @@
       }
 
       if (isEditing.value) {
-        // Update existing product
-        const productId = products.value.find(
-          p =>
-            p.title === result.data.title &&
-            p.description === result.data.description
-        )?._id
-
-        if (productId) {
-          await httpRequest.put(`/products/${productId}`, {
-            title: result.data.title.trim(),
-            description: result.data.description.trim(),
-            price: parseInt(result.data.price),
-            sales: parseInt(result.data.sales),
-            category: result.data.category,
-            quantity: parseInt(result.data.quantity),
-            thumbnail: thumbnailUrl,
-          })
+        // Update existing product - cần lưu trữ productId khi edit
+        if (!editingProductId.value) {
+          error.value = 'Không tìm thấy ID sản phẩm để cập nhật'
+          submitting.value = false
+          return
         }
+
+        await httpRequest.patch(`/products/${editingProductId.value}`, {
+          title: result.data.title.trim(),
+          description: result.data.description.trim(),
+          price: parseInt(result.data.price),
+          sales: parseInt(result.data.sales),
+          category: result.data.category,
+          quantity: parseInt(result.data.quantity),
+          thumbnail: thumbnailUrl,
+        })
       } else {
         // Create new product
         await httpRequest.post('/products', {
