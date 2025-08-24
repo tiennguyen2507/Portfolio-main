@@ -81,6 +81,11 @@
       icon: 'shop',
     },
     {
+      path: '/admin/orders',
+      label: 'Quản lý đơn hàng',
+      icon: 'reports',
+    },
+    {
       path: '/admin/reports',
       label: 'Báo cáo',
       icon: 'reports',

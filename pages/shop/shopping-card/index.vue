@@ -187,8 +187,19 @@
               rows="3"
               class="ipt sm:col-span-2"
             ></textarea>
-            <button type="submit" class="btn-place sm:col-span-2">
-              Xác nhận đặt
+            <button
+              type="submit"
+              class="btn-place sm:col-span-2"
+              :disabled="isSubmitting"
+            >
+              <Loading
+                v-if="isSubmitting"
+                size="xs"
+                color="white"
+                text=""
+                container-class="py-0 mr-2"
+              />
+              <span>{{ isSubmitting ? 'Đang xử lý...' : 'Xác nhận đặt' }}</span>
             </button>
           </form>
         </div>
@@ -225,6 +236,7 @@
   const products = ref([])
   const loading = ref(false)
   const error = ref(null)
+  const isSubmitting = ref(false)
 
   // Fetch products function - lấy tất cả products
   const fetchProducts = async () => {
@@ -358,30 +370,79 @@
     return !errors.name && !errors.phone && !errors.address
   }
 
-  const submit = () => {
+  const submit = async () => {
     if (!rows.value.length) return alert('Giỏ hàng trống.')
     if (!validate()) {
       return
     }
-    const summary = products.value
-      .filter(p => (cart.value?.[p._id] || 0) > 0)
-      .map(p => `${p.title} × ${cart.value[p._id]}`)
-      .join(', ')
-    alert(
-      `Đặt hàng thành công!\nMón: ${summary}\nTổng: ${formatPrice(totalPrice.value)}\nKhách: ${form.name} - ${form.phone}\nĐ/c: ${form.address}`
-    )
-    // Clear cart after success
-    cart.value = {}
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.removeItem('th_shop_cart')
-      } catch {}
+
+    // Bắt đầu loading
+    isSubmitting.value = true
+
+    try {
+      // Chuẩn bị dữ liệu order theo API spec
+      const orderData = {
+        fullName: form.name.trim(),
+        phone: form.phone.trim(),
+        address: form.address.trim(),
+        note: form.note.trim() || '',
+        orderItems: rows.value.map(item => ({
+          productId: item._id,
+          quantity: cart.value[item._id] || 0,
+        })),
+      }
+
+      console.log('Submitting order:', orderData)
+
+      // Gọi API tạo order
+      const response = await httpRequest.post('/orders', orderData)
+
+      if (response) {
+        console.log('Order created successfully:', response)
+
+        // Hiển thị thông báo thành công
+        const summary = rows.value
+          .map(p => `${p.title} × ${cart.value[p._id]}`)
+          .join(', ')
+
+        alert(
+          `Đặt hàng thành công!\nMã đơn hàng: ${response._id || 'N/A'}\nMón: ${summary}\nTổng: ${formatPrice(totalPrice.value)}\nKhách: ${form.name} - ${form.phone}\nĐ/c: ${form.address}`
+        )
+
+        // Clear cart after success
+        cart.value = {}
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.removeItem('th_shop_cart')
+          } catch {}
+        }
+
+        // Reset form
+        form.name = ''
+        form.phone = ''
+        form.address = ''
+        form.note = ''
+
+        // Redirect về trang order
+        await navigateTo('/shop/order')
+      }
+    } catch (error) {
+      console.error('Error creating order:', error)
+
+      // Hiển thị lỗi cụ thể từ API
+      let errorMessage = 'Có lỗi xảy ra khi đặt hàng!'
+
+      if (error.data?.message) {
+        errorMessage = error.data.message
+      } else if (error.message) {
+        errorMessage = error.message
+      }
+
+      alert(`Lỗi đặt hàng: ${errorMessage}`)
+    } finally {
+      // Kết thúc loading
+      isSubmitting.value = false
     }
-    // Reset form
-    form.name = ''
-    form.phone = ''
-    form.address = ''
-    form.note = ''
   }
 
   const formatPrice = v =>
@@ -451,7 +512,7 @@
     @apply rounded-xl border border-[#e5d6c3] bg-white/70 px-4 py-3 text-[#3b2b23] placeholder-[#7a6657] focus:outline-none focus:ring-2 focus:ring-[#e7d8c0]/40;
   }
   .btn-place {
-    @apply inline-flex items-center justify-center rounded-xl bg-[#3b2b23] text-[#f7efe6] px-5 py-3 font-medium hover:bg-[#2f221c] transition-colors;
+    @apply inline-flex items-center justify-center rounded-xl bg-[#3b2b23] text-[#f7efe6] px-5 py-3 font-medium hover:bg-[#2f221c] transition-colors disabled:bg-[#7a6657] disabled:cursor-not-allowed disabled:opacity-60;
   }
   .btn-back {
     @apply inline-flex items-center justify-center rounded-lg border border-[#3b2b23] text-[#3b2b23] px-4 py-2 text-sm font-medium hover:bg-[#3b2b23] hover:text-[#f7efe6] transition-all duration-200 hover:shadow-md;
