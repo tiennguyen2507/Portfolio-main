@@ -16,11 +16,13 @@
       <h3 class="text-sm sm:text-lg font-semibold text-[#3b2b23] truncate">
         {{ item.title }}
       </h3>
-      <p
-        class="mt-2 text-[#7a6657] leading-relaxed text-xs sm:text-sm clamp-3 min-h-[58px]"
-      >
-        {{ item.description }}
-      </p>
+      <ViewEditor
+        :content="item.description"
+        variant="default"
+        custom-class="mt-2 text-[#7a6657] leading-relaxed text-xs sm:text-sm clamp-3 min-h-[58px]"
+        :truncate="true"
+        :max-length="150"
+      />
 
       <div class="mt-2 flex items-center justify-between">
         <label class="text-[#4b3e35] text-xs sm:text-sm hidden sm:block"
@@ -61,6 +63,7 @@
   import QuantityInput from '~/pages/shop/_components/QuantityInput.vue'
   import Image from '~/components/ui/Image.vue'
   import Loading from '~/components/ui/Loading.vue'
+  import ViewEditor from '~/components/ui/ViewEditor.vue'
   const props = defineProps({
     item: { type: Object, required: true },
     modelValue: { type: Number, default: 0 },

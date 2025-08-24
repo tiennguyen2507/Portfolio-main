@@ -21,15 +21,21 @@
           <div class="text-sm font-bold text-gray-900">
             {{ record.title || 'N/A' }}
           </div>
-          <div class="text-sm text-gray-500">{{ record.description }}</div>
+          <ViewEditor
+            :content="record.description || ''"
+            variant="default"
+            custom-class="text-sm text-gray-500"
+            :truncate="true"
+            :max-length="100"
+          />
         </div>
       </div>
     </template>
 
     <!-- Cell: Category -->
     <template #cell-category="{ value }">
-      <AdminUiTag variant="info">
-        {{ value || 'N/A' }}
+      <AdminUiTag :variant="getCategoryVariant(value)">
+        {{ getCategoryLabel(value) || 'N/A' }}
       </AdminUiTag>
     </template>
 
@@ -83,6 +89,7 @@
   import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
   import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
   import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
+  import ViewEditor from '~/components/ui/ViewEditor.vue'
 
   const props = defineProps({
     products: { type: Array, default: () => [] },
@@ -139,6 +146,25 @@
       currency: 'VND',
       maximumFractionDigits: 0,
     }).format(price)
+  }
+
+  const categoryConfig = {
+    breakfast: {
+      label: 'Đồ ăn sáng',
+      variant: 'success',
+    },
+    drink: {
+      label: 'Đồ uống',
+      variant: 'primary',
+    },
+  }
+
+  const getCategoryLabel = value => {
+    return categoryConfig[value]?.label || value
+  }
+
+  const getCategoryVariant = value => {
+    return categoryConfig[value]?.variant || 'info'
   }
 
   const editProduct = id => {

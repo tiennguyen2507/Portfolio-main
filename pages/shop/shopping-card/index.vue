@@ -69,9 +69,13 @@
                 <div class="text-base font-semibold text-[#3b2b23] truncate">
                   {{ row.title }}
                 </div>
-                <div class="text-xs text-[#7a6657] clamp-2">
-                  {{ row.description }}
-                </div>
+                <ViewEditor
+                  :content="row.description"
+                  variant="default"
+                  custom-class="text-xs text-[#7a6657] clamp-2"
+                  :truncate="true"
+                  :max-length="80"
+                />
               </div>
             </div>
             <div class="mt-3 grid grid-cols-3 gap-2 items-stretch">
@@ -111,7 +115,13 @@
               />
               <div>
                 <div class="font-medium text-[#3b2b23]">{{ row.title }}</div>
-                <div class="text-sm text-[#7a6657]">{{ row.description }}</div>
+                <ViewEditor
+                  :content="row.description"
+                  variant="default"
+                  custom-class="text-sm text-[#7a6657]"
+                  :truncate="true"
+                  :max-length="100"
+                />
               </div>
             </div>
             <div class="col-span-2 text-[#4b3e35]">
@@ -262,6 +272,7 @@
   const { setPageSEO, addStructuredData } = useSEO()
   import QuantityInput from '~/pages/shop/_components/QuantityInput.vue'
   import Image from '~/components/ui/Image.vue'
+  import ViewEditor from '~/components/ui/ViewEditor.vue'
 
   const cart = useLocalStorage('th_shop_cart', {})
 
@@ -283,16 +294,11 @@
       if (response && response.data) {
         // Sử dụng trực tiếp data từ API
         products.value = response.data
-        console.log('Products fetched:', products.value)
       } else {
         throw new Error('Invalid response format')
       }
     } catch (err) {
-      console.error('Error fetching products:', err)
       error.value = err.message
-      // Fallback về mock data nếu API lỗi
-      const { shopProducts } = await import('~/utils/mock')
-      products.value = shopProducts
     } finally {
       loading.value = false
     }

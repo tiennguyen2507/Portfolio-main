@@ -18,31 +18,17 @@
         </p>
       </header>
 
-      <!-- Loading state -->
-      <div v-if="loading" class="text-center py-12">
-        <div
-          class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#3b2b23]"
-        ></div>
-        <p class="mt-4 text-[#7a6657]">Đang tải sản phẩm...</p>
-      </div>
-
-      <!-- Error state -->
-      <div v-else-if="error" class="text-center py-12">
-        <p class="text-red-600 mb-4">Có lỗi khi tải sản phẩm: {{ error }}</p>
-        <button @click="fetchProducts()" class="btn-place">Thử lại</button>
-      </div>
-
-      <!-- Products grid -->
-      <div
-        v-else
-        class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-4 lg:gap-8"
-      >
-        <Card
-          v-for="product in products"
-          :key="product._id"
-          :item="product"
-          v-model="quantities[product._id]"
+      <!-- Products by Category -->
+      <div class="space-y-12">
+        <OrderSection
+          v-for="category in categories"
+          :key="category.category"
+          :category="category.category"
+          :title="category.title"
+          :description="category.description"
+          :items-per-page="8"
           @add="onAdd"
+          @products-loaded="onProductsLoaded"
         />
       </div>
     </div>
@@ -52,46 +38,30 @@
 <script setup>
   import { onMounted, watch, ref, reactive, computed } from 'vue'
   import Card from './_components/Card.vue'
+  import OrderSection from './_components/OrderSection.vue'
   import { useSEO } from '~/composables/useSEO'
-  import httpRequest from '~/utils/httpRequest'
 
   const { setPageSEO, addStructuredData } = useSEO()
 
   // State
   const products = ref([])
-  const loading = ref(false)
-  const error = ref(null)
 
-  // Fetch products function - lấy tất cả products
-  const fetchProducts = async () => {
-    loading.value = true
-    error.value = null
-
-    try {
-      // Lấy tất cả products với limit lớn để đảm bảo mapping giỏ hàng
-      const response = await httpRequest.get('/products?page=1&limit=100')
-
-      if (response && response.data) {
-        // Sử dụng trực tiếp data từ API
-        products.value = response.data
-        console.log('Products fetched:', products.value)
-      } else {
-        throw new Error('Invalid response format')
-      }
-    } catch (err) {
-      console.error('Error fetching products:', err)
-      error.value = err.message
-      // Fallback về mock data nếu API lỗi
-      const { shopProducts } = await import('~/utils/mock')
-      products.value = shopProducts
-    } finally {
-      loading.value = false
-    }
-  }
+  // Categories configuration
+  const categories = [
+    {
+      category: 'drink',
+      title: 'Đồ Uống',
+      description: 'Các loại đồ uống thơm ngon, bổ dưỡng từ thiên nhiên',
+    },
+    {
+      category: 'breakfast',
+      title: 'Đồ Ăn Sáng',
+      description: 'Những món ăn sáng truyền thống, đậm đà hương vị quê nhà',
+    },
+  ]
 
   // Fetch products khi component mount
   onMounted(async () => {
-    await fetchProducts()
     // Clean up invalid cart items sau khi load products
     cleanupInvalidCartItems()
   })
@@ -112,6 +82,8 @@
     },
     { immediate: true }
   )
+
+  // Products are now fetched by OrderSection components
 
   const cartItems = computed(() =>
     products.value
@@ -176,9 +148,20 @@
     }
   }
 
+  // Pagination is now handled by OrderSection components
+
   const onAdd = ({ item, quantity }) => {
     if (quantity <= 0) return
     quantities[item._id] = quantity
+  }
+
+  const onProductsLoaded = newProducts => {
+    // Thêm products mới vào danh sách tổng để mapping giỏ hàng
+    newProducts.forEach(product => {
+      if (!products.value.find(p => p._id === product._id)) {
+        products.value.push(product)
+      }
+    })
   }
 
   const submitOrder = () => {

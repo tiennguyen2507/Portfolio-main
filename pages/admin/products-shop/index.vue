@@ -52,10 +52,8 @@
               label="Danh mục"
               placeholder="Tất cả danh mục"
               :options="[
-                { label: 'Breakfast', value: 'breakfast' },
-                { label: 'Lunch', value: 'lunch' },
-                { label: 'Dinner', value: 'dinner' },
-                { label: 'Snack', value: 'snack' },
+                { label: 'Đồ ăn sáng', value: 'breakfast' },
+                { label: 'Đồ uống', value: 'drink' },
               ]"
             />
           </div>
