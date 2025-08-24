@@ -22,6 +22,9 @@
 </template>
 
 <script setup>
+  import { ref } from 'vue'
+  import httpRequest from '~/utils/httpRequest'
+
   const props = defineProps({
     src: {
       type: String,
@@ -54,16 +57,37 @@
   const hasError = ref(false)
   const isProxyUsed = ref(false)
 
-  const handleImageError = () => {
+  const handleImageError = async () => {
     console.log('Image error:', props.src)
     if (!hasError.value) {
-      // Lần đầu lỗi, thử dùng proxy
+      // Lần đầu lỗi, thử dùng proxy với POST request
       hasError.value = true
       isProxyUsed.value = true
-      const proxyUrl = `https://blog-data.up.railway.app/image/proxy-image?url=${encodeURIComponent(props.src)}`
-      console.log('Trying proxy:', proxyUrl)
-      currentSrc.value = proxyUrl
-      emit('error', { originalSrc: props.src, proxyUrl })
+
+      try {
+        // Encode URL thành base64
+        const encodedUrl = btoa(props.src)
+        console.log('Trying proxy with encoded URL:', encodedUrl)
+
+        // Sử dụng httpRequest để gọi API
+        const response = await httpRequest.post('/image/proxy-image-encoded', {
+          encodedUrl: encodedUrl,
+        })
+
+        // Nếu thành công, sử dụng response data làm src
+        if (response && response.url) {
+          currentSrc.value = response.url
+          emit('error', { originalSrc: props.src, proxyUrl: response.url })
+        } else {
+          throw new Error('Invalid response from proxy')
+        }
+      } catch (error) {
+        console.error('Proxy request failed:', error)
+        // Proxy cũng lỗi, dùng ảnh mặc định
+        console.log('Using default image:', defaultImage)
+        currentSrc.value = defaultImage
+        emit('error', { originalSrc: props.src, fallbackToDefault: true })
+      }
     } else if (isProxyUsed.value) {
       // Proxy cũng lỗi, dùng ảnh mặc định
       console.log('Using default image:', defaultImage)
