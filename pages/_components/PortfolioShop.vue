@@ -212,9 +212,7 @@
       }
     } catch (err) {
       console.error('Error fetching products for portfolio:', err)
-      // Fallback về mock data nếu API lỗi
-      const { shopProducts } = await import('~/utils/mock')
-      products.value = shopProducts.slice(0, 4)
+      // Không cần fallback, chỉ để products rỗng
     }
   }
 
