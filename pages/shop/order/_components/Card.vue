@@ -4,20 +4,20 @@
   >
     <div class="sm:w-full overflow-hidden flex items-center justify-center">
       <Image
-        :src="item.image"
-        :alt="item.name"
-        custom-class="w-20 sm:w-full h-full object-cover"
+        :src="item.thumbnail"
+        :alt="item.title"
+        custom-class="w-24 h-24 md:w-52  md:h-52 object-cover"
       />
     </div>
 
     <div class="px-3 sm:p-5">
       <h3 class="text-sm sm:text-lg font-semibold text-[#3b2b23] truncate">
-        {{ item.name }}
+        {{ item.title }}
       </h3>
       <p
         class="mt-2 text-[#7a6657] leading-relaxed text-xs sm:text-sm clamp-3 min-h-[58px]"
       >
-        {{ item.desc }}
+        {{ item.description }}
       </p>
 
       <div class="mt-4 flex items-center justify-between">
@@ -82,8 +82,8 @@
       invalidQty.value = true
       return
     }
-    const current = cart.value?.[props.item.id] || 0
-    cart.value = { ...(cart.value || {}), [props.item.id]: current + qty }
+    const current = cart.value?.[props.item._id] || 0
+    cart.value = { ...(cart.value || {}), [props.item._id]: current + qty }
     emit('add', { item: props.item, quantity: qty })
     alert('Đã thêm vào giỏ hàng!')
     localQty.value = 0

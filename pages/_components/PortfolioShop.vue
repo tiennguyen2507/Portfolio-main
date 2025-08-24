@@ -155,10 +155,82 @@
           </div>
         </div>
       </div>
+
+      <!-- Products Preview -->
+      <div class="mt-16">
+        <h3 class="text-2xl font-bold text-white text-center mb-8">
+          Món Nổi Bật
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div
+            v-for="product in featuredProducts"
+            :key="product.id"
+            class="bg-gray-700 rounded-xl overflow-hidden hover:bg-gray-600 transition-colors"
+          >
+            <Image
+              :src="product.thumbnail"
+              :alt="product.title"
+              custom-class="w-full h-32 object-cover"
+              loading="lazy"
+            />
+            <div class="p-4">
+              <h4 class="text-white font-semibold text-sm mb-1 truncate">
+                {{ product.title }}
+              </h4>
+              <p class="text-orange-400 font-bold text-sm">
+                {{ formatPrice(product.price) }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
+  import { onMounted, computed, ref } from 'vue'
+  import httpRequest from '~/utils/httpRequest'
   import Image from '~/components/ui/Image.vue'
+
+  // State
+  const products = ref([])
+
+  // Fetch products function
+  const fetchProducts = async (page = 1, limit = 4) => {
+    try {
+      const response = await httpRequest.get(
+        `/products?page=${page}&limit=${limit}`
+      )
+
+      if (response && response.data) {
+        // Sử dụng trực tiếp data từ API
+        products.value = response.data
+        console.log('Products fetched for portfolio:', products.value)
+      } else {
+        throw new Error('Invalid response format')
+      }
+    } catch (err) {
+      console.error('Error fetching products for portfolio:', err)
+      // Fallback về mock data nếu API lỗi
+      const { shopProducts } = await import('~/utils/mock')
+      products.value = shopProducts.slice(0, 4)
+    }
+  }
+
+  // Fetch products khi component mount
+  onMounted(async () => {
+    await fetchProducts(1, 4) // Chỉ lấy 4 sản phẩm đầu tiên
+  })
+
+  // Lấy 4 sản phẩm đầu tiên để hiển thị
+  const featuredProducts = computed(() => products.value.slice(0, 4))
+
+  const formatPrice = price => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      maximumFractionDigits: 0,
+    }).format(price)
+  }
 </script>

@@ -28,15 +28,17 @@
           <div class="sm:hidden">
             <div class="flex gap-3">
               <Image
-                :src="row.image"
-                :alt="row.name"
+                :src="row.thumbnail"
+                :alt="row.title"
                 custom-class="h-12 w-12 rounded-lg object-cover"
               />
               <div class="flex-1 min-w-0">
                 <div class="text-base font-semibold text-[#3b2b23] truncate">
-                  {{ row.name }}
+                  {{ row.title }}
                 </div>
-                <div class="text-xs text-[#7a6657] clamp-2">{{ row.desc }}</div>
+                <div class="text-xs text-[#7a6657] clamp-2">
+                  {{ row.description }}
+                </div>
               </div>
             </div>
             <div class="mt-3 grid grid-cols-3 gap-2 items-stretch">
@@ -70,13 +72,13 @@
           <div class="hidden sm:grid grid-cols-12 gap-4 items-center">
             <div class="col-span-6 flex items-center gap-3">
               <Image
-                :src="row.image"
-                :alt="row.name"
+                :src="row.thumbnail"
+                :alt="row.title"
                 custom-class="h-12 w-12 rounded-lg object-cover"
               />
               <div>
-                <div class="font-medium text-[#3b2b23]">{{ row.name }}</div>
-                <div class="text-sm text-[#7a6657]">{{ row.desc }}</div>
+                <div class="font-medium text-[#3b2b23]">{{ row.title }}</div>
+                <div class="text-sm text-[#7a6657]">{{ row.description }}</div>
               </div>
             </div>
             <div class="col-span-2 text-[#4b3e35]">
@@ -177,22 +179,64 @@
 </template>
 
 <script setup>
-  import { shopProducts } from '~/utils/mock'
+  import { onMounted, watch, ref, reactive, computed } from 'vue'
   import { useSEO } from '~/composables/useSEO'
+  import httpRequest from '~/utils/httpRequest'
   const { setPageSEO, addStructuredData } = useSEO()
   import QuantityInput from '~/pages/shop/_components/QuantityInput.vue'
   import Image from '~/components/ui/Image.vue'
+
   const cart = useLocalStorage('th_shop_cart', {})
 
+  // State
+  const products = ref([])
+  const loading = ref(false)
+  const error = ref(null)
+
+  // Fetch products function
+  const fetchProducts = async (page = 1, limit = 10) => {
+    loading.value = true
+    error.value = null
+
+    try {
+      const response = await httpRequest.get(
+        `/products?page=${page}&limit=${limit}`
+      )
+
+      if (response && response.data) {
+        // Sử dụng trực tiếp data từ API
+        products.value = response.data
+        console.log('Products fetched:', products.value)
+      } else {
+        throw new Error('Invalid response format')
+      }
+    } catch (err) {
+      console.error('Error fetching products:', err)
+      error.value = err.message
+      // Fallback về mock data nếu API lỗi
+      const { shopProducts } = await import('~/utils/mock')
+      products.value = shopProducts
+    } finally {
+      loading.value = false
+    }
+  }
+
+  // Fetch products khi component mount
+  onMounted(async () => {
+    await fetchProducts(1, 10)
+  })
+
   const rows = computed(() =>
-    shopProducts.filter(p => (cart.value?.[p.id] || 0) > 0).map(p => ({ ...p }))
+    products.value
+      .filter(p => (cart.value?.[p._id] || 0) > 0)
+      .map(p => ({ ...p }))
   )
   const totalQuantity = computed(() =>
     Object.values(cart.value || {}).reduce((a, b) => a + Number(b || 0), 0)
   )
   const totalPrice = computed(() =>
-    shopProducts.reduce(
-      (sum, p) => sum + (cart.value?.[p.id] || 0) * p.price,
+    products.value.reduce(
+      (sum, p) => sum + (cart.value?.[p._id] || 0) * p.price,
       0
     )
   )
@@ -228,9 +272,9 @@
     if (!validate()) {
       return
     }
-    const summary = shopProducts
-      .filter(p => (cart.value?.[p.id] || 0) > 0)
-      .map(p => `${p.name} × ${cart.value[p.id]}`)
+    const summary = products.value
+      .filter(p => (cart.value?.[p._id] || 0) > 0)
+      .map(p => `${p.title} × ${cart.value[p._id]}`)
       .join(', ')
     alert(
       `Đặt hàng thành công!\nMón: ${summary}\nTổng: ${formatPrice(totalPrice.value)}\nKhách: ${form.name} - ${form.phone}\nĐ/c: ${form.address}`
@@ -274,13 +318,38 @@
     type: 'website',
   })
 
-  addStructuredData({
-    '@context': 'https://schema.org',
-    '@type': 'ShoppingCart',
-    name: 'Giỏ hàng Tiệm Đồ Quê Tiên Hạnh',
-    url: pageUrl,
-    image: [coverImage],
-  })
+  // Watch products để cập nhật SEO khi data thay đổi
+  watch(
+    products,
+    newProducts => {
+      if (newProducts.length > 0) {
+        addStructuredData({
+          '@context': 'https://schema.org',
+          '@type': 'ShoppingCart',
+          name: 'Giỏ hàng Tiệm Đồ Quê Tiên Hạnh',
+          url: pageUrl,
+          image: [coverImage],
+          itemListElement: rows.value.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            item: {
+              '@type': 'Product',
+              name: item.title,
+              description: item.description,
+              image: item.thumbnail,
+              offers: {
+                '@type': 'Offer',
+                priceCurrency: 'VND',
+                price: item.price,
+                availability: 'https://schema.org/InStock',
+              },
+            },
+          })),
+        })
+      }
+    },
+    { immediate: true }
+  )
 </script>
 
 <style scoped>
