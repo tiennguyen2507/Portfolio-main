@@ -181,12 +181,19 @@
               />
               <p v-if="errors.address" class="err">{{ errors.address }}</p>
             </div>
-            <textarea
-              v-model="form.note"
-              placeholder="Ghi chú"
-              rows="3"
-              class="ipt sm:col-span-2"
-            ></textarea>
+            <div class="sm:col-span-2">
+              <textarea
+                v-model="form.note"
+                placeholder="Ghi chú"
+                rows="3"
+                class="ipt sm:col-span-2 w-full"
+              ></textarea>
+              <p class="text-xs text-[#ff0000]">
+                *Ghi chú: Khách hàng thông cảm, chúng tôi chỉ giao hàng trong
+                phạm vi 12km khu vực từ "FPT Complex, Nam Kì Khởi Nghĩa, Đà
+                Nẵng" ,vì vậy vui lòng kiểm tra khoảng cách trước khi đặt hàng.
+              </p>
+            </div>
             <button
               type="submit"
               class="btn-place sm:col-span-2"

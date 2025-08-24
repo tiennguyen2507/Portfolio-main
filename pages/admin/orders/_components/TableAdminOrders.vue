@@ -56,19 +56,42 @@
 
     <!-- Custom cell for products -->
     <template #cell-products="{ record }">
-      <div class="space-y-2">
-        <!-- Product Count -->
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-          <div class="text-sm font-medium text-gray-900">
-            {{ record.orderItems?.length || 0 }} sản phẩm
+      <div
+        class="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-blue-300 transition-colors"
+      >
+        <!-- Product Count Badge -->
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+            <span
+              class="text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded-full"
+            >
+              {{ record.orderItems?.length || 0 }} sản phẩm
+            </span>
           </div>
         </div>
 
         <!-- Product Summary -->
-        <div class="ml-4">
-          <div class="text-xs text-gray-600 leading-relaxed">
-            {{ getProductSummary(record.orderItems) }}
+        <div class="space-y-1">
+          <!-- Show first 2 products in detail -->
+          <div
+            v-if="record.orderItems && record.orderItems.length > 0"
+            class="mt-2 space-y-1"
+          >
+            <div
+              v-for="(item, index) in record.orderItems.slice(0, 2)"
+              :key="index"
+              class="flex items-center gap-2 text-xs"
+            >
+              <div class="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+              <span class="text-gray-700 font-medium">
+                {{ item.productId?.title || 'N/A' }}
+              </span>
+              <span class="text-gray-500">×</span>
+              <span class="text-gray-600 font-semibold">
+                {{ item.quantity }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -104,20 +127,42 @@
     <!-- Custom cell for actions -->
     <template #cell-actions="{ record }">
       <div class="flex flex-col gap-2">
-        <!-- Tiếp nhận button - chỉ hiển thị khi status là pending -->
+        <!-- Xác nhận button - chỉ hiển thị khi status là pending -->
         <AdminUiButton
           v-if="record.status === 'pending'"
           variant="success"
           size="sm"
-          @click="$emit('updateStatus', record._id, 'processing')"
+          @click="$emit('updateStatus', record._id, 'confirmed')"
           class="w-full text-xs"
         >
-          Tiếp nhận
+          Xác nhận
         </AdminUiButton>
 
-        <!-- Hủy bỏ button - hiển thị khi status là pending hoặc processing -->
+        <!-- Giao hàng button - hiển thị khi status là confirmed -->
         <AdminUiButton
-          v-if="['pending', 'processing'].includes(record.status)"
+          v-if="record.status === 'confirmed'"
+          variant="primary"
+          size="sm"
+          @click="$emit('updateStatus', record._id, 'shipped')"
+          class="w-full text-xs"
+        >
+          Giao hàng
+        </AdminUiButton>
+
+        <!-- Đã giao hàng button - hiển thị khi status là shipped -->
+        <AdminUiButton
+          v-if="record.status === 'shipped'"
+          variant="success"
+          size="sm"
+          @click="$emit('updateStatus', record._id, 'delivered')"
+          class="w-full text-xs"
+        >
+          Đã giao hàng
+        </AdminUiButton>
+
+        <!-- Hủy bỏ button - hiển thị khi status là pending, confirmed hoặc shipped -->
+        <AdminUiButton
+          v-if="['pending', 'confirmed', 'shipped'].includes(record.status)"
           variant="danger"
           size="sm"
           @click="$emit('updateStatus', record._id, 'cancelled')"
@@ -150,8 +195,9 @@
 
   // Status options for select
   const statusOptions = [
-    { label: 'Chờ xử lý', value: 'pending' },
-    { label: 'Đang xử lý', value: 'processing' },
+    { label: 'Chờ xác nhận', value: 'pending' },
+    { label: 'Đã xác nhận', value: 'confirmed' },
+    { label: 'Đang giao hàng', value: 'shipped' },
     { label: 'Đã giao hàng', value: 'delivered' },
     { label: 'Đã hủy', value: 'cancelled' },
   ]
@@ -180,7 +226,7 @@
       title: 'Trạng thái',
       key: 'status',
       dataIndex: 'status',
-      width: '15%',
+      width: '12%',
     },
     {
       title: 'Ngày tạo',
@@ -192,7 +238,7 @@
       title: 'Thao tác',
       key: 'actions',
       dataIndex: 'actions',
-      width: '15%',
+      width: '18%',
     },
   ]
 
@@ -211,7 +257,8 @@
   const getStatusVariant = status => {
     const variants = {
       pending: 'warning',
-      processing: 'info',
+      confirmed: 'info',
+      shipped: 'primary',
       delivered: 'success',
       cancelled: 'danger',
     }
@@ -220,8 +267,9 @@
 
   const getStatusText = status => {
     const texts = {
-      pending: 'Chờ xử lý',
-      processing: 'Đang xử lý',
+      pending: 'Chờ xác nhận',
+      confirmed: 'Đã xác nhận',
+      shipped: 'Đang giao hàng',
       delivered: 'Đã giao hàng',
       cancelled: 'Đã hủy',
     }

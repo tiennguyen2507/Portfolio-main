@@ -34,19 +34,6 @@
             />
           </div>
           <div>
-            <AdminUiSelect
-              v-model="selectedStatus"
-              label="Trạng thái"
-              placeholder="Tất cả trạng thái"
-              :options="[
-                { label: 'Chờ xử lý', value: 'pending' },
-                { label: 'Đang xử lý', value: 'processing' },
-                { label: 'Đã giao hàng', value: 'delivered' },
-                { label: 'Đã hủy', value: 'cancelled' },
-              ]"
-            />
-          </div>
-          <div>
             <AdminUiInput
               v-model="dateRange"
               label="Khoảng thời gian"
@@ -57,6 +44,73 @@
           <div class="flex items-end">
             <AdminUiButton fullWidth @click="applyFilters"> Lọc </AdminUiButton>
           </div>
+        </div>
+      </div>
+
+      <!-- Status Tags -->
+      <div
+        class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6"
+      >
+        <div class="flex flex-wrap gap-3">
+          <!-- Tất cả -->
+          <AdminUiTag
+            :variant="selectedStatus === '' ? 'primary' : 'gray'"
+            size="md"
+            class="cursor-pointer hover:opacity-80 transition-opacity"
+            @click="selectStatus('')"
+          >
+            Tất cả
+          </AdminUiTag>
+
+          <!-- Chờ xác nhận -->
+          <AdminUiTag
+            :variant="selectedStatus === 'pending' ? 'warning' : 'gray'"
+            size="md"
+            class="cursor-pointer hover:opacity-80 transition-opacity"
+            @click="selectStatus('pending')"
+          >
+            Chờ xác nhận
+          </AdminUiTag>
+
+          <!-- Đã xác nhận -->
+          <AdminUiTag
+            :variant="selectedStatus === 'confirmed' ? 'info' : 'gray'"
+            size="md"
+            class="cursor-pointer hover:opacity-80 transition-opacity"
+            @click="selectStatus('confirmed')"
+          >
+            Đã xác nhận
+          </AdminUiTag>
+
+          <!-- Đang giao hàng -->
+          <AdminUiTag
+            :variant="selectedStatus === 'shipped' ? 'primary' : 'gray'"
+            size="md"
+            class="cursor-pointer hover:opacity-80 transition-opacity"
+            @click="selectStatus('shipped')"
+          >
+            Đang giao hàng
+          </AdminUiTag>
+
+          <!-- Đã giao hàng -->
+          <AdminUiTag
+            :variant="selectedStatus === 'delivered' ? 'success' : 'gray'"
+            size="md"
+            class="cursor-pointer hover:opacity-80 transition-opacity"
+            @click="selectStatus('delivered')"
+          >
+            Đã giao hàng
+          </AdminUiTag>
+
+          <!-- Đã hủy -->
+          <AdminUiTag
+            :variant="selectedStatus === 'cancelled' ? 'danger' : 'gray'"
+            size="md"
+            class="cursor-pointer hover:opacity-80 transition-opacity"
+            @click="selectStatus('cancelled')"
+          >
+            Đã hủy
+          </AdminUiTag>
         </div>
       </div>
 
@@ -79,6 +133,7 @@
           @update:page="
             p => {
               currentPage = p
+              updateQueryParams()
             }
           "
         />
@@ -101,22 +156,28 @@
   import Loading from '~/components/ui/Loading.vue'
   import Pagination from '~/components/ui/Pagination.vue'
   import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
-  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
   import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
+  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
   import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
   import TableAdminOrders from './_components/TableAdminOrders.vue'
   import ModalOrderDetail from './_components/ModalOrderDetail.vue'
+
+  // Route and Router
+  const route = useRoute()
+  const router = useRouter()
 
   definePageMeta({
     layout: 'admin',
     middleware: 'auth',
   })
 
-  // Reactive data
-  const searchQuery = ref('')
-  const selectedStatus = ref('')
-  const dateRange = ref('')
-  const currentPage = ref(1)
+  // Reactive data - initialize from query params
+  const searchQuery = ref(route.query.search || '')
+  const selectedStatus = ref(route.query.status || '')
+  const dateRange = ref(
+    route.query.date || new Date().toISOString().split('T')[0]
+  )
+  const currentPage = ref(parseInt(route.query.page) || 1)
   const itemsPerPage = 10
   const loading = ref(true)
   const error = ref(null)
@@ -178,10 +239,8 @@
     error.value = null
 
     try {
-      // Lấy tất cả orders với status pending
-      const response = await httpRequest.get(
-        '/orders?status=pending&page=1&limit=100'
-      )
+      // Lấy tất cả orders
+      const response = await httpRequest.get('/orders?page=1&limit=100')
 
       if (response && response.data) {
         orders.value = response.data
@@ -199,11 +258,47 @@
   }
 
   const refreshOrders = () => {
+    // Reset to first page and clear filters
+    currentPage.value = 1
+    searchQuery.value = ''
+    selectedStatus.value = ''
+    dateRange.value = new Date().toISOString().split('T')[0]
+
+    // Update query params
+    updateQueryParams()
+
+    // Fetch orders
     fetchOrders()
   }
 
   const applyFilters = () => {
     currentPage.value = 1
+    updateQueryParams()
+  }
+
+  const selectStatus = status => {
+    selectedStatus.value = status
+    currentPage.value = 1
+    updateQueryParams()
+  }
+
+  const updateQueryParams = () => {
+    const query = {
+      search: searchQuery.value || undefined,
+      status: selectedStatus.value || undefined,
+      date: dateRange.value || undefined,
+      page: currentPage.value > 1 ? currentPage.value : undefined,
+    }
+
+    // Remove undefined values
+    Object.keys(query).forEach(key => {
+      if (query[key] === undefined) {
+        delete query[key]
+      }
+    })
+
+    // Update URL without reloading the page
+    router.push({ query })
   }
 
   const viewOrder = order => {
@@ -253,6 +348,15 @@
       maximumFractionDigits: 0,
     }).format(price)
   }
+
+  // Watchers for auto-updating query params
+  watch(searchQuery, () => {
+    updateQueryParams()
+  })
+
+  watch(dateRange, () => {
+    updateQueryParams()
+  })
 
   // Lifecycle
   onMounted(() => {
