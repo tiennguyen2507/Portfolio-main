@@ -309,7 +309,7 @@
         const { handleUpdateImage } = await import('~/utils/handleUpdateImage')
         const uploadedUrl = await handleUpdateImage(
           result.thumbnailFile,
-          'products-shop'
+          'tien-hanh-shop'
         )
         if (uploadedUrl) {
           thumbnailUrl = uploadedUrl

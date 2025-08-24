@@ -2,7 +2,9 @@
   <div class="bg-[#fdf6ee] min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8 py-10 lg:py-14">
       <section class="mt-8 text-end">
-        <NuxtLink to="/shop/shopping-card" class="btn-place"
+        <NuxtLink
+          to="/shop/shopping-card"
+          class="btn-place w-full mb-4 md:w-auto"
           >Xem giỏ hàng</NuxtLink
         >
       </section>
