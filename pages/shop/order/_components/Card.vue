@@ -2,11 +2,13 @@
   <div
     class="rounded-xl sm:rounded-2xl bg-[#f6eadb] ring-1 ring-[#e8dccd] shadow-sm overflow-hidden"
   >
-    <div class="sm:w-full overflow-hidden flex items-center justify-center">
+    <div
+      class="sm:w-full overflow-hidden flex items-center justify-center p-2 md:p-4"
+    >
       <Image
         :src="item.thumbnail"
         :alt="item.title"
-        custom-class="w-24 h-24 md:w-52  md:h-52 object-cover"
+        custom-class="w-20 h-20 md:w-40  md:h-40 object-cover rounded-lg"
       />
     </div>
 
@@ -20,7 +22,7 @@
         {{ item.description }}
       </p>
 
-      <div class="mt-4 flex items-center justify-between">
+      <div class="mt-2 flex items-center justify-between">
         <label class="text-[#4b3e35] text-xs sm:text-sm hidden sm:block"
           >Số lượng:</label
         >
@@ -28,7 +30,7 @@
       </div>
 
       <div
-        class="mt-4 flex items-center justify-between flex-col sm:flex-row gap-1 pb-2 sm:pb-0"
+        class="mt-0 md:mt-4 flex items-center justify-between flex-col sm:flex-row gap-1 pb-2 sm:pb-0"
       >
         <div class="text-[#3b2b23]">
           <span class="text-sm sm:text-lg font-semibold">{{
