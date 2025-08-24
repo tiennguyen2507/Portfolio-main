@@ -1,120 +1,138 @@
 <template>
-  <div
-    class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+  <AdminUiTable
+    :dataSource="orders"
+    :columns="columns"
+    :loading="loading"
+    loadingText="Đang tải danh sách đơn hàng..."
+    emptyText="Không có đơn hàng nào."
+    @row-click="handleRowClick"
   >
-    <!-- Table Header -->
-    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-      <div class="grid grid-cols-12 gap-4 text-sm font-medium text-gray-700">
-        <div class="col-span-3">Khách hàng</div>
-        <div class="col-span-2">Sản phẩm</div>
-        <div class="col-span-2">Tổng tiền</div>
-        <div class="col-span-2">Trạng thái</div>
-        <div class="col-span-2">Ngày tạo</div>
-        <div class="col-span-1">Thao tác</div>
-      </div>
-    </div>
-
-    <!-- Table Body -->
-    <div v-if="!orders.length" class="px-6 py-12 text-center text-gray-500">
-      Không có đơn hàng nào.
-    </div>
-
-    <div v-else>
-      <div
-        v-for="order in orders"
-        :key="order._id"
-        class="px-6 py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors"
-      >
-        <div class="grid grid-cols-12 gap-4 items-center">
-          <!-- Customer Info -->
-          <div class="col-span-3">
-            <div class="font-medium text-gray-900">{{ order.fullName }}</div>
-            <div class="text-sm text-gray-600">{{ order.phone }}</div>
-            <div
-              class="text-xs text-gray-500 truncate max-w-[200px]"
-              :title="order.address"
-            >
-              {{ order.address }}
-            </div>
+    <!-- Custom cell for customer info -->
+    <template #cell-customer="{ record }">
+      <div class="space-y-2">
+        <!-- Customer Name -->
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+          <div class="font-semibold text-gray-900 text-sm">
+            Khách hàng: {{ record.fullName }}
           </div>
+        </div>
 
-          <!-- Products -->
-          <div class="col-span-2">
-            <div class="text-sm text-gray-900">
-              {{ order.orderItems?.length || 0 }} sản phẩm
-            </div>
-            <div class="text-xs text-gray-600">
-              {{ getProductSummary(order.orderItems) }}
-            </div>
+        <!-- Phone Number -->
+        <div class="flex items-center gap-2 ml-4">
+          <div class="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+          <div class="text-sm text-gray-600">
+            Số điện thoại: {{ record.phone }}
           </div>
+        </div>
 
-          <!-- Total Amount -->
-          <div class="col-span-2">
-            <div class="font-semibold text-gray-900">
-              {{ formatPrice(order.totalAmount) }}
-            </div>
-          </div>
-
-          <!-- Status -->
-          <div class="col-span-2">
-            <AdminUiTag
-              :variant="getStatusVariant(order.status)"
-              :text="getStatusText(order.status)"
-            />
-          </div>
-
-          <!-- Created Date -->
-          <div class="col-span-2">
-            <div class="text-sm text-gray-900">
-              {{ formatDate(order.createdAt) }}
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div class="col-span-1">
-            <div class="flex items-center gap-2">
-              <AdminUiButton
-                variant="ghost"
-                size="sm"
-                @click="$emit('view', order)"
-                title="Xem chi tiết"
-              >
-                <AdminUiIcon name="eye" size="sm" />
-              </AdminUiButton>
-
-              <AdminUiSelect
-                v-model="order.status"
-                size="sm"
-                :options="[
-                  { label: 'Chờ xử lý', value: 'pending' },
-                  { label: 'Đang xử lý', value: 'processing' },
-                  { label: 'Đã giao hàng', value: 'delivered' },
-                  { label: 'Đã hủy', value: 'cancelled' },
-                ]"
-                @update:modelValue="
-                  newStatus => $emit('updateStatus', order._id, newStatus)
-                "
-              />
-            </div>
+        <!-- Address -->
+        <div class="flex items-start gap-2 ml-4">
+          <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5"></div>
+          <div
+            class="text-xs text-gray-500 max-w-[180px] leading-relaxed"
+            :title="record.address"
+          >
+            Địa chỉ: {{ record.address }}
           </div>
         </div>
 
         <!-- Note (if exists) -->
         <div
-          v-if="order.note"
-          class="mt-2 text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded"
+          v-if="record.note"
+          class="ml-4 mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg"
         >
-          <span class="font-medium">Ghi chú:</span> {{ order.note }}
+          <div class="flex items-start gap-2">
+            <div
+              class="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"
+            ></div>
+            <div class="text-xs text-amber-800">
+              <span class="font-medium">Ghi chú:</span> {{ record.note }}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+
+    <!-- Custom cell for products -->
+    <template #cell-products="{ record }">
+      <div class="space-y-2">
+        <!-- Product Count -->
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+          <div class="text-sm font-medium text-gray-900">
+            {{ record.orderItems?.length || 0 }} sản phẩm
+          </div>
+        </div>
+
+        <!-- Product Summary -->
+        <div class="ml-4">
+          <div class="text-xs text-gray-600 leading-relaxed">
+            {{ getProductSummary(record.orderItems) }}
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Custom cell for total amount -->
+    <template #cell-totalAmount="{ record }">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+        <div class="font-bold text-lg text-gray-900">
+          {{ formatPrice(record.totalAmount) }}
+        </div>
+      </div>
+    </template>
+
+    <!-- Custom cell for status -->
+    <template #cell-status="{ record }">
+      <AdminUiTag :variant="getStatusVariant(record.status)">
+        {{ getStatusText(record.status) }}
+      </AdminUiTag>
+    </template>
+
+    <!-- Custom cell for created date -->
+    <template #cell-createdAt="{ record }">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 bg-indigo-500 rounded-full"></div>
+        <div class="text-sm text-gray-900">
+          {{ formatDate(record.createdAt) }}
+        </div>
+      </div>
+    </template>
+
+    <!-- Custom cell for actions -->
+    <template #cell-actions="{ record }">
+      <div class="flex flex-col gap-2">
+        <!-- Tiếp nhận button - chỉ hiển thị khi status là pending -->
+        <AdminUiButton
+          v-if="record.status === 'pending'"
+          variant="success"
+          size="sm"
+          @click="$emit('updateStatus', record._id, 'processing')"
+          class="w-full text-xs"
+        >
+          Tiếp nhận
+        </AdminUiButton>
+
+        <!-- Hủy bỏ button - hiển thị khi status là pending hoặc processing -->
+        <AdminUiButton
+          v-if="['pending', 'processing'].includes(record.status)"
+          variant="danger"
+          size="sm"
+          @click="$emit('updateStatus', record._id, 'cancelled')"
+          class="w-full text-xs"
+        >
+          Hủy bỏ
+        </AdminUiButton>
+      </div>
+    </template>
+  </AdminUiTable>
 </template>
 
 <script setup>
+  import AdminUiTable from '~/components/admin/ui/AdminUiTable.vue'
   import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
-  import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
-  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
   import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
 
   defineProps({
@@ -129,6 +147,54 @@
   })
 
   defineEmits(['view', 'updateStatus'])
+
+  // Status options for select
+  const statusOptions = [
+    { label: 'Chờ xử lý', value: 'pending' },
+    { label: 'Đang xử lý', value: 'processing' },
+    { label: 'Đã giao hàng', value: 'delivered' },
+    { label: 'Đã hủy', value: 'cancelled' },
+  ]
+
+  // Table columns configuration
+  const columns = [
+    {
+      title: 'Khách hàng',
+      key: 'customer',
+      dataIndex: 'customer',
+      width: '25%',
+    },
+    {
+      title: 'Sản phẩm',
+      key: 'products',
+      dataIndex: 'products',
+      width: '20%',
+    },
+    {
+      title: 'Tổng tiền',
+      key: 'totalAmount',
+      dataIndex: 'totalAmount',
+      width: '15%',
+    },
+    {
+      title: 'Trạng thái',
+      key: 'status',
+      dataIndex: 'status',
+      width: '15%',
+    },
+    {
+      title: 'Ngày tạo',
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      width: '15%',
+    },
+    {
+      title: 'Thao tác',
+      key: 'actions',
+      dataIndex: 'actions',
+      width: '15%',
+    },
+  ]
 
   // Helper functions
   const getProductSummary = orderItems => {
@@ -179,5 +245,10 @@
     const hours = date.getHours().toString().padStart(2, '0')
     const minutes = date.getMinutes().toString().padStart(2, '0')
     return `${day}/${month}/${year} ${hours}:${minutes}`
+  }
+
+  // Handle row click
+  const handleRowClick = ({ record }) => {
+    $emit('view', record)
   }
 </script>
