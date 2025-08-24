@@ -10,11 +10,11 @@
       </section>
       <header class="text-center mb-8">
         <h1 class="text-4xl sm:text-5xl font-serif font-bold text-[#3b2b23]">
-          Đặt Món Quê Nhà
+          Đặt Đồ Uống & Ăn Sáng
         </h1>
-        <p class="mt-3 text-[#7a6657]">
-          Chọn món bạn yêu thích, nhập thông tin – chúng tôi sẽ liên hệ xác nhận
-          ngay.
+        <p class="mt-3 text-[#7a6657] text-lg">
+          Thức uống tươi ngon và đồ ăn sáng bổ dưỡng, tốt cho sức khỏe. Chọn món
+          bạn yêu thích, chúng tôi sẽ giao hàng nhanh chóng.
         </p>
       </header>
 
@@ -51,12 +51,14 @@
     {
       category: 'drink',
       title: 'Đồ Uống',
-      description: 'Các loại đồ uống thơm ngon, bổ dưỡng từ thiên nhiên',
+      description:
+        'Cafe, sinh tố, trà sữa và các loại thức uống tươi ngon, bổ dưỡng',
     },
     {
       category: 'breakfast',
       title: 'Đồ Ăn Sáng',
-      description: 'Những món ăn sáng truyền thống, đậm đà hương vị quê nhà',
+      description:
+        'Khoai lang, sắn luộc, đậu phộng, trứng gà ta - thực phẩm sạch, tốt cho sức khỏe',
     },
   ]
 
@@ -196,11 +198,11 @@
 
   setPageSEO({
     title:
-      'Đặt món đồ quê – Khoai, Sắn, Trứng gà ta, Đậu | Tiệm Đồ Quê Tiên Hạnh',
+      'Đặt đồ uống & ăn sáng – Cafe, Sinh tố, Khoai sắn, Đậu trứng | Tiệm Đồ Quê Tiên Hạnh',
     description:
-      'Chọn món đồ quê ngon sạch: khoai lang nướng, sắn luộc, trứng gà ta, đậu phộng rang, bánh quê… Đặt nhanh, giao trong ngày tại Tiệm Đồ Quê Tiên Hạnh.',
+      'Đặt đồ uống tươi ngon: cafe, sinh tố, trà sữa và đồ ăn sáng bổ dưỡng: khoai lang, sắn luộc, đậu phộng, trứng gà ta. Thực phẩm sạch, tốt cho sức khỏe, giao hàng nhanh tại Tiên Hạnh.',
     keywords:
-      'đặt đồ quê, đặt bữa sáng, khoai lang, sắn, trứng gà ta, đậu phộng, bánh quê, tiệm đồ quê tiên hạnh',
+      'đặt đồ uống, cafe, sinh tố, trà sữa, đồ ăn sáng, khoai lang, sắn luộc, đậu phộng, trứng gà ta, thực phẩm sạch, tiệm đồ quê tiên hạnh, đặt hàng online',
     image: coverImage,
     url: pageUrl,
     type: 'website',
@@ -217,7 +219,9 @@
         addStructuredData({
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: 'Danh sách món đồ quê',
+          name: 'Danh sách đồ uống và đồ ăn sáng',
+          description:
+            'Cafe, sinh tố, trà sữa và các món ăn sáng bổ dưỡng như khoai lang, sắn luộc, đậu phộng, trứng gà ta',
           itemListElement: newProducts.map((p, i) => ({
             '@type': 'ListItem',
             position: i + 1,
@@ -226,11 +230,13 @@
               name: p.title,
               description: p.description,
               image: p.thumbnail,
+              category: p.category === 'drink' ? 'Đồ uống' : 'Đồ ăn sáng',
               offers: {
                 '@type': 'Offer',
                 priceCurrency: 'VND',
                 price: p.price,
                 availability: 'https://schema.org/InStock',
+                deliveryMethod: 'https://schema.org/OnSitePickup',
               },
             },
           })),
