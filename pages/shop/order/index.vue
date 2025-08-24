@@ -29,7 +29,7 @@
       <!-- Error state -->
       <div v-else-if="error" class="text-center py-12">
         <p class="text-red-600 mb-4">Có lỗi khi tải sản phẩm: {{ error }}</p>
-        <button @click="fetchProducts(1, 10)" class="btn-place">Thử lại</button>
+        <button @click="fetchProducts()" class="btn-place">Thử lại</button>
       </div>
 
       <!-- Products grid -->
@@ -62,15 +62,14 @@
   const loading = ref(false)
   const error = ref(null)
 
-  // Fetch products function
-  const fetchProducts = async (page = 1, limit = 10) => {
+  // Fetch products function - lấy tất cả products
+  const fetchProducts = async () => {
     loading.value = true
     error.value = null
 
     try {
-      const response = await httpRequest.get(
-        `/products?page=${page}&limit=${limit}`
-      )
+      // Lấy tất cả products với limit lớn để đảm bảo mapping giỏ hàng
+      const response = await httpRequest.get('/products?page=1&limit=100')
 
       if (response && response.data) {
         // Sử dụng trực tiếp data từ API
@@ -92,7 +91,9 @@
 
   // Fetch products khi component mount
   onMounted(async () => {
-    await fetchProducts(1, 10)
+    await fetchProducts()
+    // Clean up invalid cart items sau khi load products
+    cleanupInvalidCartItems()
   })
 
   const quantities = reactive({})
@@ -123,6 +124,57 @@
   )
 
   const form = reactive({ name: '', phone: '', address: '', note: '' })
+
+  // Cleanup invalid cart items
+  const cleanupInvalidCartItems = () => {
+    if (!products.value.length) return
+
+    const validProductIds = products.value.map(p => p._id)
+    const cartKeys = Object.keys(quantities)
+    let hasChanges = false
+
+    // Xóa sản phẩm không tồn tại trong products
+    cartKeys.forEach(productId => {
+      if (!validProductIds.includes(productId)) {
+        console.log(`Removing invalid product from quantities: ${productId}`)
+        delete quantities[productId]
+        hasChanges = true
+      }
+    })
+
+    // Xóa sản phẩm có số lượng không hợp lệ
+    cartKeys.forEach(productId => {
+      const quantity = quantities[productId]
+      if (
+        quantity === null ||
+        quantity === undefined ||
+        quantity < 0 ||
+        !Number.isInteger(Number(quantity))
+      ) {
+        console.log(
+          `Removing product with invalid quantity from quantities: ${productId}, quantity: ${quantity}`
+        )
+        delete quantities[productId]
+        hasChanges = true
+      }
+    })
+
+    // Xóa sản phẩm có số lượng = 0
+    cartKeys.forEach(productId => {
+      const quantity = quantities[productId]
+      if (quantity === 0) {
+        console.log(
+          `Removing product with zero quantity from quantities: ${productId}`
+        )
+        delete quantities[productId]
+        hasChanges = true
+      }
+    })
+
+    if (hasChanges) {
+      console.log('Quantities cleaned up, invalid items removed')
+    }
+  }
 
   const onAdd = ({ item, quantity }) => {
     if (quantity <= 0) return
@@ -171,11 +223,14 @@
     type: 'website',
   })
 
-  // Watch products để cập nhật SEO khi data thay đổi
+  // Watch products để cập nhật SEO và cleanup quantities khi data thay đổi
   watch(
     products,
     newProducts => {
       if (newProducts.length > 0) {
+        // Cleanup quantities khi products thay đổi
+        cleanupInvalidCartItems()
+
         addStructuredData({
           '@context': 'https://schema.org',
           '@type': 'ItemList',

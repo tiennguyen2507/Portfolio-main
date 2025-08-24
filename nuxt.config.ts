@@ -81,13 +81,13 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1',
       title:
         process.env.SITE_TITLE ||
-        'Nguyễn Lê Đình Tiên - Fullstack Web Developer | React, Vue.js, Node.js | Da Nang',
+        'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
       meta: [
         {
           name: 'description',
           content:
             process.env.SITE_DESCRIPTION ||
-            'Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.',
+            'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.',
         },
         { name: 'robots', content: 'index, follow' },
         {
@@ -97,20 +97,20 @@ export default defineNuxtConfig({
         {
           name: 'keywords',
           content:
-            'web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer',
+            'portfolio, web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer, NestJS, TypeScript',
         },
         { property: 'og:type', content: 'website' },
         {
           property: 'og:title',
           content:
             process.env.SITE_TITLE ||
-            'Nguyễn Lê Đình Tiên - Fullstack Web Developer | React, Vue.js, Node.js | Da Nang',
+            'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
         },
         {
           property: 'og:description',
           content:
             process.env.SITE_DESCRIPTION ||
-            'Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS.',
+            'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS.',
         },
         {
           property: 'og:site_name',
@@ -119,12 +119,12 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
-          content: 'Nguyễn Lê Đình Tiên - Fullstack Web Developer',
+          content: 'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer',
         },
         {
           name: 'twitter:description',
           content:
-            'Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development',
+            'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development',
         },
         {
           name: 'viewport',
@@ -164,24 +164,21 @@ export default defineNuxtConfig({
       NUXT_PUBLIC_API_URL:
         process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3000',
 
-      // Authentication URLs
-      PUBLISHER_SIGNUP_URL:
-        process.env.PUBLISHER_SIGNUP_URL ||
-        'https://leadswise.affise.com/v2/sign/up',
-      LOGIN_URL:
-        process.env.LOGIN_URL || 'https://leadswise.affise.com/v2/sign/in',
+      // Authentication URLs (if needed for admin panel)
+      PUBLISHER_SIGNUP_URL: process.env.PUBLISHER_SIGNUP_URL || '',
+      LOGIN_URL: process.env.LOGIN_URL || '',
 
       // Site SEO Configuration
       SITE_URL: process.env.SITE_URL || 'https://nguyenledinhtien.io.vn',
       SITE_TITLE:
         process.env.SITE_TITLE ||
-        'Nguyễn Lê Đình Tiên - Fullstack Web Developer | React, Vue.js, Node.js | Da Nang',
+        'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
       SITE_DESCRIPTION:
         process.env.SITE_DESCRIPTION ||
-        'Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.',
+        'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.',
       SITE_KEYWORDS:
         process.env.SITE_KEYWORDS ||
-        'web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer, NestJS, TypeScript',
+        'portfolio, web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer, NestJS, TypeScript',
       SITE_NAME: process.env.SITE_NAME || 'Nguyễn Lê Đình Tiên Portfolio',
       SITE_AUTHOR: process.env.SITE_AUTHOR || 'Nguyễn Lê Đình Tiên',
       SITE_LOCALE: process.env.SITE_LOCALE || 'en_US',

@@ -1,11 +1,44 @@
 <template>
   <div class="bg-[#fdf6ee] min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
-      <h1 class="text-3xl sm:text-4xl font-bold text-[#3b2b23] mb-6">
-        Giỏ hàng
-      </h1>
+      <div class="flex items-center justify-between my-4">
+        <h1 class="text-3xl sm:text-4xl font-bold text-[#3b2b23]">Giỏ hàng</h1>
+        <div>
+          <NuxtLink to="/shop/order" class="btn-back">
+            <svg
+              class="w-4 h-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Trở về đặt món
+          </NuxtLink>
+        </div>
+      </div>
+
+      <!-- Loading state -->
+      <div v-if="loading" class="text-center py-12 mb-6">
+        <div
+          class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#3b2b23]"
+        ></div>
+        <p class="mt-4 text-[#7a6657]">Đang tải sản phẩm...</p>
+      </div>
+
+      <!-- Error state -->
+      <div v-else-if="error" class="text-center py-12 mb-6">
+        <p class="text-red-600 mb-4">Có lỗi khi tải sản phẩm: {{ error }}</p>
+        <button @click="fetchProducts()" class="btn-place">Thử lại</button>
+      </div>
 
       <div
+        v-else
         class="rounded-2xl overflow-hidden ring-1 ring-[#e5d6c3] bg-white/80"
       >
         <!-- Header for desktop -->
@@ -21,7 +54,7 @@
         <!-- Rows -->
         <div
           v-for="row in rows"
-          :key="row.id"
+          :key="row._id"
           class="border-t border-[#e5d6c3] px-4 py-4"
         >
           <!-- Mobile friendly card -->
@@ -51,7 +84,7 @@
               <div class="mini-card">
                 <div class="mini-label">Thành tiền</div>
                 <div class="text-[#3b2b23] text-sm font-semibold">
-                  {{ formatPrice(row.price * (cart[row.id] || 0)) }}
+                  {{ formatPrice(row.price * (cart[row._id] || 0)) }}
                 </div>
               </div>
               <div class="mini-card">
@@ -59,7 +92,7 @@
                 <QuantityInput
                   :input-class="'w-16'"
                   :wrapper-class="'justify-center'"
-                  v-model="cart[row.id]"
+                  v-model="cart[row._id]"
                   :min="0"
                   :max="99"
                   @update:modelValue="sync()"
@@ -87,14 +120,14 @@
             <div class="col-span-2">
               <QuantityInput
                 :input-class="'w-20'"
-                v-model="cart[row.id]"
+                v-model="cart[row._id]"
                 :min="0"
                 :max="99"
                 @update:modelValue="sync()"
               />
             </div>
             <div class="col-span-2 text-right text-[#3b2b23] font-semibold">
-              {{ formatPrice(row.price * (cart[row.id] || 0)) }}
+              {{ formatPrice(row.price * (cart[row._id] || 0)) }}
             </div>
           </div>
         </div>
@@ -193,15 +226,14 @@
   const loading = ref(false)
   const error = ref(null)
 
-  // Fetch products function
-  const fetchProducts = async (page = 1, limit = 10) => {
+  // Fetch products function - lấy tất cả products
+  const fetchProducts = async () => {
     loading.value = true
     error.value = null
 
     try {
-      const response = await httpRequest.get(
-        `/products?page=${page}&limit=${limit}`
-      )
+      // Lấy tất cả products với limit lớn để đảm bảo mapping giỏ hàng
+      const response = await httpRequest.get('/products?page=1&limit=100')
 
       if (response && response.data) {
         // Sử dụng trực tiếp data từ API
@@ -223,27 +255,86 @@
 
   // Fetch products khi component mount
   onMounted(async () => {
-    await fetchProducts(1, 10)
+    await fetchProducts()
+    // Clean up invalid cart items sau khi load products
+    cleanupInvalidCartItems()
   })
 
-  const rows = computed(() =>
-    products.value
+  const rows = computed(() => {
+    if (!products.value.length) return []
+    return products.value
       .filter(p => (cart.value?.[p._id] || 0) > 0)
       .map(p => ({ ...p }))
-  )
+  })
+
   const totalQuantity = computed(() =>
     Object.values(cart.value || {}).reduce((a, b) => a + Number(b || 0), 0)
   )
-  const totalPrice = computed(() =>
-    products.value.reduce(
+
+  const totalPrice = computed(() => {
+    if (!products.value.length) return 0
+    return products.value.reduce(
       (sum, p) => sum + (cart.value?.[p._id] || 0) * p.price,
       0
     )
-  )
+  })
 
   const form = reactive({ name: '', phone: '', address: '', note: '' })
   const errors = reactive({ name: '', phone: '', address: '' })
   const sync = () => (cart.value = { ...(cart.value || {}) })
+
+  // Cleanup invalid cart items
+  const cleanupInvalidCartItems = () => {
+    if (!products.value.length || !cart.value) return
+
+    const validProductIds = products.value.map(p => p._id)
+    const cartKeys = Object.keys(cart.value)
+    let hasChanges = false
+
+    // Xóa sản phẩm không tồn tại trong products
+    cartKeys.forEach(productId => {
+      if (!validProductIds.includes(productId)) {
+        console.log(`Removing invalid product from cart: ${productId}`)
+        delete cart.value[productId]
+        hasChanges = true
+      }
+    })
+
+    // Xóa sản phẩm có số lượng không hợp lệ
+    cartKeys.forEach(productId => {
+      const quantity = cart.value[productId]
+      if (
+        quantity === null ||
+        quantity === undefined ||
+        quantity < 0 ||
+        !Number.isInteger(Number(quantity))
+      ) {
+        console.log(
+          `Removing product with invalid quantity from cart: ${productId}, quantity: ${quantity}`
+        )
+        delete cart.value[productId]
+        hasChanges = true
+      }
+    })
+
+    // Xóa sản phẩm có số lượng = 0
+    cartKeys.forEach(productId => {
+      const quantity = cart.value[productId]
+      if (quantity === 0) {
+        console.log(
+          `Removing product with zero quantity from cart: ${productId}`
+        )
+        delete cart.value[productId]
+        hasChanges = true
+      }
+    })
+
+    // Sync cart nếu có thay đổi
+    if (hasChanges) {
+      sync()
+      console.log('Cart cleaned up, invalid items removed')
+    }
+  }
 
   const validate = () => {
     errors.name = ''
@@ -318,11 +409,14 @@
     type: 'website',
   })
 
-  // Watch products để cập nhật SEO khi data thay đổi
+  // Watch products để cập nhật SEO và cleanup cart khi data thay đổi
   watch(
     products,
     newProducts => {
       if (newProducts.length > 0) {
+        // Cleanup cart khi products thay đổi
+        cleanupInvalidCartItems()
+
         addStructuredData({
           '@context': 'https://schema.org',
           '@type': 'ShoppingCart',
@@ -358,6 +452,9 @@
   }
   .btn-place {
     @apply inline-flex items-center justify-center rounded-xl bg-[#3b2b23] text-[#f7efe6] px-5 py-3 font-medium hover:bg-[#2f221c] transition-colors;
+  }
+  .btn-back {
+    @apply inline-flex items-center justify-center rounded-lg border border-[#3b2b23] text-[#3b2b23] px-4 py-2 text-sm font-medium hover:bg-[#3b2b23] hover:text-[#f7efe6] transition-all duration-200 hover:shadow-md;
   }
   .mini-card {
     @apply rounded-lg bg-[#f6eadb] p-2 text-center flex flex-col justify-center;
