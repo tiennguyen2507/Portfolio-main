@@ -60,7 +60,7 @@
     </section>
 
     <!-- Main Content -->
-    <section class="py-12">
+    <section id="blogs" class="py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Loading State -->
         <div v-if="pending" class="text-center py-16">
@@ -94,7 +94,7 @@
         <main v-else-if="allPosts.length" class="space-y-8">
           <h2 class="sr-only">Danh sách bài viết</h2>
           <!-- Grid View -->
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <article
               v-for="post in allPosts"
               :key="post._id || post.id"
@@ -135,7 +135,7 @@
                     :max-length="120"
                     custom-class="text-gray-400 mb-4 line-clamp-3 text-sm"
                     itemprop="description"
-                    variant="dark"
+                    variant="light"
                   />
 
                   <!-- Author Info -->
@@ -178,18 +178,45 @@
             </article>
           </div>
 
-          <!-- Load More Button -->
-          <div v-if="hasMorePosts" class="text-center pt-8">
+          <!-- Pagination -->
+          <div
+            v-if="totalPages > 1"
+            class="flex justify-center items-center space-x-4 mt-8"
+          >
             <button
-              @click="loadMorePosts"
-              :disabled="pending"
-              class="px-8 py-4 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 mx-auto"
+              @click="goToPage(currentPage - 1)"
+              :disabled="currentPage === 1 || pending"
+              class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
             >
-              <span
-                v-if="pending"
-                class="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-white"
-              ></span>
-              <span>{{ pending ? 'Đang tải...' : 'Xem thêm bài viết' }}</span>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span>Trước</span>
+            </button>
+
+            <div class="flex items-center space-x-2">
+              <span class="text-gray-300 text-sm">
+                Trang {{ currentPage }} / {{ totalPages }}
+              </span>
+            </div>
+
+            <button
+              @click="goToPage(currentPage + 1)"
+              :disabled="currentPage === totalPages || pending"
+              class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+            >
+              <span>Sau</span>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
             </button>
           </div>
         </main>
@@ -353,11 +380,17 @@
     ],
   })
 
+  // Router for syncing page with query
+  const route = useRoute()
+  const router = useRouter()
+
   // State management
-  const currentPage = ref(1)
-  const limit = 9
+  const currentPage = ref(
+    Number(route.query.page) > 0 ? Number(route.query.page) : 1
+  )
+  const limit = 8
   const allPosts = ref([])
-  const hasMorePosts = ref(true)
+  const totalPages = ref(1)
   const pending = ref(false)
   const error = ref(null)
 
@@ -387,15 +420,15 @@
           tags: post.tags || [],
         }))
 
-        if (currentPage.value === 1) {
-          allPosts.value = mappedPosts
-        } else {
-          allPosts.value = [...allPosts.value, ...mappedPosts]
-        }
-        hasMorePosts.value = response.nextPage || false
+        // Với phân trang dạng paging, luôn thay thế danh sách theo trang hiện tại
+        allPosts.value = mappedPosts
+
+        // Tính tổng số trang từ API (ưu tiên resp.total)
+        const total = response.total || response.data.length
+        totalPages.value = Math.ceil(total / limit)
       } else {
         allPosts.value = []
-        hasMorePosts.value = false
+        totalPages.value = 1
       }
     } catch (err) {
       error.value = err
@@ -404,14 +437,31 @@
     }
   }
 
-  // Load initial data
+  // Load initial data and ensure URL reflects current state
   await fetchPosts()
+  router.replace({
+    query: {
+      ...route.query,
+      page: String(currentPage.value),
+      limit: String(limit),
+    },
+  })
 
-  // Load more posts
-  const loadMorePosts = async () => {
-    if (hasMorePosts.value && !pending.value) {
-      currentPage.value++
+  // Go to specific page
+  const goToPage = async page => {
+    if (page >= 1 && page <= totalPages.value && page !== currentPage.value) {
+      currentPage.value = page
       await fetchPosts()
+      // Scroll to top of section
+      document.getElementById('blogs')?.scrollIntoView({ behavior: 'smooth' })
+      // Sync query
+      router.replace({
+        query: {
+          ...route.query,
+          page: String(currentPage.value),
+          limit: String(limit),
+        },
+      })
     }
   }
 
@@ -419,7 +469,30 @@
   const refresh = () => {
     currentPage.value = 1
     fetchPosts()
+    router.replace({
+      query: {
+        ...route.query,
+        page: '1',
+        limit: String(limit),
+      },
+    })
   }
+
+  // React to query changes (e.g., back/forward navigation)
+  watch(
+    () => route.query.page,
+    async newPage => {
+      const pageNum = Number(newPage)
+      if (
+        Number.isFinite(pageNum) &&
+        pageNum > 0 &&
+        pageNum !== currentPage.value
+      ) {
+        currentPage.value = pageNum
+        await fetchPosts()
+      }
+    }
+  )
 
   // Helper function to strip HTML tags
   const stripHtmlTags = html => {
@@ -468,6 +541,7 @@
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -475,6 +549,7 @@
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

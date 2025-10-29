@@ -102,22 +102,28 @@
         </NuxtLink>
       </div>
 
-      <!-- Load More Button -->
-      <div
-        v-if="allPosts.length && hasMorePosts"
-        class="text-center mt-8 sm:mt-12"
-      >
-        <button
-          @click="loadMorePosts"
-          :disabled="pending"
-          class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 mx-auto"
+      <!-- View More Button: navigate to blogs page -->
+      <div v-if="allPosts.length" class="text-center mt-8 sm:mt-12">
+        <NuxtLink
+          to="/blogs"
+          class="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg ring-1 ring-white/10 hover:from-orange-600 hover:to-amber-600 hover:shadow-orange-500/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/70 active:scale-[0.98] transition-all duration-200 mx-auto"
         >
-          <span
-            v-if="pending"
-            class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white"
-          ></span>
-          <span>{{ pending ? 'Đang tải...' : 'Xem thêm bài viết' }}</span>
-        </button>
+          <span class="font-medium">Xem thêm bài viết</span>
+          <svg
+            class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </NuxtLink>
       </div>
 
       <!-- Empty State -->
@@ -136,7 +142,6 @@
   const currentPage = ref(1)
   const limit = 6
   const allPosts = ref([])
-  const hasMorePosts = ref(true)
   const pending = ref(false)
   const error = ref(null)
 
@@ -155,7 +160,6 @@
         } else {
           allPosts.value = [...allPosts.value, ...response.data]
         }
-        hasMorePosts.value = response.nextPage || false
       }
     } catch (err) {
       console.error('Error fetching posts:', err)
@@ -168,13 +172,7 @@
   // Load initial data
   await fetchPosts()
 
-  // Load more posts
-  const loadMorePosts = async () => {
-    if (hasMorePosts.value && !pending.value) {
-      currentPage.value++
-      await fetchPosts()
-    }
-  }
+  // Removed load more functionality; navigate to /blogs instead via button
 
   // Refresh function
   const refresh = () => {
@@ -198,6 +196,7 @@
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -205,6 +204,7 @@
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
