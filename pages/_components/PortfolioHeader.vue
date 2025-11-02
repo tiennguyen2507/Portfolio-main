@@ -8,11 +8,15 @@
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <NuxtLink to="/" class="hover:opacity-80 transition-opacity">
-            <img
-              src="~/assets/images/logo-main.webp"
-              alt="Nguyễn Lê Đình Tiên Logo"
-              class="h-8 w-auto"
-            />
+            <div
+              class="bg-orange-200 backdrop-blur-sm rounded-full px-1 py-1 border border-orange-300"
+            >
+              <img
+                src="~/assets/images/logo-main.webp"
+                alt="Nguyễn Lê Đình Tiên Logo"
+                class="h-10 w-auto"
+              />
+            </div>
           </NuxtLink>
         </div>
         <nav v-if="isHomePage" class="hidden md:flex space-x-8">
