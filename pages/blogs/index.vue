@@ -61,42 +61,37 @@
 
     <!-- Main Content -->
     <section id="blogs" class="py-12">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Loading State -->
-        <div v-if="pending" class="text-center py-16">
-          <div
-            class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"
-          ></div>
-          <p class="text-gray-400 mt-4 text-lg">Đang tải bài viết...</p>
-        </div>
-
-        <!-- Error State -->
-        <div v-else-if="error" class="text-center py-16">
-          <div
-            class="bg-gray-800/50 border border-red-500/50 rounded-lg p-8 max-w-md mx-auto"
-          >
-            <h3 class="text-lg font-semibold text-red-400 mb-2">
-              Không thể tải bài viết
-            </h3>
-            <p class="text-gray-300 mb-4">
-              Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.
-            </p>
-            <button
-              @click="refresh"
-              class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Thử lại
-            </button>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        <!-- My Blog Section -->
+        <section id="my-blog" class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+              My Blog
+            </h2>
+            <p class="text-gray-300 text-lg">Những bài viết cá nhân của tôi</p>
+            <div class="w-16 h-1 bg-blue-500 mx-auto mt-4"></div>
           </div>
-        </div>
 
-        <!-- Blog Posts -->
-        <main v-else-if="allPosts.length" class="space-y-8">
-          <h2 class="sr-only">Danh sách bài viết</h2>
-          <!-- Grid View -->
-          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Loading State for My Blog -->
+          <div v-if="myBlogPending" class="text-center py-16">
+            <div
+              class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"
+            ></div>
+            <p class="text-gray-400 mt-4 text-lg">Đang tải bài viết...</p>
+          </div>
+
+          <!-- Error State for My Blog -->
+          <div v-else-if="myBlogError" class="text-center py-8">
+            <p class="text-gray-400">Không thể tải bài viết My Blog</p>
+          </div>
+
+          <!-- My Blog Posts -->
+          <div
+            v-else-if="myBlogPosts.length"
+            class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             <article
-              v-for="post in allPosts"
+              v-for="post in myBlogPosts"
               :key="post._id || post.id"
               class="bg-gray-800/30 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-700"
               itemscope
@@ -111,11 +106,22 @@
                     class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />
-                  <div class="absolute top-4 left-4">
+                  <div class="absolute top-4 left-4 flex gap-2 flex-wrap">
                     <span
                       class="bg-orange-500/90 text-white px-3 py-1 rounded-full text-sm font-medium"
                     >
                       {{ formatDate(post.createdAt) }}
+                    </span>
+                    <span
+                      v-if="post.category"
+                      :class="[
+                        'px-3 py-1 rounded-full text-sm font-medium',
+                        post.category === 'ai-blog'
+                          ? 'bg-cyan-500/90 text-white'
+                          : 'bg-blue-500/90 text-white',
+                      ]"
+                    >
+                      {{ getCategoryLabel(post.category) }}
                     </span>
                   </div>
                 </div>
@@ -178,60 +184,153 @@
             </article>
           </div>
 
-          <!-- Pagination -->
-          <div
-            v-if="totalPages > 1"
-            class="flex justify-center items-center space-x-4 mt-8"
-          >
-            <button
-              @click="goToPage(currentPage - 1)"
-              :disabled="currentPage === 1 || pending"
-              class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+          <!-- Empty State for My Blog -->
+          <div v-else class="text-center py-16">
+            <div
+              class="bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-700"
             >
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span>Trước</span>
-            </button>
-
-            <div class="flex items-center space-x-2">
-              <span class="text-gray-300 text-sm">
-                Trang {{ currentPage }} / {{ totalPages }}
-              </span>
+              <h3 class="text-lg font-semibold text-white mb-2">
+                Chưa có bài viết My Blog
+              </h3>
+              <p class="text-gray-400 mb-4">Chưa có bài viết nào được đăng</p>
             </div>
-
-            <button
-              @click="goToPage(currentPage + 1)"
-              :disabled="currentPage === totalPages || pending"
-              class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
-            >
-              <span>Sau</span>
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </button>
           </div>
-        </main>
+        </section>
 
-        <!-- Empty State -->
-        <div v-else class="text-center py-16">
+        <!-- Blog AI Section -->
+        <section id="ai-blog" class="space-y-8">
+          <div class="text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+              Blog AI
+            </h2>
+            <p class="text-gray-300 text-lg">Những bài viết được tạo bởi AI</p>
+            <div class="w-16 h-1 bg-cyan-500 mx-auto mt-4"></div>
+          </div>
+
+          <!-- Loading State for Blog AI -->
+          <div v-if="aiBlogPending" class="text-center py-16">
+            <div
+              class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500"
+            ></div>
+            <p class="text-gray-400 mt-4 text-lg">Đang tải bài viết...</p>
+          </div>
+
+          <!-- Error State for Blog AI -->
+          <div v-else-if="aiBlogError" class="text-center py-8">
+            <p class="text-gray-400">Không thể tải bài viết Blog AI</p>
+          </div>
+
+          <!-- Blog AI Posts -->
           <div
-            class="bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-700"
+            v-else-if="aiBlogPosts.length"
+            class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            <h3 class="text-lg font-semibold text-white mb-2">
-              Không tìm thấy bài viết
-            </h3>
-            <p class="text-gray-400 mb-4">Chưa có bài viết nào được đăng</p>
+            <article
+              v-for="post in aiBlogPosts"
+              :key="post._id || post.id"
+              class="bg-gray-800/30 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-700"
+              itemscope
+              itemtype="https://schema.org/BlogPosting"
+            >
+              <NuxtLink :to="`/blogs/${post._id || post.id}`" class="block">
+                <!-- Featured Image -->
+                <div class="relative overflow-hidden">
+                  <img
+                    :src="post.thumbnail"
+                    :alt="post.title"
+                    class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <div class="absolute top-4 left-4 flex gap-2 flex-wrap">
+                    <span
+                      class="bg-orange-500/90 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {{ formatDate(post.createdAt) }}
+                    </span>
+                    <span
+                      v-if="post.category"
+                      :class="[
+                        'px-3 py-1 rounded-full text-sm font-medium',
+                        post.category === 'ai-blog'
+                          ? 'bg-cyan-500/90 text-white'
+                          : 'bg-blue-500/90 text-white',
+                      ]"
+                    >
+                      {{ getCategoryLabel(post.category) }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Content -->
+                <div class="p-6">
+                  <h2
+                    class="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-orange-400 transition-colors"
+                    itemprop="headline"
+                  >
+                    {{ post.title }}
+                  </h2>
+                  <ViewEditor
+                    :content="post.description"
+                    :strip-html="true"
+                    :truncate="true"
+                    :max-length="120"
+                    custom-class="text-gray-400 mb-4 line-clamp-3 text-sm"
+                    itemprop="description"
+                    variant="light"
+                  />
+
+                  <!-- Author Info -->
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <img
+                        v-if="post.createdBy?.avatar"
+                        :src="post.createdBy.avatar"
+                        :alt="`${post.createdBy.firstName} ${post.createdBy.lastName}`"
+                        class="w-10 h-10 rounded-full object-cover"
+                      />
+                      <div>
+                        <p class="text-sm font-medium text-gray-300">
+                          {{ post.createdBy?.firstName }}
+                          {{ post.createdBy?.lastName }}
+                        </p>
+                        <p class="text-xs text-gray-400">
+                          {{ calculateReadingTime(post.description) }} phút đọc
+                        </p>
+                      </div>
+                    </div>
+                    <span
+                      class="text-orange-500 group-hover:text-orange-400 transition-colors"
+                    >
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </NuxtLink>
+            </article>
           </div>
-        </div>
+
+          <!-- Empty State for Blog AI -->
+          <div v-else class="text-center py-16">
+            <div
+              class="bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-700"
+            >
+              <h3 class="text-lg font-semibold text-white mb-2">
+                Chưa có bài viết Blog AI
+              </h3>
+              <p class="text-gray-400 mb-4">Chưa có bài viết nào được đăng</p>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
   </div>
@@ -385,114 +484,99 @@
   const router = useRouter()
 
   // State management
-  const currentPage = ref(
-    Number(route.query.page) > 0 ? Number(route.query.page) : 1
-  )
   const limit = 8
-  const allPosts = ref([])
-  const totalPages = ref(1)
-  const pending = ref(false)
-  const error = ref(null)
 
-  // Fetch blog data using httpRequest
-  const fetchPosts = async () => {
-    try {
-      pending.value = true
-      error.value = null
+  // My Blog state
+  const myBlogPosts = ref([])
+  const myBlogPending = ref(false)
+  const myBlogError = ref(null)
 
-      const response = await httpRequest.get(
-        `/posts?page=${currentPage.value}&limit=${limit}`
-      )
+  // Blog AI state
+  const aiBlogPosts = ref([])
+  const aiBlogPending = ref(false)
+  const aiBlogError = ref(null)
 
-      if (response && response.data && Array.isArray(response.data)) {
-        // Map API data to match our expected format
-        const mappedPosts = response.data.map(post => ({
-          id: post._id,
-          _id: post._id,
-          title: post.title,
-          description: post.description,
-          content: post.content,
-          thumbnail: post.thumbnail,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt,
-          createdBy: post.createdBy,
-          status: post.status,
-          tags: post.tags || [],
-        }))
-
-        // Với phân trang dạng paging, luôn thay thế danh sách theo trang hiện tại
-        allPosts.value = mappedPosts
-
-        // Tính tổng số trang từ API (ưu tiên resp.total)
-        const total = response.total || response.data.length
-        totalPages.value = Math.ceil(total / limit)
-      } else {
-        allPosts.value = []
-        totalPages.value = 1
-      }
-    } catch (err) {
-      error.value = err
-    } finally {
-      pending.value = false
-    }
-  }
-
-  // Load initial data and ensure URL reflects current state
-  await fetchPosts()
-  router.replace({
-    query: {
-      ...route.query,
-      page: String(currentPage.value),
-      limit: String(limit),
-    },
+  // Map API data to expected format
+  const mapPostData = post => ({
+    id: post._id,
+    _id: post._id,
+    title: post.title,
+    description: post.description,
+    content: post.content,
+    thumbnail: post.thumbnail,
+    createdAt: post.createdAt,
+    updatedAt: post.updatedAt,
+    createdBy: post.createdBy,
+    status: post.status,
+    tags: post.tags || [],
+    category: post.category || '',
   })
 
-  // Go to specific page
-  const goToPage = async page => {
-    if (page >= 1 && page <= totalPages.value && page !== currentPage.value) {
-      currentPage.value = page
-      await fetchPosts()
-      // Scroll to top of section
-      document.getElementById('blogs')?.scrollIntoView({ behavior: 'smooth' })
-      // Sync query
-      router.replace({
-        query: {
-          ...route.query,
-          page: String(currentPage.value),
-          limit: String(limit),
-        },
-      })
-    }
-  }
+  // Fetch My Blog posts
+  const fetchMyBlogPosts = async () => {
+    try {
+      myBlogPending.value = true
+      myBlogError.value = null
 
-  // Refresh function
-  const refresh = () => {
-    currentPage.value = 1
-    fetchPosts()
-    router.replace({
-      query: {
-        ...route.query,
+      const params = new URLSearchParams({
         page: '1',
-        limit: String(limit),
-      },
-    })
+        limit: limit.toString(),
+        category: 'my-blog',
+      })
+
+      const response = await httpRequest.get(`/posts?${params.toString()}`)
+
+      if (response && response.data && Array.isArray(response.data)) {
+        myBlogPosts.value = response.data.map(mapPostData)
+      } else {
+        myBlogPosts.value = []
+      }
+    } catch (err) {
+      myBlogError.value = err
+      myBlogPosts.value = []
+    } finally {
+      myBlogPending.value = false
+    }
   }
 
-  // React to query changes (e.g., back/forward navigation)
-  watch(
-    () => route.query.page,
-    async newPage => {
-      const pageNum = Number(newPage)
-      if (
-        Number.isFinite(pageNum) &&
-        pageNum > 0 &&
-        pageNum !== currentPage.value
-      ) {
-        currentPage.value = pageNum
-        await fetchPosts()
+  // Fetch Blog AI posts
+  const fetchAiBlogPosts = async () => {
+    try {
+      aiBlogPending.value = true
+      aiBlogError.value = null
+
+      const params = new URLSearchParams({
+        page: '1',
+        limit: limit.toString(),
+        category: 'ai-blog',
+      })
+
+      const response = await httpRequest.get(`/posts?${params.toString()}`)
+
+      if (response && response.data && Array.isArray(response.data)) {
+        aiBlogPosts.value = response.data.map(mapPostData)
+      } else {
+        aiBlogPosts.value = []
       }
+    } catch (err) {
+      aiBlogError.value = err
+      aiBlogPosts.value = []
+    } finally {
+      aiBlogPending.value = false
     }
-  )
+  }
+
+  // Get category label
+  const getCategoryLabel = category => {
+    const categoryMap = {
+      'ai-blog': 'Blog AI',
+      'my-blog': 'My Blog',
+    }
+    return categoryMap[category] || category || ''
+  }
+
+  // Load initial data
+  await Promise.all([fetchMyBlogPosts(), fetchAiBlogPosts()])
 
   // Helper function to strip HTML tags
   const stripHtmlTags = html => {
