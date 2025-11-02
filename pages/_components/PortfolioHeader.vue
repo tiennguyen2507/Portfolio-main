@@ -89,7 +89,7 @@
       path: '#projects',
     },
     {
-      label: 'Blog',
+      label: 'Blogs',
       path: '#blogs',
     },
     {

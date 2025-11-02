@@ -5,7 +5,6 @@
     <StructuredData />
     <PortfolioHero />
     <TechnologiesSection />
-    <!-- About & Services Section -->
     <PortfolioAbout />
     <ProjectsSection />
     <PortfolioShop />
