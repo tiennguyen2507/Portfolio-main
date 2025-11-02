@@ -51,7 +51,7 @@
         <label class="block text-sm font-medium text-gray-700 mb-2"
           >Thumbnail</label
         >
-        <UploadFile :onChange="handleThumbnailChange" />
+        <UploadFile :value="form.thumbnail" :onChange="handleThumbnailChange" />
         <div v-if="thumbnailFile" class="mt-2">
           <p class="text-sm text-gray-600">
             File đã chọn: {{ thumbnailFile.name }}

@@ -51,28 +51,6 @@
         ></div>
       </template>
 
-      <!-- Custom Status Column -->
-      <template #cell-status="{ value }">
-        <Badge :variant="value ? 'success' : 'danger'" size="sm">
-          {{ value ? 'Hoạt động' : 'Không hoạt động' }}
-        </Badge>
-      </template>
-
-      <!-- Custom Author Column -->
-      <template #cell-author="{ value }">
-        <div class="flex items-center">
-          <img
-            v-if="value?.avatar"
-            :src="value.avatar"
-            :alt="value.firstName"
-            class="w-8 h-8 rounded-full mr-3"
-          />
-          <div class="text-sm text-gray-900">
-            {{ value ? `${value.firstName} ${value.lastName}` : 'Admin' }}
-          </div>
-        </div>
-      </template>
-
       <!-- Custom Actions Column -->
       <template #cell-actions="{ record }">
         <div class="flex items-center gap-2">
@@ -89,7 +67,6 @@
 </template>
 
 <script setup>
-  import Badge from '~/components/ui/Badge.vue'
   import ButtonIcon from '~/components/ui/ButtonIcon.vue'
   import Table from '~/components/ui/Table.vue'
 
@@ -125,40 +102,11 @@
       key: 'description',
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
-      width: '120px',
-    },
-    {
-      title: 'Tác giả',
-      dataIndex: 'createdBy',
-      key: 'author',
-      width: '150px',
-    },
-    {
-      title: 'Ngày tạo',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: '120px',
-      formatter: value => formatDate(value),
-    },
-    {
-      title: 'Ngày cập nhật',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
-      width: '120px',
-      formatter: value => formatDate(value),
-    },
-    {
       title: 'Thao tác',
       key: 'actions',
       width: '100px',
     },
   ]
-
-  const formatDate = dateString =>
-    new Date(dateString).toLocaleDateString('vi-VN')
 
   const handleCellClick = ({ event, record, column, index }) => {
     emit('cell-click', { event, record, column, index })

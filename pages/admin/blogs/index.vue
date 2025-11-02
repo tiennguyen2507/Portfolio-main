@@ -15,21 +15,24 @@
               form = { title: '', description: '', thumbnail: '' }
             }
           "
-          class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors flex items-center"
+          variant="secondary"
+          class="group shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 transition-all duration-300 hover:-translate-y-0.5"
         >
-          <svg
-            class="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
+          <template #prefix>
+            <svg
+              class="w-5 h-5 transition-transform duration-200 group-hover:rotate-90"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+          </template>
           Thêm bài viết mới
         </Button>
       </template>
@@ -63,7 +66,7 @@
     <!-- Pagination - Separated from Table -->
     <div
       v-if="!error && posts.length > 0"
-      class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-3"
+      class="mt-8 bg-white rounded-2xl shadow-md border border-gray-100 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
     >
       <Pagination
         :page="currentPage"
@@ -93,6 +96,10 @@
     middleware: 'auth',
   })
 
+  // Route and Router for query params
+  const route = useRoute()
+  const router = useRouter()
+
   const posts = ref([])
   const loading = ref(true)
   const error = ref('')
@@ -102,7 +109,7 @@
   const isEditing = ref(false)
   const editingId = ref(null)
   let thumbnailFile = null
-  const currentPage = ref(1)
+  const currentPage = ref(parseInt(route.query.page) || 1)
   const limit = 10
   const pagination = ref({
     total: 0,
@@ -227,6 +234,13 @@
 
   const handlePageChange = page => {
     currentPage.value = page
+    // Update query params
+    router.push({
+      query: {
+        ...route.query,
+        page: page > 1 ? page : undefined,
+      },
+    })
     fetchPosts()
   }
 

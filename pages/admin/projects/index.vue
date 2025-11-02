@@ -93,6 +93,10 @@
     middleware: 'auth',
   })
 
+  // Route and Router for query params
+  const route = useRoute()
+  const router = useRouter()
+
   const projects = ref([])
   const loading = ref(true)
   const error = ref('')
@@ -103,7 +107,7 @@
   const thumbnailFile = ref(null)
 
   // Pagination
-  const currentPage = ref(1)
+  const currentPage = ref(parseInt(route.query.page) || 1)
   const limit = 10
   const pagination = ref({
     total: 0,
@@ -298,6 +302,13 @@
   // Handle page change
   const handlePageChange = page => {
     currentPage.value = page
+    // Update query params
+    router.push({
+      query: {
+        ...route.query,
+        page: page > 1 ? page : undefined,
+      },
+    })
     fetchProjects()
   }
 

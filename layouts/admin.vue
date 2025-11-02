@@ -1,60 +1,76 @@
 <template>
-  <div class="h-screen bg-gray-100 overflow-hidden flex flex-col">
+  <div
+    class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden flex flex-col"
+  >
     <!-- Admin Header -->
     <HeaderLayout />
 
     <div class="flex flex-1 overflow-hidden">
       <!-- Sidebar -->
       <aside
-        class="bg-white shadow-sm h-full transition-all duration-300 relative"
-        :class="collapsed ? 'w-16' : 'w-64'"
+        class="bg-white border-r border-gray-200/60 shadow-sm h-full transition-all duration-300 ease-in-out relative backdrop-blur-sm"
+        :class="collapsed ? 'w-20' : 'w-64'"
       >
-        <nav class="mt-5 px-2">
-          <div class="space-y-1">
-            <NuxtLink
-              v-for="item in menuItems"
-              :key="item.path"
-              :to="item.path"
-              class="group relative flex items-center px-2 py-2 text-sm font-medium rounded-md overflow-hidden"
-              :class="[
-                $route.path === item.path ||
-                (item.path !== '/admin' && $route.path.startsWith(item.path))
-                  ? 'bg-blue-100 text-blue-900'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-              ]"
-              :aria-label="item.label"
-            >
-              <AdminUiIcon
-                :name="item.icon"
-                size="lg"
-                color="currentColor"
-                class="mr-3"
-              />
-              <span v-if="!collapsed">{{ item.label }}</span>
-              <span
-                v-else
-                class="pointer-events-none absolute left-14 top-1/2 -translate-y-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        <div class="h-full flex flex-col">
+          <nav class="flex-1 mt-6 px-3 overflow-y-auto">
+            <div class="space-y-1">
+              <NuxtLink
+                v-for="item in menuItems"
+                :key="item.path"
+                :to="item.path"
+                class="group relative flex items-center px-3 py-3 text-sm font-medium rounded-xl overflow-hidden transition-all duration-200"
+                :class="[
+                  $route.path === item.path ||
+                  (item.path !== '/admin' && $route.path.startsWith(item.path))
+                    ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30 scale-[1.02]'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-orange-600 hover:scale-[1.01]',
+                ]"
+                :aria-label="item.label"
               >
-                {{ item.label }}
-              </span>
-            </NuxtLink>
-          </div>
-        </nav>
-        <div class="absolute left-2 bottom-4">
-          <button
-            class="flex items-center justify-center rounded-md border border-gray-200 p-2 text-sm text-gray-700 hover:bg-gray-50"
-            @click="collapsed = !collapsed"
-            :aria-expanded="!collapsed"
-            :aria-label="collapsed ? 'Mở sidebar' : 'Thu gọn sidebar'"
-            type="button"
-          >
-            <span class="inline-flex items-center justify-center">
+                <AdminUiIcon
+                  :name="item.icon"
+                  size="lg"
+                  :color="
+                    $route.path === item.path ||
+                    (item.path !== '/admin' &&
+                      $route.path.startsWith(item.path))
+                      ? 'text-white'
+                      : 'currentColor'
+                  "
+                  class="transition-transform duration-200"
+                  :class="collapsed ? 'mr-0' : 'mr-3'"
+                />
+                <span
+                  v-if="!collapsed"
+                  class="transition-opacity duration-200 font-medium"
+                >
+                  {{ item.label }}
+                </span>
+                <span
+                  v-else
+                  class="pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-2 text-xs text-white opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:scale-100 shadow-xl z-50"
+                >
+                  {{ item.label }}
+                </span>
+              </NuxtLink>
+            </div>
+          </nav>
+
+          <!-- Collapse Button -->
+          <div class="p-3 border-t border-gray-200/60">
+            <button
+              class="w-full flex items-center justify-center rounded-xl border border-gray-200 bg-white p-2.5 text-gray-600 hover:bg-gray-50 hover:border-orange-300 hover:text-orange-600 transition-all duration-200 shadow-sm hover:shadow-md"
+              @click="collapsed = !collapsed"
+              :aria-expanded="!collapsed"
+              :aria-label="collapsed ? 'Mở sidebar' : 'Thu gọn sidebar'"
+              type="button"
+            >
               <svg
                 v-if="collapsed"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="h-5 w-5"
+                class="h-5 w-5 transition-transform duration-200"
               >
                 <path
                   fill-rule="evenodd"
@@ -67,7 +83,7 @@
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="h-5 w-5"
+                class="h-5 w-5 transition-transform duration-200"
               >
                 <path
                   fill-rule="evenodd"
@@ -75,14 +91,18 @@
                   clip-rule="evenodd"
                 />
               </svg>
-            </span>
-          </button>
+            </button>
+          </div>
         </div>
       </aside>
 
       <!-- Main Content -->
-      <main class="flex-1 p-6 overflow-auto">
-        <slot />
+      <main
+        class="flex-1 overflow-auto bg-gradient-to-br from-gray-50/50 via-white to-gray-50/50"
+      >
+        <div class="p-6 lg:p-8 w-full">
+          <slot />
+        </div>
       </main>
     </div>
   </div>

@@ -182,12 +182,7 @@
           :limit="limit"
           :show-info="true"
           :split="true"
-          @update:page="
-            p => {
-              currentPage = p
-              fetchContacts()
-            }
-          "
+          @update:page="handlePageChange"
         />
       </div>
     </div>
@@ -208,10 +203,14 @@
     middleware: 'auth',
   })
 
+  // Route and Router for query params
+  const route = useRoute()
+  const router = useRouter()
+
   // Reactive data
   const searchQuery = ref('')
   const selectedStatus = ref('')
-  const currentPage = ref(1)
+  const currentPage = ref(parseInt(route.query.page) || 1)
   const limit = 10
   const loading = ref(false)
   const contacts = ref([])
@@ -229,8 +228,24 @@
     clearTimeout(searchTimeout)
     searchTimeout = setTimeout(() => {
       currentPage.value = 1
+      updateQueryParams()
       fetchContacts()
     }, 500)
+  }
+
+  const handlePageChange = page => {
+    currentPage.value = page
+    updateQueryParams()
+    fetchContacts()
+  }
+
+  const updateQueryParams = () => {
+    router.push({
+      query: {
+        ...route.query,
+        page: currentPage.value > 1 ? currentPage.value : undefined,
+      },
+    })
   }
 
   // Fetch contacts from API

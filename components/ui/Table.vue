@@ -200,8 +200,9 @@
   }
 
   .table-wrapper {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto;
     border-bottom: none;
+    max-width: 100%;
   }
 
   .table {

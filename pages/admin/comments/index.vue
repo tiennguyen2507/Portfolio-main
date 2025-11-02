@@ -168,12 +168,7 @@
           :page-count="Math.ceil(pagination.total / limit)"
           :show-info="true"
           :split="true"
-          @update:page="
-            p => {
-              currentPage = p
-              fetchComments()
-            }
-          "
+          @update:page="handlePageChange"
         />
       </div>
     </div>
@@ -195,8 +190,12 @@
     middleware: 'auth',
   })
 
+  // Route and Router for query params
+  const route = useRoute()
+  const router = useRouter()
+
   // Reactive data
-  const currentPage = ref(1)
+  const currentPage = ref(parseInt(route.query.page) || 1)
   const limit = 10
   const loading = ref(false)
   const error = ref('') // Error state
@@ -264,6 +263,7 @@
         // Refresh data if current page is empty
         if (comments.value.length === 0 && currentPage.value > 1) {
           currentPage.value--
+          updateQueryParams()
           fetchComments()
         }
       } catch (err) {
@@ -276,9 +276,25 @@
   }
 
   // Pagination methods
+  const handlePageChange = page => {
+    currentPage.value = page
+    updateQueryParams()
+    fetchComments()
+  }
+
+  const updateQueryParams = () => {
+    router.push({
+      query: {
+        ...route.query,
+        page: currentPage.value > 1 ? currentPage.value : undefined,
+      },
+    })
+  }
+
   const previousPage = () => {
     if (currentPage.value > 1) {
       currentPage.value--
+      updateQueryParams()
       fetchComments()
     }
   }
@@ -286,6 +302,7 @@
   const nextPage = () => {
     if (pagination.value.nextPage) {
       currentPage.value++
+      updateQueryParams()
       fetchComments()
     }
   }

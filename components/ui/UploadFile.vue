@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, watch, onMounted } from 'vue'
 
   // Props
   const props = defineProps({
@@ -55,16 +55,48 @@
       type: Function,
       default: null,
     },
+    value: {
+      type: String,
+      default: null,
+    },
   })
 
   // Reactive data
   const preview = ref(null)
   const inputRef = ref(null)
+  const hasNewFile = ref(false) // Track if user selected a new file
+
+  // Set preview from value prop when component mounts or value changes
+  onMounted(() => {
+    if (props.value) {
+      preview.value = props.value
+    }
+  })
+
+  watch(
+    () => props.value,
+    (newValue, oldValue) => {
+      // If value prop changed (e.g., switching to edit different item), reset and show new value
+      if (newValue !== oldValue && newValue) {
+        // If current preview is a data URL (file selected), keep it
+        // Otherwise, update to show the new value
+        if (!preview.value || !preview.value.startsWith('data:')) {
+          preview.value = newValue
+          hasNewFile.value = false
+        }
+      } else if (newValue && !hasNewFile.value) {
+        // Initial load or value exists but no new file selected
+        preview.value = newValue
+      }
+    },
+    { immediate: true }
+  )
 
   // Methods
   const handleFileChange = event => {
     const file = event.target.files[0]
     if (file) {
+      hasNewFile.value = true
       if (props.onChange) props.onChange(file)
       const reader = new FileReader()
       reader.onload = ev => {
@@ -78,6 +110,7 @@
     event.preventDefault()
     const file = event.dataTransfer.files[0]
     if (file) {
+      hasNewFile.value = true
       if (props.onChange) props.onChange(file)
       const reader = new FileReader()
       reader.onload = ev => {

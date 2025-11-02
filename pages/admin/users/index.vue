@@ -61,11 +61,7 @@
           :limit="itemsPerPage"
           :show-info="true"
           :split="true"
-          @update:page="
-            p => {
-              currentPage = p
-            }
-          "
+          @update:page="handlePageChange"
         />
       </div>
     </div>
@@ -88,10 +84,14 @@
     middleware: 'auth',
   })
 
+  // Route and Router for query params
+  const route = useRoute()
+  const router = useRouter()
+
   // Reactive data
   const searchQuery = ref('')
   const selectedStatus = ref('')
-  const currentPage = ref(1)
+  const currentPage = ref(parseInt(route.query.page) || 1)
   const itemsPerPage = 10
   const loading = ref(true)
   const error = ref(null)
@@ -155,8 +155,23 @@
 
   const applyFilters = () => {
     currentPage.value = 1
+    updateQueryParams()
     // Removed selectedUsers.value = []
     // Removed selectAll.value = false
+  }
+
+  const handlePageChange = page => {
+    currentPage.value = page
+    updateQueryParams()
+  }
+
+  const updateQueryParams = () => {
+    router.push({
+      query: {
+        ...route.query,
+        page: currentPage.value > 1 ? currentPage.value : undefined,
+      },
+    })
   }
 
   const formatDate = dateString => {
