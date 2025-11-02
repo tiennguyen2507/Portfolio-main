@@ -256,7 +256,7 @@
                 class="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/20 border-4 border-orange-500/20 shadow-2xl overflow-hidden"
               >
                 <img
-                  src="~/assets/images/IMG_6220.webp"
+                  src="~/assets/images/avatar.webp"
                   alt="Nguyễn Lê Đình Tiên - Software Developer"
                   class="w-full h-full object-cover scale-110 hover:scale-125 transition-transform duration-500"
                 />

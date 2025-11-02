@@ -16,7 +16,7 @@
           description:
             'Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development',
           url: 'https://nguyenledinhtien.io.vn',
-          image: 'https://nguyenledinhtien.io.vn/assets/images/IMG_6220.png',
+          image: 'https://nguyenledinhtien.io.vn/assets/images/avatar.png',
           email: 'Nguyenledinhtien2507@gmail.com',
           telephone: '+84 88 669 4350',
           address: {
