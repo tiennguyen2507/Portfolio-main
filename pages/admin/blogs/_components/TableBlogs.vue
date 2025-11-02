@@ -51,6 +51,13 @@
         ></div>
       </template>
 
+      <!-- Custom Category Column -->
+      <template #cell-category="{ value }">
+        <AdminUiTag :variant="getCategoryVariant(value)" size="sm">
+          {{ formatCategory(value) }}
+        </AdminUiTag>
+      </template>
+
       <!-- Custom Actions Column -->
       <template #cell-actions="{ record }">
         <div class="flex items-center gap-2">
@@ -69,6 +76,7 @@
 <script setup>
   import ButtonIcon from '~/components/ui/ButtonIcon.vue'
   import Table from '~/components/ui/Table.vue'
+  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
 
   const props = defineProps({
     posts: {
@@ -102,6 +110,12 @@
       key: 'description',
     },
     {
+      title: 'Danh mục',
+      dataIndex: 'category',
+      key: 'category',
+      width: '120px',
+    },
+    {
       title: 'Thao tác',
       key: 'actions',
       width: '100px',
@@ -110,5 +124,23 @@
 
   const handleCellClick = ({ event, record, column, index }) => {
     emit('cell-click', { event, record, column, index })
+  }
+
+  // Format category value for display
+  const formatCategory = category => {
+    const categoryMap = {
+      'ai-blog': 'Blog AI',
+      'my-blog': 'My Blog',
+    }
+    return categoryMap[category] || category || '-'
+  }
+
+  // Get variant for category tag
+  const getCategoryVariant = category => {
+    const variantMap = {
+      'ai-blog': 'secondary', // Blue color for AI Blog
+      'my-blog': 'primary', // Blue color for My Blog
+    }
+    return variantMap[category] || 'gray'
   }
 </script>

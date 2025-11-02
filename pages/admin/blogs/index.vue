@@ -12,7 +12,12 @@
               showCreateModal = true
               isEditing = false
               editingId = null
-              form = { title: '', description: '', thumbnail: '' }
+              form = {
+                title: '',
+                description: '',
+                thumbnail: '',
+                category: 'my-blog',
+              }
             }
           "
           variant="secondary"
@@ -105,7 +110,12 @@
   const error = ref('')
   const showCreateModal = ref(false)
   const submitting = ref(false) // Loading state for form submit
-  let form = ref({ title: '', description: '', thumbnail: '' })
+  let form = ref({
+    title: '',
+    description: '',
+    thumbnail: '',
+    category: 'my-blog',
+  })
   const isEditing = ref(false)
   const editingId = ref(null)
   let thumbnailFile = null
@@ -165,6 +175,7 @@
       title: post.title || '',
       description: post.description || '',
       thumbnail: post.thumbnail || '',
+      category: post.category || 'my-blog',
     }
     thumbnailFile = null // Reset thumbnail file when editing
     showCreateModal.value = true
@@ -195,23 +206,32 @@
         }
       }
 
+      const categoryValue = result.data.category?.trim() || 'my-blog'
+
       if (isEditing.value && editingId.value) {
         await httpRequest.patch(`/posts/${editingId.value}`, {
           title: result.data.title.trim(),
           description: result.data.description.trim(),
           thumbnail: thumbnailUrl,
+          category: categoryValue,
         })
       } else {
         await httpRequest.post('/posts', {
           title: result.data.title.trim(),
           description: result.data.description.trim(),
           thumbnail: thumbnailUrl,
+          category: categoryValue,
           status: true,
         })
       }
       await fetchPosts()
       closeModal()
-      form.value = { title: '', description: '', thumbnail: '' }
+      form.value = {
+        title: '',
+        description: '',
+        thumbnail: '',
+        category: 'my-blog',
+      }
       error.value = '' // Clear any previous errors
     } catch (err) {
       error.value = err?.message || 'Không thể lưu dữ liệu.'

@@ -46,6 +46,17 @@
         />
       </div>
 
+      <!-- Category -->
+      <div>
+        <AdminUiSelect
+          v-model="form.category"
+          label="Danh mục"
+          :options="categoryOptions"
+          placeholder="Chọn danh mục"
+          variant="primary"
+        />
+      </div>
+
       <!-- Thumbnail Upload -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2"
@@ -119,7 +130,14 @@
   import Modal from '~/components/ui/Modal.vue'
   import Editor from '~/components/ui/Editor.vue'
   import UploadFile from '~/components/ui/UploadFile.vue'
+  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
   import { ref } from 'vue'
+
+  // Category options
+  const categoryOptions = [
+    { label: 'Blog AI', value: 'ai-blog' },
+    { label: 'My Blog', value: 'my-blog' },
+  ]
 
   const props = defineProps({
     isOpen: {
