@@ -6,19 +6,25 @@
   >
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
-        <div class="flex items-center">
-          <NuxtLink to="/" class="hover:opacity-80 transition-opacity">
-            <div
-              class="bg-orange-200 backdrop-blur-sm rounded-full px-1 py-1 border border-orange-300"
-            >
-              <img
-                src="~/assets/images/logo-main.webp"
-                alt="Nguyễn Lê Đình Tiên Logo"
-                class="h-10 w-auto"
-              />
+        <NuxtLink to="/" class="hover:opacity-80 transition-opacity">
+          <div
+            class="bg-orange-100 backdrop-blur-sm rounded-2xl px-2 py-1 md:px-2 md:py-1 border border-orange-200 flex items-center gap-1"
+          >
+            <img
+              src="~/assets/images/logo-main.webp"
+              alt="Nguyễn Lê Đình Tiên Logo"
+              class="h-6 md:h-10 w-auto"
+            />
+            <div class="flex flex-col">
+              <span class="text-gray-900 font-semibold text-xs md:text-base"
+                >TienNLD2</span
+              >
+              <span class="text-gray-700 text-[10px] md:text-sm"
+                >software engineer</span
+              >
             </div>
-          </NuxtLink>
-        </div>
+          </div>
+        </NuxtLink>
         <nav v-if="isHomePage" class="hidden md:flex space-x-8">
           <a
             v-for="item in navigationItems"
