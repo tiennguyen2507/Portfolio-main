@@ -4,7 +4,7 @@
       <!-- Title -->
       <div class="text-center mb-16">
         <h2 class="text-4xl md:text-5xl font-light text-white mb-4">
-          Xác Nhận Tham Dự
+          Gửi lời chúc mừng
         </h2>
         <div class="flex items-center justify-center gap-4">
           <div class="h-px w-16 bg-gray-700"></div>

@@ -42,6 +42,7 @@
   import WeddingRSVP from './_components/WeddingRSVP.vue'
   import WeddingLocation from './_components/WeddingLocation.vue'
   import { weddingConfig } from './config.js'
+  import { useSeoWedding } from './useSeoWedding.tsx'
 
   // Không sử dụng layout nào, trang tự quản lý
   definePageMeta({
@@ -59,16 +60,8 @@
     return date.toLocaleDateString('vi-VN', options)
   }
 
-  // SEO Meta Tags
-  useHead({
-    title: `${weddingConfig.couple.groom.name} & ${weddingConfig.couple.bride.name} - Wedding`,
-    meta: [
-      {
-        name: 'description',
-        content: `Đám cưới của ${weddingConfig.couple.groom.name} và ${weddingConfig.couple.bride.name} vào ngày ${formatDate(weddingConfig.weddingDate.ceremony.date)}`,
-      },
-    ],
-  })
+  // Sử dụng hook SEO cho wedding
+  useSeoWedding(weddingConfig)
 </script>
 
 <style>
