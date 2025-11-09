@@ -9,6 +9,7 @@
     <ProjectsSection />
     <PortfolioShop />
     <PortfolioBlog />
+    <PortfolioWedding />
     <CommentsAboutMe />
 
     <PortfolioContact @submit="handleContactSubmit" />
@@ -20,6 +21,7 @@
   import TechnologiesSection from '~/pages/_components/TechnologiesSection.vue'
   import ProjectsSection from '~/pages/_components/ProjectsSection.vue'
   import PortfolioShop from '~/pages/_components/PortfolioShop.vue'
+  import PortfolioWedding from '~/pages/_components/PortfolioWedding.vue'
   import PortfolioBlog from '~/pages/_components/PortfolioBlog.vue'
   import StructuredData from '~/components/StructuredData.vue'
   import CommentsAboutMe from '~/pages/_components/CommentsAboutMe.vue'

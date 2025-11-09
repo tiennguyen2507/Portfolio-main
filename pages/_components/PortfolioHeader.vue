@@ -103,6 +103,10 @@
       path: '#blogs',
     },
     {
+      label: 'Wedding',
+      path: '#wedding',
+    },
+    {
       label: 'Shop',
       path: '/shop',
     },
