@@ -24,7 +24,7 @@ export const adminMenuItems = [
 
 // Icon configuration constants
 export const ICON_CONFIG = {
-  SIZE: 24,
+  SIZE: 28,
   ACTIVE_STROKE_WIDTH: 2.5,
   INACTIVE_STROKE_WIDTH: 2,
   ACTIVE_COLOR: 'text-white',

@@ -11,7 +11,7 @@
     <aside class="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom bg-white">
       <nav class="overflow-x-auto flex justify-center">
         <div
-          class="flex items-end justify-center min-w-max gap-10 w-full lg:max-w-4xl lg:mx-auto p-3 lg:rounded-3xl bg-white/30"
+          class="flex items-end justify-between min-w-max gap-10 w-full lg:max-w-4xl lg:mx-auto p-3 px-8 pb-5 lg:rounded-3xl bg-white/30"
         >
           <NuxtLink
             v-for="item in menuItems"
