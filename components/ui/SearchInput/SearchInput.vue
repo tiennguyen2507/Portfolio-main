@@ -126,9 +126,9 @@
 
   const inputClasses = computed(() => {
     const base =
-      'w-full pl-12 pr-12 py-3 rounded-full border-2 bg-white text-gray-900 placeholder-gray-400 focus:outline-none transition-all duration-200'
+      'w-full pl-12 pr-12 py-2 rounded-full border-[1px] bg-white text-gray-900 placeholder-gray-400 focus:outline-none'
     const activeBorder = isActive.value
-      ? 'border-primary-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20'
+      ? 'border-primary-500'
       : 'border-gray-300 hover:border-gray-400 focus:border-gray-400'
     const disabledClass = props.disabled
       ? 'opacity-50 cursor-not-allowed bg-gray-100'

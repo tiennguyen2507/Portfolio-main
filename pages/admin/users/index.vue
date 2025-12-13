@@ -6,11 +6,14 @@
     />
     <ErrorCommon v-if="error" :message="error" @retry="fetchUsers" />
     <div v-else>
-      <SearchInput
-        id="search-users"
-        v-model="searchQuery"
-        placeholder="Tìm theo tên, email..."
-      />
+      <div class="sm:flex sm:justify-end">
+        <SearchInput
+          class="sm:max-w-md"
+          id="search-users"
+          v-model="searchQuery"
+          placeholder="Tìm theo tên, email..."
+        />
+      </div>
       <div class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200">
         <TableAdminUsers :users="paginatedUsers" :loading="loading" />
 

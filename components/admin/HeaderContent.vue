@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:mb-10">
+  <div class="sm:mb-2">
     <div
       class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4"
     >
