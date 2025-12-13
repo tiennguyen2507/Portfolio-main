@@ -1,20 +1,13 @@
 <template>
-  <div class="mb-8 sm:mb-10">
+  <div class="sm:mb-10">
     <div
       class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4"
     >
       <div class="flex-1">
-        <div class="flex items-center gap-3 mb-2">
-          <div
-            class="h-1 w-12 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full"
-          ></div>
-          <h1
-            class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent"
-          >
-            {{ title }}
-          </h1>
-        </div>
-        <p class="text-gray-600 text-base sm:text-lg mt-1 ml-15">
+        <h1 class="text-xl sm:text-2xl font-bold">
+          {{ title }}
+        </h1>
+        <p class="text-gray-600 text-sm sm:text-base mt-1 ml-15">
           {{ subtitle }}
         </p>
       </div>

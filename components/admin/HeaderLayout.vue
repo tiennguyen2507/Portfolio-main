@@ -4,7 +4,7 @@
       <!-- Logo and Title -->
       <div class="flex items-center">
         <NuxtLink to="/admin" class="text-xl font-bold text-gray-900">
-          Admin Panel
+          Admin
         </NuxtLink>
       </div>
 

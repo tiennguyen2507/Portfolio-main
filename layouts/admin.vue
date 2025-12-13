@@ -1,7 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex flex-col">
     <HeaderLayout />
-
     <main class="flex-1 overflow-auto bg-gray-50 pb-20">
       <div class="p-6 lg:p-8 w-full">
         <slot />
