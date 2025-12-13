@@ -36,7 +36,7 @@
         @blur="$emit('blur', $event)"
         @keydown="$emit('keydown', $event)"
         @keyup="$emit('keyup', $event)"
-        @keydown.enter.stop.prevent="$emit('enter', innerValue)"
+        @keydown.enter="$emit('enter', innerValue)"
       />
 
       <button

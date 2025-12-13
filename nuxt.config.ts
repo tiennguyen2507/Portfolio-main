@@ -5,7 +5,11 @@ export default defineNuxtConfig({
   // Enable SSR for better SEO
   ssr: true,
 
-  css: ['~/assets/scss/main.scss', 'swiper/css'],
+  css: [
+    '~/assets/scss/main.scss',
+    '~/assets/scss/toast-custom.scss',
+    'swiper/css',
+  ],
   modules: [
     '@nuxtjs/tailwindcss',
     '@vee-validate/nuxt',

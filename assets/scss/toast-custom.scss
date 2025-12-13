@@ -1,0 +1,73 @@
+/* Custom Toast Notification Styles với màu Orange theme */
+.v-toast {
+  .v-toast__item {
+    padding: 0.5rem !important;
+    min-height: auto !important;
+    font-size: 0.875rem !important;
+    border-radius: 0.5rem !important;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .v-toast__icon {
+    margin-left: 0px !important;
+    margin-right: 10px;
+  }
+
+  .v-toast__item--success {
+    background-color: #000000 !important; /* green */
+    color: white !important;
+  }
+
+  .v-toast__item--error {
+    background-color: #ef4444 !important; /* red */
+    color: white !important;
+  }
+
+  .v-toast__item--warning {
+    background-color: #f97316 !important; /* orange - theo theme của bạn */
+    color: white !important;
+  }
+
+  .v-toast__item--info {
+    background-color: #3b82f6 !important; /* blue */
+    color: white !important;
+  }
+
+  .v-toast__item--default {
+    background-color: #f97316 !important; /* orange - theo theme của bạn */
+    color: white !important;
+  }
+
+  .v-toast__text {
+    padding: 0 !important;
+  }
+
+  .v-toast__close {
+    padding: 0.25rem !important;
+    margin-left: 0.5rem !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .v-toast__item {
+    margin: 1.5rem 0 !important;
+  }
+
+  .v-toast__icon {
+    width: 1rem !important;
+    min-width: 1rem !important;
+    height: 1rem !important;
+  }
+
+  .v-toast__text {
+    font-size: 0.7rem;
+  }
+}

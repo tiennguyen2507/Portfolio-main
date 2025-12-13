@@ -14,54 +14,7 @@
     </p>
   </div>
 
-  <!-- Login Form -->
-  <form class="mt-2 space-y-6" @submit.prevent="handleLogin">
-    <!-- Error Message -->
-    <div
-      v-if="error"
-      class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg"
-    >
-      <div class="flex items-center">
-        <svg
-          class="w-5 h-5 mr-2 text-red-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        {{ error }}
-      </div>
-    </div>
-
-    <!-- Success Message -->
-    <div
-      v-if="successMessage"
-      class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg"
-    >
-      <div class="flex items-center">
-        <svg
-          class="w-5 h-5 mr-2 text-green-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 13l4 4L19 7"
-          />
-        </svg>
-        {{ successMessage }}
-      </div>
-    </div>
-
+  <form class="mt-2 space-y-6" @submit="handleLogin">
     <div class="space-y-4">
       <!-- Email Input -->
       <div>
@@ -70,17 +23,16 @@
         </label>
         <AdminUiInput
           id="email"
-          v-model="formData.email"
+          v-model="email"
+          v-bind="emailAttrs"
           type="email"
           placeholder="Nhập email của bạn"
           required
-          :variant="emailError ? 'danger' : 'primary'"
+          :variant="errors.email ? 'danger' : 'primary'"
           size="lg"
-          @blur="validateEmailRealTime"
-          @input="validateEmailRealTime"
         />
-        <p v-if="emailError" class="mt-1 text-sm text-red-600">
-          {{ emailError }}
+        <p v-if="errors.email" class="mt-1 text-sm text-red-600">
+          {{ errors.email }}
         </p>
       </div>
 
@@ -94,17 +46,16 @@
         </label>
         <AdminUiInput
           id="password"
-          v-model="formData.password"
+          v-model="password"
+          v-bind="passwordAttrs"
           type="password"
           placeholder="Nhập mật khẩu của bạn"
           required
-          :variant="passwordError ? 'danger' : 'primary'"
+          :variant="errors.password ? 'danger' : 'primary'"
           size="lg"
-          @blur="validatePasswordRealTime"
-          @input="validatePasswordRealTime"
         />
-        <p v-if="passwordError" class="mt-1 text-sm text-red-600">
-          {{ passwordError }}
+        <p v-if="errors.password" class="mt-1 text-sm text-red-600">
+          {{ errors.password }}
         </p>
       </div>
     </div>
@@ -114,7 +65,7 @@
       <div class="flex items-center">
         <input
           id="remember-me"
-          v-model="formData.rememberMe"
+          v-model="rememberMe"
           type="checkbox"
           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded bg-white"
         />
@@ -129,7 +80,7 @@
       :disabled="loading"
       :loading="loading"
       full-width
-      size="lg"
+      size="md"
       variant="primary"
     >
       Đăng nhập
@@ -141,95 +92,44 @@
   import { httpRequest } from '~/utils/httpRequest'
   import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
   import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
+  import { useForm } from 'vee-validate'
+  import { toTypedSchema } from '@vee-validate/zod'
+  import { loginSchema } from '~/utils/validations/loginSchema'
+  import { useNotification } from '~/composables/useNotification'
 
   definePageMeta({
     layout: 'auth',
   })
 
-  // Reactive data
-  const formData = ref({
-    email: '',
-    password: '',
-    rememberMe: false,
+  const { showNotification, showError } = useNotification()
+
+  // Sử dụng vee-validate với Zod schema
+  const { handleSubmit, defineField, errors } = useForm({
+    validationSchema: toTypedSchema(loginSchema),
+    initialValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+  })
+
+  // Define fields với vee-validate
+  const [email, emailAttrs] = defineField('email')
+  const [password, passwordAttrs] = defineField('password')
+  const [rememberMe] = defineField('rememberMe', {
+    type: 'checkbox',
   })
 
   const loading = ref(false)
-  const error = ref('')
-  const successMessage = ref('')
-  const emailError = ref('')
-  const passwordError = ref('')
 
-  // Validation functions
-  const validateEmail = email => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!email) {
-      return 'Email là bắt buộc'
-    }
-    if (!emailRegex.test(email)) {
-      return 'Email không hợp lệ'
-    }
-    return ''
-  }
-
-  const validatePassword = password => {
-    if (!password) {
-      return 'Mật khẩu là bắt buộc'
-    }
-    if (password.length < 8) {
-      return 'Mật khẩu phải có ít nhất 8 ký tự'
-    }
-    return ''
-  }
-
-  // Clear errors
-  const clearErrors = () => {
-    error.value = ''
-    emailError.value = ''
-    passwordError.value = ''
-    successMessage.value = ''
-  }
-
-  // Real-time validation
-  const validateEmailRealTime = () => {
-    if (formData.value.email) {
-      emailError.value = validateEmail(formData.value.email)
-    } else {
-      emailError.value = ''
-    }
-  }
-
-  const validatePasswordRealTime = () => {
-    if (formData.value.password) {
-      passwordError.value = validatePassword(formData.value.password)
-    } else {
-      passwordError.value = ''
-    }
-  }
-
-  // Handle form submission
-  const handleLogin = async () => {
-    clearErrors()
-
-    // Validate form
-    const emailValidation = validateEmail(formData.value.email)
-    const passwordValidation = validatePassword(formData.value.password)
-
-    if (emailValidation) {
-      emailError.value = emailValidation
-      return
-    }
-
-    if (passwordValidation) {
-      passwordError.value = passwordValidation
-      return
-    }
-
+  // Handle form submission với vee-validate
+  const handleLogin = handleSubmit(async values => {
     loading.value = true
 
     try {
       const response = await httpRequest.post('/auth/login', {
-        email: formData.value.email,
-        password: formData.value.password,
+        email: values.email,
+        password: values.password,
       })
 
       // Handle successful login
@@ -243,7 +143,7 @@
         }
 
         // Store remember me preference
-        if (formData.value.rememberMe) {
+        if (values.rememberMe) {
           localStorage.setItem('remember_me', 'true')
         } else {
           localStorage.removeItem('remember_me')
@@ -253,41 +153,38 @@
         const userStore = useUserStore()
         userStore.setAuth(response.access_token, response.user)
 
-        successMessage.value = 'Đăng nhập thành công! Đang chuyển hướng...'
+        showNotification('Đăng nhập thành công! Đang chuyển hướng...')
 
         // Redirect to admin dashboard or home page
         setTimeout(() => {
           navigateTo('/admin')
         }, 1500)
       } else {
-        error.value = 'Đăng nhập thành công nhưng không nhận được token'
+        showNotification({
+          message: 'Đăng nhập thành công nhưng không nhận được token',
+          type: 'error',
+        })
       }
     } catch (err) {
-      console.error('Login error:', err)
-
       // Handle different error scenarios
+      let errorMessage = 'Có lỗi xảy ra khi đăng nhập'
       if (err.status === 401) {
-        error.value = 'Email hoặc mật khẩu không đúng'
+        errorMessage = 'Email hoặc mật khẩu không đúng'
       } else if (err.status === 422) {
-        error.value = 'Dữ liệu không hợp lệ'
+        errorMessage = 'Dữ liệu không hợp lệ'
       } else if (err.status === 429) {
-        error.value = 'Quá nhiều lần thử đăng nhập. Vui lòng thử lại sau'
+        errorMessage = 'Quá nhiều lần thử đăng nhập. Vui lòng thử lại sau'
       } else if (err.status >= 500) {
-        error.value = 'Lỗi server. Vui lòng thử lại sau'
+        errorMessage = 'Lỗi server. Vui lòng thử lại sau'
       } else {
-        error.value = err.message || 'Có lỗi xảy ra khi đăng nhập'
+        errorMessage = err.message || 'Có lỗi xảy ra khi đăng nhập'
       }
+
+      showError(errorMessage)
     } finally {
       loading.value = false
     }
-  }
-
-  // Social login handlers
-  const socialLogin = provider => {
-    // Implement social login logic here
-    console.log(`Social login with ${provider}`)
-    error.value = `Tính năng đăng nhập bằng ${provider} đang được phát triển`
-  }
+  })
 
   // Check if user is already logged in
   onMounted(() => {

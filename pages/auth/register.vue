@@ -15,7 +15,7 @@
   </div>
 
   <!-- Register Form -->
-  <form class="mt-2 space-y-6" @submit.prevent="handleRegister">
+  <form class="mt-2 space-y-6" @submit="handleRegister">
     <!-- Error Message -->
     <div
       v-if="error"
@@ -73,17 +73,16 @@
         </label>
         <AdminUiInput
           id="firstName"
-          v-model="formData.firstName"
+          v-model="firstName"
+          v-bind="firstNameAttrs"
           type="text"
           placeholder="Nhập họ của bạn"
           required
-          :variant="firstNameError ? 'danger' : 'primary'"
+          :variant="errors.firstName ? 'danger' : 'primary'"
           size="lg"
-          @blur="validateFirstNameRealTime"
-          @input="validateFirstNameRealTime"
         />
-        <p v-if="firstNameError" class="mt-1 text-sm text-red-600">
-          {{ firstNameError }}
+        <p v-if="errors.firstName" class="mt-1 text-sm text-red-600">
+          {{ errors.firstName }}
         </p>
       </div>
 
@@ -97,17 +96,16 @@
         </label>
         <AdminUiInput
           id="lastName"
-          v-model="formData.lastName"
+          v-model="lastName"
+          v-bind="lastNameAttrs"
           type="text"
           placeholder="Nhập tên của bạn"
           required
-          :variant="lastNameError ? 'danger' : 'primary'"
+          :variant="errors.lastName ? 'danger' : 'primary'"
           size="lg"
-          @blur="validateLastNameRealTime"
-          @input="validateLastNameRealTime"
         />
-        <p v-if="lastNameError" class="mt-1 text-sm text-red-600">
-          {{ lastNameError }}
+        <p v-if="errors.lastName" class="mt-1 text-sm text-red-600">
+          {{ errors.lastName }}
         </p>
       </div>
 
@@ -118,17 +116,16 @@
         </label>
         <AdminUiInput
           id="email"
-          v-model="formData.email"
+          v-model="email"
+          v-bind="emailAttrs"
           type="email"
           placeholder="Nhập email của bạn"
           required
-          :variant="emailError ? 'danger' : 'primary'"
+          :variant="errors.email ? 'danger' : 'primary'"
           size="lg"
-          @blur="validateEmailRealTime"
-          @input="validateEmailRealTime"
         />
-        <p v-if="emailError" class="mt-1 text-sm text-red-600">
-          {{ emailError }}
+        <p v-if="errors.email" class="mt-1 text-sm text-red-600">
+          {{ errors.email }}
         </p>
       </div>
 
@@ -142,17 +139,16 @@
         </label>
         <AdminUiInput
           id="password"
-          v-model="formData.password"
+          v-model="password"
+          v-bind="passwordAttrs"
           type="password"
           placeholder="Nhập mật khẩu của bạn"
           required
-          :variant="passwordError ? 'danger' : 'primary'"
+          :variant="errors.password ? 'danger' : 'primary'"
           size="lg"
-          @blur="validatePasswordRealTime"
-          @input="validatePasswordRealTime"
         />
-        <p v-if="passwordError" class="mt-1 text-sm text-red-600">
-          {{ passwordError }}
+        <p v-if="errors.password" class="mt-1 text-sm text-red-600">
+          {{ errors.password }}
         </p>
       </div>
 
@@ -166,17 +162,16 @@
         </label>
         <AdminUiInput
           id="confirmPassword"
-          v-model="formData.confirmPassword"
+          v-model="confirmPassword"
+          v-bind="confirmPasswordAttrs"
           type="password"
           placeholder="Nhập lại mật khẩu"
           required
-          :variant="confirmPasswordError ? 'danger' : 'primary'"
+          :variant="errors.confirmPassword ? 'danger' : 'primary'"
           size="lg"
-          @blur="validateConfirmPasswordRealTime"
-          @input="validateConfirmPasswordRealTime"
         />
-        <p v-if="confirmPasswordError" class="mt-1 text-sm text-red-600">
-          {{ confirmPasswordError }}
+        <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">
+          {{ errors.confirmPassword }}
         </p>
       </div>
     </div>
@@ -185,10 +180,13 @@
     <div class="flex items-center">
       <input
         id="agree-terms"
-        v-model="formData.agreeTerms"
+        v-model="agreeTerms"
         type="checkbox"
         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded bg-white"
       />
+      <p v-if="errors.agreeTerms" class="mt-1 text-sm text-red-600">
+        {{ errors.agreeTerms }}
+      </p>
       <label for="agree-terms" class="ml-2 block text-sm text-gray-700">
         Tôi đồng ý với
         <NuxtLink
@@ -211,7 +209,7 @@
     <div>
       <AdminUiButton
         type="submit"
-        :disabled="loading || !formData.agreeTerms"
+        :disabled="loading || !agreeTerms"
         :loading="loading"
         full-width
         size="lg"
@@ -227,204 +225,58 @@
   import { httpRequest } from '~/utils/httpRequest'
   import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
   import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
+  import { useForm } from 'vee-validate'
+  import { toTypedSchema } from '@vee-validate/zod'
+  import { registerSchema } from '~/utils/validations/registerSchema'
 
   definePageMeta({
     layout: 'auth',
   })
 
-  // Reactive data
-  const formData = ref({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    agreeTerms: false,
+  // Sử dụng vee-validate với Zod schema
+  const { handleSubmit, defineField, errors, resetForm } = useForm({
+    validationSchema: toTypedSchema(registerSchema),
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      agreeTerms: false,
+    },
+  })
+
+  // Define fields với vee-validate
+  const [firstName, firstNameAttrs] = defineField('firstName')
+  const [lastName, lastNameAttrs] = defineField('lastName')
+  const [email, emailAttrs] = defineField('email')
+  const [password, passwordAttrs] = defineField('password')
+  const [confirmPassword, confirmPasswordAttrs] = defineField('confirmPassword')
+  const [agreeTerms] = defineField('agreeTerms', {
+    type: 'checkbox',
   })
 
   const loading = ref(false)
   const error = ref('')
   const successMessage = ref('')
-  const firstNameError = ref('')
-  const lastNameError = ref('')
-  const emailError = ref('')
-  const passwordError = ref('')
-  const confirmPasswordError = ref('')
-
-  // Validation functions
-  const validateFirstName = firstName => {
-    if (!firstName) {
-      return 'Họ là bắt buộc'
-    }
-    if (firstName.length < 2) {
-      return 'Họ phải có ít nhất 2 ký tự'
-    }
-    if (firstName.length > 50) {
-      return 'Họ không được quá 50 ký tự'
-    }
-    return ''
-  }
-
-  const validateLastName = lastName => {
-    if (!lastName) {
-      return 'Tên là bắt buộc'
-    }
-    if (lastName.length < 2) {
-      return 'Tên phải có ít nhất 2 ký tự'
-    }
-    if (lastName.length > 50) {
-      return 'Tên không được quá 50 ký tự'
-    }
-    return ''
-  }
-
-  const validateEmail = email => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!email) {
-      return 'Email là bắt buộc'
-    }
-    if (!emailRegex.test(email)) {
-      return 'Email không hợp lệ'
-    }
-    return ''
-  }
-
-  const validatePassword = password => {
-    if (!password) {
-      return 'Mật khẩu là bắt buộc'
-    }
-    if (password.length < 8) {
-      return 'Mật khẩu phải có ít nhất 8 ký tự'
-    }
-    // Check for at least one uppercase, one lowercase, one number
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/
-    if (!passwordRegex.test(password)) {
-      return 'Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 số'
-    }
-    return ''
-  }
-
-  const validateConfirmPassword = confirmPassword => {
-    if (!confirmPassword) {
-      return 'Xác nhận mật khẩu là bắt buộc'
-    }
-    if (confirmPassword !== formData.value.password) {
-      return 'Mật khẩu xác nhận không khớp'
-    }
-    return ''
-  }
 
   // Clear errors
   const clearErrors = () => {
     error.value = ''
-    firstNameError.value = ''
-    lastNameError.value = ''
-    emailError.value = ''
-    passwordError.value = ''
-    confirmPasswordError.value = ''
     successMessage.value = ''
   }
 
-  // Real-time validation
-  const validateFirstNameRealTime = () => {
-    if (formData.value.firstName) {
-      firstNameError.value = validateFirstName(formData.value.firstName)
-    } else {
-      firstNameError.value = ''
-    }
-  }
-
-  const validateLastNameRealTime = () => {
-    if (formData.value.lastName) {
-      lastNameError.value = validateLastName(formData.value.lastName)
-    } else {
-      lastNameError.value = ''
-    }
-  }
-
-  const validateEmailRealTime = () => {
-    if (formData.value.email) {
-      emailError.value = validateEmail(formData.value.email)
-    } else {
-      emailError.value = ''
-    }
-  }
-
-  const validatePasswordRealTime = () => {
-    if (formData.value.password) {
-      passwordError.value = validatePassword(formData.value.password)
-    } else {
-      passwordError.value = ''
-    }
-    // Also validate confirm password when password changes
-    if (formData.value.confirmPassword) {
-      confirmPasswordError.value = validateConfirmPassword(
-        formData.value.confirmPassword
-      )
-    }
-  }
-
-  const validateConfirmPasswordRealTime = () => {
-    if (formData.value.confirmPassword) {
-      confirmPasswordError.value = validateConfirmPassword(
-        formData.value.confirmPassword
-      )
-    } else {
-      confirmPasswordError.value = ''
-    }
-  }
-
-  // Handle form submission
-  const handleRegister = async () => {
+  // Handle form submission với vee-validate
+  const handleRegister = handleSubmit(async values => {
     clearErrors()
-
-    // Validate form
-    const firstNameValidation = validateFirstName(formData.value.firstName)
-    const lastNameValidation = validateLastName(formData.value.lastName)
-    const emailValidation = validateEmail(formData.value.email)
-    const passwordValidation = validatePassword(formData.value.password)
-    const confirmPasswordValidation = validateConfirmPassword(
-      formData.value.confirmPassword
-    )
-
-    if (firstNameValidation) {
-      firstNameError.value = firstNameValidation
-      return
-    }
-
-    if (lastNameValidation) {
-      lastNameError.value = lastNameValidation
-      return
-    }
-
-    if (emailValidation) {
-      emailError.value = emailValidation
-      return
-    }
-
-    if (passwordValidation) {
-      passwordError.value = passwordValidation
-      return
-    }
-
-    if (confirmPasswordValidation) {
-      confirmPasswordError.value = confirmPasswordValidation
-      return
-    }
-
-    if (!formData.value.agreeTerms) {
-      error.value = 'Bạn phải đồng ý với điều khoản sử dụng'
-      return
-    }
-
     loading.value = true
 
     try {
       const response = await httpRequest.post('/auth/register', {
-        firstName: formData.value.firstName,
-        lastName: formData.value.lastName,
-        email: formData.value.email,
-        password: formData.value.password,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
       })
 
       // Handle successful registration
@@ -432,14 +284,7 @@
         'Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...'
 
       // Clear form
-      formData.value = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        agreeTerms: false,
-      }
+      resetForm()
 
       // Redirect to login page after 2 seconds
       setTimeout(() => {
@@ -463,7 +308,7 @@
     } finally {
       loading.value = false
     }
-  }
+  })
 
   // Check if user is already logged in
   onMounted(() => {

@@ -13,27 +13,9 @@
     </span>
 
     <span class="inline-flex items-center">
-      <svg
-        v-if="loading"
-        class="animate-spin -ml-1 mr-2 h-5 w-5 text-current"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          class="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          stroke-width="4"
-        />
-        <path
-          class="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-        />
-      </svg>
+      <span v-if="loading" :class="loadingWrapperClass">
+        <Loading :size="loadingSize" :color="loadingColor" container-class="" />
+      </span>
       <slot />
     </span>
 
@@ -44,6 +26,8 @@
 </template>
 
 <script setup>
+  import Loading from '~/components/ui/Loading.vue'
+
   const props = defineProps({
     variant: {
       type: String,
@@ -72,6 +56,37 @@
 
   const slots = useSlots()
   const emit = defineEmits(['click', 'focus', 'blur'])
+
+  const loadingColor = computed(() => {
+    // Với các variant có background màu, loading nên màu trắng để tương phản
+    // Với outline và ghost (background transparent), dùng màu orange
+    const colorMap = {
+      primary: 'gray', // Màu trắng/sáng cho button xanh
+      secondary: 'gray', // Màu trắng/sáng cho button cam
+      success: 'gray', // Màu trắng/sáng cho button xanh lá
+      danger: 'gray', // Màu trắng/sáng cho button đỏ
+      outline: 'orange',
+      ghost: 'orange',
+    }
+    return colorMap[props.variant] || 'orange'
+  })
+
+  const loadingSize = computed(() => {
+    return props.size === 'lg' ? 'lg' : 'md'
+  })
+
+  const loadingWrapperClass = computed(() => {
+    // Với các variant có background đậm, dùng filter để làm sáng loading
+    const needsBrightFilter = [
+      'primary',
+      'secondary',
+      'success',
+      'danger',
+    ].includes(props.variant)
+    return ['-ml-1', 'mr-2', needsBrightFilter ? 'brightness-150' : '']
+      .filter(Boolean)
+      .join(' ')
+  })
 
   const buttonClasses = computed(() => {
     const base =
