@@ -1,34 +1,44 @@
 <template>
   <div
-    class="min-h-screen bg-gray-900 text-white w-full max-w-full overflow-x-hidden relative"
+    class="min-h-screen bg-gray-900 text-white w-full max-w-full overflow-x-hidden"
   >
-    <!-- Loading Overlay - Chỉ hiển thị trên client để không ảnh hưởng SEO -->
-    <div
-      v-if="isClient && isLoading"
-      class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center transition-opacity duration-300"
-    >
-      <Loading color="orange" />
-    </div>
-
-    <!-- Main Content - Luôn hiển thị trên server để SEO tốt -->
-    <div
-      :class="{
-        'opacity-0 pointer-events-none': isLoading && isClient,
-        'opacity-100': !isLoading || !isClient,
+    <StructuredData />
+    <PortfolioHero />
+    <TechnologiesSection />
+    <PortfolioAbout />
+    <ProjectsSection
+      :projects="projectsDataTransformed"
+      :pending="projectsPending"
+      :error="projectsError"
+      @refresh="refreshProjects"
+    />
+    <PortfolioShop
+      :products="shopProducts?.data || []"
+      :pending="shopPending"
+      :error="shopError"
+    />
+    <PortfolioBlog
+      :posts="blogPostsData"
+      :pending="blogPending"
+      :error="blogError"
+      @refresh="refreshBlog"
+    />
+    <PortfolioWedding />
+    <CommentsAboutMe
+      :comments="commentsData?.data || []"
+      :pagination="{
+        total: commentsData?.total || 0,
+        page: commentsData?.page || 1,
+        limit: commentsData?.limit || 4,
+        nextPage: commentsData?.nextPage || false,
+        prePage: commentsData?.prePage || false,
       }"
-    >
-      <StructuredData />
-      <PortfolioHero />
-      <TechnologiesSection />
-      <PortfolioAbout />
-      <ProjectsSection />
-      <PortfolioShop />
-      <PortfolioBlog />
-      <PortfolioWedding />
-      <CommentsAboutMe />
+      :pending="commentsPending"
+      :error="commentsError"
+      @refresh="refreshComments"
+    />
 
-      <PortfolioContact @submit="handleContactSubmit" />
-    </div>
+    <PortfolioContact @submit="handleContactSubmit" />
   </div>
 </template>
 
@@ -41,55 +51,95 @@
   import PortfolioBlog from '~/pages/_components/PortfolioBlog.vue'
   import StructuredData from '~/components/StructuredData.vue'
   import CommentsAboutMe from '~/pages/_components/CommentsAboutMe.vue'
-  import Loading from '~/components/ui/Loading.vue'
+  import { httpRequest } from '~/utils/httpRequest'
 
-  // Loading state - Bắt đầu là false để server render content đầy đủ (SEO)
-  const isLoading = ref(false)
-  const isClient = ref(false)
-
-  // Hide loading after page and components are loaded
-  onMounted(() => {
-    // Set client flag và loading ngay lập tức
-    isClient.value = true
-    isLoading.value = true
-
-    console.log('Loading started:', {
-      isClient: isClient.value,
-      isLoading: isLoading.value,
-    })
-
-    // Đảm bảo loading hiển thị ít nhất 1.5 giây để user thấy rõ
-    const minDisplayTime = 1500 // 1.5 giây tối thiểu
-    const startTime = Date.now()
-
-    const hideLoading = () => {
-      const elapsed = Date.now() - startTime
-      const remainingTime = Math.max(0, minDisplayTime - elapsed)
-
-      console.log('Hiding loading in:', remainingTime, 'ms')
-
-      setTimeout(() => {
-        isLoading.value = false
-        console.log('Loading hidden')
-      }, remainingTime)
+  // Fetch tất cả data với useAsyncData - Nuxt tự động track pending state
+  const {
+    data: blogPosts,
+    pending: blogPending,
+    error: blogError,
+    refresh: refreshBlog,
+  } = await useAsyncData(
+    'portfolio-blog-posts',
+    () => $fetch('https://blog-data.up.railway.app/posts?page=1&limit=6'),
+    {
+      default: () => [],
+      server: true, // Fetch trên server
+      client: true, // Fetch trên client nếu cần
     }
+  )
 
-    // Hide loading when window is fully loaded
-    if (window.document.readyState === 'complete') {
-      console.log('Page already loaded, hiding loading...')
-      hideLoading()
-    } else {
-      console.log('Waiting for window load event...')
-      window.addEventListener('load', hideLoading, { once: true })
-
-      // Fallback: Ẩn loading sau 3 giây nếu window.load không fire
-      setTimeout(() => {
-        if (isLoading.value) {
-          console.log('Fallback: Hiding loading after 3s')
-          isLoading.value = false
-        }
-      }, 3000)
+  const {
+    data: projectsData,
+    pending: projectsPending,
+    error: projectsError,
+    refresh: refreshProjects,
+  } = await useAsyncData(
+    'portfolio-projects',
+    () => httpRequest.get('/projects?page=1&limit=6'),
+    {
+      default: () => [],
+      server: true,
+      client: true,
     }
+  )
+
+  const {
+    data: shopProducts,
+    pending: shopPending,
+    error: shopError,
+    refresh: refreshShop,
+  } = await useAsyncData(
+    'portfolio-shop-products',
+    () => httpRequest.get('/products?page=1&limit=4'),
+    {
+      default: () => [],
+      server: true,
+      client: true,
+    }
+  )
+
+  const {
+    data: commentsData,
+    pending: commentsPending,
+    error: commentsError,
+    refresh: refreshComments,
+  } = await useAsyncData(
+    'portfolio-comments',
+    () => httpRequest.get('/comments-about-me?page=1&limit=4'),
+    {
+      default: () => ({
+        data: [],
+        total: 0,
+        page: 1,
+        limit: 4,
+        nextPage: false,
+        prePage: false,
+      }),
+      server: true,
+      client: true,
+    }
+  )
+
+  // Transform data để match với components
+  const blogPostsData = computed(() => {
+    if (!blogPosts.value || !blogPosts.value.data) return []
+    return blogPosts.value.data
+  })
+
+  const projectsDataTransformed = computed(() => {
+    if (!projectsData.value || !projectsData.value.data) return []
+    return projectsData.value.data.map(project => ({
+      _id: project._id,
+      title: project.title,
+      description: project.description,
+      thumbnail: project.thumbnail,
+      skill: project.skill || [],
+      status: project.status,
+      createdBy: project.createdBy,
+      createdAt: project.createdAt,
+      updatedAt: project.updatedAt,
+    }))
   })
 
   // Enhanced SEO Meta Tags - Optimized for Google Search

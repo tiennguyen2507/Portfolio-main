@@ -32,7 +32,7 @@
             Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.
           </p>
           <button
-            @click="fetchProjects"
+            @click="handleRefresh"
             class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
           >
             Thử lại
@@ -41,10 +41,10 @@
       </div>
 
       <!-- Projects Grid -->
-      <div v-else-if="projects.length" class="space-y-8">
+      <div v-else-if="displayedProjects.length" class="space-y-8">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           <Card
-            v-for="project in projects"
+            v-for="project in displayedProjects"
             :key="project._id"
             variant="elevated"
             hover
@@ -172,58 +172,45 @@
   import Badge from '~/components/ui/Badge.vue'
   import { httpRequest } from '~/utils/httpRequest'
 
-  // State management
-  const projects = ref([])
+  // Props từ parent component
+  const props = defineProps({
+    projects: {
+      type: Array,
+      default: () => [],
+    },
+    pending: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
+      type: Object,
+      default: null,
+    },
+  })
+
+  // Emit events
+  const emit = defineEmits(['refresh'])
+
+  // State management cho pagination (local)
   const currentPage = ref(1)
   const totalPages = ref(1)
-  const pending = ref(false)
-  const error = ref(null)
-  const limit = 6 // Hiển thị 6 project mỗi trang
+  const limit = 6
 
-  // Fetch projects from API
-  const fetchProjects = async () => {
-    try {
-      pending.value = true
-      error.value = null
-
-      const response = await httpRequest.get(
-        `/projects?page=${currentPage.value}&limit=${limit}`
-      )
-
-      if (response && response.data && Array.isArray(response.data)) {
-        projects.value = response.data.map(project => ({
-          _id: project._id,
-          title: project.title,
-          description: project.description,
-          thumbnail: project.thumbnail,
-          skill: project.skill || [],
-          status: project.status,
-          createdBy: project.createdBy,
-          createdAt: project.createdAt,
-          updatedAt: project.updatedAt,
-        }))
-
-        // Tính tổng số trang
-        const total = response.total || response.data.length
-        totalPages.value = Math.ceil(total / limit)
-      } else {
-        projects.value = []
-        totalPages.value = 1
-      }
-    } catch (err) {
-      console.error('Error fetching projects:', err)
-      error.value = err
-      projects.value = []
-    } finally {
-      pending.value = false
+  // Sử dụng data từ props
+  const projectsList = computed(() => {
+    if (props.projects && props.projects.length > 0) {
+      // Tính totalPages từ data
+      const total = props.projects.length
+      totalPages.value = Math.ceil(total / limit)
+      return props.projects
     }
-  }
+    return []
+  })
 
-  // Go to specific page
-  const goToPage = async page => {
+  // Go to specific page (local pagination)
+  const goToPage = page => {
     if (page >= 1 && page <= totalPages.value && page !== currentPage.value) {
       currentPage.value = page
-      await fetchProjects()
       // Scroll to top of section
       document
         .getElementById('projects')
@@ -238,14 +225,16 @@
     }
   }
 
-  // Initialize on mount
-  onMounted(() => {
-    fetchProjects()
-  })
+  // Refresh function - emit event để parent refresh
+  const handleRefresh = () => {
+    emit('refresh')
+  }
 
-  // Watch for page changes
-  watch(currentPage, () => {
-    fetchProjects()
+  // Tính projects hiển thị theo pagination
+  const displayedProjects = computed(() => {
+    const start = (currentPage.value - 1) * limit
+    const end = start + limit
+    return projectsList.value.slice(start, end)
   })
 </script>
 

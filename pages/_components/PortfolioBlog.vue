@@ -24,7 +24,7 @@
       <div v-else-if="error" class="text-center py-12">
         <p class="text-red-400 mb-4">Không thể tải bài viết</p>
         <button
-          @click="refresh"
+          @click="handleRefresh"
           class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
         >
           Thử lại
@@ -138,46 +138,31 @@
   import Card from '~/components/ui/Card.vue'
   import Badge from '~/components/ui/Badge.vue'
 
-  // Pagination state
-  const currentPage = ref(1)
-  const limit = 6
-  const allPosts = ref([])
-  const pending = ref(false)
-  const error = ref(null)
+  // Props từ parent component
+  const props = defineProps({
+    posts: {
+      type: Array,
+      default: () => [],
+    },
+    pending: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
+      type: Object,
+      default: null,
+    },
+  })
 
-  // Fetch blog data
-  const fetchPosts = async () => {
-    try {
-      pending.value = true
-      error.value = null
-      const response = await $fetch(
-        `https://blog-data.up.railway.app/posts?page=${currentPage.value}&limit=${limit}`
-      )
+  // Emit events
+  const emit = defineEmits(['refresh'])
 
-      if (response && response.data) {
-        if (currentPage.value === 1) {
-          allPosts.value = response.data
-        } else {
-          allPosts.value = [...allPosts.value, ...response.data]
-        }
-      }
-    } catch (err) {
-      console.error('Error fetching posts:', err)
-      error.value = err
-    } finally {
-      pending.value = false
-    }
-  }
+  // Sử dụng data từ props
+  const allPosts = computed(() => props.posts || [])
 
-  // Load initial data
-  await fetchPosts()
-
-  // Removed load more functionality; navigate to /blogs instead via button
-
-  // Refresh function
-  const refresh = () => {
-    currentPage.value = 1
-    fetchPosts()
+  // Refresh function - emit event để parent refresh
+  const handleRefresh = () => {
+    emit('refresh')
   }
 
   // Helper function to format date

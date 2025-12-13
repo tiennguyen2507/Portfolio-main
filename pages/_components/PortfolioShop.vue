@@ -189,40 +189,30 @@
 </template>
 
 <script setup>
-  import { onMounted, computed, ref } from 'vue'
-  import httpRequest from '~/utils/httpRequest'
+  import { computed } from 'vue'
   import Image from '~/components/ui/Image.vue'
 
-  // State
-  const products = ref([])
-
-  // Fetch products function
-  const fetchProducts = async (page = 1, limit = 4) => {
-    try {
-      const response = await httpRequest.get(
-        `/products?page=${page}&limit=${limit}`
-      )
-
-      if (response && response.data) {
-        // Sử dụng trực tiếp data từ API
-        products.value = response.data
-        console.log('Products fetched for portfolio:', products.value)
-      } else {
-        throw new Error('Invalid response format')
-      }
-    } catch (err) {
-      console.error('Error fetching products for portfolio:', err)
-      // Không cần fallback, chỉ để products rỗng
-    }
-  }
-
-  // Fetch products khi component mount
-  onMounted(async () => {
-    await fetchProducts(1, 4) // Chỉ lấy 4 sản phẩm đầu tiên
+  // Props từ parent component
+  const props = defineProps({
+    products: {
+      type: Array,
+      default: () => [],
+    },
+    pending: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
+      type: Object,
+      default: null,
+    },
   })
 
+  // Sử dụng data từ props
+  const productsList = computed(() => props.products || [])
+
   // Lấy 4 sản phẩm đầu tiên để hiển thị
-  const featuredProducts = computed(() => products.value.slice(0, 4))
+  const featuredProducts = computed(() => productsList.value.slice(0, 4))
 
   const formatPrice = price => {
     return new Intl.NumberFormat('vi-VN', {

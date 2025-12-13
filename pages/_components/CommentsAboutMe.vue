@@ -180,7 +180,7 @@
         <div v-else>
           <div class="grid gap-6 md:grid-cols-2">
             <div
-              v-for="comment in comments"
+              v-for="comment in commentsList"
               :key="comment._id"
               class="bg-gray-900/80 rounded-xl p-6 flex flex-col shadow-lg border border-gray-700 hover:shadow-xl transition-shadow"
             >
@@ -262,16 +262,53 @@
     )
   )
 
-  const pagination = ref({
+  // Props từ parent component
+  const props = defineProps({
+    comments: {
+      type: Array,
+      default: () => [],
+    },
+    pagination: {
+      type: Object,
+      default: null,
+    },
+    pending: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
+      type: Object,
+      default: null,
+    },
+  })
+
+  // Emit events
+  const emit = defineEmits(['refresh'])
+
+  const limit = 4
+
+  // Sử dụng data từ props hoặc local state
+  const commentsList = computed(() => props.comments || comments.value)
+  const paginationData = computed(() => props.pagination || pagination.value)
+
+  const totalPages = computed(() => {
+    if (paginationData.value) {
+      return Math.ceil(paginationData.value.total / limit)
+    }
+    return 1
+  })
+
+  // Local pagination state (nếu cần fetch thêm)
+  const localPagination = ref({
     total: 0,
     page: 1,
     limit: 4,
     nextPage: false,
     prePage: false,
   })
-  const limit = 4
 
-  const totalPages = computed(() => Math.ceil(pagination.value.total / limit))
+  // Nếu có props, sử dụng props; nếu không, dùng local
+  const pagination = computed(() => props.pagination || localPagination.value)
 
   const fetchComments = async (page = 1) => {
     loading.value = true
@@ -280,7 +317,7 @@
         `/comments-about-me?page=${page}&limit=${limit}`
       )
       comments.value = res.data || []
-      pagination.value = {
+      localPagination.value = {
         total: res.total,
         page: res.page,
         limit: res.limit,
@@ -289,7 +326,7 @@
       }
     } catch (e) {
       comments.value = []
-      pagination.value = {
+      localPagination.value = {
         total: 0,
         page: 1,
         limit,
@@ -303,13 +340,23 @@
 
   const prevPage = () => {
     if (pagination.value.page > 1) {
-      fetchComments(pagination.value.page - 1)
+      if (props.pagination) {
+        // Nếu có props, emit event để parent fetch
+        emit('refresh')
+      } else {
+        fetchComments(pagination.value.page - 1)
+      }
     }
   }
 
   const nextPage = () => {
     if (pagination.value.nextPage) {
-      fetchComments(pagination.value.page + 1)
+      if (props.pagination) {
+        // Nếu có props, emit event để parent fetch
+        emit('refresh')
+      } else {
+        fetchComments(pagination.value.page + 1)
+      }
     }
   }
 
@@ -399,7 +446,12 @@
     })
   }
 
-  onMounted(() => fetchComments(1))
+  // Chỉ fetch nếu không có props (fallback)
+  onMounted(() => {
+    if (!props.comments || props.comments.length === 0) {
+      fetchComments(1)
+    }
+  })
 </script>
 
 <style scoped>
