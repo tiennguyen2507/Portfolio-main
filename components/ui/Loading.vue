@@ -1,15 +1,10 @@
 <template>
   <div :class="['flex justify-center items-center', containerClass]">
     <div
-      :class="[
-        'animate-spin rounded-full border-b-2',
-        sizeClasses[size],
-        colorClasses[color],
-      ]"
+      class="loader"
+      :class="[sizeClasses[size]]"
+      :style="{ '--loader-color': colorValues[color] }"
     ></div>
-    <span v-if="text" :class="['ml-2 text-gray-600', textSizeClasses[size]]">
-      {{ text }}
-    </span>
   </div>
 </template>
 
@@ -18,16 +13,13 @@
     size: {
       type: String,
       default: 'md',
-      validator: value => ['xs', 'sm', 'md', 'lg'].includes(value),
+      validator: value => ['md', 'lg'].includes(value),
     },
     color: {
       type: String,
-      default: 'blue',
-      validator: value => ['blue', 'gray', 'green', 'red'].includes(value),
-    },
-    text: {
-      type: String,
-      default: 'Đang tải dữ liệu...',
+      default: 'orange',
+      validator: value =>
+        ['blue', 'gray', 'green', 'red', 'orange'].includes(value),
     },
     containerClass: {
       type: String,
@@ -36,23 +28,47 @@
   })
 
   const sizeClasses = {
-    xs: 'h-4 w-4',
-    sm: 'h-6 w-6',
-    md: 'h-8 w-8',
-    lg: 'h-12 w-12',
+    md: 'loader-md',
+    lg: 'loader-lg',
   }
 
-  const textSizeClasses = {
-    xs: 'text-xs',
-    sm: 'text-sm',
-    md: 'text-sm',
-    lg: 'text-base',
-  }
-
-  const colorClasses = {
-    blue: 'border-blue-600',
-    gray: 'border-gray-600',
-    green: 'border-green-600',
-    red: 'border-red-600',
+  const colorValues = {
+    blue: '#3b82f6',
+    gray: '#6b7280',
+    green: '#10b981',
+    red: '#ef4444',
+    orange: '#f97316',
   }
 </script>
+
+<style scoped>
+  .loader {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(farthest-side, var(--loader-color) 94%, #0000) top/8px 7px
+        no-repeat,
+      conic-gradient(#0000 30%, var(--loader-color));
+    -webkit-mask: radial-gradient(
+      farthest-side,
+      #0000 calc(100% - 12px),
+      #000 0
+    );
+    mask: radial-gradient(farthest-side, #0000 calc(100% - 7px), #000 0);
+    animation: l13 1s infinite linear;
+  }
+
+  .loader-md {
+    width: 36px;
+  }
+
+  .loader-lg {
+    width: 48px;
+  }
+
+  @keyframes l13 {
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+</style>

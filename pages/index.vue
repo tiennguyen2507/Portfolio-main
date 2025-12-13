@@ -1,18 +1,45 @@
 <template>
   <div
-    class="min-h-screen bg-gray-900 text-white w-full max-w-full overflow-x-hidden"
+    class="min-h-screen bg-gray-900 text-white w-full max-w-full overflow-x-hidden relative"
   >
-    <StructuredData />
-    <PortfolioHero />
-    <TechnologiesSection />
-    <PortfolioAbout />
-    <ProjectsSection />
-    <PortfolioShop />
-    <PortfolioBlog />
-    <PortfolioWedding />
-    <CommentsAboutMe />
+    <!-- Loading Overlay - Chỉ hiển thị trên client để không ảnh hưởng SEO -->
+    <ClientOnly>
+      <Transition
+        enter-active-class="transition-opacity duration-300"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-300"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div
+          v-if="isLoading"
+          class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center"
+        >
+          <Loading color="orange" />
+        </div>
+      </Transition>
+    </ClientOnly>
 
-    <PortfolioContact @submit="handleContactSubmit" />
+    <!-- Main Content - Luôn hiển thị trên server để SEO tốt -->
+    <div
+      :class="{
+        'opacity-0 pointer-events-none': isLoading && isClient,
+        'opacity-100': !isLoading || !isClient,
+      }"
+    >
+      <StructuredData />
+      <PortfolioHero />
+      <TechnologiesSection />
+      <PortfolioAbout />
+      <ProjectsSection />
+      <PortfolioShop />
+      <PortfolioBlog />
+      <PortfolioWedding />
+      <CommentsAboutMe />
+
+      <PortfolioContact @submit="handleContactSubmit" />
+    </div>
   </div>
 </template>
 
@@ -25,6 +52,31 @@
   import PortfolioBlog from '~/pages/_components/PortfolioBlog.vue'
   import StructuredData from '~/components/StructuredData.vue'
   import CommentsAboutMe from '~/pages/_components/CommentsAboutMe.vue'
+  import Loading from '~/components/ui/Loading.vue'
+
+  // Loading state - Bắt đầu là false để server render content đầy đủ (SEO)
+  const isLoading = ref(false)
+  const isClient = ref(false)
+
+  // Hide loading after page and components are loaded
+  onMounted(() => {
+    // Chỉ set loading = true trên client-side
+    isClient.value = true
+    isLoading.value = true
+
+    // Wait for initial render and API calls
+    // Có thể điều chỉnh thời gian này tùy vào tốc độ API
+    setTimeout(() => {
+      isLoading.value = false
+    }, 800) // 800ms để các components có thời gian load
+
+    // Alternative: Hide loading when window is fully loaded
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        isLoading.value = false
+      }, 300)
+    })
+  })
 
   // Enhanced SEO Meta Tags - Optimized for Google Search
   useHead({
