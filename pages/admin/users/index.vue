@@ -14,33 +14,61 @@
           placeholder="Tìm theo tên, email..."
         />
       </div>
-      <div class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200">
-        <TableAdminUsers :users="paginatedUsers" :loading="loading" />
-
-        <div
-          v-if="filteredUsers.length > 0"
-          class="px-6 py-4 border-t border-gray-200"
-        >
-          <Pagination
-            :page="currentPage"
-            :total="filteredUsers.length"
-            :limit="itemsPerPage"
-            :show-info="true"
-            :split="true"
-            @update:page="handlePageChange"
-          />
-        </div>
+      <div
+        v-if="loading"
+        class="mt-6 bg-white rounded-lg shadow-sm border-[1px] border-gray-200"
+      >
+        <Loading container-class="py-12" />
       </div>
+      <ul
+        v-else
+        class="mt-6 bg-white rounded-lg shadow-sm border-[1px] border-gray-200"
+      >
+        <li
+          v-for="user in users"
+          :key="user.id"
+          class="p-2 border-b-[1px] border-gray-200"
+        >
+          <div class="flex items-center gap-2">
+            <AdminUiAvatar
+              :src="user.avatar"
+              :size="45"
+              :read-only="true"
+              :ring="false"
+            />
+            <div class="flex flex-col flex-grow gap-1">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-bold text-gray-600">
+                  {{ user.fullName }}
+                </p>
+                <p class="text-[12px] text-gray-300">
+                  {{ formatDate(user.createdAt) }}
+                </p>
+              </div>
+              <div class="flex items-center justify-between">
+                <p class="text-sm text-gray-300">{{ user.email }}</p>
+                <p
+                  class="text-[10px] bg-green-100 text-green-800 px-2 py-1 rounded-full"
+                >
+                  {{ user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script setup>
+  import { format } from 'date-fns'
   import { httpRequest } from '~/utils/httpRequest'
   import HeaderContent from '~/components/admin/HeaderContent.vue'
   import ErrorCommon from '~/components/admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
   import SearchInput from '~/components/ui/SearchInput'
+  import Loading from '~/components/ui/Loading.vue'
   import TableAdminUsers from './_components/TableAdminUsers.vue'
 
   definePageMeta({
@@ -103,6 +131,16 @@
         page: currentPage.value > 1 ? currentPage.value : undefined,
       },
     })
+  }
+
+  const formatDate = dateString => {
+    if (!dateString) return 'N/A'
+    try {
+      return format(new Date(dateString), 'dd/MM/yyyy HH:mm')
+    } catch (error) {
+      console.error('Error formatting date:', error)
+      return 'N/A'
+    }
   }
 
   watch(searchQuery, () => {
