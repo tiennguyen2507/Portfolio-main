@@ -3,23 +3,12 @@
     class="min-h-screen bg-gray-900 text-white w-full max-w-full overflow-x-hidden relative"
   >
     <!-- Loading Overlay - Chỉ hiển thị trên client để không ảnh hưởng SEO -->
-    <ClientOnly>
-      <Transition
-        enter-active-class="transition-opacity duration-300"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="transition-opacity duration-300"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-      >
-        <div
-          v-if="isLoading"
-          class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center"
-        >
-          <Loading color="orange" />
-        </div>
-      </Transition>
-    </ClientOnly>
+    <div
+      v-if="isClient && isLoading"
+      class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center transition-opacity duration-300"
+    >
+      <Loading color="orange" />
+    </div>
 
     <!-- Main Content - Luôn hiển thị trên server để SEO tốt -->
     <div
@@ -60,22 +49,47 @@
 
   // Hide loading after page and components are loaded
   onMounted(() => {
-    // Chỉ set loading = true trên client-side
+    // Set client flag và loading ngay lập tức
     isClient.value = true
     isLoading.value = true
 
-    // Wait for initial render and API calls
-    // Có thể điều chỉnh thời gian này tùy vào tốc độ API
-    setTimeout(() => {
-      isLoading.value = false
-    }, 800) // 800ms để các components có thời gian load
+    console.log('Loading started:', {
+      isClient: isClient.value,
+      isLoading: isLoading.value,
+    })
 
-    // Alternative: Hide loading when window is fully loaded
-    window.addEventListener('load', () => {
+    // Đảm bảo loading hiển thị ít nhất 1.5 giây để user thấy rõ
+    const minDisplayTime = 1500 // 1.5 giây tối thiểu
+    const startTime = Date.now()
+
+    const hideLoading = () => {
+      const elapsed = Date.now() - startTime
+      const remainingTime = Math.max(0, minDisplayTime - elapsed)
+
+      console.log('Hiding loading in:', remainingTime, 'ms')
+
       setTimeout(() => {
         isLoading.value = false
-      }, 300)
-    })
+        console.log('Loading hidden')
+      }, remainingTime)
+    }
+
+    // Hide loading when window is fully loaded
+    if (window.document.readyState === 'complete') {
+      console.log('Page already loaded, hiding loading...')
+      hideLoading()
+    } else {
+      console.log('Waiting for window load event...')
+      window.addEventListener('load', hideLoading, { once: true })
+
+      // Fallback: Ẩn loading sau 3 giây nếu window.load không fire
+      setTimeout(() => {
+        if (isLoading.value) {
+          console.log('Fallback: Hiding loading after 3s')
+          isLoading.value = false
+        }
+      }, 3000)
+    }
   })
 
   // Enhanced SEO Meta Tags - Optimized for Google Search
