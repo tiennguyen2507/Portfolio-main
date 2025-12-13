@@ -98,7 +98,7 @@
     }
     const variantMap = {
       primary:
-        'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 border border-transparent',
+        'bg-[#28bdbf] text-white hover:bg-[#20a8aa] focus:ring-[#28bdbf] border border-transparent',
       secondary:
         'bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500 border border-transparent',
       success:

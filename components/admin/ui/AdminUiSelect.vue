@@ -198,7 +198,7 @@
     }
     const variantMap = {
       primary:
-        'border-blue-600 hover:border-blue-700 focus:border-blue-700 focus:ring-1 focus:ring-blue-500',
+        'border-[#28bdbf] hover:border-[#20a8aa] focus:border-[#20a8aa] focus:ring-1 focus:ring-[#28bdbf]',
       secondary:
         'border-orange-500 hover:border-orange-600 focus:border-orange-600 focus:ring-1 focus:ring-orange-500',
       success:

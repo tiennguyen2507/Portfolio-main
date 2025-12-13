@@ -70,8 +70,8 @@
           font-weight: 500; border-radius: 0.5rem; transition: all 0.2s ease; 
           text-decoration: none; cursor: pointer; border: none; outline: none; 
         }
-        .btn-primary { background-color: #f97316; color: white; }
-        .btn-primary:hover { background-color: #ea580c; }
+        .btn-primary { background-color: #28bdbf; color: white; }
+        .btn-primary:hover { background-color: #20a8aa; }
         img { max-width: 100%; height: auto; }
         *:focus { outline: 2px solid #10b981; outline-offset: 2px; }
         @media (max-width: 768px) { 

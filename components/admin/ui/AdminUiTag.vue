@@ -45,9 +45,9 @@
     lg: 'px-3.5 py-1.5 text-sm',
   }
 
-  // primary is BLUE, secondary is ORANGE (aligned with AdminUiButton/Input/Select)
+  // primary is TURQUOISE (#28bdbf), secondary is ORANGE (aligned with AdminUiButton/Input/Select)
   const variantMap = {
-    primary: 'bg-blue-100 text-blue-800',
+    primary: 'bg-[#b3e5e7] text-[#0d7377]',
     secondary: 'bg-orange-100 text-orange-800',
     success: 'bg-green-100 text-green-800',
     danger: 'bg-red-100 text-red-800',
