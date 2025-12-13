@@ -11,7 +11,8 @@
     "lint": "eslint . --ext .js,.mjs,.cjs",
     "lint:fix": "eslint . --ext .js,.mjs,.cjs --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "generate:icons": "tsx scripts/generate-icons.ts"
   },
   "dependencies": {
     "@nuxt/content": "3.6.3",
@@ -35,14 +36,18 @@
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
+    "@types/node": "^25.0.1",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
+    "@vite-pwa/nuxt": "^1.1.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-vue": "^10.4.0",
     "globals": "^16.3.0",
     "prettier": "^3.6.2",
     "sass": "^1.89.2",
+    "sharp": "^0.34.5",
+    "tsx": "^4.21.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vue-eslint-parser": "^10.2.0"
   }

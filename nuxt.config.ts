@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@nuxt/image',
     '@pinia/nuxt',
+    '@vite-pwa/nuxt',
   ],
 
   // Auto import Vue composables and composables from composables directory
@@ -132,9 +133,33 @@ export default defineNuxtConfig({
         },
         { name: 'theme-color', content: '#f97316' },
         { name: 'msapplication-TileColor', content: '#f97316' },
+        // iOS PWA Meta Tags
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'black-translucent',
+        },
+        { name: 'apple-mobile-web-app-title', content: 'Nguyễn Lê Đình Tiên' },
+        { name: 'application-name', content: 'Nguyễn Lê Đình Tiên Portfolio' },
       ],
       link: [
         { rel: 'icon', type: 'image/webp', href: '/favicon.webp' },
+        // iOS PWA Icons
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/icons/apple-touch-icon.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '152x152',
+          href: '/icons/apple-touch-icon-152x152.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '120x120',
+          href: '/icons/apple-touch-icon-120x120.png',
+        },
         {
           rel: 'canonical',
           href: process.env.SITE_URL || 'https://nguyenledinhtien.io.vn',
@@ -208,6 +233,106 @@ export default defineNuxtConfig({
       SITE_PHONE: process.env.SITE_PHONE || '+84 88 669 4350',
       SITE_AREA_SERVED: process.env.SITE_AREA_SERVED || 'VN',
       SITE_LANGUAGES: process.env.SITE_LANGUAGES || 'English,Vietnamese',
+    },
+  },
+
+  // PWA Configuration
+  pwa: {
+    registerType: 'autoUpdate',
+    strategies: 'generateSW',
+    manifest: {
+      name: process.env.SITE_NAME || 'Nguyễn Lê Đình Tiên Portfolio',
+      short_name: 'Tiên Portfolio',
+      description:
+        process.env.SITE_DESCRIPTION ||
+        'Portfolio của Nguyễn Lê Đình Tiên - Fullstack Web Developer',
+      theme_color: '#f97316',
+      background_color: '#ffffff',
+      display: 'standalone',
+      orientation: 'portrait',
+      scope: '/',
+      start_url: '/',
+      icons: [
+        {
+          src: '/icons/pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'any maskable',
+        },
+        {
+          src: '/icons/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable',
+        },
+        {
+          src: '/icons/apple-touch-icon.png',
+          sizes: '180x180',
+          type: 'image/png',
+          purpose: 'apple-touch-icon',
+        },
+      ],
+      screenshots: [],
+      categories: ['portfolio', 'developer', 'web'],
+      lang: 'vi',
+      dir: 'ltr',
+    },
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,png,svg,ico,webp,woff,woff2,ttf}'],
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'google-fonts-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'images-cache',
+            expiration: {
+              maxEntries: 100,
+              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/.*\.(?:js|css)$/i,
+          handler: 'StaleWhileRevalidate',
+          options: {
+            cacheName: 'static-resources',
+          },
+        },
+        {
+          urlPattern: /^https?:\/\/.*/i,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'network-cache',
+            expiration: {
+              maxEntries: 50,
+              maxAgeSeconds: 60 * 60 * 24, // 1 day
+            },
+            networkTimeoutSeconds: 10,
+          },
+        },
+      ],
+    },
+    devOptions: {
+      enabled: true,
+      type: 'module',
+    },
+    client: {
+      installPrompt: true,
+      periodicSyncForUpdates: 20,
     },
   },
 })
