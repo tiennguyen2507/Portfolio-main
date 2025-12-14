@@ -17,7 +17,7 @@
     },
     color: {
       type: String,
-      default: 'orange',
+      default: 'green',
       validator: value =>
         ['blue', 'gray', 'green', 'red', 'orange'].includes(value),
     },
@@ -35,7 +35,7 @@
   const colorValues = {
     blue: '#3b82f6',
     gray: '#6b7280',
-    green: '#10b981',
+    green: '#28bdbf',
     red: '#ef4444',
     orange: '#f97316',
   }
