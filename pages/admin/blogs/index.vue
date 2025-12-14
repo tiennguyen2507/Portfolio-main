@@ -1,74 +1,82 @@
 <template>
   <div>
-    <!-- Page Header -->
     <HeaderContent
       title="Quản lý Bài viết"
-      subtitle="Quản lý và theo dõi tất cả bài viết trong hệ thống"
+      subtitle="Quản lý và theo dõi tất cả bài viết"
     >
       <template #action>
-        <Button
-          @click="
-            () => {
-              showCreateModal = true
-              isEditing = false
-              editingId = null
-              form = {
-                title: '',
-                description: '',
-                thumbnail: '',
-                category: 'my-blog',
-              }
-            }
-          "
-          variant="secondary"
-          class="group shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 transition-all duration-300 hover:-translate-y-0.5"
+        <button
+          @click="handleClickButtonAddBlog"
+          class="bg-orange-500 text-white px-2 py-2 rounded-full hover:bg-orange-700 transition-colors flex items-center"
         >
-          <template #prefix>
-            <svg
-              class="w-5 h-5 transition-transform duration-200 group-hover:rotate-90"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-          </template>
-          Thêm bài viết mới
-        </Button>
+          <AdminUiIcon name="plus" />
+        </button>
       </template>
     </HeaderContent>
-
-    <!-- Create/Edit Blog Modal -->
-    <FormBlogs
-      v-if="showCreateModal"
-      :isOpen="showCreateModal"
-      :isEditing="isEditing"
-      :form="form"
-      :submitting="submitting"
-      :error="error"
-      :editorOptions="editorOptions"
-      @close="closeModal"
-      @submit="handleFormSubmit"
-      @thumbnailChange="f => (thumbnailFile = f)"
-    />
-
-    <!-- Blogs List -->
     <ErrorCommon v-if="error" :message="error" @retry="fetchPosts" />
 
-    <TableBlogs
-      v-if="!error"
-      :posts="posts"
-      :loading="loading"
-      @edit="startEdit"
-      @delete="deletePost"
-    />
+    <ui class="flex flex-col gap-4 border-[1px] border-gray-200 rounded-lg">
+      <li
+        v-for="post in posts"
+        :key="post._id"
+        class="p-2 border-b-[1px] border-gray-200 list-none flex flex-col gap-2"
+      >
+        <div class="flex items-center gap-2">
+          <img
+            :src="post.thumbnail"
+            alt="Thumbnail"
+            class="w-24 h-24 rounded-md"
+          />
+          <div class="flex flex-col">
+            <h3 class="text-sm font-bold text-gray-600">{{ post.title }}</h3>
+            <ViewEditor
+              class="text-xs text-gray-300"
+              :content="post.description"
+              :strip-html="true"
+              :truncate="true"
+              :max-length="90"
+            />
+          </div>
+        </div>
+        <div class="flex items-center gap-2 justify-between">
+          <div class="flex items-center gap-1">
+            <span
+              v-if="post.createdAt"
+              class="text-[8px] bg-green-100 text-green-800 px-2 py-1 rounded-full"
+            >
+              {{ formatDate(post.createdAt) }}
+            </span>
+            <span
+              v-if="post.category"
+              class="text-[8px] bg-red-100 text-red-800 px-2 py-1 rounded-full"
+            >
+              {{ post.category }}
+            </span>
+            <span
+              v-if="post?.createdBy?.lastName"
+              class="text-[8px] bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full"
+            >
+              {{ post?.createdBy?.lastName }}
+            </span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              class="bg-blue-500 text-white px-1 py-1 rounded-full hover:bg-blue-700 transition-colors flex items-center"
+              @click="startEdit(post)"
+            >
+              <AdminUiIcon name="edit" size="sm" />
+            </button>
+            <button
+              class="bg-red-500 text-white px-1 py-1 rounded-full hover:bg-red-700 transition-colors flex items-center"
+              @click="deletePost(post._id)"
+            >
+              <AdminUiIcon name="delete" size="sm" />
+            </button>
+          </div>
+        </div>
+      </li>
+    </ui>
 
-    <!-- Pagination - Separated from Table -->
     <div
       v-if="!error && posts.length > 0"
       class="mt-8 bg-white rounded-2xl shadow-md border border-gray-100 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
@@ -82,6 +90,18 @@
         @update:page="handlePageChange"
       />
     </div>
+    <FormBlogs
+      v-if="showCreateModal"
+      :isOpen="showCreateModal"
+      :isEditing="isEditing"
+      :form="form"
+      :submitting="submitting"
+      :error="error"
+      :editorOptions="editorOptions"
+      @close="closeModal"
+      @submit="handleFormSubmit"
+      @thumbnailChange="f => (thumbnailFile = f)"
+    />
   </div>
 </template>
 
@@ -95,6 +115,7 @@
   import ErrorCommon from '~/components/admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
   import TableBlogs from '~/pages/admin/blogs/_components/TableBlogs.vue'
+  import { format } from 'date-fns'
 
   definePageMeta({
     layout: 'admin',
@@ -180,6 +201,15 @@
     thumbnailFile = null // Reset thumbnail file when editing
     showCreateModal.value = true
   }
+  const handleClickButtonAddBlog = () => {
+    showCreateModal.value = true
+    isEditing.value = false
+    editingId.value = null
+    form.value = {
+      title: '',
+      description: '',
+    }
+  }
 
   const handleFormSubmit = async result => {
     if (!result.success) {
@@ -262,6 +292,16 @@
       },
     })
     fetchPosts()
+  }
+
+  const formatDate = dateString => {
+    if (!dateString) return 'N/A'
+    try {
+      return format(new Date(dateString), 'dd/MM/yyyy HH:mm')
+    } catch (error) {
+      console.error('Error formatting date:', error)
+      return 'N/A'
+    }
   }
 
   onMounted(() => {

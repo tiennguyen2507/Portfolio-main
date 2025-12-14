@@ -1,8 +1,6 @@
 <template>
   <div class="sm:mb-2">
-    <div
-      class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4"
-    >
+    <div class="flex sm:flex-row sm:justify-between sm:items-start gap-4">
       <div class="flex-1">
         <h1 class="text-xl sm:text-2xl font-bold">
           {{ title }}
