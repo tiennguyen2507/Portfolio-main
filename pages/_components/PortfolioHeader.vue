@@ -8,15 +8,15 @@
       <div class="flex justify-between items-center">
         <NuxtLink to="/" class="hover:opacity-80 transition-opacity">
           <div
-            class="backdrop-blur-sm rounded-2xl px-2 py-1 md:px-2 md:py-1 flex items-center gap-1"
+            class="backdrop-blur-sm px-2 py-1 md:px-2 md:py-1 flex items-center gap-1"
           >
             <img
               src="~/assets/images/logo-main.webp"
               alt="Nguyễn Lê Đình Tiên Logo"
-              class="h-6 md:h-10 w-auto rounded-xl"
+              class="h-6 md:h-10 w-auto md:rounded-[12px] rounded-[8px]"
             />
             <div class="flex flex-col">
-              <span class="text-gray-900 font-semibold text-xs md:text-base"
+              <span class="text-back-800 font-semibold text-xs md:text-base"
                 >TienNLD2</span
               >
               <span class="text-gray-700 text-[10px] md:text-sm"
