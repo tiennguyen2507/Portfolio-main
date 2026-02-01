@@ -1,7 +1,7 @@
 <template>
   <!-- Technologies Section -->
   <section
-    class="py-8 sm:py-12 md:py-16 bg-gray-800/50 relative overflow-hidden"
+    class="py-8 sm:py-12 md:py-16 bg-white dark:bg-black relative overflow-hidden transition-colors duration-300"
   >
     <!-- Background Tech Pattern -->
     <div class="absolute inset-0 opacity-5 pointer-events-none">
@@ -28,17 +28,15 @@
 
     <div class="relative z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div class="flex flex-wrap justify-center gap-8 text-gray-400 text-lg">
-          <span class="hover:text-orange-500 transition-colors">HTML</span>
-          <span class="hover:text-orange-500 transition-colors">CSS</span>
-          <span class="hover:text-orange-500 transition-colors"
-            >Javascript</span
-          >
-          <span class="hover:text-orange-500 transition-colors">Nest JS</span>
-          <span class="hover:text-orange-500 transition-colors">React</span>
-          <span class="hover:text-orange-500 transition-colors">Next</span>
-          <span class="hover:text-orange-500 transition-colors">Vue</span>
-          <span class="hover:text-orange-500 transition-colors">Nuxt</span>
+        <div class="flex flex-wrap justify-center gap-8">
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">HTML</Typography>
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">CSS</Typography>
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Javascript</Typography>
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Nest JS</Typography>
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">React</Typography>
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Next</Typography>
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Vue</Typography>
+          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Nuxt</Typography>
         </div>
       </div>
     </div>

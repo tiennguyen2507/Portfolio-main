@@ -1,6 +1,6 @@
 <template>
   <!-- About & Services Section -->
-  <section id="about" class="py-20">
+  <section id="about" class="py-20 bg-[#F2F2F7] dark:bg-[#1C1C1E] transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-2 gap-16">
         <!-- Left Side - Services -->
@@ -38,10 +38,12 @@
                   </svg>
                 </div>
                 <div>
-                  <h3 class="text-xl font-semibold text-white">
+                  <Typography as="h3" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="default">
                     {{ service.title }}
-                  </h3>
-                  <p class="text-gray-400">{{ service.description }}</p>
+                  </Typography>
+                  <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" class="mt-1">
+                    {{ service.description }}
+                  </Typography>
                 </div>
               </div>
             </div>
@@ -50,8 +52,10 @@
 
         <!-- Right Side - About Me -->
         <div class="space-y-8">
-          <h2 class="text-4xl md:text-5xl font-bold text-white">Giới thiệu</h2>
-          <p class="text-lg text-gray-300 leading-relaxed">
+          <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" class="mb-6">
+            Giới thiệu
+          </Typography>
+          <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="default" class="leading-relaxed">
             Tôi là Tiên, lập trình viên web với 6 năm kinh nghiệm. Tôi có khả
             năng làm việc cả Frontend và Backend. Ở phía giao diện, tôi thành
             thạo Vue.js và React, thường xuyên xây dựng các ứng dụng web hiện
@@ -59,7 +63,7 @@
             Node.js, NestJS để xây dựng API, xử lý dữ liệu, quản lý hệ thống và
             tích hợp với các dịch vụ khác. Tôi yêu thích tạo ra sản phẩm chất
             lượng, dễ bảo trì và tối ưu hiệu suất.
-          </p>
+          </Typography>
 
           <!-- Statistics -->
           <div class="grid grid-cols-3 gap-8 pt-8">
@@ -68,11 +72,12 @@
               :key="stat.label"
               class="text-center"
             >
-              <div class="text-3xl font-bold text-orange-500 mb-2">
-                <span>{{ stat.value }}</span>
-                <span class="text-orange-500">{{ stat.suffix }}</span>
-              </div>
-              <div class="text-gray-400">{{ stat.label }}</div>
+              <Typography as="div" :size="{sp: 'xl', pc: '2xl'}" weight="bold" color="primary" class="mb-2">
+                {{ stat.value }}{{ stat.suffix }}
+              </Typography>
+              <Typography as="div" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+                {{ stat.label }}
+              </Typography>
             </div>
           </div>
         </div>

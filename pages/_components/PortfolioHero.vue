@@ -2,7 +2,7 @@
   <!-- Hero Section -->
   <section
     id="home"
-    class="pt-24 pb-16 min-h-screen flex items-center relative overflow-hidden"
+    class="pt-24 pb-16 min-h-screen flex items-center relative overflow-hidden bg-white dark:bg-black transition-colors duration-300"
   >
     <!-- Background Technology Icons -->
     <div class="absolute inset-0 opacity-5 pointer-events-none">
@@ -59,26 +59,38 @@
       </div>
 
       <!-- Code-like Elements -->
-      <div
-        class="absolute top-1/4 left-1/2 text-gray-600 text-xs font-mono opacity-20"
+      <Typography
+        as="div"
+        :size="{sp: 'xxs', pc: 'xs'}"
+        color="tertiary"
+        class="absolute top-1/4 left-1/2 font-mono opacity-60"
       >
         &lt;div class="developer"&gt;
-      </div>
-      <div
-        class="absolute top-1/3 left-1/2 text-gray-600 text-xs font-mono opacity-20"
+      </Typography>
+      <Typography
+        as="div"
+        :size="{sp: 'xxs', pc: 'xs'}"
+        color="tertiary"
+        class="absolute top-1/3 left-1/2 font-mono opacity-60"
       >
         &lt;/div&gt;
-      </div>
-      <div
-        class="absolute bottom-1/3 right-1/4 text-gray-600 text-xs font-mono opacity-20"
+      </Typography>
+      <Typography
+        as="div"
+        :size="{sp: 'xxs', pc: 'xs'}"
+        color="tertiary"
+        class="absolute bottom-1/3 right-1/4 font-mono opacity-60"
       >
         function create() {
-      </div>
-      <div
-        class="absolute bottom-1/4 right-1/4 text-gray-600 text-xs font-mono opacity-20"
+      </Typography>
+      <Typography
+        as="div"
+        :size="{sp: 'xxs', pc: 'xs'}"
+        color="tertiary"
+        class="absolute bottom-1/4 right-1/4 font-mono opacity-60"
       >
         }
-      </div>
+      </Typography>
 
       <!-- Grid Pattern -->
       <div
@@ -193,36 +205,36 @@
         <!-- Left Side - Introduction -->
         <div class="space-y-8">
           <div class="space-y-4">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-              <span class="text-white">Hello.</span>
-              <span class="text-orange-500 ml-2">●</span>
-            </h1>
+            <Typography as="h1" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default">
+              Hello.<span class="text-orange-500 dark:text-orange-400 ml-2">●</span>
+            </Typography>
             <div class="flex items-center space-x-4">
-              <span
-                class="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white"
-                >I'm Nguyễn Lê Đình Tiên</span
-              >
-              <div class="w-8 sm:w-12 md:w-16 h-0.5 bg-orange-500"></div>
+              <Typography as="span" :size="{sp: 'lg', pc: 'xl'}" weight="normal" color="default">
+                I'm Nguyễn Lê Đình Tiên
+              </Typography>
+              <div class="w-8 sm:w-12 md:w-16 h-0.5 bg-orange-500 dark:bg-orange-400"></div>
             </div>
-            <h2
-              class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white"
-            >
+            <Typography as="h2" :size="{sp: 'xl', pc: '2xl'}" weight="bold" color="default">
               Software Developer
-            </h2>
+            </Typography>
           </div>
 
           <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <NuxtLink
               to="/blogs"
-              class="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 inline-block text-center"
+              class="bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-300 transform hover:scale-105 inline-block text-center"
             >
-              Explore my blogs
+              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="semibold" color="white">
+                Explore my blogs
+              </Typography>
             </NuxtLink>
             <NuxtLink
               to="/projects"
-              class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 text-center"
+              class="border-2 border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-center"
             >
-              My projects
+              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="semibold" color="default">
+                My projects
+              </Typography>
             </NuxtLink>
           </div>
         </div>

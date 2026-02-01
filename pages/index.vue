@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-screen bg-gray-900 text-white w-full max-w-full overflow-x-hidden"
+    class="min-h-screen bg-white dark:bg-black text-black dark:text-white w-full max-w-full overflow-x-hidden transition-colors duration-300"
   >
     <StructuredData />
     <PortfolioHero />

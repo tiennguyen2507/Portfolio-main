@@ -1,15 +1,15 @@
 <template>
   <!-- Projects Section -->
-  <section id="projects" class="py-12 sm:py-16 md:py-20 bg-gray-800/30">
+  <section id="projects" class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-8 sm:mb-12 md:mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-4">
           Dự án nổi bật
-        </h2>
-        <p class="text-lg text-gray-300 mb-4">
+        </Typography>
+        <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="muted" align="center" class="mb-4">
           Các dự án web và ứng dụng tôi đã phát triển
-        </p>
-        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
+        </Typography>
+        <div class="w-16 h-1 bg-orange-500 dark:bg-orange-400 mx-auto"></div>
       </div>
 
       <!-- Loading State -->
@@ -17,20 +17,22 @@
         <div
           class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"
         ></div>
-        <p class="text-gray-400 mt-4 text-lg">Đang tải dự án...</p>
+        <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="muted" align="center" class="mt-4">
+          Đang tải dự án...
+        </Typography>
       </div>
 
       <!-- Error State -->
       <div v-else-if="error" class="text-center py-16">
         <div
-          class="bg-gray-800/50 border border-red-500/50 rounded-lg p-8 max-w-md mx-auto"
+          class="bg-[#F2F2F7] dark:bg-[#1C1C1E] border border-red-500/50 dark:border-red-400/50 rounded-lg p-8 max-w-md mx-auto"
         >
-          <h3 class="text-lg font-semibold text-red-400 mb-2">
+          <Typography as="h3" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="error" align="center" class="mb-2">
             Không thể tải dự án
-          </h3>
-          <p class="text-gray-300 mb-4">
+          </Typography>
+          <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="default" align="center" class="mb-4">
             Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.
-          </p>
+          </Typography>
           <button
             @click="handleRefresh"
             class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
@@ -59,17 +61,21 @@
               loading="lazy"
             />
             <div class="p-4 sm:p-2 flex flex-col h-full">
-              <h3
-                class="text-xl font-semibold text-white mb-2 line-clamp-1 min-h-[1.5rem] hover:text-orange-400 transition-colors"
+              <Typography
+                as="h3"
+                :size="{sp: 'lg', pc: 'xl'}"
+                weight="semibold"
+                color="default"
+                class="mb-2 line-clamp-1 min-h-[1.5rem] hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
               >
                 {{ project.title }}
-              </h3>
+              </Typography>
               <ViewEditor
                 :content="project.description"
                 :strip-html="true"
                 :truncate="true"
                 :max-length="120"
-                custom-class="text-gray-400 mb-4 line-clamp-3 min-h-[4.5rem] flex-grow"
+                custom-class="text-gray-400 dark:text-gray-300 mb-4 line-clamp-3 min-h-[4.5rem] flex-grow"
                 variant="light"
               />
               <div class="flex flex-wrap gap-2 mt-auto">
@@ -89,11 +95,13 @@
               </div>
 
               <!-- View Details Button -->
-              <div class="mt-4 pt-3 border-t border-gray-700">
+              <div class="mt-4 pt-3 border-t border-gray-300 dark:border-gray-700">
                 <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-400">Xem chi tiết</span>
+                  <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+                    Xem chi tiết
+                  </Typography>
                   <svg
-                    class="w-4 h-4 text-orange-500"
+                    class="w-4 h-4 text-orange-500 dark:text-orange-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -117,7 +125,7 @@
           <button
             @click="goToPage(currentPage - 1)"
             :disabled="currentPage === 1 || pending"
-            class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+            class="px-4 py-2 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
           >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -126,21 +134,21 @@
                 clip-rule="evenodd"
               ></path>
             </svg>
-            <span>Trước</span>
+            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default">Trước</Typography>
           </button>
 
           <div class="flex items-center space-x-2">
-            <span class="text-gray-300 text-sm">
+            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">
               Trang {{ currentPage }} / {{ totalPages }}
-            </span>
+            </Typography>
           </div>
 
           <button
             @click="goToPage(currentPage + 1)"
             :disabled="currentPage === totalPages || pending"
-            class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+            class="px-4 py-2 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
           >
-            <span>Sau</span>
+            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default">Sau</Typography>
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fill-rule="evenodd"
@@ -155,12 +163,14 @@
       <!-- Empty State -->
       <div v-else class="text-center py-16">
         <div
-          class="bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-700"
+          class="bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-lg p-8 max-w-md mx-auto border border-gray-300 dark:border-gray-700"
         >
-          <h3 class="text-lg font-semibold text-white mb-2">
+          <Typography as="h3" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="default" align="center" class="mb-2">
             Không có dự án nào
-          </h3>
-          <p class="text-gray-400">Chưa có dự án nào được đăng</p>
+          </Typography>
+          <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center">
+            Chưa có dự án nào được đăng
+          </Typography>
         </div>
       </div>
     </div>
@@ -261,22 +271,30 @@
     min-height: 4.5rem;
   }
 
-  /* Custom scrollbar for dark theme */
+  /* Custom scrollbar - gray color */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #1f2937;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #4b5563;
+    background: #9ca3af;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: #6b7280;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: #6b7280;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
   }
 
   /* Focus states for accessibility */

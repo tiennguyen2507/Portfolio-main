@@ -15,6 +15,33 @@
     bodyAttrs: {
       class: 'antialiased',
     },
+    script: [
+      {
+        innerHTML: `
+          (function() {
+            // Đọc cookie darkMode ngay lập tức để tránh flash
+            function getCookie(name) {
+              const value = '; ' + document.cookie;
+              const parts = value.split('; ' + name + '=');
+              if (parts.length === 2) return parts.pop().split(';').shift();
+              return null;
+            }
+            
+            const darkMode = getCookie('darkMode');
+            const html = document.documentElement;
+            
+            // Mặc định là false (light mode) nếu không có cookie
+            if (darkMode === 'true') {
+              html.classList.add('dark');
+            } else {
+              // darkMode === 'false' hoặc null -> light mode
+              html.classList.remove('dark');
+            }
+          })();
+        `,
+        type: 'text/javascript',
+      },
+    ],
     link: [
       {
         rel: 'preconnect',
@@ -45,14 +72,19 @@
         /* Critical CSS - Inline for above-the-fold content */
         html { scroll-behavior: smooth; }
         body { 
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, sans-serif;
           line-height: 1.6; 
-          color: #1f2937; 
+          color: #000000; 
           background-color: #ffffff; 
           margin: 0; 
           padding: 0;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark body {
+          color: #ffffff;
+          background-color: #000000;
         }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
         header { 
@@ -131,5 +163,33 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+
+  /* Global Scrollbar Styling - iOS style gray */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #9ca3af;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
+
+  /* Dark mode scrollbar */
+  .dark ::-webkit-scrollbar-thumb {
+    background: #6b7280;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
   }
 </style>

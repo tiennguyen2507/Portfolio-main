@@ -1,10 +1,10 @@
 <template>
-  <section class="py-12 sm:py-16 md:py-20 bg-gray-800/30">
+  <section class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-center mb-8 gap-2">
-        <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-0">
+        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-0">
           Nhận xét về tôi
-        </h2>
+        </Typography>
         <button
           @click="showForm = !showForm"
           class="ml-2 flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow transition focus:outline-none focus:ring-2 focus:ring-orange-400"
@@ -47,7 +47,7 @@
       <form
         v-if="showForm"
         @submit.prevent="handleSubmit"
-        class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-start gap-3 mb-8 bg-gray-900/80 p-4 rounded-xl border border-gray-700 shadow"
+        class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-start gap-3 mb-8 bg-[#F2F2F7] dark:bg-[#1C1C1E] p-4 rounded-xl border border-gray-300 dark:border-gray-700 shadow"
       >
         <!-- Avatar selector with error -->
         <div class="flex flex-col w-full sm:w-auto">
@@ -61,7 +61,7 @@
               "
               @change="handleAvatarChange"
             />
-            <span class="text-sm text-gray-300">Ảnh đại diện</span>
+            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">Ảnh đại diện</Typography>
           </div>
           <p v-if="errors.avatar" class="mt-1 text-xs text-red-400">
             {{ errors.avatar }}
@@ -76,10 +76,10 @@
             type="text"
             placeholder="Tên"
             :class="[
-              'px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2',
+              'px-3 py-2 rounded bg-white dark:bg-[#1C1C1E] text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2',
               errors.name
-                ? 'border border-red-500 focus:ring-red-500'
-                : 'border border-gray-600 focus:ring-orange-400',
+                ? 'border border-red-500 dark:border-red-400 focus:ring-red-500'
+                : 'border border-gray-300 dark:border-gray-700 focus:ring-orange-400',
             ]"
             required
           />
@@ -99,10 +99,10 @@
             type="text"
             placeholder="Mối quan hệ"
             :class="[
-              'px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2',
+              'px-3 py-2 rounded bg-white dark:bg-[#1C1C1E] text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2',
               errors.relationship
-                ? 'border border-red-500 focus:ring-red-500'
-                : 'border border-gray-600 focus:ring-orange-400',
+                ? 'border border-red-500 dark:border-red-400 focus:ring-red-500'
+                : 'border border-gray-300 dark:border-gray-700 focus:ring-orange-400',
             ]"
             required
           />
@@ -121,10 +121,10 @@
             @input="validateField('comment')"
             placeholder="Nhận xét (ít nhất 20 ký tự)"
             :class="[
-              'px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 resize-y h-11 overflow-y-auto',
+              'px-3 py-2 rounded bg-white dark:bg-[#1C1C1E] text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 resize-y h-11 overflow-y-auto',
               errors.comment
-                ? 'border border-red-500 focus:ring-red-500'
-                : 'border border-gray-600 focus:ring-orange-400',
+                ? 'border border-red-500 dark:border-red-400 focus:ring-red-500'
+                : 'border border-gray-300 dark:border-gray-700 focus:ring-orange-400',
             ]"
             required
           ></textarea>
@@ -147,7 +147,7 @@
           <div
             v-for="n in limit"
             :key="n"
-            class="bg-gray-900/80 rounded-xl p-6 border border-gray-700"
+            class="bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-xl p-6 border border-gray-300 dark:border-gray-700"
           >
             <div class="flex items-center mb-4">
               <div
@@ -173,36 +173,41 @@
       <div v-else>
         <div
           v-if="comments.length === 0"
-          class="text-center text-gray-400 py-8"
+          class="text-center py-8"
         >
-          Chưa có nhận xét nào.
+          <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center">
+            Chưa có nhận xét nào.
+          </Typography>
         </div>
         <div v-else>
           <div class="grid gap-6 md:grid-cols-2">
             <div
               v-for="comment in commentsList"
               :key="comment._id"
-              class="bg-gray-900/80 rounded-xl p-6 flex flex-col shadow-lg border border-gray-700 hover:shadow-xl transition-shadow"
+              class="bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-xl p-6 flex flex-col shadow-lg border border-gray-300 dark:border-gray-700 hover:shadow-xl transition-shadow"
             >
               <div class="flex items-center mb-4">
                 <Avatar :src="comment.avatar" :readOnly="true" :size="56" />
                 <div class="ml-4 flex-1 min-w-0">
-                  <div class="text-lg font-semibold text-white line-clamp-1">
+                  <Typography as="div" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="default" class="line-clamp-1">
                     {{ comment.name }}
-                  </div>
-                  <div class="text-sm text-orange-400 line-clamp-1">
+                  </Typography>
+                  <Typography as="div" :size="{sp: 'xs', pc: 'sm'}" color="primary" class="line-clamp-1">
                     {{ comment.relationship }}
-                  </div>
+                  </Typography>
                 </div>
               </div>
-              <div
-                class="text-gray-200 text-base mb-3 italic break-words break-all line-clamp-2"
+              <Typography
+                as="div"
+                :size="{sp: 'sm', pc: 'md'}"
+                color="default"
+                class="mb-3 italic break-words break-all line-clamp-2"
               >
                 "{{ comment.comment }}"
-              </div>
-              <div class="text-xs text-gray-500 mt-auto text-right">
+              </Typography>
+              <Typography as="div" :size="{sp: 'xxs', pc: 'xs'}" color="tertiary" align="right" class="mt-auto">
                 {{ formatDate(comment.createdAt) }}
-              </div>
+              </Typography>
             </div>
           </div>
 
@@ -214,19 +219,23 @@
             <button
               @click="prevPage"
               :disabled="pagination.page === 1 || loading"
-              class="px-4 py-2 rounded bg-gray-700 text-white font-medium hover:bg-orange-500 disabled:opacity-50 transition"
+              class="px-4 py-2 rounded bg-[#F2F2F7] dark:bg-[#1C1C1E] hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 transition"
             >
-              Trước
+              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="medium" color="default">
+                Trước
+              </Typography>
             </button>
-            <span class="text-gray-300 text-sm">
+            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">
               Trang {{ pagination.page }} / {{ totalPages }}
-            </span>
+            </Typography>
             <button
               @click="nextPage"
               :disabled="!pagination.nextPage || loading"
-              class="px-4 py-2 rounded bg-gray-700 text-white font-medium hover:bg-orange-500 disabled:opacity-50 transition"
+              class="px-4 py-2 rounded bg-[#F2F2F7] dark:bg-[#1C1C1E] hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 transition"
             >
-              Sau
+              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="medium" color="default">
+                Sau
+              </Typography>
             </button>
           </div>
         </div>

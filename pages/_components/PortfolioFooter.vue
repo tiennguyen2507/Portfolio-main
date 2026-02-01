@@ -1,10 +1,10 @@
 <template>
   <!-- Footer -->
-  <footer class="py-6 sm:py-8 border-t border-gray-800">
+  <footer class="py-6 sm:py-8 border-t border-gray-300 dark:border-gray-700 bg-white dark:bg-black transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-      <p class="text-gray-400">
+      <Typography as="p" size="sm" color="muted">
         &copy; 2025 Nguyễn Lê Đình Tiên. All rights reserved.
-      </p>
+      </Typography>
     </div>
   </footer>
 </template>

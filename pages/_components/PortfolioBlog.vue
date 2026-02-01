@@ -1,15 +1,15 @@
 <template>
   <!-- Blog Section -->
-  <section id="blogs" class="py-12 sm:py-16 md:py-20 bg-gray-800/30">
+  <section id="blogs" class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-8 sm:mb-12 md:mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-4">
           Blog & Tin tức
-        </h2>
-        <p class="text-lg text-gray-300 mb-4">
+        </Typography>
+        <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="muted" align="center" class="mb-4">
           Những bài viết mới nhất về công nghệ và phát triển web
-        </p>
-        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
+        </Typography>
+        <div class="w-16 h-1 bg-orange-500 dark:bg-orange-400 mx-auto"></div>
       </div>
 
       <!-- Loading State -->
@@ -17,12 +17,16 @@
         <div
           class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"
         ></div>
-        <p class="text-gray-400 mt-4">Đang tải bài viết...</p>
+        <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center" class="mt-4">
+          Đang tải bài viết...
+        </Typography>
       </div>
 
       <!-- Error State -->
       <div v-else-if="error" class="text-center py-12">
-        <p class="text-red-400 mb-4">Không thể tải bài viết</p>
+        <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="error" align="center" class="mb-4">
+          Không thể tải bài viết
+        </Typography>
         <button
           @click="handleRefresh"
           class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
@@ -62,18 +66,22 @@
             </div>
 
             <div>
-              <h3
-                class="text-xl font-semibold text-white mb-3 line-clamp-2 group-hover:text-orange-400 transition-colors h-[56px] overflow-hidden"
+              <Typography
+                as="h3"
+                :size="{sp: 'lg', pc: 'xl'}"
+                weight="semibold"
+                color="default"
+                class="mb-3 line-clamp-2 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors h-[56px] overflow-hidden"
               >
                 {{ post.title }}
-              </h3>
+              </Typography>
 
               <ViewEditor
                 :content="post.description"
                 :strip-html="true"
                 :truncate="true"
                 :max-length="120"
-                custom-class="text-gray-400 mb-4 line-clamp-3 text-sm h-[60px] overflow-hidden"
+                custom-class="text-gray-400 dark:text-gray-300 mb-4 line-clamp-3 text-sm h-[60px] overflow-hidden"
                 variant="light"
               />
 
@@ -85,17 +93,21 @@
                     :alt="`${post.createdBy.firstName} ${post.createdBy.lastName}`"
                     class="w-8 h-8 rounded-full object-cover"
                   />
-                  <div class="text-sm text-gray-400">
+                  <Typography as="div" :size="{sp: 'xs', pc: 'sm'}" color="muted">
                     {{ post.createdBy?.firstName }}
                     {{ post.createdBy?.lastName }}
-                  </div>
+                  </Typography>
                 </div>
 
-                <span
-                  class="text-orange-500 hover:text-orange-400 transition-colors text-sm font-medium"
+                <Typography
+                  as="span"
+                  :size="{sp: 'xs', pc: 'sm'}"
+                  weight="medium"
+                  color="primary"
+                  class="hover:text-orange-600 dark:hover:text-orange-300 transition-colors"
                 >
                   Đọc thêm →
-                </span>
+                </Typography>
               </div>
             </div>
           </Card>
@@ -128,7 +140,9 @@
 
       <!-- Empty State -->
       <div v-else-if="!allPosts.length" class="text-center py-12">
-        <p class="text-gray-400">Chưa có bài viết nào</p>
+        <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center">
+          Chưa có bài viết nào
+        </Typography>
       </div>
     </div>
   </section>

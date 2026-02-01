@@ -1,15 +1,15 @@
 <template>
-  <section id="shop" class="py-20 bg-gray-800">
+  <section id="shop" class="py-20 bg-[#F2F2F7] dark:bg-[#1C1C1E] transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-6">
       <!-- Section Header -->
       <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-white mb-4">
+        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-4">
           Tiệm Đồ Quê Tiên Hạnh
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        </Typography>
+        <Typography as="p" :size="{sp: 'lg', pc: 'xl'}" color="muted" align="center" class="max-w-3xl mx-auto">
           Khám phá hương vị mộc mạc của đồ quê với khoai lang, sắn, trứng gà ta,
           đậu phộng rang và các món bánh quê truyền thống
-        </p>
+        </Typography>
       </div>
 
       <!-- Shop Content -->
@@ -38,16 +38,16 @@
 
         <!-- Right: Content -->
         <div class="space-y-6">
-          <h3 class="text-2xl font-bold text-white">
+          <Typography as="h3" :size="{sp: 'xl', pc: '2xl'}" weight="bold" color="default">
             Hương Vị Quê Nhà, Ấm Áp Từng Món
-          </h3>
+          </Typography>
 
-          <p class="text-gray-300 leading-relaxed">
+          <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="default" class="leading-relaxed">
             Tiệm đồ quê Tiên Hạnh chuyên cung cấp các món ăn sáng và đặc sản
             vùng quê như khoai lang, sắn, trứng gà ta, đậu phộng rang và các
             loại bánh quê truyền thống. Đảm bảo sạch, ngon, mộc mạc và giao hàng
             nhanh trong ngày.
-          </p>
+          </Typography>
 
           <!-- Features -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -67,11 +67,11 @@
                   ></path>
                 </svg>
               </div>
-              <span class="text-gray-300">Nguyên liệu sạch</span>
+              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">Nguyên liệu sạch</Typography>
             </div>
             <div class="flex items-center gap-3">
               <div
-                class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center"
+                class="w-8 h-8 bg-orange-500 dark:bg-orange-600 rounded-full flex items-center justify-center"
               >
                 <svg
                   class="w-4 h-4 text-white"
@@ -85,11 +85,11 @@
                   ></path>
                 </svg>
               </div>
-              <span class="text-gray-300">Giao hàng nhanh</span>
+              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">Giao hàng nhanh</Typography>
             </div>
             <div class="flex items-center gap-3">
               <div
-                class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center"
+                class="w-8 h-8 bg-orange-500 dark:bg-orange-600 rounded-full flex items-center justify-center"
               >
                 <svg
                   class="w-4 h-4 text-white"
@@ -103,11 +103,11 @@
                   ></path>
                 </svg>
               </div>
-              <span class="text-gray-300">Giá bình dân</span>
+              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">Giá bình dân</Typography>
             </div>
             <div class="flex items-center gap-3">
               <div
-                class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center"
+                class="w-8 h-8 bg-orange-500 dark:bg-orange-600 rounded-full flex items-center justify-center"
               >
                 <svg
                   class="w-4 h-4 text-white"
@@ -121,7 +121,7 @@
                   ></path>
                 </svg>
               </div>
-              <span class="text-gray-300">Chế biến thủ công</span>
+              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">Chế biến thủ công</Typography>
             </div>
           </div>
 
@@ -158,14 +158,14 @@
 
       <!-- Products Preview -->
       <div class="mt-16">
-        <h3 class="text-2xl font-bold text-white text-center mb-8">
+        <Typography as="h3" :size="{sp: 'xl', pc: '2xl'}" weight="bold" color="default" align="center" class="mb-8">
           Món Nổi Bật
-        </h3>
+        </Typography>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div
             v-for="product in featuredProducts"
             :key="product.id"
-            class="bg-gray-700 rounded-xl overflow-hidden hover:bg-gray-600 transition-colors"
+            class="bg-white dark:bg-[#1C1C1E] rounded-xl overflow-hidden hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-700"
           >
             <Image
               :src="product.thumbnail"
@@ -174,12 +174,12 @@
               loading="lazy"
             />
             <div class="p-4">
-              <h4 class="text-white font-semibold text-sm mb-1 truncate">
+              <Typography as="h4" :size="{sp: 'xs', pc: 'sm'}" weight="semibold" color="default" class="mb-1 truncate">
                 {{ product.title }}
-              </h4>
-              <p class="text-orange-400 font-bold text-sm">
+              </Typography>
+              <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" weight="bold" color="primary">
                 {{ formatPrice(product.price) }}
-              </p>
+              </Typography>
             </div>
           </div>
         </div>
