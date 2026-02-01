@@ -87,18 +87,12 @@
               <meta itemprop="position" content="1" />
             </li>
             <li>
-              <svg
-                class="w-4 h-4"
-                fill="currentColor"
+              <Icon
+                name="chevron-right-filled"
+                size="sm"
                 viewBox="0 0 20 20"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+                color="text-gray-500 dark:text-gray-400"
+              />
             </li>
             <li
               itemprop="itemListElement"
@@ -122,18 +116,12 @@
               <meta itemprop="position" content="2" />
             </li>
             <li>
-              <svg
-                class="w-4 h-4"
-                fill="currentColor"
+              <Icon
+                name="chevron-right-filled"
+                size="sm"
                 viewBox="0 0 20 20"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+                color="text-gray-500 dark:text-gray-400"
+              />
             </li>
             <li
               class="truncate max-w-xs"
@@ -319,54 +307,67 @@
             </div>
 
             <!-- Loading State for Recommended -->
-            <div v-if="recommendedPending" class="grid grid-cols-3 gap-6">
+            <div v-if="recommendedPending" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               <div v-for="i in 6" :key="i" class="animate-pulse">
-                <div class="flex gap-4">
-                  <!-- Left Content Skeleton -->
-                  <div class="flex-1">
-                    <div class="flex items-center justify-between mb-3">
-                      <div class="bg-gray-200 dark:bg-gray-700 h-6 w-20 rounded"></div>
-                      <div class="bg-gray-200 dark:bg-gray-700 h-4 w-16 rounded"></div>
-                    </div>
-                    <div class="space-y-2 mb-3">
-                      <div class="bg-gray-200 dark:bg-gray-700 h-4 rounded w-full"></div>
-                      <div class="bg-gray-200 dark:bg-gray-700 h-4 rounded w-3/4"></div>
-                      <div class="bg-gray-200 dark:bg-gray-700 h-4 rounded w-1/2"></div>
-                    </div>
-                    <div class="bg-gray-200 dark:bg-gray-700 h-3 rounded w-2/3"></div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                  <!-- Image Skeleton -->
+                  <div class="flex-shrink-0 w-full sm:w-24 sm:order-2">
+                    <div class="bg-gray-200 dark:bg-gray-700 w-full h-32 sm:h-24 rounded-lg"></div>
                   </div>
-                  <!-- Right Image Skeleton -->
-                  <div class="flex-shrink-0">
-                    <div class="bg-gray-200 dark:bg-gray-700 w-24 h-24 rounded-lg"></div>
+                  <!-- Content Skeleton -->
+                  <div class="flex-1 sm:order-1">
+                    <div class="flex items-center justify-between mb-2 sm:mb-3 gap-1 sm:gap-2">
+                      <div class="bg-gray-200 dark:bg-gray-700 h-4 sm:h-6 w-16 sm:w-20 rounded"></div>
+                      <div class="bg-gray-200 dark:bg-gray-700 h-3 sm:h-4 w-12 sm:w-16 rounded"></div>
+                    </div>
+                    <div class="space-y-1.5 sm:space-y-2 mb-2 sm:mb-3">
+                      <div class="bg-gray-200 dark:bg-gray-700 h-3 sm:h-4 rounded w-full"></div>
+                      <div class="bg-gray-200 dark:bg-gray-700 h-3 sm:h-4 rounded w-3/4"></div>
+                    </div>
+                    <div class="bg-gray-200 dark:bg-gray-700 h-2.5 sm:h-3 rounded w-2/3"></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Recommended Articles Grid - 3 columns with horizontal layout per article -->
+            <!-- Recommended Articles Grid - Responsive columns with horizontal layout per article -->
             <div
               v-else-if="recommendedPosts.length"
-              class="grid grid-cols-3 gap-6"
+              class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
             >
               <article
                 v-for="post in recommendedPosts"
                 :key="post._id"
-                class="group cursor-pointer border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-600 transition-colors bg-white dark:bg-gray-800/30"
+                class="group cursor-pointer border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 hover:border-gray-300 dark:hover:border-gray-600 transition-colors bg-white dark:bg-gray-800/30"
                 itemscope
                 itemtype="https://schema.org/BlogPosting"
               >
                 <NuxtLink :to="`/blogs/${post._id}`" class="block h-full">
-                  <div class="flex gap-4">
-                    <!-- Left Content -->
-                    <div class="flex-1">
+                  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                    <!-- Image - Show on top for mobile -->
+                    <div class="flex-shrink-0 w-full sm:w-24 sm:order-2">
+                      <div
+                        class="relative overflow-hidden rounded-lg w-full h-32 sm:h-24"
+                      >
+                        <img
+                          :src="post.thumbnail"
+                          :alt="post.title"
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex-1 min-w-0 sm:order-1">
                       <!-- Source Tag and Time -->
-                      <div class="flex items-center justify-between mb-3">
+                      <div class="flex items-center justify-between mb-2 sm:mb-3 flex-wrap gap-1 sm:gap-2">
                         <Typography
                           as="span"
                           size="xs"
                           weight="medium"
                           color="muted"
-                          class="bg-white dark:bg-gray-800 px-2 py-1 rounded border border-gray-200 dark:border-gray-700"
+                          class="bg-white dark:bg-gray-800 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-gray-200 dark:border-gray-700 whitespace-nowrap text-[10px] sm:text-xs"
                         >
                           {{ post.createdBy?.firstName || 'Blog' }} News
                         </Typography>
@@ -374,8 +375,9 @@
                           as="span"
                           size="xs"
                           color="tertiary"
+                          class="whitespace-nowrap text-[10px] sm:text-xs"
                         >
-                          4 hours ago
+                          4h ago
                         </Typography>
                       </div>
 
@@ -385,7 +387,7 @@
                         size="sm"
                         weight="semibold"
                         color="default"
-                        class="mb-3 line-clamp-3 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors"
+                        class="mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors text-xs sm:text-sm"
                         itemprop="headline"
                       >
                         {{ post.title }}
@@ -396,25 +398,11 @@
                         as="p"
                         size="xs"
                         color="muted"
+                        class="line-clamp-1 text-[10px] sm:text-xs"
                       >
                         by {{ post.createdBy?.firstName || 'Author' }} |
-                        {{ calculateReadingTime(post.description) }} min |
-                        {{ formatDate(post.createdAt) }}
+                        {{ calculateReadingTime(post.description) }} min
                       </Typography>
-                    </div>
-
-                    <!-- Right Image -->
-                    <div class="flex-shrink-0">
-                      <div
-                        class="relative overflow-hidden rounded-lg w-24 h-24"
-                      >
-                        <img
-                          :src="post.thumbnail"
-                          :alt="post.title"
-                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                      </div>
                     </div>
                   </div>
                 </NuxtLink>
@@ -467,20 +455,11 @@
                 class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 aria-label="Xem tất cả bài viết"
               >
-                <svg
-                  class="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-                  ></path>
-                </svg>
+                <Icon
+                  name="blogs"
+                  size="sm"
+                  icon-class="mr-2"
+                />
                 <Typography
                   as="span"
                   size="sm"
@@ -494,20 +473,11 @@
                 class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 aria-label="Về trang chủ"
               >
-                <svg
-                  class="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  ></path>
-                </svg>
+                <Icon
+                  name="home"
+                  size="sm"
+                  icon-class="mr-2"
+                />
                 <Typography
                   as="span"
                   size="sm"
@@ -947,33 +917,24 @@
   // Fetch recommended posts
   const fetchRecommendedPosts = async () => {
     try {
-      console.log('Starting to fetch recommended posts...')
       recommendedPending.value = true
       // Lấy nhiều hơn để đảm bảo có đủ 6 bài sau khi filter
       const response = await httpRequest.get('/posts?limit=10&page=1')
 
-      console.log('API Response:', response)
-
       if (response && response.data && Array.isArray(response.data)) {
-        console.log('Total posts from API:', response.data.length)
-
         // Filter out current post and get 6 recommended posts
         const filteredPosts = response.data
           .filter(post => post._id !== blogId.value)
           .slice(0, 6)
 
-        console.log('Filtered posts (excluding current):', filteredPosts.length)
-        console.log('Current blogId:', blogId.value)
         recommendedPosts.value = filteredPosts
       } else {
-        console.log('Invalid response format:', response)
         recommendedPosts.value = []
       }
     } catch (err) {
       console.error('Error fetching recommended posts:', err)
       recommendedPosts.value = []
     } finally {
-      console.log('Setting recommendedPending to false')
       recommendedPending.value = false
     }
   }
@@ -982,9 +943,7 @@
   watch(
     blogData,
     newBlogData => {
-      console.log('blogData changed:', newBlogData)
       if (newBlogData) {
-        console.log('Calling fetchRecommendedPosts from blogData watch')
         fetchRecommendedPosts()
       }
     },
@@ -993,22 +952,18 @@
 
   // Handle route changes for SPA navigation
   watch(blogId, async newId => {
-    console.log('blogId changed:', newId)
     if (newId) {
       // Refresh data when route changes
       await refresh()
       // Also fetch recommended posts for new blog
-      console.log('Calling fetchRecommendedPosts from blogId watch')
       fetchRecommendedPosts()
     }
   })
 
   // Fallback: fetch recommended posts after a short delay if not already fetched
   onMounted(() => {
-    console.log('Component mounted, blogId:', blogId.value)
     setTimeout(() => {
       if (recommendedPosts.value.length === 0 && !recommendedPending.value) {
-        console.log('Fallback: fetching recommended posts')
         fetchRecommendedPosts()
       }
     }, 1000)

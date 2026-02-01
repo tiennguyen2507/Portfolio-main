@@ -1,9 +1,9 @@
 <template>
   <svg
     :viewBox="viewBox"
-    fill="none"
-    :stroke-width="strokeWidth"
-    stroke="currentColor"
+    :fill="useFill ? 'currentColor' : 'none'"
+    :stroke-width="useFill ? 0 : strokeWidth"
+    :stroke="useFill ? 'none' : 'currentColor'"
     :class="['inline-block align-middle', sizeClass, colorClass, iconClass]"
     :style="styleObject"
     aria-hidden="true"
@@ -12,8 +12,9 @@
       v-for="icon in iconPaths"
       :key="icon.name"
       v-show="name === icon.name"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      :stroke-linecap="useFill ? undefined : 'round'"
+      :stroke-linejoin="useFill ? undefined : 'round'"
+      :fill="useFill ? 'currentColor' : undefined"
       :d="icon.path"
     />
   </svg>
@@ -28,6 +29,10 @@
     viewBox: { type: String, default: '0 0 24 24' },
     iconClass: { type: [String, Array, Object], default: '' },
   })
+
+  // Icons that use fill instead of stroke
+  const fillIcons = ['chevron-right-filled']
+  const useFill = computed(() => fillIcons.includes(props.name))
 
   // Mảng chứa tất cả icon paths
   const iconPaths = [
@@ -136,6 +141,10 @@
       path: 'M9 5l7 7-7 7',
     },
     {
+      name: 'chevron-right-filled',
+      path: 'M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z',
+    },
+    {
       name: 'chevron-up',
       path: 'M5 15l7-7 7 7',
     },
@@ -147,6 +156,34 @@
       name: 'arrow-right',
       path: 'M14 5l7 7m0 0l-7 7m7-7H3',
     },
+    {
+      name: 'facebook',
+      path: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z',
+    },
+    {
+      name: 'linkedin',
+      path: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z',
+    },
+    {
+      name: 'twitter',
+      path: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z',
+    },
+    {
+      name: 'code',
+      path: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+    },
+    {
+      name: 'mobile',
+      path: 'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z',
+    },
+    {
+      name: 'database',
+      path: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
+    },
+    {
+      name: 'book',
+      path: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+    },
   ]
 
   const sizeClass = computed(() => {
@@ -156,11 +193,19 @@
   })
 
   const colorClass = computed(() => {
-    return props.color &&
+    // Nếu có prop color và là Tailwind class, dùng nó
+    if (
+      props.color &&
       !props.color.startsWith('#') &&
       !props.color.startsWith('rgb')
-      ? props.color
-      : ''
+    ) {
+      return props.color
+    }
+    // Nếu không có color prop, dùng default color với dark mode support
+    if (!props.color) {
+      return 'text-gray-600 dark:text-gray-400'
+    }
+    return ''
   })
 
   const styleObject = computed(() => {

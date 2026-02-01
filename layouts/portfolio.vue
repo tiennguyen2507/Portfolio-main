@@ -9,11 +9,11 @@
     </main>
 
     <!-- Footer -->
-    <PortfolioFooter />
+    <Footer />
   </div>
 </template>
 
 <script setup>
   import PortfolioHeader from '~/pages/_components/PortfolioHeader.vue'
-  import PortfolioFooter from '~/pages/_components/PortfolioFooter.vue'
+  // Footer component is auto-imported from components/common/Footer
 </script>
