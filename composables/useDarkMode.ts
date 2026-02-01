@@ -7,7 +7,7 @@
  */
 export const useDarkMode = () => {
   // Sử dụng custom useCookie để lưu dark mode
-  const darkModeCookie = useCookie('darkMode', {
+  const darkModeCookie = useCustomCookie('darkMode', {
     default: () => 'false', // Mặc định là false (light mode)
     maxAge: 60 * 60 * 24 * 365, // 1 năm
     sameSite: 'lax',

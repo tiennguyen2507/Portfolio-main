@@ -37,7 +37,7 @@
       type: [String, Object],
       default: 'md',
       validator: value => {
-        const validSizes = ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
+        const validSizes = ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl']
         // Nếu là string, validate như cũ
         if (typeof value === 'string') {
           return validSizes.includes(value)
@@ -116,6 +116,9 @@
       xl: 'text-xl',
       '2xl': 'text-2xl',
       '3xl': 'text-3xl',
+      '4xl': 'text-4xl',
+      '5xl': 'text-5xl',
+      '6xl': 'text-6xl',
     }
 
     const weightClasses = {

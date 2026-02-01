@@ -165,31 +165,47 @@
     }
   }
 
-  /* Global Scrollbar Styling - iOS style gray */
+  /* Global Scrollbar Styling - Responsive to dark mode */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
+  /* Light mode scrollbar */
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #f3f4f6; /* gray-100 */
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #9ca3af;
+    background: #9ca3af; /* gray-400 */
     border-radius: 4px;
+    transition: background-color 0.2s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #6b7280;
+    background: #6b7280; /* gray-500 */
   }
 
   /* Dark mode scrollbar */
+  .dark ::-webkit-scrollbar-track {
+    background: #1f2937; /* gray-800 */
+  }
+
   .dark ::-webkit-scrollbar-thumb {
-    background: #6b7280;
+    background: #4b5563; /* gray-600 */
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
+    background: #6b7280; /* gray-500 */
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #9ca3af #f3f4f6;
+  }
+
+  .dark * {
+    scrollbar-color: #4b5563 #1f2937;
   }
 </style>

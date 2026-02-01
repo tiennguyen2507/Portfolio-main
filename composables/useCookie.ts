@@ -1,8 +1,9 @@
 /**
  * Composable để quản lý cookie đơn giản
  * Sử dụng document.cookie trực tiếp, không phụ thuộc vào Nuxt
+ * Renamed từ useCookie để tránh conflict với Nuxt's built-in useCookie
  */
-export const useCookie = <T = string>(
+export const useCustomCookie = <T = string>(
   name: string,
   options?: {
     default?: () => T

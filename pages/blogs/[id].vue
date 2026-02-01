@@ -1,13 +1,23 @@
 <template>
   <div>
-    <div class="min-h-screen mt-2 bg-white">
+    <!-- Blog Header -->
+    <Header />
+    
+    <div class="min-h-screen pt-20 bg-white dark:bg-gray-900 transition-colors duration-300">
       <!-- Loading State -->
       <div v-if="pending" class="flex items-center justify-center min-h-screen">
         <div class="text-center">
           <div
-            class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"
+            class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 dark:border-orange-400"
           ></div>
-          <p class="mt-4 text-gray-600">Đang tải bài viết...</p>
+          <Typography
+            as="p"
+            color="muted"
+            align="center"
+            class="mt-4"
+          >
+            Đang tải bài viết...
+          </Typography>
         </div>
       </div>
 
@@ -17,9 +27,15 @@
         class="flex items-center justify-center min-h-screen"
       >
         <div class="text-center">
-          <p class="text-red-600 mb-4 text-lg">
+          <Typography
+            as="p"
+            size="lg"
+            color="error"
+            align="center"
+            class="mb-4"
+          >
             {{ fetchError.message || 'Đã xảy ra lỗi' }}
-          </p>
+          </Typography>
           <button
             @click="refresh"
             class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
@@ -28,7 +44,7 @@
           </button>
           <NuxtLink
             to="/blogs"
-            class="block mt-4 text-orange-500 hover:text-orange-600 transition-colors"
+            class="block mt-4 text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 transition-colors"
           >
             ← Về danh sách bài viết
           </NuxtLink>
@@ -45,7 +61,7 @@
         <!-- Enhanced Breadcrumbs with Schema -->
         <nav class="mb-8" aria-label="Breadcrumb">
           <ol
-            class="flex items-center space-x-2 text-sm text-gray-500"
+            class="flex items-center space-x-2 text-sm"
             itemscope
             itemtype="https://schema.org/BreadcrumbList"
           >
@@ -56,10 +72,17 @@
             >
               <NuxtLink
                 to="/"
-                class="hover:text-orange-500 transition-colors"
+                class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 itemprop="item"
               >
-                <span itemprop="name">Trang chủ</span>
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  itemprop="name"
+                >
+                  Trang chủ
+                </Typography>
               </NuxtLink>
               <meta itemprop="position" content="1" />
             </li>
@@ -84,10 +107,17 @@
             >
               <NuxtLink
                 to="/blogs"
-                class="hover:text-orange-500 transition-colors"
+                class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
                 itemprop="item"
               >
-                <span itemprop="name">Blog</span>
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  itemprop="name"
+                >
+                  Blog
+                </Typography>
               </NuxtLink>
               <meta itemprop="position" content="2" />
             </li>
@@ -106,42 +136,74 @@
               </svg>
             </li>
             <li
-              class="text-gray-900 font-medium truncate max-w-xs"
+              class="truncate max-w-xs"
               itemprop="itemListElement"
               itemscope
               itemtype="https://schema.org/ListItem"
             >
-              <span itemprop="name">{{ blogData.title }}</span>
+              <Typography
+                as="span"
+                size="sm"
+                weight="medium"
+                color="default"
+                itemprop="name"
+              >
+                {{ blogData.title }}
+              </Typography>
               <meta itemprop="position" content="3" />
             </li>
           </ol>
         </nav>
 
         <!-- Blog Content - Seamless Layout -->
-        <div class="bg-white">
+        <div class="bg-white dark:bg-gray-900 transition-colors duration-300">
           <!-- Enhanced Title with better typography -->
           <header>
-            <h1
-              class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
+            <Typography
+              as="h1"
+              :size="{sp: '4xl', pc: '5xl'}"
+              weight="bold"
+              color="default"
+              class="mb-6 leading-tight"
               itemprop="headline"
             >
               {{ blogData.title }}
-            </h1>
+            </Typography>
 
             <!-- Enhanced Meta Info with better accessibility -->
-            <div class="flex flex-wrap items-center gap-6 mb-8 text-sm">
+            <div class="flex flex-wrap items-center gap-6 mb-8">
               <div class="flex items-center">
-                <span class="text-gray-500 mr-2">Ngày đăng:</span>
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  class="mr-2"
+                >
+                  Ngày đăng:
+                </Typography>
                 <time
                   :datetime="formatDateISO(blogData.createdAt)"
-                  class="text-gray-900 font-medium"
                   itemprop="datePublished"
                 >
-                  {{ formatDate(blogData.createdAt) }}
+                  <Typography
+                    as="span"
+                    size="sm"
+                    weight="medium"
+                    color="default"
+                  >
+                    {{ formatDate(blogData.createdAt) }}
+                  </Typography>
                 </time>
               </div>
               <div class="flex items-center">
-                <span class="text-gray-500 mr-2">Tác giả:</span>
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  class="mr-2"
+                >
+                  Tác giả:
+                </Typography>
                 <img
                   :src="blogData.createdBy.avatar"
                   :alt="`Avatar của ${blogData.createdBy.firstName} ${blogData.createdBy.lastName}`"
@@ -150,32 +212,62 @@
                   loading="lazy"
                 />
                 <span
-                  class="text-gray-900 font-medium"
                   itemprop="author"
                   itemscope
                   itemtype="https://schema.org/Person"
                 >
-                  <span itemprop="name"
-                    >{{ blogData.createdBy.firstName }}
-                    {{ blogData.createdBy.lastName }}</span
+                  <Typography
+                    as="span"
+                    size="sm"
+                    weight="medium"
+                    color="default"
+                    itemprop="name"
                   >
+                    {{ blogData.createdBy.firstName }}
+                    {{ blogData.createdBy.lastName }}
+                  </Typography>
                 </span>
               </div>
               <div class="flex items-center">
-                <span class="text-gray-500 mr-2">Trạng thái:</span>
-                <span
-                  :class="blogData.status ? 'bg-green-500' : 'bg-gray-500'"
-                  class="text-white px-2 py-1 rounded text-xs font-medium"
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  class="mr-2"
+                >
+                  Trạng thái:
+                </Typography>
+                <Typography
+                  as="span"
+                  size="xs"
+                  weight="medium"
+                  color="white"
+                  :class="[
+                    'px-2 py-1 rounded',
+                    blogData.status ? 'bg-green-500 dark:bg-green-600' : 'bg-gray-500 dark:bg-gray-600',
+                  ]"
                 >
                   {{ blogData.status ? 'Hoạt động' : 'Không hoạt động' }}
-                </span>
+                </Typography>
               </div>
               <!-- Reading time estimate -->
               <div class="flex items-center">
-                <span class="text-gray-500 mr-2">Thời gian đọc:</span>
-                <span class="text-gray-900 font-medium"
-                  >{{ calculateReadingTime(blogData.description) }} phút</span
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="muted"
+                  class="mr-2"
                 >
+                  Thời gian đọc:
+                </Typography>
+                <Typography
+                  as="span"
+                  size="sm"
+                  weight="medium"
+                  color="default"
+                >
+                  {{ calculateReadingTime(blogData.description) }} phút
+                </Typography>
               </div>
             </div>
           </header>
@@ -192,9 +284,15 @@
               decoding="async"
             />
             <figcaption
-              class="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm"
+              class="absolute bottom-4 left-4 bg-black bg-opacity-75 dark:bg-black dark:bg-opacity-80 px-3 py-1 rounded"
             >
-              Hình ảnh chính: {{ blogData.title }}
+              <Typography
+                as="span"
+                size="sm"
+                color="white"
+              >
+                Hình ảnh chính: {{ blogData.title }}
+              </Typography>
             </figcaption>
           </figure>
 
@@ -202,12 +300,19 @@
           <ViewEditor :content="blogData.description" itemprop="articleBody" />
 
           <!-- Recommended Articles Section -->
-          <section class="mt-16 pt-8 border-t border-gray-200">
+          <section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
             <div class="flex items-center justify-between mb-8">
-              <h2 class="text-2xl font-bold text-gray-900">Recommended</h2>
+              <Typography
+                as="h2"
+                size="2xl"
+                weight="bold"
+                color="default"
+              >
+                Recommended
+              </Typography>
               <NuxtLink
                 to="/blogs"
-                class="text-orange-500 hover:text-orange-600 font-medium transition-colors"
+                class="text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 font-medium transition-colors"
               >
                 See all >
               </NuxtLink>
@@ -220,19 +325,19 @@
                   <!-- Left Content Skeleton -->
                   <div class="flex-1">
                     <div class="flex items-center justify-between mb-3">
-                      <div class="bg-gray-200 h-6 w-20 rounded"></div>
-                      <div class="bg-gray-200 h-4 w-16 rounded"></div>
+                      <div class="bg-gray-200 dark:bg-gray-700 h-6 w-20 rounded"></div>
+                      <div class="bg-gray-200 dark:bg-gray-700 h-4 w-16 rounded"></div>
                     </div>
                     <div class="space-y-2 mb-3">
-                      <div class="bg-gray-200 h-4 rounded w-full"></div>
-                      <div class="bg-gray-200 h-4 rounded w-3/4"></div>
-                      <div class="bg-gray-200 h-4 rounded w-1/2"></div>
+                      <div class="bg-gray-200 dark:bg-gray-700 h-4 rounded w-full"></div>
+                      <div class="bg-gray-200 dark:bg-gray-700 h-4 rounded w-3/4"></div>
+                      <div class="bg-gray-200 dark:bg-gray-700 h-4 rounded w-1/2"></div>
                     </div>
-                    <div class="bg-gray-200 h-3 rounded w-2/3"></div>
+                    <div class="bg-gray-200 dark:bg-gray-700 h-3 rounded w-2/3"></div>
                   </div>
                   <!-- Right Image Skeleton -->
                   <div class="flex-shrink-0">
-                    <div class="bg-gray-200 w-24 h-24 rounded-lg"></div>
+                    <div class="bg-gray-200 dark:bg-gray-700 w-24 h-24 rounded-lg"></div>
                   </div>
                 </div>
               </div>
@@ -246,7 +351,7 @@
               <article
                 v-for="post in recommendedPosts"
                 :key="post._id"
-                class="group cursor-pointer border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors"
+                class="group cursor-pointer border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-600 transition-colors bg-white dark:bg-gray-800/30"
                 itemscope
                 itemtype="https://schema.org/BlogPosting"
               >
@@ -256,30 +361,46 @@
                     <div class="flex-1">
                       <!-- Source Tag and Time -->
                       <div class="flex items-center justify-between mb-3">
-                        <span
-                          class="text-xs font-medium text-gray-700 bg-white px-2 py-1 rounded border"
+                        <Typography
+                          as="span"
+                          size="xs"
+                          weight="medium"
+                          color="muted"
+                          class="bg-white dark:bg-gray-800 px-2 py-1 rounded border border-gray-200 dark:border-gray-700"
                         >
                           {{ post.createdBy?.firstName || 'Blog' }} News
-                        </span>
-                        <span class="text-xs text-gray-400">4 hours ago</span>
+                        </Typography>
+                        <Typography
+                          as="span"
+                          size="xs"
+                          color="tertiary"
+                        >
+                          4 hours ago
+                        </Typography>
                       </div>
 
                       <!-- Article Title -->
-                      <h3
-                        class="text-sm font-semibold text-gray-900 mb-3 line-clamp-3 group-hover:text-orange-500 transition-colors"
+                      <Typography
+                        as="h3"
+                        size="sm"
+                        weight="semibold"
+                        color="default"
+                        class="mb-3 line-clamp-3 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors"
                         itemprop="headline"
                       >
                         {{ post.title }}
-                      </h3>
+                      </Typography>
 
                       <!-- Author and Reading Time -->
-                      <div class="flex items-center text-xs text-gray-500">
-                        <span
-                          >by {{ post.createdBy?.firstName || 'Author' }} |
-                          {{ calculateReadingTime(post.description) }} min |
-                          {{ formatDate(post.createdAt) }}</span
-                        >
-                      </div>
+                      <Typography
+                        as="p"
+                        size="xs"
+                        color="muted"
+                      >
+                        by {{ post.createdBy?.firstName || 'Author' }} |
+                        {{ calculateReadingTime(post.description) }} min |
+                        {{ formatDate(post.createdAt) }}
+                      </Typography>
                     </div>
 
                     <!-- Right Image -->
@@ -302,30 +423,48 @@
 
             <!-- Empty State for Recommended -->
             <div v-else class="text-center py-8">
-              <p class="text-gray-500">Không có bài viết liên quan</p>
+              <Typography
+                as="p"
+                color="muted"
+                align="center"
+              >
+                Không có bài viết liên quan
+              </Typography>
             </div>
           </section>
 
           <!-- Enhanced Footer with better navigation -->
           <footer
-            class="flex flex-col sm:flex-row items-start sm:items-center justify-between text-sm text-gray-500 pt-8 border-t border-gray-200 gap-4 mt-8"
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-8 border-t border-gray-200 dark:border-gray-700 gap-4 mt-8 transition-colors duration-300"
           >
             <div>
-              <span>Cập nhật lần cuối: </span>
+              <Typography
+                as="span"
+                size="sm"
+                color="muted"
+              >
+                Cập nhật lần cuối:
+              </Typography>
               <time
                 :datetime="
                   formatDateISO(blogData.updatedAt || blogData.createdAt)
                 "
                 itemprop="dateModified"
-                class="font-medium"
               >
-                {{ formatDate(blogData.updatedAt || blogData.createdAt) }}
+                <Typography
+                  as="span"
+                  size="sm"
+                  weight="medium"
+                  color="default"
+                >
+                  {{ formatDate(blogData.updatedAt || blogData.createdAt) }}
+                </Typography>
               </time>
             </div>
             <div class="flex gap-3">
               <NuxtLink
                 to="/blogs"
-                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 aria-label="Xem tất cả bài viết"
               >
                 <svg
@@ -342,11 +481,17 @@
                     d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
                   ></path>
                 </svg>
-                Tất cả bài viết
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="default"
+                >
+                  Tất cả bài viết
+                </Typography>
               </NuxtLink>
               <NuxtLink
                 to="/"
-                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 aria-label="Về trang chủ"
               >
                 <svg
@@ -363,7 +508,13 @@
                     d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                   ></path>
                 </svg>
-                Về trang chủ
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="default"
+                >
+                  Về trang chủ
+                </Typography>
               </NuxtLink>
             </div>
           </footer>
@@ -377,6 +528,9 @@
   import { computed, watch } from 'vue'
   import httpRequest from '~/utils/httpRequest'
   // ViewEditor component is auto-imported from components/ui/ViewEditor.vue
+
+  // Dark mode
+  const { isDark } = useDarkMode()
 
   // Get route params
   const route = useRoute()
@@ -862,29 +1016,6 @@
 </script>
 
 <style scoped>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* Smooth transitions */
-  .transition-shadow {
-    transition: box-shadow 0.3s ease;
-  }
-
-  .transition-transform {
-    transition: transform 0.3s ease;
-  }
-
   /* Focus states for accessibility */
   a:focus {
     outline: 2px solid #f97316;

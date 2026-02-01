@@ -1,88 +1,86 @@
 <template>
-  <div class="min-h-screen bg-gray-900">
-    <!-- Breadcrumb Navigation -->
-    <section class="py-4 bg-gray-900/50 border-b border-gray-700">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="flex" aria-label="Breadcrumb">
-          <ol class="inline-flex items-center space-x-1 md:space-x-3">
-            <li class="inline-flex items-center">
-              <NuxtLink
-                to="/"
-                class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-orange-400 transition-colors"
-              >
-                <svg
-                  class="w-4 h-4 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
-                  ></path>
-                </svg>
-                Trang chủ
-              </NuxtLink>
-            </li>
-            <li>
-              <div class="flex items-center">
-                <svg
-                  class="w-6 h-6 text-gray-600 mx-2"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span class="text-sm font-medium text-orange-400">
-                  Blog & Tin tức
-                </span>
-              </div>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </section>
-
-    <!-- Hero Section -->
-    <section class="bg-gray-800/30 text-white py-16 md:py-20">
+  <div class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 pt-16">
+    <Header />
+    <section class="bg-gray-50 dark:bg-gray-800/30 py-16 md:py-20 transition-colors duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <h1 class="text-4xl md:text-6xl font-bold mb-6">Blog & Tin tức</h1>
-          <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          <Typography
+            as="h1"
+            :size="{sp: '4xl', pc: '6xl'}"
+            weight="bold"
+            color="default"
+            align="center"
+            class="mb-6"
+          >
+            Blog & Tin tức
+          </Typography>
+          <Typography
+            as="p"
+            :size="{sp: 'xl', pc: '2xl'}"
+            color="muted"
+            align="center"
+            class="mb-8 max-w-3xl mx-auto"
+          >
             Khám phá những bài viết mới nhất về công nghệ, phát triển web và
             kinh nghiệm lập trình
-          </p>
-          <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
+          </Typography>
+          <div class="w-16 h-1 bg-orange-500 dark:bg-orange-400 mx-auto transition-colors duration-300"></div>
         </div>
       </div>
     </section>
 
     <!-- Main Content -->
-    <section id="blogs" class="py-12">
+    <section id="blogs" class="py-12 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         <!-- My Blog Section -->
         <section id="my-blog" class="space-y-8">
           <div class="text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            <Typography
+              as="h2"
+              :size="{sp: '3xl', pc: '4xl'}"
+              weight="bold"
+              color="default"
+              align="center"
+              class="mb-4"
+            >
               My Blog
-            </h2>
-            <p class="text-gray-300 text-lg">Những bài viết cá nhân của tôi</p>
-            <div class="w-16 h-1 bg-blue-500 mx-auto mt-4"></div>
+            </Typography>
+            <Typography
+              as="p"
+              size="lg"
+              color="muted"
+              align="center"
+            >
+              Những bài viết cá nhân của tôi
+            </Typography>
+            <div class="w-16 h-1 bg-blue-500 dark:bg-blue-400 mx-auto mt-4 transition-colors duration-300"></div>
           </div>
 
           <!-- Loading State for My Blog -->
           <div v-if="myBlogPending" class="text-center py-16">
             <div
-              class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"
+              class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 dark:border-blue-400"
             ></div>
-            <p class="text-gray-400 mt-4 text-lg">Đang tải bài viết...</p>
+            <Typography
+              as="p"
+              size="lg"
+              color="tertiary"
+              align="center"
+              class="mt-4"
+            >
+              Đang tải bài viết...
+            </Typography>
           </div>
 
           <!-- Error State for My Blog -->
           <div v-else-if="myBlogError" class="text-center py-8">
-            <p class="text-gray-400">Không thể tải bài viết My Blog</p>
+            <Typography
+              as="p"
+              color="tertiary"
+              align="center"
+            >
+              Không thể tải bài viết My Blog
+            </Typography>
           </div>
 
           <!-- My Blog Posts -->
@@ -93,11 +91,14 @@
             <article
               v-for="post in myBlogPosts"
               :key="post._id || post.id"
-              class="bg-gray-800/30 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-700"
+              class="bg-white dark:bg-gray-800/30 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
               itemscope
               itemtype="https://schema.org/BlogPosting"
             >
-              <NuxtLink :to="`/blogs/${post._id || post.id}`" class="block">
+              <NuxtLink
+                :to="`/blogs/${post._id || post.id}`"
+                class="block focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 rounded-xl"
+              >
                 <!-- Featured Image -->
                 <div class="relative overflow-hidden">
                   <img
@@ -107,39 +108,51 @@
                     loading="lazy"
                   />
                   <div class="absolute top-4 left-4 flex gap-2 flex-wrap">
-                    <span
-                      class="bg-orange-500/90 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    <Typography
+                      as="span"
+                      size="sm"
+                      weight="medium"
+                      color="white"
+                      class="bg-orange-500/90 dark:bg-orange-600/90 px-3 py-1 rounded-full"
                     >
                       {{ formatDate(post.createdAt) }}
-                    </span>
-                    <span
+                    </Typography>
+                    <Typography
                       v-if="post.category"
+                      as="span"
+                      size="sm"
+                      weight="medium"
+                      color="white"
                       :class="[
-                        'px-3 py-1 rounded-full text-sm font-medium',
+                        'px-3 py-1 rounded-full',
                         post.category === 'ai-blog'
-                          ? 'bg-cyan-500/90 text-white'
-                          : 'bg-blue-500/90 text-white',
+                          ? 'bg-cyan-500/90 dark:bg-cyan-600/90'
+                          : 'bg-blue-500/90 dark:bg-blue-600/90',
                       ]"
                     >
                       {{ getCategoryLabel(post.category) }}
-                    </span>
+                    </Typography>
                   </div>
                 </div>
 
                 <!-- Content -->
                 <div class="p-6">
-                  <h2
-                    class="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-orange-400 transition-colors"
+                  <Typography
+                    as="h2"
+                    size="xl"
+                    weight="bold"
+                    color="default"
+                    class="mb-3 line-clamp-2 group-hover:text-orange-400 dark:group-hover:text-orange-400 transition-colors duration-200"
                     itemprop="headline"
                   >
                     {{ post.title }}
-                  </h2>
+                  </Typography>
                   <ViewEditor
                     :content="post.description"
                     :strip-html="true"
                     :truncate="true"
                     :max-length="120"
-                    custom-class="text-gray-400 mb-4 line-clamp-3 text-sm"
+                    custom-class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3 text-sm"
                     itemprop="description"
                     variant="light"
                   />
@@ -154,17 +167,26 @@
                         class="w-10 h-10 rounded-full object-cover"
                       />
                       <div>
-                        <p class="text-sm font-medium text-gray-300">
+                        <Typography
+                          as="p"
+                          size="sm"
+                          weight="medium"
+                          color="muted"
+                        >
                           {{ post.createdBy?.firstName }}
                           {{ post.createdBy?.lastName }}
-                        </p>
-                        <p class="text-xs text-gray-400">
+                        </Typography>
+                        <Typography
+                          as="p"
+                          size="xs"
+                          color="tertiary"
+                        >
                           {{ calculateReadingTime(post.description) }} phút đọc
-                        </p>
+                        </Typography>
                       </div>
                     </div>
                     <span
-                      class="text-orange-500 group-hover:text-orange-400 transition-colors"
+                      class="text-orange-500 dark:text-orange-400 group-hover:text-orange-600 dark:group-hover:text-orange-300 transition-colors"
                     >
                       <svg
                         class="w-5 h-5"
@@ -187,12 +209,26 @@
           <!-- Empty State for My Blog -->
           <div v-else class="text-center py-16">
             <div
-              class="bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-700"
+              class="bg-gray-50 dark:bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-200 dark:border-gray-700 transition-colors duration-300"
             >
-              <h3 class="text-lg font-semibold text-white mb-2">
+              <Typography
+                as="h3"
+                size="lg"
+                weight="semibold"
+                color="default"
+                align="center"
+                class="mb-2"
+              >
                 Chưa có bài viết My Blog
-              </h3>
-              <p class="text-gray-400 mb-4">Chưa có bài viết nào được đăng</p>
+              </Typography>
+              <Typography
+                as="p"
+                color="tertiary"
+                align="center"
+                class="mb-4"
+              >
+                Chưa có bài viết nào được đăng
+              </Typography>
             </div>
           </div>
         </section>
@@ -200,24 +236,52 @@
         <!-- Blog AI Section -->
         <section id="ai-blog" class="space-y-8">
           <div class="text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            <Typography
+              as="h2"
+              :size="{sp: '3xl', pc: '4xl'}"
+              weight="bold"
+              color="default"
+              align="center"
+              class="mb-4"
+            >
               Blog AI
-            </h2>
-            <p class="text-gray-300 text-lg">Những bài viết được tạo bởi AI</p>
-            <div class="w-16 h-1 bg-cyan-500 mx-auto mt-4"></div>
+            </Typography>
+            <Typography
+              as="p"
+              size="lg"
+              color="muted"
+              align="center"
+            >
+              Những bài viết được tạo bởi AI
+            </Typography>
+            <div class="w-16 h-1 bg-cyan-500 dark:bg-cyan-400 mx-auto mt-4 transition-colors duration-300"></div>
           </div>
 
           <!-- Loading State for Blog AI -->
           <div v-if="aiBlogPending" class="text-center py-16">
             <div
-              class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500"
+              class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 dark:border-cyan-400"
             ></div>
-            <p class="text-gray-400 mt-4 text-lg">Đang tải bài viết...</p>
+            <Typography
+              as="p"
+              size="lg"
+              color="tertiary"
+              align="center"
+              class="mt-4"
+            >
+              Đang tải bài viết...
+            </Typography>
           </div>
 
           <!-- Error State for Blog AI -->
           <div v-else-if="aiBlogError" class="text-center py-8">
-            <p class="text-gray-400">Không thể tải bài viết Blog AI</p>
+            <Typography
+              as="p"
+              color="tertiary"
+              align="center"
+            >
+              Không thể tải bài viết Blog AI
+            </Typography>
           </div>
 
           <!-- Blog AI Posts -->
@@ -228,11 +292,14 @@
             <article
               v-for="post in aiBlogPosts"
               :key="post._id || post.id"
-              class="bg-gray-800/30 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-700"
+              class="bg-white dark:bg-gray-800/30 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
               itemscope
               itemtype="https://schema.org/BlogPosting"
             >
-              <NuxtLink :to="`/blogs/${post._id || post.id}`" class="block">
+              <NuxtLink
+                :to="`/blogs/${post._id || post.id}`"
+                class="block focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 rounded-xl"
+              >
                 <!-- Featured Image -->
                 <div class="relative overflow-hidden">
                   <img
@@ -242,39 +309,51 @@
                     loading="lazy"
                   />
                   <div class="absolute top-4 left-4 flex gap-2 flex-wrap">
-                    <span
-                      class="bg-orange-500/90 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    <Typography
+                      as="span"
+                      size="sm"
+                      weight="medium"
+                      color="white"
+                      class="bg-orange-500/90 dark:bg-orange-600/90 px-3 py-1 rounded-full"
                     >
                       {{ formatDate(post.createdAt) }}
-                    </span>
-                    <span
+                    </Typography>
+                    <Typography
                       v-if="post.category"
+                      as="span"
+                      size="sm"
+                      weight="medium"
+                      color="white"
                       :class="[
-                        'px-3 py-1 rounded-full text-sm font-medium',
+                        'px-3 py-1 rounded-full',
                         post.category === 'ai-blog'
-                          ? 'bg-cyan-500/90 text-white'
-                          : 'bg-blue-500/90 text-white',
+                          ? 'bg-cyan-500/90 dark:bg-cyan-600/90'
+                          : 'bg-blue-500/90 dark:bg-blue-600/90',
                       ]"
                     >
                       {{ getCategoryLabel(post.category) }}
-                    </span>
+                    </Typography>
                   </div>
                 </div>
 
                 <!-- Content -->
                 <div class="p-6">
-                  <h2
-                    class="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-orange-400 transition-colors"
+                  <Typography
+                    as="h2"
+                    size="xl"
+                    weight="bold"
+                    color="default"
+                    class="mb-3 line-clamp-2 group-hover:text-orange-400 dark:group-hover:text-orange-400 transition-colors duration-200"
                     itemprop="headline"
                   >
                     {{ post.title }}
-                  </h2>
+                  </Typography>
                   <ViewEditor
                     :content="post.description"
                     :strip-html="true"
                     :truncate="true"
                     :max-length="120"
-                    custom-class="text-gray-400 mb-4 line-clamp-3 text-sm"
+                    custom-class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3 text-sm"
                     itemprop="description"
                     variant="light"
                   />
@@ -289,17 +368,26 @@
                         class="w-10 h-10 rounded-full object-cover"
                       />
                       <div>
-                        <p class="text-sm font-medium text-gray-300">
+                        <Typography
+                          as="p"
+                          size="sm"
+                          weight="medium"
+                          color="muted"
+                        >
                           {{ post.createdBy?.firstName }}
                           {{ post.createdBy?.lastName }}
-                        </p>
-                        <p class="text-xs text-gray-400">
+                        </Typography>
+                        <Typography
+                          as="p"
+                          size="xs"
+                          color="tertiary"
+                        >
                           {{ calculateReadingTime(post.description) }} phút đọc
-                        </p>
+                        </Typography>
                       </div>
                     </div>
                     <span
-                      class="text-orange-500 group-hover:text-orange-400 transition-colors"
+                      class="text-orange-500 dark:text-orange-400 group-hover:text-orange-600 dark:group-hover:text-orange-300 transition-colors"
                     >
                       <svg
                         class="w-5 h-5"
@@ -322,12 +410,26 @@
           <!-- Empty State for Blog AI -->
           <div v-else class="text-center py-16">
             <div
-              class="bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-700"
+              class="bg-gray-50 dark:bg-gray-800/30 rounded-lg p-8 max-w-md mx-auto border border-gray-200 dark:border-gray-700 transition-colors duration-300"
             >
-              <h3 class="text-lg font-semibold text-white mb-2">
+              <Typography
+                as="h3"
+                size="lg"
+                weight="semibold"
+                color="default"
+                align="center"
+                class="mb-2"
+              >
                 Chưa có bài viết Blog AI
-              </h3>
-              <p class="text-gray-400 mb-4">Chưa có bài viết nào được đăng</p>
+              </Typography>
+              <Typography
+                as="p"
+                color="tertiary"
+                align="center"
+                class="mb-4"
+              >
+                Chưa có bài viết nào được đăng
+              </Typography>
             </div>
           </div>
         </section>
@@ -479,6 +581,9 @@
     ],
   })
 
+  // Dark mode
+  const { isDark } = useDarkMode()
+
   // Router for syncing page with query
   const route = useRoute()
   const router = useRouter()
@@ -621,64 +726,3 @@
   })
 </script>
 
-<style scoped>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  /* Dark theme enhancements */
-  .group:hover {
-    box-shadow:
-      0 20px 25px -5px rgba(0, 0, 0, 0.3),
-      0 10px 10px -5px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Focus states for accessibility */
-  button:focus,
-  a:focus {
-    outline: 2px solid #f97316;
-    outline-offset: 2px;
-  }
-
-  /* Custom scrollbar for dark theme */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #1f2937;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #4b5563;
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #6b7280;
-  }
-</style>
