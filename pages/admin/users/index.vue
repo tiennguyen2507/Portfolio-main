@@ -67,7 +67,6 @@
   import HeaderContent from '~/components/admin/HeaderContent.vue'
   import ErrorCommon from '~/components/admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import SearchInput from '~/components/ui/SearchInput'
   import Loading from '~/components/ui/Loading.vue'
   import TableAdminUsers from './_components/TableAdminUsers.vue'
 
