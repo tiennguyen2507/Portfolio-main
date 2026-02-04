@@ -219,22 +219,42 @@
             </Typography>
           </div>
 
-          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-md">
             <NuxtLink
               to="/blogs"
-              class="bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-300 transform hover:scale-105 inline-block text-center"
+              class="w-full sm:w-auto focus:outline-none"
             >
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="semibold" color="white">
-                Explore my blogs
-              </Typography>
+              <Button variant="primary" size="md" :fullWidth="true">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  weight="semibold"
+                  color="white"
+                >
+                  Explore my blogs
+                </Typography>
+              </Button>
             </NuxtLink>
             <NuxtLink
               to="/projects"
-              class="border-2 border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-center"
+              class="w-full sm:w-auto focus:outline-none"
             >
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="semibold" color="default">
-                My projects
-              </Typography>
+              <Button
+                variant="heroOutline"
+                size="md"
+                :fullWidth="true"
+                class="group"
+              >
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  weight="semibold"
+                  color="default"
+                  class="transition-colors group-hover:text-white dark:group-hover:text-black"
+                >
+                  My projects
+                </Typography>
+              </Button>
             </NuxtLink>
           </div>
         </div>
@@ -282,7 +302,7 @@
 </template>
 
 <script setup>
-  // Component logic can be added here if needed
+  import Button from '~/components/ui/Button.vue'
 </script>
 
 <style scoped>
