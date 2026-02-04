@@ -1,12 +1,15 @@
 <template>
   <div
     :class="[
-      'view-editor',
+      'view-editor leading-relaxed',
       customClass,
       {
-        'text-gray-700 leading-relaxed': variant === 'default',
-        'text-gray-900': variant === 'dark',
-        'text-gray-200': variant === 'light',
+        // Default: nội dung bài viết thông thường
+        'text-gray-700 dark:text-gray-200': variant === 'default',
+        // Đậm hơn, dùng cho section cần nhấn mạnh
+        'text-gray-900 dark:text-gray-100': variant === 'dark',
+        // Nhạt hơn, dùng cho mô tả phụ / meta
+        'text-gray-500 dark:text-gray-400': variant === 'light',
       },
     ]"
     :itemprop="itemprop"

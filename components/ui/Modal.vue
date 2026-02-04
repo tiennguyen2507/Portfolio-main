@@ -20,12 +20,12 @@
         <!-- Header -->
         <div
           v-if="$slots.header"
-          class="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 px-6 py-4 bg-white"
+          class="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-6 py-4 bg-white dark:bg-gray-900"
         >
           <slot name="header" />
           <button
             @click="close"
-            class="ml-4 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 text-xl transition-colors focus:outline-none focus:ring-0"
+            class="ml-4 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-xl transition-colors focus:outline-none focus:ring-0"
             aria-label="Đóng"
           >
             &times;
@@ -33,14 +33,14 @@
         </div>
         <!-- Content -->
         <div
-          class="px-6 py-6 text-gray-700 text-base flex-1 overflow-y-auto bg-white"
+          class="px-6 py-6 text-gray-700 dark:text-gray-100 text-base flex-1 overflow-y-auto bg-white dark:bg-gray-900"
         >
           <slot />
         </div>
         <!-- Footer -->
         <div
           v-if="$slots.footer"
-          class="sticky bottom-0 z-10 border-t border-gray-200 px-6 py-4 flex justify-end space-x-3 bg-white"
+          class="sticky bottom-0 z-10 border-t border-gray-200 dark:border-gray-800 px-6 py-4 flex justify-end space-x-3 bg-white dark:bg-gray-900"
         >
           <slot name="footer" />
         </div>
@@ -69,7 +69,7 @@
 
   const modalClasses = computed(() => {
     const base =
-      'relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full overflow-hidden flex flex-col transition-all duration-300'
+      'relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 w-full overflow-hidden flex flex-col transition-all duration-300 text-gray-900 dark:text-white'
     const widthMap = {
       sm: 'max-w-sm',
       md: 'max-w-lg',

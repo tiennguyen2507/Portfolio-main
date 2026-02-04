@@ -313,7 +313,7 @@
                   <!-- Image Skeleton -->
                   <div class="flex-shrink-0 w-full sm:w-24 sm:order-2">
                     <div class="bg-gray-200 dark:bg-gray-700 w-full h-32 sm:h-24 rounded-lg"></div>
-                  </div>
+                    </div>
                   <!-- Content Skeleton -->
                   <div class="flex-1 sm:order-1">
                     <div class="flex items-center justify-between mb-2 sm:mb-3 gap-1 sm:gap-2">
@@ -323,7 +323,7 @@
                     <div class="space-y-1.5 sm:space-y-2 mb-2 sm:mb-3">
                       <div class="bg-gray-200 dark:bg-gray-700 h-3 sm:h-4 rounded w-full"></div>
                       <div class="bg-gray-200 dark:bg-gray-700 h-3 sm:h-4 rounded w-3/4"></div>
-                    </div>
+                  </div>
                     <div class="bg-gray-200 dark:bg-gray-700 h-2.5 sm:h-3 rounded w-2/3"></div>
                   </div>
                 </div>

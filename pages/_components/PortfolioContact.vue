@@ -108,7 +108,7 @@
 <script setup>
   import { portfolioContactData } from '~/constants/PortfolioContactData'
   import Button from '~/components/ui/Button.vue'
-  import Input from '~/components/ui/Input.vue'
+  import Input from '~/components/ui/Input/Input.vue'
   import Textarea from '~/components/ui/Textarea.vue'
   import { httpRequest } from '~/utils/httpRequest'
 

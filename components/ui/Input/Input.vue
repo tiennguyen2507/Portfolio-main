@@ -1,7 +1,11 @@
 <template>
   <div class="space-y-1">
     <!-- Label -->
-    <label v-if="label" class="flex items-center justify-between">
+    <label
+      v-if="label"
+      class="flex items-center justify-between"
+      :for="id || undefined"
+    >
       <Typography
         as="span"
         size="sm"
@@ -22,16 +26,16 @@
       </Typography>
     </label>
 
-    <!-- Textarea + Icon -->
+    <!-- Input + Icon -->
     <div class="relative">
-      <textarea
+      <input
+        :id="id || undefined"
+        :type="type"
         :value="modelValue"
         :placeholder="placeholder"
         :disabled="disabled"
         :required="required"
-        :rows="rows"
-        :cols="cols"
-        :class="textareaClasses"
+        :class="inputClasses"
         @input="$emit('update:modelValue', $event.target.value)"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
@@ -40,7 +44,7 @@
       <!-- Optional icon slot (right aligned) -->
       <div
         v-if="$slots.icon"
-        class="absolute inset-y-0 right-0 pr-3 flex items-start pt-3 pointer-events-none"
+        class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
       >
         <slot name="icon" />
       </div>
@@ -71,8 +75,16 @@
 <script setup>
   const props = defineProps({
     modelValue: {
+      type: [String, Number],
+      default: '',
+    },
+    id: {
       type: String,
       default: '',
+    },
+    type: {
+      type: String,
+      default: 'text',
     },
     placeholder: {
       type: String,
@@ -85,14 +97,6 @@
     required: {
       type: Boolean,
       default: false,
-    },
-    rows: {
-      type: Number,
-      default: 4,
-    },
-    cols: {
-      type: Number,
-      default: undefined,
     },
     variant: {
       type: String,
@@ -120,9 +124,9 @@
 
   defineEmits(['update:modelValue', 'focus', 'blur'])
 
-  const textareaClasses = computed(() => {
+  const inputClasses = computed(() => {
     const baseClasses =
-      'w-full rounded-lg border bg-white text-gray-900 placeholder-gray-400 shadow-sm resize-none ' +
+      'w-full rounded-lg border bg-white text-gray-900 placeholder-gray-400 shadow-sm ' +
       'focus:outline-none focus:ring-2 focus:ring-orange-500/70 focus:border-transparent ' +
       'dark:bg-gray-900 dark:text-white dark:border-gray-700 dark:placeholder-gray-500'
 
@@ -157,4 +161,5 @@
     ].join(' ')
   })
 </script>
+
 

@@ -55,7 +55,8 @@
     const variantClasses = {
       primary:
         'bg-orange-500 hover:bg-orange-600 text-white focus:ring-orange-500',
-      secondary: 'bg-gray-700 hover:bg-gray-600 text-white focus:ring-gray-500',
+      secondary:
+        'bg-gray-700 hover:bg-gray-600 text-white focus:ring-gray-500 dark:bg-gray-800 dark:hover:bg-gray-700',
       outline:
         'border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white focus:ring-orange-500',
       ghost: 'text-orange-500 hover:bg-orange-500/10 focus:ring-orange-500',

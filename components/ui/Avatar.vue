@@ -40,13 +40,13 @@
       <!-- Placeholder -->
       <div
         v-else
-        class="w-full h-full bg-gray-700 flex items-center justify-center"
+        class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          class="text-gray-300"
+          class="text-inherit"
           :style="{ width: iconSizePx, height: iconSizePx }"
         >
           <path

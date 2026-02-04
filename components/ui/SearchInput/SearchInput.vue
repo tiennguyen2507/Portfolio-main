@@ -5,7 +5,7 @@
       class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10"
     >
       <svg
-        class="w-5 h-5 text-gray-600"
+        class="w-5 h-5 text-gray-600 dark:text-gray-400"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -66,7 +66,7 @@
         class="flex items-center justify-center pointer-events-none"
       >
         <svg
-          class="w-5 h-5 text-gray-400"
+          class="w-5 h-5 text-gray-400 dark:text-gray-500"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -126,12 +126,12 @@
 
   const inputClasses = computed(() => {
     const base =
-      'w-full pl-12 pr-12 py-2 rounded-full border-[1px] bg-white text-gray-900 placeholder-gray-400 focus:outline-none'
+      'w-full pl-12 pr-12 py-2 rounded-full border-[1px] bg-white text-gray-900 placeholder-gray-400 focus:outline-none dark:bg-gray-900 dark:text-white dark:placeholder-gray-500'
     const activeBorder = isActive.value
-      ? 'border-primary-500'
-      : 'border-gray-300 hover:border-gray-400 focus:border-gray-400'
+      ? 'border-primary-500 dark:border-primary-500'
+      : 'border-gray-300 hover:border-gray-400 focus:border-gray-400 dark:border-gray-700 dark:hover:border-gray-500 dark:focus:border-gray-500'
     const disabledClass = props.disabled
-      ? 'opacity-50 cursor-not-allowed bg-gray-100'
+      ? 'opacity-50 cursor-not-allowed bg-gray-100 dark:bg-gray-800'
       : ''
 
     return [base, activeBorder, disabledClass].filter(Boolean).join(' ')

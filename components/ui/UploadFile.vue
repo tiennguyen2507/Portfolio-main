@@ -1,9 +1,13 @@
 <template>
-  <div class="w-full p-4 bg-white rounded-xl shadow border border-gray-200">
-    <h2 class="text-lg font-semibold mb-1">Upload a File</h2>
+  <div
+    class="w-full p-4 bg-white dark:bg-gray-900 rounded-xl shadow border border-gray-200 dark:border-gray-800"
+  >
+    <h2 class="text-lg font-semibold mb-1 text-gray-900 dark:text-gray-100">
+      Upload a File
+    </h2>
     <label
       for="file-upload"
-      class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl cursor-pointer transition hover:border-blue-400 bg-gray-50 py-2 px-4 text-center w-full"
+      class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl cursor-pointer transition hover:border-blue-400 dark:hover:border-blue-500 bg-gray-50 dark:bg-gray-900 py-2 px-4 text-center w-full"
       @drop="handleDrop"
       @dragover="handleDragOver"
     >
@@ -22,7 +26,7 @@
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          class="mx-auto text-gray-400"
+          class="mx-auto text-gray-400 dark:text-gray-500"
         >
           <path
             stroke-linecap="round"
@@ -31,7 +35,9 @@
             d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"
           />
         </svg>
-        <p class="text-gray-400">Click to upload or drag and drop</p>
+        <p class="text-gray-500 dark:text-gray-400">
+          Click to upload or drag and drop
+        </p>
       </div>
 
       <input

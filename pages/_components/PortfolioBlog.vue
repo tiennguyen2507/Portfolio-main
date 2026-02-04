@@ -38,7 +38,7 @@
       <!-- Blog Grid -->
       <div
         v-else-if="allPosts.length"
-        class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+        class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8"
       >
         <NuxtLink
           v-for="post in allPosts"
@@ -49,14 +49,14 @@
           <Card
             variant="elevated"
             hover
-            class="group cursor-pointer"
+            class="group cursor-pointer p-3 sm:p-4"
             padding="sm"
           >
             <div class="relative overflow-hidden">
               <img
                 :src="post.thumbnail"
                 :alt="post.title"
-                class="w-full h-48 object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-300"
+                class="w-full h-36 sm:h-44 lg:h-48 object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-300"
               />
               <div class="absolute top-4 left-4">
                 <Badge variant="primary" class="bg-orange-500/90 text-white">
@@ -81,11 +81,11 @@
                 :strip-html="true"
                 :truncate="true"
                 :max-length="120"
-                custom-class="text-gray-400 dark:text-gray-300 mb-4 line-clamp-3 text-sm h-[60px] overflow-hidden"
+                custom-class="text-gray-400 dark:text-gray-300 mb-4 text-sm blog-desc-clamp"
                 variant="light"
               />
 
-              <div class="flex items-center justify-between">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div class="flex items-center space-x-2">
                   <img
                     v-if="post.createdBy?.avatar"
@@ -192,7 +192,7 @@
 </script>
 
 <style scoped>
-  .line-clamp-2 {
+  .blog-desc-clamp {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -200,11 +200,10 @@
     overflow: hidden;
   }
 
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  @media (min-width: 1024px) {
+    .blog-desc-clamp {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+    }
   }
 </style>

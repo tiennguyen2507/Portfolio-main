@@ -31,12 +31,17 @@
   })
 
   const cardClasses = computed(() => {
-    const baseClasses = 'rounded-lg transition-all duration-300'
+    const baseClasses =
+      'rounded-xl border transition-all duration-300 bg-white text-gray-900 ' +
+      'dark:bg-gray-900 dark:text-white shadow-sm'
 
     const variantClasses = {
-      default: 'bg-gray-800 border border-gray-700',
-      elevated: 'bg-gray-800 shadow-lg border border-gray-700',
-      outlined: 'bg-transparent border-2 border-gray-700',
+      default:
+        'border-gray-200 dark:border-gray-800',
+      elevated:
+        'border-gray-200 dark:border-gray-800 shadow-lg shadow-black/5 dark:shadow-black/40',
+      outlined:
+        'bg-transparent border border-gray-300 dark:border-gray-700',
     }
 
     const paddingClasses = {
@@ -47,7 +52,7 @@
     }
 
     const hoverClass = props.hover
-      ? 'hover:transform hover:scale-105 hover:shadow-xl'
+      ? 'hover:-translate-y-0.5 hover:shadow-lg hover:border-orange-500/60 dark:hover:border-orange-400/60'
       : ''
 
     return [
@@ -61,7 +66,7 @@
 
 <style scoped>
   .card-header {
-    @apply border-b border-gray-700 pb-4 mb-4;
+    @apply border-b border-gray-200 dark:border-gray-800 pb-4 mb-4;
   }
 
   .card-body {
@@ -69,6 +74,6 @@
   }
 
   .card-footer {
-    @apply border-t border-gray-700 pt-4 mt-4;
+    @apply border-t border-gray-200 dark:border-gray-800 pt-4 mt-4;
   }
 </style>

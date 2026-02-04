@@ -1,13 +1,13 @@
 <template>
   <section class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex items-center justify-center mb-8 gap-2">
+      <div class="flex flex-col items-center mb-8 gap-3">
         <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-0">
           Nhận xét về tôi
         </Typography>
         <button
           @click="showForm = !showForm"
-          class="ml-2 flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow transition focus:outline-none focus:ring-2 focus:ring-orange-400"
+          class="flex items-center justify-center w-9 h-9 rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow transition focus:outline-none focus:ring-2 focus:ring-orange-400"
           :aria-label="showForm ? 'Đóng form' : 'Thêm nhận xét'"
         >
           <svg
@@ -142,8 +142,8 @@
         </button>
       </form>
 
-      <div v-if="loading" class="">
-        <div class="grid gap-6 md:grid-cols-2">
+      <div v-if="isLoading" class="">
+        <div class="grid gap-4 md:gap-6 md:grid-cols-2">
           <div
             v-for="n in limit"
             :key="n"
@@ -172,7 +172,7 @@
       </div>
       <div v-else>
         <div
-          v-if="comments.length === 0"
+          v-if="commentsList.length === 0"
           class="text-center py-8"
         >
           <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center">
@@ -180,11 +180,11 @@
           </Typography>
         </div>
         <div v-else>
-          <div class="grid gap-6 md:grid-cols-2">
+          <div class="grid gap-4 md:gap-6 md:grid-cols-2">
             <div
               v-for="comment in commentsList"
               :key="comment._id"
-              class="bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-xl p-6 flex flex-col shadow-lg border border-gray-300 dark:border-gray-700 hover:shadow-xl transition-shadow"
+              class="bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-xl p-4 sm:p-5 md:p-6 flex flex-col shadow-lg border border-gray-300 dark:border-gray-700 hover:shadow-xl transition-shadow"
             >
               <div class="flex items-center mb-4">
                 <Avatar :src="comment.avatar" :readOnly="true" :size="56" />
@@ -201,7 +201,7 @@
                 as="div"
                 :size="{sp: 'sm', pc: 'md'}"
                 color="default"
-                class="mb-3 italic break-words break-all line-clamp-2"
+                class="mb-3 italic break-words comment-clamp"
               >
                 "{{ comment.comment }}"
               </Typography>
@@ -251,7 +251,7 @@
   import handleUpdateImage from '~/utils/handleUpdateImage'
 
   const comments = ref([])
-  const loading = ref(true)
+  const loading = ref(false)
   const showForm = ref(false)
   const avatarPreviewUrl = ref('')
   const isUploadingAvatar = ref(false)
@@ -297,8 +297,15 @@
   const limit = 4
 
   // Sử dụng data từ props hoặc local state
-  const commentsList = computed(() => props.comments || comments.value)
-  const paginationData = computed(() => props.pagination || pagination.value)
+  const commentsList = computed(() =>
+    props.comments && props.comments.length ? props.comments : comments.value
+  )
+  const paginationData = computed(
+    () => props.pagination || pagination.value
+  )
+
+  // Trạng thái loading tổng hợp: ưu tiên pending từ props + loading local
+  const isLoading = computed(() => props.pending || loading.value)
 
   const totalPages = computed(() => {
     if (paginationData.value) {
@@ -464,6 +471,21 @@
 </script>
 
 <style scoped>
+  .comment-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (min-width: 1024px) {
+    .comment-clamp {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+    }
+  }
+
   .bg-gray-900\/80 {
     background: rgba(17, 24, 39, 0.8);
   }

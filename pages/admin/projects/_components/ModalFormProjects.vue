@@ -190,7 +190,7 @@
 <script setup>
   import { ref, watch, computed } from 'vue'
   import Modal from '~/components/ui/Modal.vue'
-  import Input from '~/components/ui/Input.vue'
+  import Input from '~/components/ui/Input/Input.vue'
   import Button from '~/components/ui/Button.vue'
   import Editor from '~/components/ui/Editor.vue'
   import UploadFile from '~/components/ui/UploadFile.vue'

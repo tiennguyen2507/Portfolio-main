@@ -35,12 +35,12 @@
     }
 
     const variantClasses = {
-      default: 'bg-gray-700 text-gray-300',
-      primary: 'bg-orange-500/20 text-orange-500',
-      success: 'bg-green-500/20 text-green-500',
-      warning: 'bg-yellow-500/20 text-yellow-500',
-      error: 'bg-red-500/20 text-red-500',
-      info: 'bg-blue-500/20 text-blue-500',
+      default: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200',
+      primary: 'bg-orange-500/10 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400',
+      success: 'bg-green-500/10 text-green-600 dark:bg-green-500/20 dark:text-green-400',
+      warning: 'bg-yellow-500/10 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-400',
+      error: 'bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400',
+      info: 'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400',
     }
 
     const roundedClass = props.rounded ? 'rounded-full' : 'rounded-md'

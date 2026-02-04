@@ -200,21 +200,21 @@
   }
 
   .table-wrapper {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto;
+  @apply bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 overflow-x-auto;
     border-bottom: none;
     max-width: 100%;
   }
 
   .table {
-    @apply min-w-full divide-y divide-gray-200;
+  @apply min-w-full divide-y divide-gray-200 dark:divide-gray-800;
   }
 
   .table-header {
-    @apply bg-gray-50;
+  @apply bg-gray-50 dark:bg-gray-900;
   }
 
   .table-header-cell {
-    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider;
   }
 
   .table-header-cell.has-width {
@@ -230,7 +230,7 @@
   }
 
   .table-body {
-    @apply bg-white divide-y divide-gray-200;
+  @apply bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800;
   }
 
   .table-body tr:last-child td:first-child {
@@ -246,11 +246,11 @@
   }
 
   .table-row:hover {
-    @apply bg-gray-50;
+  @apply bg-gray-50 dark:bg-gray-800;
   }
 
   .table-cell {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100;
   }
 
   .table-cell.has-width {
@@ -263,11 +263,11 @@
 
   /* Fixed columns support */
   .fixed-left {
-    @apply sticky left-0 z-10 bg-white;
+  @apply sticky left-0 z-10 bg-white dark:bg-gray-900;
   }
 
   .fixed-right {
-    @apply sticky right-0 z-10 bg-white;
+  @apply sticky right-0 z-10 bg-white dark:bg-gray-900;
   }
 
   /* Responsive */

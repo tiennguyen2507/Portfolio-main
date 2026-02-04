@@ -1,7 +1,7 @@
 <template>
-  <div class="text-center py-12">
+  <div class="text-center py-12 text-gray-700 dark:text-gray-200">
     <div
-      class="mx-auto h-12 w-12 text-gray-400 flex items-center justify-center"
+      class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 flex items-center justify-center"
     >
       <template v-if="isSvg(icon)">
         <span v-html="icon" />
@@ -23,10 +23,16 @@
       </template>
     </div>
 
-    <h3 v-if="title" class="mt-2 text-sm font-medium text-gray-900">
+    <h3
+      v-if="title"
+      class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100"
+    >
       {{ title }}
     </h3>
-    <p v-if="description" class="mt-1 text-sm text-gray-500">
+    <p
+      v-if="description"
+      class="mt-1 text-sm text-gray-500 dark:text-gray-400"
+    >
       {{ description }}
     </p>
 

@@ -44,26 +44,28 @@
 
       <!-- Projects Grid -->
       <div v-else-if="displayedProjects.length" class="space-y-8">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6"
+        >
           <Card
             v-for="project in displayedProjects"
             :key="project._id"
             variant="elevated"
             hover
-            class="h-full cursor-pointer transition-transform hover:scale-105"
-            padding="sm"
+            class="h-full cursor-pointer transition-transform"
+            padding="none"
             @click="goToProjectDetail(project._id)"
           >
             <img
               :src="project.thumbnail || '/images/blog-1.webp'"
               :alt="project.title"
-              class="w-full h-48 object-cover rounded-t-lg"
+              class="w-full h-36 sm:h-40 md:h-44 lg:h-48 object-cover rounded-t-xl"
               loading="lazy"
             />
-            <div class="p-4 sm:p-2 flex flex-col h-full">
+            <div class="p-3 sm:p-5 flex flex-col h-full">
               <Typography
                 as="h3"
-                :size="{sp: 'lg', pc: 'xl'}"
+                :size="{sp: 'md', pc: 'lg'}"
                 weight="semibold"
                 color="default"
                 class="mb-2 line-clamp-1 min-h-[1.5rem] hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
@@ -75,27 +77,48 @@
                 :strip-html="true"
                 :truncate="true"
                 :max-length="120"
-                custom-class="text-gray-400 dark:text-gray-300 mb-4 line-clamp-3 min-h-[4.5rem] flex-grow"
+                custom-class="text-sm sm:text-[15px] text-gray-400 dark:text-gray-300 mb-3 sm:mb-4 line-clamp-2 sm:line-clamp-3 min-h-[3rem] sm:min-h-[4.5rem]"
                 variant="light"
               />
-              <div class="flex flex-wrap gap-2 mt-auto">
-                <Badge
-                  v-for="skill in project.skill?.slice(0, 3)"
-                  :key="skill"
-                  variant="primary"
+
+              <!-- Tech stack -->
+              <div class="mt-auto">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'xs' }"
+                  color="tertiary"
+                  class="uppercase tracking-wide"
                 >
-                  {{ skill }}
-                </Badge>
-                <Badge
-                  v-if="project.skill && project.skill.length > 3"
-                  variant="info"
-                >
-                  +{{ project.skill.length - 3 }}
-                </Badge>
+                  Tech stack
+                </Typography>
+                <div class="mt-2 flex items-center gap-1.5 overflow-hidden">
+                  <div class="flex items-center gap-1.5 overflow-hidden">
+                    <Badge
+                      v-for="skill in project.skill?.slice(0, 3)"
+                      :key="skill"
+                      variant="primary"
+                      size="sm"
+                    >
+                      <span class="max-w-[90px] truncate whitespace-nowrap inline-block align-middle">
+                        {{ skill }}
+                      </span>
+                    </Badge>
+                  </div>
+                  <Badge
+                    v-if="project.skill && project.skill.length > 3"
+                    variant="info"
+                    size="sm"
+                    class="shrink-0"
+                  >
+                    +{{ project.skill.length - 3 }}
+                  </Badge>
+                </div>
               </div>
 
               <!-- View Details Button -->
-              <div class="mt-4 pt-3 border-t border-gray-300 dark:border-gray-700">
+              <div
+                class="mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-gray-300 dark:border-gray-700"
+              >
                 <div class="flex items-center justify-between">
                   <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">
                     Xem chi tiết
@@ -253,6 +276,15 @@
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+    line-clamp: 1;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
     overflow: hidden;
   }
 
@@ -260,6 +292,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    line-clamp: 3;
     overflow: hidden;
   }
 
