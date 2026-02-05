@@ -35,6 +35,7 @@
         :placeholder="placeholder"
         :disabled="disabled"
         :required="required"
+        :maxlength="maxlength"
         :class="inputClasses"
         @input="$emit('update:modelValue', $event.target.value)"
         @focus="$emit('focus', $event)"
@@ -119,6 +120,10 @@
     error: {
       type: String,
       default: '',
+    },
+    maxlength: {
+      type: [String, Number],
+      default: undefined,
     },
   })
 

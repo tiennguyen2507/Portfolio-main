@@ -32,19 +32,14 @@
     <!-- Form Content -->
     <div class="space-y-6">
       <!-- Title -->
-      <div>
-        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
-          >Tiêu đề bài viết</Typography
-        >
-        <input
-          v-model="form.title"
-          type="text"
-          required
-          class="w-full px-3 py-2 rounded-lg bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 outline-none"
-          placeholder="Nhập tiêu đề bài viết..."
-          maxlength="120"
-        />
-      </div>
+      <Input
+        v-model="form.title"
+        label="Tiêu đề bài viết"
+        type="text"
+        placeholder="Nhập tiêu đề bài viết..."
+        required
+        :maxlength="120"
+      />
 
       <!-- Category -->
       <div>
@@ -109,6 +104,7 @@
   import Select from '~/components/ui/Select.vue'
   import Button from '~/components/ui/Button.vue'
   import Typography from '~/components/ui/Typography.vue'
+  import Input from '~/components/ui/Input/Input.vue'
   import { ref } from 'vue'
 
   // Category options

@@ -1,18 +1,19 @@
 <template>
-  <transition name="fade">
+  <transition name="modal">
     <div
       v-if="isOpen"
-      class="fixed inset-0 z-50 flex items-center justify-center"
+      class="fixed inset-0 z-[100] flex items-end md:items-center justify-center"
     >
       <!-- Overlay with only opacity -->
       <div
-        class="fixed inset-0 bg-black/70 transition-all duration-300"
+        class="fixed inset-0 bg-black/70 modal-overlay"
         @click="close"
       ></div>
       <!-- Modal Content -->
       <div
         :class="modalClasses"
         :style="modalStyle"
+        class="modal-content"
         @click.stop
         role="dialog"
         aria-modal="true"
@@ -69,7 +70,7 @@
 
   const modalClasses = computed(() => {
     const base =
-      'relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 w-full overflow-hidden flex flex-col transition-all duration-300 text-gray-900 dark:text-white'
+      'relative bg-white dark:bg-gray-900 rounded-t-2xl md:rounded-xl shadow-2xl border-t md:border border-gray-200 dark:border-gray-800 w-full overflow-hidden flex flex-col transition-all duration-300 text-gray-900 dark:text-white max-h-[calc(100vh-4rem)] md:max-h-none safe-area-bottom'
     const widthMap = {
       sm: 'max-w-sm',
       md: 'max-w-lg',
@@ -82,7 +83,6 @@
   })
 
   const modalStyle = computed(() => ({
-    zIndex: 10,
     maxHeight: props.maxHeight,
   }))
 
@@ -92,12 +92,62 @@
 </script>
 
 <style scoped>
-  .fade-enter-active,
-  .fade-leave-active {
+  /* Overlay fade animation */
+  .modal-overlay {
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Modal container animation */
+  .modal-enter-active {
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .modal-enter-active .modal-overlay {
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .modal-enter-active .modal-content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .modal-leave-active {
     transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .fade-enter-from,
-  .fade-leave-to {
+  .modal-leave-active .modal-overlay {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .modal-leave-active .modal-content {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Initial states */
+  .modal-enter-from {
     opacity: 0;
+  }
+  .modal-enter-from .modal-overlay {
+    opacity: 0;
+  }
+  .modal-enter-from .modal-content {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  .modal-leave-to {
+    opacity: 0;
+  }
+  .modal-leave-to .modal-overlay {
+    opacity: 0;
+  }
+  .modal-leave-to .modal-content {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  /* Desktop: scale + fade animation */
+  @media (min-width: 768px) {
+    .modal-enter-from .modal-content {
+      transform: translateY(0) scale(0.95);
+    }
+    .modal-leave-to .modal-content {
+      transform: translateY(0) scale(0.95);
+    }
   }
 </style>
