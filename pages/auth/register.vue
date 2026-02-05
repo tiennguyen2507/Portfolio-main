@@ -1,17 +1,17 @@
 <template>
   <div class="text-center">
-    <h2 class="mt-2 text-3xl font-extrabold text-gray-900">
+    <Typography as="h2" size="3xl" weight="extrabold" color="default" class="mt-2">
       Đăng ký tài khoản mới
-    </h2>
-    <p class="mt-2 text-sm text-gray-600">
+    </Typography>
+    <Typography as="p" size="sm" color="muted" class="mt-2">
       Hoặc
       <NuxtLink
         to="/auth/login"
-        class="font-medium text-orange-500 hover:text-orange-400"
+        class="font-medium text-orange-500 dark:text-orange-400 hover:text-orange-400 dark:hover:text-orange-300"
       >
         đăng nhập vào tài khoản hiện có
       </NuxtLink>
-    </p>
+    </Typography>
   </div>
 
   <!-- Register Form -->
@@ -19,11 +19,11 @@
     <!-- Error Message -->
     <div
       v-if="error"
-      class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg"
+      class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 rounded-lg"
     >
       <div class="flex items-center">
         <svg
-          class="w-5 h-5 mr-2 text-red-600"
+          class="w-5 h-5 mr-2 text-red-600 dark:text-red-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -35,18 +35,18 @@
             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        {{ error }}
+        <Typography as="span" size="sm" color="error">{{ error }}</Typography>
       </div>
     </div>
 
     <!-- Success Message -->
     <div
       v-if="successMessage"
-      class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg"
+      class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-4 py-3 rounded-lg"
     >
       <div class="flex items-center">
         <svg
-          class="w-5 h-5 mr-2 text-green-600"
+          class="w-5 h-5 mr-2 text-green-600 dark:text-green-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -58,19 +58,23 @@
             d="M5 13l4 4L19 7"
           />
         </svg>
-        {{ successMessage }}
+        <Typography as="span" size="sm" color="success">{{ successMessage }}</Typography>
       </div>
     </div>
 
     <div class="space-y-4">
       <!-- First Name Input -->
       <div>
-        <label
+        <Typography
+          as="label"
           for="firstName"
-          class="block text-sm font-medium text-gray-700 mb-2"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
         >
           Họ
-        </label>
+        </Typography>
         <Input
           id="firstName"
           v-model="firstName"
@@ -81,19 +85,23 @@
           :variant="errors.firstName ? 'error' : 'default'"
           size="lg"
         />
-        <p v-if="errors.firstName" class="mt-1 text-sm text-red-600">
+        <Typography v-if="errors.firstName" as="p" size="sm" color="error" class="mt-1">
           {{ errors.firstName }}
-        </p>
+        </Typography>
       </div>
 
       <!-- Last Name Input -->
       <div>
-        <label
+        <Typography
+          as="label"
           for="lastName"
-          class="block text-sm font-medium text-gray-700 mb-2"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
         >
           Tên
-        </label>
+        </Typography>
         <Input
           id="lastName"
           v-model="lastName"
@@ -104,16 +112,16 @@
           :variant="errors.lastName ? 'error' : 'default'"
           size="lg"
         />
-        <p v-if="errors.lastName" class="mt-1 text-sm text-red-600">
+        <Typography v-if="errors.lastName" as="p" size="sm" color="error" class="mt-1">
           {{ errors.lastName }}
-        </p>
+        </Typography>
       </div>
 
       <!-- Email Input -->
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+        <Typography as="label" for="email" size="sm" weight="medium" color="default" class="block mb-2">
           Email
-        </label>
+        </Typography>
         <Input
           id="email"
           v-model="email"
@@ -124,19 +132,23 @@
           :variant="errors.email ? 'error' : 'default'"
           size="lg"
         />
-        <p v-if="errors.email" class="mt-1 text-sm text-red-600">
+        <Typography v-if="errors.email" as="p" size="sm" color="error" class="mt-1">
           {{ errors.email }}
-        </p>
+        </Typography>
       </div>
 
       <!-- Password Input -->
       <div>
-        <label
+        <Typography
+          as="label"
           for="password"
-          class="block text-sm font-medium text-gray-700 mb-2"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
         >
           Mật khẩu
-        </label>
+        </Typography>
         <Input
           id="password"
           v-model="password"
@@ -147,19 +159,23 @@
           :variant="errors.password ? 'error' : 'default'"
           size="lg"
         />
-        <p v-if="errors.password" class="mt-1 text-sm text-red-600">
+        <Typography v-if="errors.password" as="p" size="sm" color="error" class="mt-1">
           {{ errors.password }}
-        </p>
+        </Typography>
       </div>
 
       <!-- Confirm Password Input -->
       <div>
-        <label
+        <Typography
+          as="label"
           for="confirmPassword"
-          class="block text-sm font-medium text-gray-700 mb-2"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
         >
           Xác nhận mật khẩu
-        </label>
+        </Typography>
         <Input
           id="confirmPassword"
           v-model="confirmPassword"
@@ -170,9 +186,9 @@
           :variant="errors.confirmPassword ? 'error' : 'default'"
           size="lg"
         />
-        <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">
+        <Typography v-if="errors.confirmPassword" as="p" size="sm" color="error" class="mt-1">
           {{ errors.confirmPassword }}
-        </p>
+        </Typography>
       </div>
     </div>
 
@@ -182,27 +198,27 @@
         id="agree-terms"
         v-model="agreeTerms"
         type="checkbox"
-        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded bg-white"
+        class="h-4 w-4 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400 border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900"
       />
-      <p v-if="errors.agreeTerms" class="mt-1 text-sm text-red-600">
+      <Typography v-if="errors.agreeTerms" as="p" size="sm" color="error" class="mt-1">
         {{ errors.agreeTerms }}
-      </p>
-      <label for="agree-terms" class="ml-2 block text-sm text-gray-700">
+      </Typography>
+      <Typography as="label" for="agree-terms" size="sm" color="default" class="ml-2 block">
         Tôi đồng ý với
         <NuxtLink
           to="/terms"
-          class="font-medium text-orange-500 hover:text-orange-400"
+          class="font-medium text-orange-500 dark:text-orange-400 hover:text-orange-400 dark:hover:text-orange-300"
         >
           Điều khoản sử dụng
         </NuxtLink>
         và
         <NuxtLink
           to="/privacy"
-          class="font-medium text-orange-500 hover:text-orange-400"
+          class="font-medium text-orange-500 dark:text-orange-400 hover:text-orange-400 dark:hover:text-orange-300"
         >
           Chính sách bảo mật
         </NuxtLink>
-      </label>
+      </Typography>
     </div>
 
     <!-- Submit Button -->
@@ -226,6 +242,7 @@
   import { httpRequest } from '~/utils/httpRequest'
   import Input from '~/components/ui/Input/Input.vue'
   import Button from '~/components/ui/Button.vue'
+  import Typography from '~/components/ui/Typography.vue'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import { registerSchema } from '~/utils/validations/registerSchema'

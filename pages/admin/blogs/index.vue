@@ -17,11 +17,13 @@
     </HeaderContent>
     <ErrorCommon v-if="error" :message="error" @retry="fetchPosts" />
 
-    <ul class="flex flex-col gap-4 border-[1px] border-gray-200 rounded-lg">
+    <ul
+      class="flex flex-col gap-4 border-[1px] border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-[#050505]"
+    >
       <li
         v-for="post in posts"
         :key="post._id"
-        class="p-2 border-b-[1px] border-gray-200 list-none flex flex-col gap-2"
+        class="p-2 border-b-[1px] border-gray-200 dark:border-gray-800 list-none flex flex-col gap-2"
       >
         <div class="flex items-center gap-2">
           <img
@@ -30,9 +32,11 @@
             class="w-24 h-24 rounded-md"
           />
           <div class="flex flex-col">
-            <h3 class="text-sm font-bold text-gray-600">{{ post.title }}</h3>
+            <Typography as="h3" size="sm" weight="bold">
+              {{ post.title }}
+            </Typography>
             <ViewEditor
-              class="text-xs text-gray-300"
+              class="text-xs text-gray-500 dark:text-gray-400"
               :content="post.description"
               :strip-html="true"
               :truncate="true"
@@ -44,19 +48,19 @@
           <div class="flex items-center gap-1">
             <span
               v-if="post.createdAt"
-              class="text-[8px] bg-green-100 text-green-800 px-2 py-1 rounded-full"
+              class="text-[8px] bg-green-100 text-green-800 px-2 py-1 rounded-full dark:bg-green-900/40 dark:text-green-300"
             >
               {{ formatDate(post.createdAt) }}
             </span>
             <span
               v-if="post.category"
-              class="text-[8px] bg-red-100 text-red-800 px-2 py-1 rounded-full"
+              class="text-[8px] bg-red-100 text-red-800 px-2 py-1 rounded-full dark:bg-red-900/40 dark:text-red-300"
             >
               {{ post.category }}
             </span>
             <span
               v-if="post?.createdBy?.lastName"
-              class="text-[8px] bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full"
+              class="text-[8px] bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full dark:bg-yellow-900/40 dark:text-yellow-200"
             >
               {{ post?.createdBy?.lastName }}
             </span>
@@ -81,7 +85,7 @@
 
     <div
       v-if="!error && posts.length > 0"
-      class="mt-8 bg-white rounded-2xl shadow-md border border-gray-100 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
+      class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
     >
       <Pagination
         :page="currentPage"
@@ -119,6 +123,7 @@
   import Pagination from '~/components/ui/Pagination.vue'
   import TableBlogs from '~/pages/admin/blogs/_components/TableBlogs.vue'
   import { format } from 'date-fns'
+  import Typography from '~/components/ui/Typography.vue'
 
   definePageMeta({
     layout: 'admin',

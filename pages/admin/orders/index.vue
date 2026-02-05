@@ -16,13 +16,18 @@
     </HeaderContent>
 
     <!-- Loading State -->
-    <Loading v-if="loading" size="lg" />
+    <div
+      v-if="loading"
+      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-8"
+    >
+      <Loading size="lg" />
+    </div>
 
     <!-- Content -->
     <div v-else>
       <!-- Filters -->
       <div
-        class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6"
+        class="bg-white dark:bg-[#050505] p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 mb-6"
       >
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
@@ -53,7 +58,7 @@
 
       <!-- Status Tags -->
       <div
-        class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6"
+        class="bg-white dark:bg-[#050505] p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 mb-6"
       >
         <div class="flex flex-wrap gap-3">
           <!-- Tất cả -->
@@ -127,7 +132,7 @@
       />
 
       <!-- Pagination -->
-      <div class="bg-white px-6 py-3 border-t border-gray-200">
+      <div class="bg-white dark:bg-[#050505] px-6 py-3 border-t border-gray-200 dark:border-gray-800">
         <Pagination
           :page="currentPage"
           :total="filteredOrders.length"

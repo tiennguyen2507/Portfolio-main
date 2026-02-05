@@ -2,12 +2,23 @@
   <div class="sm:mb-2">
     <div class="flex sm:flex-row sm:justify-between sm:items-start gap-4">
       <div class="flex-1">
-        <h1 class="text-xl sm:text-2xl font-bold">
+        <Typography
+          as="h1"
+          :size="{ sp: 'xl', pc: '2xl' }"
+          weight="bold"
+          color="default"
+        >
           {{ title }}
-        </h1>
-        <p class="text-gray-600 text-sm sm:text-base mt-1 ml-15">
+        </Typography>
+        <Typography
+          v-if="subtitle"
+          as="p"
+          size="sm"
+          color="muted"
+          class="mt-1"
+        >
           {{ subtitle }}
-        </p>
+        </Typography>
       </div>
       <div class="flex items-center justify-end sm:justify-start">
         <slot name="action" />
@@ -17,6 +28,8 @@
 </template>
 
 <script setup>
+  import Typography from '~/components/ui/Typography.vue'
+
   defineProps({
     title: {
       type: String,
@@ -28,5 +41,4 @@
     },
   })
 </script>
-
 

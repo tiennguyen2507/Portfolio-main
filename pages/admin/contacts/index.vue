@@ -6,7 +6,9 @@
     />
 
     <!-- Filters -->
-    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
+    <div
+      class="bg-white dark:bg-[#050505] p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 mb-6"
+    >
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <Input
@@ -39,45 +41,48 @@
     <!-- Loading State -->
     <div
       v-if="loading"
-      class="bg-white rounded-lg shadow-sm border border-gray-200 p-8"
+      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-8"
     >
       <Loading />
     </div>
 
     <!-- Contacts Table -->
-    <div v-else class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div
+      v-else
+      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800"
+    >
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+          <thead class="bg-gray-50 dark:bg-[#080808]">
             <tr>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Thông tin liên hệ
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Tin nhắn
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Trạng thái
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Ngày tạo
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Thao tác
               </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody class="bg-white dark:bg-[#050505] divide-y divide-gray-200 dark:divide-gray-800">
             <tr
               v-for="contact in contacts"
               :key="contact._id"
@@ -86,24 +91,26 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div
-                    class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center"
+                    class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center"
                   >
-                    <span class="text-sm font-medium text-gray-600">{{
-                      contact.name.charAt(0).toUpperCase()
-                    }}</span>
+                    <span class="text-sm font-medium text-gray-600 dark:text-gray-100">
+                      {{ contact.name.charAt(0).toUpperCase() }}
+                    </span>
                   </div>
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
+                    <Typography as="p" size="sm" weight="medium">
                       {{ contact.name }}
-                    </div>
-                    <div class="text-sm text-gray-500">{{ contact.email }}</div>
+                    </Typography>
+                    <Typography as="p" size="xs" color="muted">
+                      {{ contact.email }}
+                    </Typography>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4">
-                <div class="text-sm text-gray-900 max-w-xs truncate">
+                <Typography as="p" size="sm" class="max-w-xs truncate">
                   {{ contact.message }}
-                </div>
+                </Typography>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
@@ -116,8 +123,10 @@
                   {{ contact.status ? 'Đã xử lý' : 'Chưa xử lý' }}
                 </span>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ formatDate(contact.createdAt) }}
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <Typography as="p" size="xs" color="muted">
+                  {{ formatDate(contact.createdAt) }}
+                </Typography>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div class="flex space-x-2">
@@ -164,18 +173,18 @@
             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
           />
         </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">
+        <Typography as="h3" size="sm" weight="medium">
           Không có liên hệ nào
-        </h3>
-        <p class="mt-1 text-sm text-gray-500">
+        </Typography>
+        <Typography as="p" size="sm" color="muted" class="mt-1">
           Chưa có liên hệ nào được gửi đến.
-        </p>
+        </Typography>
       </div>
 
       <!-- Pagination -->
       <div
         v-if="contacts.length > 0"
-        class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6"
+        class="bg-white dark:bg-[#050505] px-4 py-3 border-t border-gray-200 dark:border-gray-800 sm:px-6"
       >
         <Pagination
           :page="currentPage"
@@ -198,6 +207,7 @@
   import Input from '~/components/ui/Input/Input.vue'
   import Button from '~/components/ui/Button.vue'
   import Select from '~/components/ui/Select.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   definePageMeta({
     layout: 'admin',

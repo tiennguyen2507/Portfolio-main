@@ -1,26 +1,26 @@
 <template>
   <div class="text-center">
-    <h2 class="mt-1 text-3xl font-extrabold text-gray-900">
+    <Typography as="h2" size="3xl" weight="extrabold" color="default" class="mt-1">
       Đăng nhập vào tài khoản
-    </h2>
-    <p class="mt-2 text-sm text-gray-600">
+    </Typography>
+    <Typography as="p" size="sm" color="muted" class="mt-2">
       Hoặc
       <NuxtLink
         to="/auth/register"
-        class="font-medium text-orange-500 hover:text-orange-400"
+        class="font-medium text-orange-500 dark:text-orange-400 hover:text-orange-400 dark:hover:text-orange-300"
       >
         đăng ký tài khoản mới
       </NuxtLink>
-    </p>
+    </Typography>
   </div>
 
   <form class="mt-2 space-y-6" @submit="handleLogin">
     <div class="space-y-4">
       <!-- Email Input -->
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+        <Typography as="label" for="email" size="sm" weight="medium" color="default" class="block mb-2">
           Email
-        </label>
+        </Typography>
         <Input
           id="email"
           v-model="email"
@@ -31,19 +31,23 @@
           :variant="errors.email ? 'error' : 'default'"
           size="lg"
         />
-        <p v-if="errors.email" class="mt-1 text-sm text-red-600">
+        <Typography v-if="errors.email" as="p" size="sm" color="error" class="mt-1">
           {{ errors.email }}
-        </p>
+        </Typography>
       </div>
 
       <!-- Password Input -->
       <div>
-        <label
+        <Typography
+          as="label"
           for="password"
-          class="block text-sm font-medium text-gray-700 mb-2"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
         >
           Mật khẩu
-        </label>
+        </Typography>
         <Input
           id="password"
           v-model="password"
@@ -54,9 +58,9 @@
           :variant="errors.password ? 'error' : 'default'"
           size="lg"
         />
-        <p v-if="errors.password" class="mt-1 text-sm text-red-600">
+        <Typography v-if="errors.password" as="p" size="sm" color="error" class="mt-1">
           {{ errors.password }}
-        </p>
+        </Typography>
       </div>
     </div>
 
@@ -67,11 +71,11 @@
           id="remember-me"
           v-model="rememberMe"
           type="checkbox"
-          class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded bg-white"
+          class="h-4 w-4 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400 border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900"
         />
-        <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+        <Typography as="label" for="remember-me" size="sm" color="default" class="ml-2 block">
           Ghi nhớ đăng nhập
-        </label>
+        </Typography>
       </div>
     </div>
     <!-- Submit Button -->
@@ -93,6 +97,7 @@
   import { httpRequest } from '~/utils/httpRequest'
   import Input from '~/components/ui/Input/Input.vue'
   import Button from '~/components/ui/Button.vue'
+  import Typography from '~/components/ui/Typography.vue'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import { loginSchema } from '~/utils/validations/loginSchema'

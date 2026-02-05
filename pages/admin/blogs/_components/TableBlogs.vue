@@ -17,9 +17,9 @@
           />
           <div
             v-else
-            class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center"
+            class="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center"
           >
-            <span class="text-gray-400 text-xs">No image</span>
+            <Typography as="span" size="xxs" color="tertiary">No image</Typography>
           </div>
         </div>
       </template>
@@ -38,11 +38,12 @@
       <!-- Custom Description Column -->
       <template #cell-description="{ value }">
         <div
-          class="text-sm text-gray-500 max-w-md overflow-hidden"
+          class="text-sm text-gray-500 dark:text-gray-400 max-w-md overflow-hidden"
           style="
             max-height: 60px;
             display: -webkit-box;
             -webkit-line-clamp: 3;
+            line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -77,6 +78,7 @@
   import ButtonIcon from '~/components/ui/ButtonIcon.vue'
   import Table from '~/components/ui/Table.vue'
   import Tag from '~/components/ui/Tag.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   const props = defineProps({
     posts: {

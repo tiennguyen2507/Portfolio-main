@@ -1,19 +1,23 @@
 <template>
   <Modal :isOpen="isOpen" @close="$emit('close')">
     <div class="p-6">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">
+      <Typography as="h2" size="2xl" weight="bold" color="default" class="mb-6">
         {{ isEditing ? 'Chỉnh sửa Dự án' : 'Thêm Dự án Mới' }}
-      </h2>
+      </Typography>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Title -->
         <div>
-          <label
+          <Typography
+            as="label"
             for="title"
-            class="block text-sm font-medium text-gray-700 mb-2"
+            size="sm"
+            weight="medium"
+            color="default"
+            class="block mb-2"
           >
             Tiêu đề dự án *
-          </label>
+          </Typography>
           <Input
             id="title"
             v-model="localForm.title"
@@ -26,12 +30,16 @@
 
         <!-- Description -->
         <div>
-          <label
+          <Typography
+            as="label"
             for="description"
-            class="block text-sm font-medium text-gray-700 mb-2"
+            size="sm"
+            weight="medium"
+            color="default"
+            class="block mb-2"
           >
             Mô tả dự án *
-          </label>
+          </Typography>
           <Editor
             v-model="localForm.description"
             :options="editorOptions"
@@ -41,9 +49,9 @@
 
         <!-- Skills -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">
+          <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2">
             Công nghệ sử dụng
-          </label>
+          </Typography>
           <div class="space-y-3">
             <!-- Skills Input -->
             <div class="flex gap-2">
@@ -69,13 +77,13 @@
               <span
                 v-for="(skill, index) in localForm.skill"
                 :key="index"
-                class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2"
+                class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2"
               >
                 {{ skill }}
                 <button
                   type="button"
                   @click="removeSkill(index)"
-                  class="text-orange-600 hover:text-orange-800"
+                  class="text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-200"
                 >
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path
@@ -89,15 +97,17 @@
             </div>
 
             <!-- Common Skills Suggestions -->
-            <div class="text-sm text-gray-500">
-              <p class="mb-2">Gợi ý công nghệ phổ biến:</p>
+            <div>
+              <Typography as="p" size="sm" color="muted" class="mb-2">
+                Gợi ý công nghệ phổ biến:
+              </Typography>
               <div class="flex flex-wrap gap-1">
                 <button
                   v-for="suggestion in commonSkills"
                   :key="suggestion"
                   type="button"
                   @click="addSkillFromSuggestion(suggestion)"
-                  class="text-blue-600 hover:text-blue-800 underline text-xs"
+                  class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline text-xs"
                 >
                   {{ suggestion }}
                 </button>
@@ -108,9 +118,9 @@
 
         <!-- Thumbnail -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">
+          <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2">
             Hình ảnh dự án
-          </label>
+          </Typography>
           <UploadFile
             :value="localForm.thumbnail"
             @change="handleThumbnailChange"
@@ -125,22 +135,24 @@
             <input
               v-model="localForm.status"
               type="checkbox"
-              class="rounded border-gray-300 text-orange-600 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
+              class="rounded border-gray-300 dark:border-gray-700 text-orange-600 dark:text-orange-400 shadow-sm focus:border-orange-300 dark:focus:border-orange-500 focus:ring focus:ring-orange-200 dark:focus:ring-orange-800 focus:ring-opacity-50"
             />
-            <span class="ml-2 text-sm text-gray-700">Dự án hoàn thành</span>
+            <Typography as="span" size="sm" color="default" class="ml-2">
+              Dự án hoàn thành
+            </Typography>
           </label>
         </div>
 
         <!-- Error Message -->
         <div
           v-if="error"
-          class="bg-red-50 border border-red-200 rounded-md p-4"
+          class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4"
         >
-          <p class="text-red-800 text-sm">{{ error }}</p>
+          <Typography as="p" size="sm" color="error">{{ error }}</Typography>
         </div>
 
         <!-- Form Actions -->
-        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-800">
           <Button
             type="button"
             @click="$emit('close')"
@@ -194,6 +206,7 @@
   import Button from '~/components/ui/Button.vue'
   import Editor from '~/components/ui/Editor.vue'
   import UploadFile from '~/components/ui/UploadFile.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   const props = defineProps({
     isOpen: {

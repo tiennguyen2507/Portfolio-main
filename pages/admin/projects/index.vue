@@ -63,7 +63,7 @@
     <!-- Pagination - Separated from Table -->
     <div
       v-if="!error && projects.length > 0"
-      class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-3"
+      class="mt-6 bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 px-6 py-3"
     >
       <Pagination
         :page="currentPage"

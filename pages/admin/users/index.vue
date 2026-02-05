@@ -16,13 +16,13 @@
       </div>
       <div
         v-if="loading"
-        class="mt-6 bg-white rounded-lg shadow-sm border-[1px] border-gray-200"
+        class="mt-6 bg-white dark:bg-[#050505] rounded-lg shadow-sm border-[1px] border-gray-200 dark:border-gray-800"
       >
         <Loading container-class="py-12" />
       </div>
       <ul
         v-else
-        class="mt-6 bg-white rounded-lg shadow-sm border-[1px] border-gray-200"
+        class="mt-6 bg-white dark:bg-[#050505] rounded-lg shadow-sm border-[1px] border-gray-200 dark:border-gray-800"
       >
         <li
           v-for="user in users"
@@ -38,20 +38,22 @@
             />
             <div class="flex flex-col flex-grow gap-1">
               <div class="flex items-center justify-between">
-                <p class="text-sm font-bold text-gray-600">
+                <Typography as="p" size="sm" weight="semibold">
                   {{ user.fullName }}
-                </p>
-                <p class="text-[12px] text-gray-300">
+                </Typography>
+                <Typography as="p" size="xxs" color="tertiary">
                   {{ formatDate(user.createdAt) }}
-                </p>
+                </Typography>
               </div>
               <div class="flex items-center justify-between">
-                <p class="text-sm text-gray-300">{{ user.email }}</p>
-                <p
-                  class="text-[10px] bg-green-100 text-green-800 px-2 py-1 rounded-full"
+                <Typography as="p" size="xs" color="muted">
+                  {{ user.email }}
+                </Typography>
+                <span
+                  class="text-[10px] bg-green-100 text-green-800 px-2 py-1 rounded-full dark:bg-green-900/40 dark:text-green-300"
                 >
                   {{ user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }}
-                </p>
+                </span>
               </div>
             </div>
           </div>
@@ -70,6 +72,7 @@
   import Loading from '~/components/ui/Loading.vue'
   import Avatar from '~/components/ui/Avatar.vue'
   import TableAdminUsers from './_components/TableAdminUsers.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   definePageMeta({
     layout: 'admin',

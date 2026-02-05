@@ -12,43 +12,46 @@
       <div class="space-y-2">
         <!-- Customer Name -->
         <div class="flex items-center gap-2">
-          <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-          <div class="font-semibold text-gray-900 text-sm">
+          <div class="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full"></div>
+          <Typography as="span" size="sm" weight="semibold" color="default">
             Khách hàng: {{ record.fullName }}
-          </div>
+          </Typography>
         </div>
 
         <!-- Phone Number -->
         <div class="flex items-center gap-2 ml-4">
-          <div class="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-          <div class="text-sm text-gray-600">
+          <div class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
+          <Typography as="span" size="sm" color="muted">
             Số điện thoại: {{ record.phone }}
-          </div>
+          </Typography>
         </div>
 
         <!-- Address -->
         <div class="flex items-start gap-2 ml-4">
-          <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5"></div>
-          <div
-            class="text-xs text-gray-500 max-w-[180px] leading-relaxed"
+          <div class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mt-1.5"></div>
+          <Typography
+            as="span"
+            size="xxs"
+            color="tertiary"
+            class="max-w-[180px]"
             :title="record.address"
           >
             Địa chỉ: {{ record.address }}
-          </div>
+          </Typography>
         </div>
 
         <!-- Note (if exists) -->
         <div
           v-if="record.note"
-          class="ml-4 mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg"
+          class="ml-4 mt-3 p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg"
         >
           <div class="flex items-start gap-2">
             <div
-              class="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"
+              class="w-1.5 h-1.5 bg-amber-500 dark:bg-amber-400 rounded-full mt-1.5 flex-shrink-0"
             ></div>
-            <div class="text-xs text-amber-800">
+            <Typography as="span" size="xxs" color="warning">
               <span class="font-medium">Ghi chú:</span> {{ record.note }}
-            </div>
+            </Typography>
           </div>
         </div>
       </div>
@@ -57,14 +60,14 @@
     <!-- Custom cell for products -->
     <template #cell-products="{ record }">
       <div
-        class="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-blue-300 transition-colors"
+        class="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-3 border border-gray-200 dark:border-gray-800 hover:border-blue-300 dark:hover:border-blue-600 transition-colors"
       >
         <!-- Product Count Badge -->
         <div class="flex items-center justify-between mb-2">
           <div class="flex items-center gap-2">
-            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+            <div class="w-3 h-3 bg-blue-500 dark:bg-blue-400 rounded-full"></div>
             <span
-              class="text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded-full"
+              class="text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded-full"
             >
               {{ record.orderItems?.length || 0 }} sản phẩm
             </span>
@@ -81,16 +84,16 @@
             <div
               v-for="(item, index) in record.orderItems.slice(0, 2)"
               :key="index"
-              class="flex items-center gap-2 text-xs"
+              class="flex items-center gap-2"
             >
-              <div class="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-              <span class="text-gray-700 font-medium">
+              <div class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
+              <Typography as="span" size="xxs" weight="medium" color="default">
                 {{ item.productId?.title || 'N/A' }}
-              </span>
-              <span class="text-gray-500">×</span>
-              <span class="text-gray-600 font-semibold">
+              </Typography>
+              <Typography as="span" size="xxs" color="tertiary">×</Typography>
+              <Typography as="span" size="xxs" weight="semibold" color="muted">
                 {{ item.quantity }}
-              </span>
+              </Typography>
             </div>
           </div>
         </div>
@@ -100,10 +103,10 @@
     <!-- Custom cell for total amount -->
     <template #cell-totalAmount="{ record }">
       <div class="flex items-center gap-2">
-        <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
-        <div class="font-bold text-lg text-gray-900">
+        <div class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full"></div>
+        <Typography as="span" size="lg" weight="bold" color="default">
           {{ formatPrice(record.totalAmount) }}
-        </div>
+        </Typography>
       </div>
     </template>
 
@@ -117,10 +120,10 @@
     <!-- Custom cell for created date -->
     <template #cell-createdAt="{ record }">
       <div class="flex items-center gap-2">
-        <div class="w-2 h-2 bg-indigo-500 rounded-full"></div>
-        <div class="text-sm text-gray-900">
+        <div class="w-2 h-2 bg-indigo-500 dark:bg-indigo-400 rounded-full"></div>
+        <Typography as="span" size="sm" color="default">
           {{ formatDate(record.createdAt) }}
-        </div>
+        </Typography>
       </div>
     </template>
 
@@ -179,6 +182,7 @@
   import Table from '~/components/ui/Table.vue'
   import Button from '~/components/ui/Button.vue'
   import Tag from '~/components/ui/Tag.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   defineProps({
     orders: {

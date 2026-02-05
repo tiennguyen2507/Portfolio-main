@@ -1,19 +1,19 @@
 <template>
   <Modal :isOpen="isOpen" width="2xl" maxHeight="90vh" @close="$emit('close')">
     <template #header>
-      <h3 class="text-lg font-semibold text-gray-900">
+      <Typography as="h3" size="lg" weight="semibold" color="default">
         {{ isEditing ? 'Chỉnh sửa sản phẩm' : 'Tạo sản phẩm mới' }}
-      </h3>
+      </Typography>
     </template>
 
     <!-- Error Display -->
     <div
       v-if="error"
-      class="mb-4 p-3 bg-red-50 border border-red-200 rounded-md"
+      class="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md"
     >
       <div class="flex items-center">
         <svg
-          class="w-5 h-5 text-red-600 mr-2"
+          class="w-5 h-5 text-red-600 dark:text-red-400 mr-2"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -25,7 +25,7 @@
             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
-        <span class="text-sm text-red-800">{{ error }}</span>
+        <Typography as="span" size="sm" color="error">{{ error }}</Typography>
       </div>
     </div>
 
@@ -44,8 +44,8 @@
 
       <!-- Description -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"
-          >Mô tả sản phẩm</label
+        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
+          >Mô tả sản phẩm</Typography
         >
         <Editor
           v-model="form.description"
@@ -106,19 +106,19 @@
 
       <!-- Thumbnail Upload -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"
-          >Hình ảnh sản phẩm</label
+        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
+          >Hình ảnh sản phẩm</Typography
         >
         <UploadFile :onChange="handleThumbnailChange" />
         <div v-if="thumbnailFile" class="mt-2">
-          <p class="text-sm text-gray-600">
+          <Typography as="p" size="sm" color="muted">
             File đã chọn: {{ thumbnailFile.name }}
-          </p>
+          </Typography>
         </div>
         <div v-else-if="form.thumbnail" class="mt-2">
-          <p class="text-sm text-gray-600">
+          <Typography as="p" size="sm" color="muted">
             Hình ảnh hiện tại: {{ form.thumbnail }}
-          </p>
+          </Typography>
         </div>
       </div>
     </div>
@@ -147,6 +147,7 @@
   import Input from '~/components/ui/Input/Input.vue'
   import Select from '~/components/ui/Select.vue'
   import Button from '~/components/ui/Button.vue'
+  import Typography from '~/components/ui/Typography.vue'
   import { ref } from 'vue'
 
   // Editor options

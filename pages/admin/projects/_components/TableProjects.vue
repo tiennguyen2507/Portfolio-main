@@ -1,22 +1,26 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+  <div class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800">
     <!-- Table Header -->
-    <div class="px-6 py-4 border-b border-gray-200">
-      <h3 class="text-lg font-semibold text-gray-900">Danh sách dự án</h3>
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+      <Typography as="h3" size="lg" weight="semibold" color="default">
+        Danh sách dự án
+      </Typography>
     </div>
 
     <!-- Loading State -->
     <div v-if="loading" class="p-8 text-center">
       <div
-        class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"
+        class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 dark:border-orange-400"
       ></div>
-      <p class="mt-2 text-gray-500">Đang tải dữ liệu...</p>
+      <Typography as="p" size="sm" color="muted" class="mt-2">
+        Đang tải dữ liệu...
+      </Typography>
     </div>
 
     <!-- Empty State -->
     <div v-else-if="projects.length === 0" class="p-8 text-center">
       <svg
-        class="mx-auto h-12 w-12 text-gray-400"
+        class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -28,16 +32,18 @@
           d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
         />
       </svg>
-      <h3 class="mt-2 text-sm font-medium text-gray-900">Không có dự án nào</h3>
-      <p class="mt-1 text-sm text-gray-500">
+      <Typography as="h3" size="sm" weight="medium" color="default" class="mt-2">
+        Không có dự án nào
+      </Typography>
+      <Typography as="p" size="sm" color="muted" class="mt-1">
         Bắt đầu tạo dự án đầu tiên của bạn.
-      </p>
+      </Typography>
     </div>
 
     <!-- Projects Table -->
     <div v-else class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
+        <thead class="bg-gray-50 dark:bg-gray-900/50">
           <tr>
             <th
               scope="col"
@@ -71,11 +77,11 @@
             </th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="bg-white dark:bg-[#050505] divide-y divide-gray-200 dark:divide-gray-800">
           <tr
             v-for="project in projects"
             :key="project._id"
-            class="hover:bg-gray-50 transition-colors"
+            class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors"
           >
             <!-- Project Info -->
             <td class="px-6 py-4 whitespace-nowrap">
@@ -89,12 +95,17 @@
                   />
                 </div>
                 <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">
+                  <Typography as="div" size="sm" weight="medium" color="default">
                     {{ project.title }}
-                  </div>
-                  <div class="text-sm text-gray-500 line-clamp-2 max-w-xs">
+                  </Typography>
+                  <Typography
+                    as="div"
+                    size="sm"
+                    color="muted"
+                    class="line-clamp-2 max-w-xs"
+                  >
                     {{ project.description }}
-                  </div>
+                  </Typography>
                 </div>
               </div>
             </td>
@@ -105,13 +116,13 @@
                 <span
                   v-for="skill in project.skill?.slice(0, 3)"
                   :key="skill"
-                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800"
+                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300"
                 >
                   {{ skill }}
                 </span>
                 <span
                   v-if="project.skill && project.skill.length > 3"
-                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300"
                 >
                   +{{ project.skill.length - 3 }}
                 </span>
@@ -123,13 +134,13 @@
               <span
                 :class="
                   project.status
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
+                    : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
                 "
                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               >
                 <svg
-                  :class="project.status ? 'text-green-400' : 'text-yellow-400'"
+                  :class="project.status ? 'text-green-400 dark:text-green-500' : 'text-yellow-400 dark:text-yellow-500'"
                   class="w-2 h-2 mr-1"
                   fill="currentColor"
                   viewBox="0 0 8 8"
@@ -141,8 +152,10 @@
             </td>
 
             <!-- Created Date -->
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {{ formatDate(project.createdAt) }}
+            <td class="px-6 py-4 whitespace-nowrap">
+              <Typography as="span" size="sm" color="tertiary">
+                {{ formatDate(project.createdAt) }}
+              </Typography>
             </td>
 
             <!-- Actions -->
@@ -150,7 +163,7 @@
               <div class="flex items-center space-x-2">
                 <button
                   @click="emit('edit', project)"
-                  class="text-orange-600 hover:text-orange-900 transition-colors"
+                  class="text-orange-600 dark:text-orange-400 hover:text-orange-900 dark:hover:text-orange-300 transition-colors"
                   title="Chỉnh sửa"
                 >
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -161,7 +174,7 @@
                 </button>
                 <button
                   @click="emit('delete', project._id)"
-                  class="text-red-600 hover:text-red-900 transition-colors"
+                  class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 transition-colors"
                   title="Xóa"
                 >
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -182,6 +195,8 @@
 </template>
 
 <script setup>
+  import Typography from '~/components/ui/Typography.vue'
+
   const props = defineProps({
     projects: {
       type: Array,
@@ -219,6 +234,7 @@
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

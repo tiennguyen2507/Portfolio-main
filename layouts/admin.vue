@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
+  <div class="min-h-screen bg-gray-50 dark:bg-black flex flex-col">
     <div
       v-if="isLoading"
       class="min-h-screen flex items-center justify-center bg-gray-50"
@@ -7,8 +7,8 @@
       <Loading size="lg" color="green" />
     </div>
     <template v-else>
-      <HeaderLayout />
-      <main class="flex-1 overflow-auto bg-gray-50 pb-20">
+      <Header />
+      <main class="flex-1 overflow-auto bg-gray-50 dark:bg-black pb-24 pt-16">
         <div class="p-6 lg:p-8 w-full">
           <slot />
         </div>
@@ -19,14 +19,14 @@
       >
         <nav class="overflow-x-auto flex justify-center">
           <div
-            class="flex items-end justify-between min-w-max gap-10 w-full lg:max-w-4xl lg:mx-auto p-3 px-8 pb-5 lg:rounded-3xl bg-white/30 dark:bg-black/40"
+            class="flex items-end justify-between w-full gap-6 p-3 px-6 pb-5 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800"
           >
             <NuxtLink
               v-for="item in menuItems"
               :key="item.path"
               :to="item.path"
-              class="group relative flex items-center justify-center p-2 rounded-xl transition-all duration-200 ease-out hover:scale-110 active:scale-95"
-              :class="[item.active ? 'bg-orange-500 text-white scale-110' : '']"
+              class="group relative flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 ease-out hover:scale-105 active:scale-95"
+              :class="[item.active ? 'bg-orange-500 text-white scale-105 shadow-md' : '']"
               :aria-label="item.label"
             >
               <Icon
@@ -47,6 +47,18 @@
                   item.active ? 'drop-shadow-md' : 'group-hover:drop-shadow-sm',
                 ]"
               />
+
+              <Typography
+                as="span"
+                :size="{ sp: 'xxs', pc: 'xs' }"
+                weight="medium"
+                :color="item.active ? 'white' : 'muted'"
+                align="center"
+                no-wrap
+                class="relative z-10 hidden sm:block"
+              >
+                {{ item.label }}
+              </Typography>
             </NuxtLink>
           </div>
         </nav>
@@ -58,6 +70,8 @@
 <script setup>
   import Icon from '~/components/ui/Icon/Icon.vue'
   import Loading from '~/components/ui/Loading.vue'
+  import Header from '~/components/common/Header/Header.vue'
+  import Typography from '~/components/ui/Typography.vue'
   import {
     adminMenuItems,
     ICON_CONFIG,

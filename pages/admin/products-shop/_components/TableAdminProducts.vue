@@ -18,13 +18,13 @@
           />
         </div>
         <div>
-          <div class="text-sm font-bold text-gray-900">
+          <Typography as="div" size="sm" weight="bold" color="default">
             {{ record.title || 'N/A' }}
-          </div>
+          </Typography>
           <ViewEditor
             :content="record.description || ''"
             variant="default"
-            custom-class="text-sm text-gray-500"
+            custom-class="text-sm text-gray-500 dark:text-gray-400"
             :truncate="true"
             :max-length="100"
           />
@@ -41,24 +41,26 @@
 
     <!-- Cell: Price -->
     <template #cell-price="{ value }">
-      <span class="text-sm font-semibold text-green-600">
+      <Typography as="span" size="sm" weight="semibold" color="success">
         {{ formatPrice(value) }}
-      </span>
+      </Typography>
     </template>
 
     <!-- Cell: Quantity -->
     <template #cell-quantity="{ value }">
-      <span class="text-sm text-gray-600">{{ value || 0 }}</span>
+      <Typography as="span" size="sm" color="muted">{{ value || 0 }}</Typography>
     </template>
 
     <!-- Cell: Sales -->
     <template #cell-sales="{ value }">
-      <span class="text-sm text-blue-600">{{ formatPrice(value) }}</span>
+      <Typography as="span" size="sm" color="primary">
+        {{ formatPrice(value) }}
+      </Typography>
     </template>
 
     <!-- Cell: Created At -->
     <template #cell-createdAt="{ value }">
-      <span class="text-sm text-gray-500">{{ formatDate(value) }}</span>
+      <Typography as="span" size="sm" color="tertiary">{{ formatDate(value) }}</Typography>
     </template>
 
     <!-- Cell: Actions -->
@@ -90,6 +92,7 @@
   import Button from '~/components/ui/Button.vue'
   import Icon from '~/components/ui/Icon/Icon.vue'
   import ViewEditor from '~/components/ui/ViewEditor.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   const props = defineProps({
     products: { type: Array, default: () => [] },

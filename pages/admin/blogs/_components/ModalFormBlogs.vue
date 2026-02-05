@@ -1,19 +1,19 @@
 <template>
   <Modal :isOpen="isOpen" width="2xl" maxHeight="90vh" @close="$emit('close')">
     <template #header>
-      <h3 class="text-lg font-semibold text-gray-900">
+      <Typography as="h3" size="lg" weight="semibold" color="default">
         {{ isEditing ? 'Chỉnh sửa bài viết' : 'Tạo bài viết mới' }}
-      </h3>
+      </Typography>
     </template>
 
     <!-- Error Display -->
     <div
       v-if="error"
-      class="mb-4 p-3 bg-red-50 border border-red-200 rounded-md"
+      class="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md"
     >
       <div class="flex items-center">
         <svg
-          class="w-5 h-5 text-red-600 mr-2"
+          class="w-5 h-5 text-red-600 dark:text-red-400 mr-2"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -25,7 +25,7 @@
             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
-        <span class="text-sm text-red-800">{{ error }}</span>
+        <Typography as="span" size="sm" color="error">{{ error }}</Typography>
       </div>
     </div>
 
@@ -33,14 +33,14 @@
     <div class="space-y-6">
       <!-- Title -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"
-          >Tiêu đề bài viết</label
+        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
+          >Tiêu đề bài viết</Typography
         >
         <input
           v-model="form.title"
           type="text"
           required
-          class="w-full px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          class="w-full px-3 py-2 rounded-lg bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 outline-none"
           placeholder="Nhập tiêu đề bài viết..."
           maxlength="120"
         />
@@ -58,21 +58,21 @@
 
       <!-- Thumbnail Upload -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"
-          >Thumbnail</label
+        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
+          >Thumbnail</Typography
         >
         <UploadFile :value="form.thumbnail" :onChange="handleThumbnailChange" />
         <div v-if="thumbnailFile" class="mt-2">
-          <p class="text-sm text-gray-600">
+          <Typography as="p" size="sm" color="muted">
             File đã chọn: {{ thumbnailFile.name }}
-          </p>
+          </Typography>
         </div>
       </div>
 
       <!-- Content Editor -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"
-          >Nội dung bài viết</label
+        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
+          >Nội dung bài viết</Typography
         >
         <Editor
           v-model="form.description"
@@ -86,41 +86,18 @@
     </div>
 
     <template #footer>
-      <button
-        @click="$emit('close')"
-        :disabled="submitting"
-        class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
+      <Button variant="outline" size="md" :disabled="submitting" @click="$emit('close')">
         Hủy
-      </button>
-      <button
-        @click="handleSubmit"
+      </Button>
+      <Button
+        variant="primary"
+        size="md"
+        :loading="submitting"
         :disabled="submitting"
-        class="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+        @click="handleSubmit"
       >
-        <svg
-          v-if="submitting"
-          class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            class="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="4"
-          ></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          ></path>
-        </svg>
-        {{ submitting ? 'Đang xử lý...' : isEditing ? 'Cập nhật' : 'Tạo mới' }}
-      </button>
+        {{ isEditing ? 'Cập nhật' : 'Tạo mới' }}
+      </Button>
     </template>
   </Modal>
 </template>
@@ -130,6 +107,8 @@
   import Editor from '~/components/ui/Editor.vue'
   import UploadFile from '~/components/ui/UploadFile.vue'
   import Select from '~/components/ui/Select.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Typography from '~/components/ui/Typography.vue'
   import { ref } from 'vue'
 
   // Category options
@@ -197,6 +176,7 @@
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -204,6 +184,7 @@
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

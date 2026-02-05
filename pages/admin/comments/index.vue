@@ -7,41 +7,12 @@
     />
 
     <!-- Error Display -->
-    <div
-      v-if="error"
-      class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4"
-    >
-      <div class="flex items-center">
-        <svg
-          class="w-5 h-5 text-red-600 mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-        <div>
-          <h3 class="text-sm font-medium text-red-800">Lỗi khi tải dữ liệu</h3>
-          <p class="text-red-600 mt-1">{{ error }}</p>
-        </div>
-      </div>
-      <button
-        @click="fetchComments"
-        class="mt-3 bg-red-600 text-white px-3 py-1.5 rounded-md hover:bg-red-700 transition-colors text-sm"
-      >
-        Thử lại
-      </button>
-    </div>
+    <ErrorCommon v-if="error" :message="error" @retry="fetchComments" />
 
     <!-- Loading State -->
     <div
       v-if="loading"
-      class="bg-white rounded-lg shadow-sm border border-gray-200 p-8"
+      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-8"
     >
       <Loading />
     </div>
@@ -49,40 +20,40 @@
     <!-- Comments Table -->
     <div
       v-else-if="!error"
-      class="bg-white rounded-lg shadow-sm border border-gray-200"
+      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800"
     >
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+          <thead class="bg-gray-50 dark:bg-[#080808]">
             <tr>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Người nhận xét
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Nội dung
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Trạng thái
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Ngày tạo
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
                 Thao tác
               </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody class="bg-white dark:bg-[#050505] divide-y divide-gray-200 dark:divide-gray-800">
             <tr
               v-for="comment in comments"
               :key="comment._id"
@@ -97,19 +68,19 @@
                     :readOnly="true"
                   />
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
+                    <Typography as="p" size="sm" weight="medium">
                       {{ comment.name }}
-                    </div>
-                    <div class="text-xs text-gray-500">
+                    </Typography>
+                    <Typography as="p" size="xs" color="muted">
                       {{ comment.relationship }}
-                    </div>
+                    </Typography>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4">
-                <div class="text-sm text-gray-900 max-w-xs truncate">
+                <Typography as="p" size="sm" class="max-w-xs truncate">
                   {{ comment.comment }}
-                </div>
+                </Typography>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
@@ -126,8 +97,10 @@
                   {{ isActiveStatus(comment.status) ? 'Hiển thị' : 'Ẩn' }}
                 </span>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ formatDate(comment.createdAt) }}
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <Typography as="p" size="xs" color="muted">
+                  {{ formatDate(comment.createdAt) }}
+                </Typography>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div class="flex space-x-2">
@@ -159,7 +132,7 @@
       <!-- Pagination -->
       <div
         v-if="comments.length > 0"
-        class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6 mt-2"
+        class="bg-white dark:bg-[#050505] px-4 py-3 border-t border-gray-200 dark:border-gray-800 sm:px-6 mt-2"
       >
         <Pagination
           :page="currentPage"
@@ -184,6 +157,8 @@
   import Pagination from '~/components/ui/Pagination.vue'
   import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
+  import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   definePageMeta({
     layout: 'admin',

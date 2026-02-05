@@ -18,10 +18,10 @@
           />
         </div>
         <div>
-          <div class="text-sm font-bold text-gray-900">
+          <Typography as="div" size="sm" weight="bold" color="default">
             {{ record.fullName || 'N/A' }}
-          </div>
-          <div class="text-sm text-gray-500">{{ record.email }}</div>
+          </Typography>
+          <Typography as="div" size="sm" color="muted">{{ record.email }}</Typography>
         </div>
       </div>
     </template>
@@ -42,7 +42,7 @@
 
     <!-- Cell: Created At -->
     <template #cell-createdAt="{ value }">
-      <span class="text-sm text-gray-500">{{ formatDate(value) }}</span>
+      <Typography as="span" size="sm" color="tertiary">{{ formatDate(value) }}</Typography>
     </template>
   </Table>
 </template>
@@ -51,6 +51,7 @@
   import Table from '~/components/ui/Table.vue'
   import Avatar from '~/components/ui/Avatar.vue'
   import Tag from '~/components/ui/Tag.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   const props = defineProps({
     users: { type: Array, default: () => [] },

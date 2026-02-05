@@ -9,7 +9,7 @@
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <div
-        class="group bg-white p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:border-orange-200 transition-all duration-300 hover:-translate-y-1"
+        class="group bg-white dark:bg-[#050505] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 hover:shadow-xl hover:border-orange-200/70 transition-all duration-300 hover:-translate-y-1"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center">
@@ -31,14 +31,18 @@
               </svg>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 mb-1">Tổng Leads</p>
-              <p class="text-3xl font-bold text-gray-900">1,234</p>
+              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
+                Tổng Leads
+              </Typography>
+              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+                1,234
+              </Typography>
             </div>
           </div>
         </div>
         <div class="mt-5 flex items-center">
           <span
-            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800"
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
           >
             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -49,12 +53,14 @@
             </svg>
             +12%
           </span>
-          <span class="text-gray-500 text-xs ml-2">so với tháng trước</span>
+          <Typography as="span" size="xs" color="tertiary" class="ml-2">
+            so với tháng trước
+          </Typography>
         </div>
       </div>
 
       <div
-        class="group bg-white p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:border-orange-200 transition-all duration-300 hover:-translate-y-1"
+        class="group bg-white dark:bg-[#050505] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 hover:shadow-xl hover:border-orange-200/70 transition-all duration-300 hover:-translate-y-1"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center">
@@ -76,16 +82,18 @@
               </svg>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 mb-1">
+              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
                 Leads Chuyển đổi
-              </p>
-              <p class="text-3xl font-bold text-gray-900">456</p>
+              </Typography>
+              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+                456
+              </Typography>
             </div>
           </div>
         </div>
         <div class="mt-5 flex items-center">
           <span
-            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800"
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
           >
             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -96,12 +104,14 @@
             </svg>
             +8%
           </span>
-          <span class="text-gray-500 text-xs ml-2">so với tháng trước</span>
+          <Typography as="span" size="xs" color="tertiary" class="ml-2">
+            so với tháng trước
+          </Typography>
         </div>
       </div>
 
       <div
-        class="group bg-white p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:border-orange-200 transition-all duration-300 hover:-translate-y-1"
+        class="group bg-white dark:bg-[#050505] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 hover:shadow-xl hover:border-orange-200/70 transition-all duration-300 hover:-translate-y-1"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center">
@@ -123,14 +133,18 @@
               </svg>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 mb-1">Doanh thu</p>
-              <p class="text-3xl font-bold text-gray-900">$45,678</p>
+              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
+                Doanh thu
+              </Typography>
+              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+                $45,678
+              </Typography>
             </div>
           </div>
         </div>
         <div class="mt-5 flex items-center">
           <span
-            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800"
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
           >
             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -141,12 +155,14 @@
             </svg>
             +15%
           </span>
-          <span class="text-gray-500 text-xs ml-2">so với tháng trước</span>
+          <Typography as="span" size="xs" color="tertiary" class="ml-2">
+            so với tháng trước
+          </Typography>
         </div>
       </div>
 
       <div
-        class="group bg-white p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:border-orange-200 transition-all duration-300 hover:-translate-y-1"
+        class="group bg-white dark:bg-[#050505] p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 hover:shadow-xl hover:border-orange-200/70 transition-all duration-300 hover:-translate-y-1"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center">
@@ -168,14 +184,18 @@
               </svg>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 mb-1">Người dùng</p>
-              <p class="text-3xl font-bold text-gray-900">89</p>
+              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
+                Người dùng
+              </Typography>
+              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+                89
+              </Typography>
             </div>
           </div>
         </div>
         <div class="mt-5 flex items-center">
           <span
-            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800"
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
           >
             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -186,7 +206,9 @@
             </svg>
             +5%
           </span>
-          <span class="text-gray-500 text-xs ml-2">so với tháng trước</span>
+          <Typography as="span" size="xs" color="tertiary" class="ml-2">
+            so với tháng trước
+          </Typography>
         </div>
       </div>
     </div>
@@ -195,10 +217,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <!-- Recent Leads -->
       <div
-        class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+        class="bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl transition-shadow duration-300"
       >
         <div
-          class="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white"
+          class="p-6 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-[#050505] dark:to-[#080808]"
         >
           <div class="flex items-center gap-2">
             <div class="p-2 bg-blue-100 rounded-lg">
@@ -216,7 +238,9 @@
                 />
               </svg>
             </div>
-            <h3 class="text-lg font-bold text-gray-900">Leads gần đây</h3>
+            <Typography as="h3" size="lg" weight="bold">
+              Leads gần đây
+            </Typography>
           </div>
         </div>
         <div class="p-6">
@@ -235,19 +259,23 @@
                   }}</span>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm font-semibold text-gray-900">
+                  <Typography as="p" size="sm" weight="semibold">
                     {{ lead.name }}
-                  </p>
-                  <p class="text-xs text-gray-500 mt-0.5">{{ lead.email }}</p>
+                  </Typography>
+                  <Typography as="p" size="xs" color="muted" class="mt-0.5">
+                    {{ lead.email }}
+                  </Typography>
                 </div>
               </div>
               <div class="text-right">
                 <span
-                  class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800"
+                  class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300"
                 >
                   {{ lead.source }}
                 </span>
-                <p class="text-xs text-gray-400 mt-1.5">{{ lead.date }}</p>
+                <Typography as="p" size="xs" color="tertiary" class="mt-1.5">
+                  {{ lead.date }}
+                </Typography>
               </div>
             </div>
           </div>
@@ -256,10 +284,10 @@
 
       <!-- Quick Actions -->
       <div
-        class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+        class="bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl transition-shadow duration-300"
       >
         <div
-          class="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white"
+          class="p-6 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-[#050505] dark:to-[#080808]"
         >
           <div class="flex items-center gap-2">
             <div class="p-2 bg-orange-100 rounded-lg">
@@ -277,14 +305,16 @@
                 />
               </svg>
             </div>
-            <h3 class="text-lg font-bold text-gray-900">Thao tác nhanh</h3>
+            <Typography as="h3" size="lg" weight="bold">
+              Thao tác nhanh
+            </Typography>
           </div>
         </div>
         <div class="p-6">
           <div class="space-y-3">
             <NuxtLink
               to="/admin/blogs"
-              class="group flex items-center p-4 border-2 border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/50 transition-all duration-200 hover:shadow-md"
+              class="group flex items-center p-4 border-2 border-gray-100 dark:border-gray-800 rounded-xl hover:border-orange-200/70 hover:bg-orange-50/50 dark:hover:bg-orange-500/5 transition-all duration-200 hover:shadow-md"
             >
               <div
                 class="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-200"
@@ -304,14 +334,17 @@
                 </svg>
               </div>
               <div class="ml-4 flex-1">
-                <p
-                  class="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors"
+                <Typography
+                  as="p"
+                  size="sm"
+                  weight="semibold"
+                  class="group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors"
                 >
                   Quản lý Bài viết
-                </p>
-                <p class="text-xs text-gray-500 mt-0.5">
+                </Typography>
+                <Typography as="p" size="xs" color="muted" class="mt-0.5">
                   Tạo và quản lý bài viết
-                </p>
+                </Typography>
               </div>
               <svg
                 class="w-5 h-5 text-gray-400 group-hover:text-orange-600 transition-colors"
@@ -330,7 +363,7 @@
 
             <NuxtLink
               to="/admin/projects"
-              class="group flex items-center p-4 border-2 border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/50 transition-all duration-200 hover:shadow-md"
+              class="group flex items-center p-4 border-2 border-gray-100 dark:border-gray-800 rounded-xl hover:border-orange-200/70 hover:bg-orange-50/50 dark:hover:bg-orange-500/5 transition-all duration-200 hover:shadow-md"
             >
               <div
                 class="p-3 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-200"
@@ -350,14 +383,17 @@
                 </svg>
               </div>
               <div class="ml-4 flex-1">
-                <p
-                  class="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors"
+                <Typography
+                  as="p"
+                  size="sm"
+                  weight="semibold"
+                  class="group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors"
                 >
                   Quản lý Dự án
-                </p>
-                <p class="text-xs text-gray-500 mt-0.5">
+                </Typography>
+                <Typography as="p" size="xs" color="muted" class="mt-0.5">
                   Quản lý dự án portfolio
-                </p>
+                </Typography>
               </div>
               <svg
                 class="w-5 h-5 text-gray-400 group-hover:text-orange-600 transition-colors"
@@ -376,7 +412,7 @@
 
             <NuxtLink
               to="/admin/reports"
-              class="group flex items-center p-4 border-2 border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/50 transition-all duration-200 hover:shadow-md"
+              class="group flex items-center p-4 border-2 border-gray-100 dark:border-gray-800 rounded-xl hover:border-orange-200/70 hover:bg-orange-50/50 dark:hover:bg-orange-500/5 transition-all duration-200 hover:shadow-md"
             >
               <div
                 class="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-200"
@@ -396,14 +432,17 @@
                 </svg>
               </div>
               <div class="ml-4 flex-1">
-                <p
-                  class="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors"
+                <Typography
+                  as="p"
+                  size="sm"
+                  weight="semibold"
+                  class="group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors"
                 >
                   Xem báo cáo
-                </p>
-                <p class="text-xs text-gray-500 mt-0.5">
+                </Typography>
+                <Typography as="p" size="xs" color="muted" class="mt-0.5">
                   Phân tích hiệu suất hệ thống
-                </p>
+                </Typography>
               </div>
               <svg
                 class="w-5 h-5 text-gray-400 group-hover:text-orange-600 transition-colors"
@@ -428,6 +467,7 @@
 
 <script setup>
   import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
+  import Typography from '~/components/ui/Typography.vue'
 
   definePageMeta({
     layout: 'admin',

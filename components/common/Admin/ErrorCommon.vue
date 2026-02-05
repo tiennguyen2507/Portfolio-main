@@ -1,9 +1,11 @@
 <template>
   <div class="flex justify-center items-center py-12 mb-6">
-    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+    <div
+      class="bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-lg p-6"
+    >
       <div class="flex items-center">
         <svg
-          class="w-6 h-6 text-red-600 mr-3"
+          class="w-6 h-6 text-red-600 dark:text-red-400 mr-3"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -16,14 +18,18 @@
           ></path>
         </svg>
         <div>
-          <h3 class="text-lg font-medium text-red-800">{{ title }}</h3>
-          <p class="text-red-600 mt-1">{{ message }}</p>
+          <Typography as="h3" size="md" weight="semibold" color="error">
+            {{ title }}
+          </Typography>
+          <Typography as="p" size="sm" color="error" class="mt-1">
+            {{ message }}
+          </Typography>
         </div>
       </div>
       <button
         v-if="showRetry"
         @click="$emit('retry')"
-        class="mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+        class="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors dark:bg-red-500 dark:hover:bg-red-600"
       >
         {{ retryText }}
       </button>
@@ -32,7 +38,9 @@
 </template>
 
 <script setup>
-  const props = defineProps({
+  import Typography from '~/components/ui/Typography.vue'
+
+  defineProps({
     title: {
       type: String,
       default: 'Lỗi khi tải dữ liệu',
@@ -51,7 +59,7 @@
     },
   })
 
-  const emit = defineEmits(['retry'])
+  defineEmits(['retry'])
 </script>
 
 
