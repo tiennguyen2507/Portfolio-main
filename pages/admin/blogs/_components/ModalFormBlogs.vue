@@ -48,12 +48,11 @@
 
       <!-- Category -->
       <div>
-        <AdminUiSelect
+        <Select
           v-model="form.category"
           label="Danh mục"
           :options="categoryOptions"
           placeholder="Chọn danh mục"
-          variant="primary"
         />
       </div>
 
@@ -130,7 +129,7 @@
   import Modal from '~/components/ui/Modal.vue'
   import Editor from '~/components/ui/Editor.vue'
   import UploadFile from '~/components/ui/UploadFile.vue'
-  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
+  import Select from '~/components/ui/Select.vue'
   import { ref } from 'vue'
 
   // Category options

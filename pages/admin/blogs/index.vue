@@ -5,17 +5,19 @@
       subtitle="Quản lý và theo dõi tất cả bài viết"
     >
       <template #action>
-        <button
+        <Button
+          variant="primary"
+          size="sm"
           @click="handleClickButtonAddBlog"
-          class="bg-orange-500 text-white px-2 py-2 rounded-full hover:bg-orange-700 transition-colors flex items-center"
+          class="rounded-full px-3"
         >
-          <AdminUiIcon name="plus" />
-        </button>
+          <Icon name="plus" size="sm" />
+        </Button>
       </template>
     </HeaderContent>
     <ErrorCommon v-if="error" :message="error" @retry="fetchPosts" />
 
-    <ui class="flex flex-col gap-4 border-[1px] border-gray-200 rounded-lg">
+    <ul class="flex flex-col gap-4 border-[1px] border-gray-200 rounded-lg">
       <li
         v-for="post in posts"
         :key="post._id"
@@ -75,7 +77,7 @@
           </div>
         </div>
       </li>
-    </ui>
+    </ul>
 
     <div
       v-if="!error && posts.length > 0"
@@ -110,9 +112,10 @@
   import httpRequest from '~/utils/httpRequest'
   import handleUpdateImage from '~/utils/handleUpdateImage'
   import Button from '~/components/ui/Button.vue'
+  import Icon from '~/components/ui/Icon/Icon.vue'
   import FormBlogs from '~/pages/admin/blogs/_components/ModalFormBlogs.vue'
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
-  import ErrorCommon from '~/components/admin/ErrorCommon.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
+  import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
   import TableBlogs from '~/pages/admin/blogs/_components/TableBlogs.vue'
   import { format } from 'date-fns'

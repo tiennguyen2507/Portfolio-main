@@ -21,14 +21,14 @@
         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
           Email
         </label>
-        <AdminUiInput
+        <Input
           id="email"
           v-model="email"
           v-bind="emailAttrs"
           type="email"
           placeholder="Nhập email của bạn"
           required
-          :variant="errors.email ? 'danger' : 'primary'"
+          :variant="errors.email ? 'error' : 'default'"
           size="lg"
         />
         <p v-if="errors.email" class="mt-1 text-sm text-red-600">
@@ -44,14 +44,14 @@
         >
           Mật khẩu
         </label>
-        <AdminUiInput
+        <Input
           id="password"
           v-model="password"
           v-bind="passwordAttrs"
           type="password"
           placeholder="Nhập mật khẩu của bạn"
           required
-          :variant="errors.password ? 'danger' : 'primary'"
+          :variant="errors.password ? 'error' : 'default'"
           size="lg"
         />
         <p v-if="errors.password" class="mt-1 text-sm text-red-600">
@@ -75,23 +75,24 @@
       </div>
     </div>
     <!-- Submit Button -->
-    <AdminUiButton
+    <Button
       type="submit"
       :disabled="loading"
       :loading="loading"
-      full-width
+      fullWidth
       size="md"
       variant="primary"
+      class="w-full"
     >
       Đăng nhập
-    </AdminUiButton>
+    </Button>
   </form>
 </template>
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
-  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
+  import Input from '~/components/ui/Input/Input.vue'
+  import Button from '~/components/ui/Button.vue'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import { loginSchema } from '~/utils/validations/loginSchema'

@@ -71,14 +71,14 @@
         >
           Họ
         </label>
-        <AdminUiInput
+        <Input
           id="firstName"
           v-model="firstName"
           v-bind="firstNameAttrs"
           type="text"
           placeholder="Nhập họ của bạn"
           required
-          :variant="errors.firstName ? 'danger' : 'primary'"
+          :variant="errors.firstName ? 'error' : 'default'"
           size="lg"
         />
         <p v-if="errors.firstName" class="mt-1 text-sm text-red-600">
@@ -94,14 +94,14 @@
         >
           Tên
         </label>
-        <AdminUiInput
+        <Input
           id="lastName"
           v-model="lastName"
           v-bind="lastNameAttrs"
           type="text"
           placeholder="Nhập tên của bạn"
           required
-          :variant="errors.lastName ? 'danger' : 'primary'"
+          :variant="errors.lastName ? 'error' : 'default'"
           size="lg"
         />
         <p v-if="errors.lastName" class="mt-1 text-sm text-red-600">
@@ -114,14 +114,14 @@
         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
           Email
         </label>
-        <AdminUiInput
+        <Input
           id="email"
           v-model="email"
           v-bind="emailAttrs"
           type="email"
           placeholder="Nhập email của bạn"
           required
-          :variant="errors.email ? 'danger' : 'primary'"
+          :variant="errors.email ? 'error' : 'default'"
           size="lg"
         />
         <p v-if="errors.email" class="mt-1 text-sm text-red-600">
@@ -137,14 +137,14 @@
         >
           Mật khẩu
         </label>
-        <AdminUiInput
+        <Input
           id="password"
           v-model="password"
           v-bind="passwordAttrs"
           type="password"
           placeholder="Nhập mật khẩu của bạn"
           required
-          :variant="errors.password ? 'danger' : 'primary'"
+          :variant="errors.password ? 'error' : 'default'"
           size="lg"
         />
         <p v-if="errors.password" class="mt-1 text-sm text-red-600">
@@ -160,14 +160,14 @@
         >
           Xác nhận mật khẩu
         </label>
-        <AdminUiInput
+        <Input
           id="confirmPassword"
           v-model="confirmPassword"
           v-bind="confirmPasswordAttrs"
           type="password"
           placeholder="Nhập lại mật khẩu"
           required
-          :variant="errors.confirmPassword ? 'danger' : 'primary'"
+          :variant="errors.confirmPassword ? 'error' : 'default'"
           size="lg"
         />
         <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">
@@ -207,24 +207,25 @@
 
     <!-- Submit Button -->
     <div>
-      <AdminUiButton
+      <Button
         type="submit"
         :disabled="loading || !agreeTerms"
         :loading="loading"
-        full-width
+        fullWidth
         size="lg"
         variant="primary"
+        class="w-full"
       >
         Đăng ký
-      </AdminUiButton>
+      </Button>
     </div>
   </form>
 </template>
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
-  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
+  import Input from '~/components/ui/Input/Input.vue'
+  import Button from '~/components/ui/Button.vue'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import { registerSchema } from '~/utils/validations/registerSchema'

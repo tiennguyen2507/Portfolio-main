@@ -15,9 +15,15 @@
       type: String,
       default: 'primary',
       validator: value =>
-        ['primary', 'secondary', 'outline', 'ghost', 'heroOutline'].includes(
-          value
-        ),
+        [
+          'primary',
+          'secondary',
+          'success',
+          'danger',
+          'outline',
+          'ghost',
+          'heroOutline',
+        ].includes(value),
     },
     size: {
       type: String,
@@ -59,6 +65,10 @@
         'bg-orange-500 hover:bg-orange-600 text-white focus:ring-orange-500 dark:bg-orange-500 dark:hover:bg-orange-400',
       secondary:
         'bg-gray-700 hover:bg-gray-600 text-white focus:ring-gray-500 dark:bg-gray-800 dark:hover:bg-gray-700',
+      success:
+        'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500 dark:bg-green-600 dark:hover:bg-green-500',
+      danger:
+        'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500 dark:bg-red-600 dark:hover:bg-red-500',
       outline:
         'border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white focus:ring-orange-500',
       heroOutline:

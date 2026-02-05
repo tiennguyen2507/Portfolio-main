@@ -15,21 +15,21 @@
       </main>
 
       <aside
-        class="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom bg-white"
+        class="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom bg-white dark:bg-black"
       >
         <nav class="overflow-x-auto flex justify-center">
           <div
-            class="flex items-end justify-between min-w-max gap-10 w-full lg:max-w-4xl lg:mx-auto p-3 px-8 pb-5 lg:rounded-3xl bg-white/30"
+            class="flex items-end justify-between min-w-max gap-10 w-full lg:max-w-4xl lg:mx-auto p-3 px-8 pb-5 lg:rounded-3xl bg-white/30 dark:bg-black/40"
           >
             <NuxtLink
               v-for="item in menuItems"
               :key="item.path"
               :to="item.path"
               class="group relative flex items-center justify-center p-2 rounded-xl transition-all duration-200 ease-out hover:scale-110 active:scale-95"
-              :class="[item.active ? 'bg-primary-500 scale-110' : '']"
+              :class="[item.active ? 'bg-orange-500 text-white scale-110' : '']"
               :aria-label="item.label"
             >
-              <AdminUiIcon
+              <Icon
                 :name="item.icon"
                 :size="ICON_CONFIG.SIZE"
                 :color="
@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-  import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
+  import Icon from '~/components/ui/Icon/Icon.vue'
   import Loading from '~/components/ui/Loading.vue'
   import {
     adminMenuItems,

@@ -6,12 +6,12 @@
       subtitle="Quản lý và theo dõi tất cả sản phẩm trong shop"
     >
       <template #action>
-        <AdminUiButton variant="secondary" size="md" @click="openCreateModal">
-          Thêm Sản phẩm mới
-          <template #suffix>
-            <AdminUiIcon name="plus" size="md" color="text-white" />
-          </template>
-        </AdminUiButton>
+        <Button variant="secondary" size="md" @click="openCreateModal">
+          <span class="inline-flex items-center gap-2">
+            <span>Thêm Sản phẩm mới</span>
+            <Icon name="plus" size="md" color="text-white" />
+          </span>
+        </Button>
       </template>
     </HeaderContent>
 
@@ -39,15 +39,16 @@
       >
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <AdminUiInput
+            <Input
               v-model="searchQuery"
               label="Tìm kiếm"
               type="text"
               placeholder="Tìm theo tên sản phẩm..."
+              size="md"
             />
           </div>
           <div>
-            <AdminUiSelect
+            <Select
               v-model="selectedCategory"
               label="Danh mục"
               placeholder="Tất cả danh mục"
@@ -58,7 +59,7 @@
             />
           </div>
           <div class="flex items-end">
-            <AdminUiButton fullWidth @click="applyFilters"> Lọc </AdminUiButton>
+            <Button fullWidth size="md" @click="applyFilters"> Lọc </Button>
           </div>
         </div>
       </div>
@@ -88,13 +89,13 @@
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
-  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
-  import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
+  import Input from '~/components/ui/Input/Input.vue'
+  import Select from '~/components/ui/Select.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Icon from '~/components/ui/Icon/Icon.vue'
   import TableAdminProducts from './_components/TableAdminProducts.vue'
   import ModalFormProducts from './_components/ModalFormProducts.vue'
 

@@ -3,7 +3,7 @@
     <label
       v-if="label"
       :for="id || undefined"
-      class="block text-sm font-medium text-gray-700 mb-2"
+      class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2"
       :class="labelClass"
     >
       {{ label }}<span v-if="required" class="text-red-500"> *</span>
@@ -61,12 +61,16 @@
       </span>
     </div>
 
-    <p v-if="error" class="mt-1 text-sm text-red-600" :class="messageClass">
+    <p
+      v-if="error"
+      class="mt-1 text-sm text-red-600 dark:text-red-400"
+      :class="messageClass"
+    >
       {{ error }}
     </p>
     <p
       v-else-if="hint"
-      class="mt-1 text-sm text-gray-500"
+      class="mt-1 text-sm text-gray-500 dark:text-gray-400"
       :class="messageClass"
     >
       {{ hint }}
@@ -93,7 +97,8 @@
     variant: {
       type: String,
       default: 'primary',
-      validator: v => ['primary', 'secondary', 'success', 'danger'].includes(v),
+      validator: v =>
+        ['primary', 'secondary', 'success', 'danger'].includes(v),
     },
     name: { type: String, default: '' },
     id: { type: String, default: '' },
@@ -189,7 +194,7 @@
 
   const selectClasses = computed(() => {
     const base =
-      'block w-full rounded-md border bg-white text-gray-900 focus:outline-none transition-all'
+      'block w-full rounded-md border bg-white text-gray-900 focus:outline-none transition-all dark:bg-gray-900 dark:text-white'
     const textSizing = 'placeholder-gray-400'
     const sizeMap = {
       sm: 'h-10 px-3 text-sm',
@@ -198,16 +203,16 @@
     }
     const variantMap = {
       primary:
-        'border-[#28bdbf] hover:border-[#20a8aa] focus:border-[#20a8aa] focus:ring-1 focus:ring-[#28bdbf]',
+        'border-orange-500 hover:border-orange-600 focus:border-orange-600 focus:ring-1 focus:ring-orange-500 dark:border-orange-500',
       secondary:
-        'border-orange-500 hover:border-orange-600 focus:border-orange-600 focus:ring-1 focus:ring-orange-500',
+        'border-gray-500 hover:border-gray-600 focus:border-gray-600 focus:ring-1 focus:ring-gray-500 dark:border-gray-400',
       success:
-        'border-green-600 hover:border-green-700 focus:border-green-700 focus:ring-1 focus:ring-green-500',
+        'border-green-600 hover:border-green-700 focus:border-green-700 focus:ring-1 focus:ring-green-500 dark:border-green-500',
       danger:
-        'border-red-600 hover:border-red-700 focus:border-red-700 focus:ring-1 focus:ring-red-500',
+        'border-red-600 hover:border-red-700 focus:border-red-700 focus:ring-1 focus:ring-red-500 dark:border-red-500',
     }
     const disabledClass = props.disabled
-      ? 'opacity-50 cursor-not-allowed bg-gray-100'
+      ? 'opacity-50 cursor-not-allowed bg-gray-100 dark:bg-gray-800'
       : ''
 
     const hasPrefix = !!slots.prefix
@@ -230,3 +235,5 @@
       .join(' ')
   })
 </script>
+
+

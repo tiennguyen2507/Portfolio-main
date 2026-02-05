@@ -30,10 +30,10 @@
           class="p-2 border-b-[1px] border-gray-200"
         >
           <div class="flex items-center gap-2">
-            <AdminUiAvatar
+            <Avatar
               :src="user.avatar"
               :size="45"
-              :read-only="true"
+              :readOnly="true"
               :ring="false"
             />
             <div class="flex flex-col flex-grow gap-1">
@@ -64,10 +64,11 @@
 <script setup>
   import { format } from 'date-fns'
   import { httpRequest } from '~/utils/httpRequest'
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
-  import ErrorCommon from '~/components/admin/ErrorCommon.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
+  import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
   import Loading from '~/components/ui/Loading.vue'
+  import Avatar from '~/components/ui/Avatar.vue'
   import TableAdminUsers from './_components/TableAdminUsers.vue'
 
   definePageMeta({

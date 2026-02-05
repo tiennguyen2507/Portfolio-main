@@ -83,8 +83,8 @@
   import handleUpdateImage from '~/utils/handleUpdateImage'
   import Button from '~/components/ui/Button.vue'
   import FormProjects from '~/pages/admin/projects/_components/ModalFormProjects.vue'
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
-  import ErrorCommon from '~/components/admin/ErrorCommon.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
+  import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
   import TableProjects from '~/pages/admin/projects/_components/TableProjects.vue'
 

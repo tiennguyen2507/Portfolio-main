@@ -90,11 +90,11 @@
             >
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                  <AdminUiAvatar
+                  <Avatar
                     :src="comment.avatar"
                     :size="40"
                     :ring="false"
-                    :read-only="true"
+                    :readOnly="true"
                   />
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
@@ -178,11 +178,11 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import { httpRequest } from '~/utils/httpRequest'
-  import AdminUiAvatar from '~/components/admin/ui/AdminUiAvatar.vue'
+  import Avatar from '~/components/ui/Avatar.vue'
   import ButtonIcon from '~/components/ui/ButtonIcon.vue'
   import EmptyData from '~/components/ui/EmptyData.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
 
   definePageMeta({

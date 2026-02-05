@@ -5,10 +5,9 @@
         <h3 class="text-lg font-semibold text-gray-900">
           Chi tiết đơn hàng #{{ order?._id?.slice(-8) }}
         </h3>
-        <AdminUiTag
-          :variant="getStatusVariant(order?.status)"
-          :text="getStatusText(order?.status)"
-        />
+        <Tag :variant="getStatusVariant(order?.status)">
+          {{ getStatusText(order?.status) }}
+        </Tag>
       </div>
     </template>
 
@@ -142,23 +141,23 @@
 
     <template #footer>
       <div class="flex justify-end gap-3">
-        <AdminUiButton variant="secondary" @click="$emit('close')">
+        <Button variant="secondary" @click="$emit('close')">
           Đóng
-        </AdminUiButton>
-        <AdminUiButton
+        </Button>
+        <Button
           v-if="order?.status === 'pending'"
           variant="success"
           @click="updateStatus('processing')"
         >
           Bắt đầu xử lý
-        </AdminUiButton>
-        <AdminUiButton
+        </Button>
+        <Button
           v-if="order?.status === 'processing'"
           variant="success"
           @click="updateStatus('delivered')"
         >
           Xác nhận giao hàng
-        </AdminUiButton>
+        </Button>
       </div>
     </template>
   </Modal>
@@ -166,8 +165,8 @@
 
 <script setup>
   import Modal from '~/components/ui/Modal.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
-  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Tag from '~/components/ui/Tag.vue'
 
   defineProps({
     isOpen: {

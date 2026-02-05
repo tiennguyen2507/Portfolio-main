@@ -6,12 +6,12 @@
       subtitle="Theo dõi và quản lý tất cả đơn hàng từ khách hàng"
     >
       <template #action>
-        <AdminUiButton variant="secondary" size="md" @click="refreshOrders">
-          Làm mới
-          <template #suffix>
-            <AdminUiIcon name="refresh" size="md" color="text-white" />
-          </template>
-        </AdminUiButton>
+        <Button variant="secondary" size="md" @click="refreshOrders">
+          <span class="inline-flex items-center gap-2">
+            <span>Làm mới</span>
+            <Icon name="refresh" size="md" color="text-white" />
+          </span>
+        </Button>
       </template>
     </HeaderContent>
 
@@ -26,23 +26,27 @@
       >
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <AdminUiInput
+            <Input
               v-model="searchQuery"
               label="Tìm kiếm"
               type="text"
               placeholder="Tìm theo tên khách hàng..."
+              size="md"
             />
           </div>
           <div>
-            <AdminUiInput
+            <Input
               v-model="dateRange"
               label="Khoảng thời gian"
               type="date"
               placeholder="Chọn ngày"
+              size="md"
             />
           </div>
           <div class="flex items-end">
-            <AdminUiButton fullWidth @click="applyFilters"> Lọc </AdminUiButton>
+            <Button fullWidth size="md" variant="primary" @click="applyFilters">
+              Lọc
+            </Button>
           </div>
         </div>
       </div>
@@ -53,64 +57,64 @@
       >
         <div class="flex flex-wrap gap-3">
           <!-- Tất cả -->
-          <AdminUiTag
+          <Tag
             :variant="selectedStatus === '' ? 'primary' : 'gray'"
             size="md"
             class="cursor-pointer hover:opacity-80 transition-opacity"
             @click="selectStatus('')"
           >
             Tất cả
-          </AdminUiTag>
+          </Tag>
 
           <!-- Chờ xác nhận -->
-          <AdminUiTag
+          <Tag
             :variant="selectedStatus === 'pending' ? 'warning' : 'gray'"
             size="md"
             class="cursor-pointer hover:opacity-80 transition-opacity"
             @click="selectStatus('pending')"
           >
             Chờ xác nhận
-          </AdminUiTag>
+          </Tag>
 
           <!-- Đã xác nhận -->
-          <AdminUiTag
+          <Tag
             :variant="selectedStatus === 'confirmed' ? 'info' : 'gray'"
             size="md"
             class="cursor-pointer hover:opacity-80 transition-opacity"
             @click="selectStatus('confirmed')"
           >
             Đã xác nhận
-          </AdminUiTag>
+          </Tag>
 
           <!-- Đang giao hàng -->
-          <AdminUiTag
+          <Tag
             :variant="selectedStatus === 'shipped' ? 'primary' : 'gray'"
             size="md"
             class="cursor-pointer hover:opacity-80 transition-opacity"
             @click="selectStatus('shipped')"
           >
             Đang giao hàng
-          </AdminUiTag>
+          </Tag>
 
           <!-- Đã giao hàng -->
-          <AdminUiTag
+          <Tag
             :variant="selectedStatus === 'delivered' ? 'success' : 'gray'"
             size="md"
             class="cursor-pointer hover:opacity-80 transition-opacity"
             @click="selectStatus('delivered')"
           >
             Đã giao hàng
-          </AdminUiTag>
+          </Tag>
 
           <!-- Đã hủy -->
-          <AdminUiTag
+          <Tag
             :variant="selectedStatus === 'cancelled' ? 'danger' : 'gray'"
             size="md"
             class="cursor-pointer hover:opacity-80 transition-opacity"
             @click="selectStatus('cancelled')"
           >
             Đã hủy
-          </AdminUiTag>
+          </Tag>
         </div>
       </div>
 
@@ -152,13 +156,13 @@
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
-  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
-  import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
+  import Input from '~/components/ui/Input/Input.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Tag from '~/components/ui/Tag.vue'
+  import Icon from '~/components/ui/Icon/Icon.vue'
   import TableAdminOrders from './_components/TableAdminOrders.vue'
   import ModalOrderDetail from './_components/ModalOrderDetail.vue'
 

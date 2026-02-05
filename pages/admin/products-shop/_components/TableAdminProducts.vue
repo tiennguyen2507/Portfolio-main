@@ -1,5 +1,5 @@
 <template>
-  <AdminUiTable
+  <Table
     :data-source="products"
     :columns="columns"
     :loading="loading"
@@ -10,10 +10,10 @@
     <template #cell-info="{ record }">
       <div class="flex items-center">
         <div class="mr-3">
-          <AdminUiAvatar
+          <Avatar
             :src="record.thumbnail"
             :size="40"
-            :read-only="true"
+            :readOnly="true"
             :ring="false"
           />
         </div>
@@ -34,9 +34,9 @@
 
     <!-- Cell: Category -->
     <template #cell-category="{ value }">
-      <AdminUiTag :variant="getCategoryVariant(value)">
+      <Tag :variant="getCategoryVariant(value)">
         {{ getCategoryLabel(value) || 'N/A' }}
-      </AdminUiTag>
+      </Tag>
     </template>
 
     <!-- Cell: Price -->
@@ -64,31 +64,31 @@
     <!-- Cell: Actions -->
     <template #cell-actions="{ record }">
       <div class="flex items-center gap-2">
-        <AdminUiButton
+        <Button
           size="sm"
           variant="primary"
           @click.stop="editProduct(record._id)"
         >
-          <AdminUiIcon name="edit" size="sm" />
-        </AdminUiButton>
-        <AdminUiButton
+          <Icon name="edit" size="sm" />
+        </Button>
+        <Button
           size="sm"
           variant="danger"
           @click.stop="deleteProduct(record._id)"
         >
-          <AdminUiIcon name="delete" size="sm" />
-        </AdminUiButton>
+          <Icon name="delete" size="sm" />
+        </Button>
       </div>
     </template>
-  </AdminUiTable>
+  </Table>
 </template>
 
 <script setup>
-  import AdminUiTable from '~/components/admin/ui/AdminUiTable.vue'
-  import AdminUiAvatar from '~/components/admin/ui/AdminUiAvatar.vue'
-  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
-  import AdminUiIcon from '~/components/admin/ui/AdminUiIcon.vue'
+  import Table from '~/components/ui/Table.vue'
+  import Avatar from '~/components/ui/Avatar.vue'
+  import Tag from '~/components/ui/Tag.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Icon from '~/components/ui/Icon/Icon.vue'
   import ViewEditor from '~/components/ui/ViewEditor.vue'
 
   const props = defineProps({

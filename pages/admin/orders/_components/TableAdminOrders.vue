@@ -1,5 +1,5 @@
 <template>
-  <AdminUiTable
+  <Table
     :dataSource="orders"
     :columns="columns"
     :loading="loading"
@@ -109,9 +109,9 @@
 
     <!-- Custom cell for status -->
     <template #cell-status="{ record }">
-      <AdminUiTag :variant="getStatusVariant(record.status)">
+      <Tag :variant="getStatusVariant(record.status)">
         {{ getStatusText(record.status) }}
-      </AdminUiTag>
+      </Tag>
     </template>
 
     <!-- Custom cell for created date -->
@@ -128,7 +128,7 @@
     <template #cell-actions="{ record }">
       <div class="flex flex-col gap-2">
         <!-- Xác nhận button - chỉ hiển thị khi status là pending -->
-        <AdminUiButton
+        <Button
           v-if="record.status === 'pending'"
           variant="success"
           size="sm"
@@ -136,10 +136,10 @@
           class="w-full text-xs"
         >
           Xác nhận
-        </AdminUiButton>
+        </Button>
 
         <!-- Giao hàng button - hiển thị khi status là confirmed -->
-        <AdminUiButton
+        <Button
           v-if="record.status === 'confirmed'"
           variant="primary"
           size="sm"
@@ -147,10 +147,10 @@
           class="w-full text-xs"
         >
           Giao hàng
-        </AdminUiButton>
+        </Button>
 
         <!-- Đã giao hàng button - hiển thị khi status là shipped -->
-        <AdminUiButton
+        <Button
           v-if="record.status === 'shipped'"
           variant="success"
           size="sm"
@@ -158,10 +158,10 @@
           class="w-full text-xs"
         >
           Đã giao hàng
-        </AdminUiButton>
+        </Button>
 
         <!-- Hủy bỏ button - hiển thị khi status là pending, confirmed hoặc shipped -->
-        <AdminUiButton
+        <Button
           v-if="['pending', 'confirmed', 'shipped'].includes(record.status)"
           variant="danger"
           size="sm"
@@ -169,16 +169,16 @@
           class="w-full text-xs"
         >
           Hủy bỏ
-        </AdminUiButton>
+        </Button>
       </div>
     </template>
-  </AdminUiTable>
+  </Table>
 </template>
 
 <script setup>
-  import AdminUiTable from '~/components/admin/ui/AdminUiTable.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
-  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
+  import Table from '~/components/ui/Table.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Tag from '~/components/ui/Tag.vue'
 
   defineProps({
     orders: {

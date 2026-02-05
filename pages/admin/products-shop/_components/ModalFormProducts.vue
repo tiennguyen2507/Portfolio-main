@@ -32,13 +32,13 @@
     <!-- Form Content -->
     <div class="space-y-6">
       <!-- Title -->
-      <AdminUiInput
+      <Input
         v-model="form.title"
         label="Tên sản phẩm"
         placeholder="Nhập tên sản phẩm..."
         required
         maxlength="120"
-        variant="primary"
+        variant="default"
         size="md"
       />
 
@@ -58,35 +58,33 @@
       </div>
 
       <!-- Price -->
-      <AdminUiInput
+      <Input
         v-model="form.price"
         label="Giá sản phẩm (VND)"
         type="number"
         placeholder="Nhập giá sản phẩm..."
         required
-        variant="primary"
+        variant="default"
         size="md"
       />
 
       <!-- Sales Price -->
-      <AdminUiInput
+      <Input
         v-model="form.sales"
         label="Giá bán (VND)"
         type="number"
         placeholder="Nhập giá bán..."
         required
-        variant="primary"
+        variant="default"
         size="md"
       />
 
       <!-- Category -->
-      <AdminUiSelect
+      <Select
         v-model="form.category"
         label="Danh mục"
         placeholder="Chọn danh mục"
         required
-        variant="primary"
-        size="md"
         :options="[
           { label: 'Breakfast', value: 'breakfast' },
           { label: 'Lunch', value: 'lunch' },
@@ -96,13 +94,13 @@
       />
 
       <!-- Quantity -->
-      <AdminUiInput
+      <Input
         v-model="form.quantity"
         label="Số lượng tồn kho"
         type="number"
         placeholder="Nhập số lượng..."
         required
-        variant="primary"
+        variant="default"
         size="md"
       />
 
@@ -126,15 +124,10 @@
     </div>
 
     <template #footer>
-      <AdminUiButton
-        variant="outline"
-        size="md"
-        :disabled="submitting"
-        @click="$emit('close')"
-      >
+      <Button variant="outline" size="md" :disabled="submitting" @click="$emit('close')">
         Hủy
-      </AdminUiButton>
-      <AdminUiButton
+      </Button>
+      <Button
         variant="primary"
         size="md"
         :loading="submitting"
@@ -142,7 +135,7 @@
         @click="handleSubmit"
       >
         {{ isEditing ? 'Cập nhật' : 'Tạo mới' }}
-      </AdminUiButton>
+      </Button>
     </template>
   </Modal>
 </template>
@@ -151,8 +144,9 @@
   import Modal from '~/components/ui/Modal.vue'
   import UploadFile from '~/components/ui/UploadFile.vue'
   import Editor from '~/components/ui/Editor.vue'
-  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
-  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
+  import Input from '~/components/ui/Input/Input.vue'
+  import Select from '~/components/ui/Select.vue'
+  import Button from '~/components/ui/Button.vue'
   import { ref } from 'vue'
 
   // Editor options

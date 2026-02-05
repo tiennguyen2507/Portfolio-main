@@ -1,5 +1,5 @@
 <template>
-  <AdminUiTable
+  <Table
     :data-source="users"
     :columns="columns"
     :loading="loading"
@@ -10,10 +10,10 @@
     <template #cell-info="{ record }">
       <div class="flex items-center">
         <div class="mr-3">
-          <AdminUiAvatar
+          <Avatar
             :src="record.avatar"
             :size="40"
-            :read-only="true"
+            :readOnly="true"
             :ring="false"
           />
         </div>
@@ -28,29 +28,29 @@
 
     <!-- Cell: Source -->
     <template #cell-source="{ value }">
-      <AdminUiTag variant="info">
+      <Tag variant="info">
         {{ value || 'Website' }}
-      </AdminUiTag>
+      </Tag>
     </template>
 
     <!-- Cell: Status -->
     <template #cell-status="{ value }">
-      <AdminUiTag :variant="value === 1 ? 'success' : 'gray'">
+      <Tag :variant="value === 1 ? 'success' : 'gray'">
         {{ value === 1 ? 'Hoạt động' : 'Mới' }}
-      </AdminUiTag>
+      </Tag>
     </template>
 
     <!-- Cell: Created At -->
     <template #cell-createdAt="{ value }">
       <span class="text-sm text-gray-500">{{ formatDate(value) }}</span>
     </template>
-  </AdminUiTable>
+  </Table>
 </template>
 
 <script setup>
-  import AdminUiTable from '~/components/admin/ui/AdminUiTable.vue'
-  import AdminUiAvatar from '~/components/admin/ui/AdminUiAvatar.vue'
-  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
+  import Table from '~/components/ui/Table.vue'
+  import Avatar from '~/components/ui/Avatar.vue'
+  import Tag from '~/components/ui/Tag.vue'
 
   const props = defineProps({
     users: { type: Array, default: () => [] },

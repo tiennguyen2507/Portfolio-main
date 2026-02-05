@@ -53,9 +53,9 @@
 
       <!-- Custom Category Column -->
       <template #cell-category="{ value }">
-        <AdminUiTag :variant="getCategoryVariant(value)" size="sm">
+        <Tag :variant="getCategoryVariant(value)" size="sm">
           {{ formatCategory(value) }}
-        </AdminUiTag>
+        </Tag>
       </template>
 
       <!-- Custom Actions Column -->
@@ -76,7 +76,7 @@
 <script setup>
   import ButtonIcon from '~/components/ui/ButtonIcon.vue'
   import Table from '~/components/ui/Table.vue'
-  import AdminUiTag from '~/components/admin/ui/AdminUiTag.vue'
+  import Tag from '~/components/ui/Tag.vue'
 
   const props = defineProps({
     posts: {

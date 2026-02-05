@@ -9,15 +9,16 @@
     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <AdminUiInput
+          <Input
             v-model="searchQuery"
             label="Tìm kiếm"
             type="text"
             placeholder="Tìm theo tên, email..."
+            size="md"
             @input="debouncedSearch"
           />
         </div>
-        <AdminUiSelect
+        <Select
           v-model="selectedStatus"
           label="Trạng thái"
           placeholder="Tất cả trạng thái"
@@ -28,9 +29,9 @@
           @change="fetchContacts"
         />
         <div class="flex items-end">
-          <AdminUiButton fullWidth variant="primary" @click="fetchContacts">
+          <Button fullWidth variant="primary" size="md" @click="fetchContacts">
             Lọc
-          </AdminUiButton>
+          </Button>
         </div>
       </div>
     </div>
@@ -191,12 +192,12 @@
 
 <script setup>
   import { httpRequest } from '~/utils/httpRequest'
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import AdminUiInput from '~/components/admin/ui/AdminUiInput.vue'
-  import AdminUiButton from '~/components/admin/ui/AdminUiButton.vue'
-  import AdminUiSelect from '~/components/admin/ui/AdminUiSelect.vue'
+  import Input from '~/components/ui/Input/Input.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Select from '~/components/ui/Select.vue'
 
   definePageMeta({
     layout: 'admin',

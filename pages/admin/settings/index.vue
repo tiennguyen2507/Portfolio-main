@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-  import HeaderContent from '~/components/admin/HeaderContent.vue'
+  import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
 
   definePageMeta({
     layout: 'admin',
