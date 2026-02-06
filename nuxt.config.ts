@@ -83,7 +83,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1',
+      viewport: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
       title:
         process.env.SITE_TITLE ||
         'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
@@ -133,7 +133,7 @@ export default defineNuxtConfig({
         },
         {
           name: 'viewport',
-          content: 'width=device-width, initial-scale=1, maximum-scale=5',
+          content: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
         },
         { name: 'theme-color', content: '#f97316' },
         { name: 'msapplication-TileColor', content: '#f97316' },

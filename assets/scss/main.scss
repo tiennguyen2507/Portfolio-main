@@ -10,6 +10,24 @@
 
 body {
   @apply text-gray-800 #{!important};
+  // Prevent zoom on iOS Safari when clicking or double-tapping
+  touch-action: manipulation;
+}
+
+// Ensure input fields have font-size >= 16px to prevent iOS Safari auto-zoom
+// iOS Safari will auto-zoom if font-size < 16px
+@media (max-width: 767px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
 }
 
 // Custom Tailwind classes using CSS variables
