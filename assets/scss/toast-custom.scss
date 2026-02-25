@@ -8,36 +8,37 @@
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(8px);
   }
 
   .v-toast__icon {
-    margin-left: 0px !important;
+    margin-left: 0 !important;
     margin-right: 10px;
   }
 
   .v-toast__item--success {
-    background-color: #000000 !important; /* green */
-    color: white !important;
+    background-color: #16a34a !important; /* emerald-600 */
+    color: #f9fafb !important;
   }
 
   .v-toast__item--error {
-    background-color: #ef4444 !important; /* red */
-    color: white !important;
+    background-color: #dc2626 !important; /* red-600 */
+    color: #f9fafb !important;
   }
 
   .v-toast__item--warning {
-    background-color: #f97316 !important; /* orange - theo theme của bạn */
-    color: white !important;
+    background-color: #f97316 !important; /* orange-500 */
+    color: #111827 !important;
   }
 
   .v-toast__item--info {
-    background-color: #3b82f6 !important; /* blue */
-    color: white !important;
+    background-color: #2563eb !important; /* blue-600 */
+    color: #f9fafb !important;
   }
 
   .v-toast__item--default {
-    background-color: #f97316 !important; /* orange - theo theme của bạn */
-    color: white !important;
+    background-color: #f97316 !important; /* orange-500 */
+    color: #111827 !important;
   }
 
   .v-toast__text {
@@ -52,6 +53,41 @@
 
     &:hover {
       opacity: 1;
+    }
+  }
+}
+
+.dark {
+  .v-toast {
+    .v-toast__item {
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.4),
+        0 4px 6px -4px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .v-toast__item--success {
+      background-color: #14532d !important; /* emerald-900 */
+      color: #bbf7d0 !important;
+    }
+
+    .v-toast__item--error {
+      background-color: #7f1d1d !important; /* red-900 */
+      color: #fecaca !important;
+    }
+
+    .v-toast__item--warning {
+      background-color: #7c2d12 !important; /* orange-900 */
+      color: #fed7aa !important;
+    }
+
+    .v-toast__item--info {
+      background-color: #1e3a8a !important; /* blue-900 */
+      color: #bfdbfe !important;
+    }
+
+    .v-toast__item--default {
+      background-color: #7c2d12 !important; /* orange-900 */
+      color: #fed7aa !important;
     }
   }
 }

@@ -43,12 +43,27 @@
 
       <!-- Category -->
       <div>
-        <Select
-          v-model="form.category"
-          label="Danh mục"
-          :options="categoryOptions"
-          placeholder="Chọn danh mục"
-        />
+        <Typography
+          as="label"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
+        >
+          Danh mục <span class="text-red-500">*</span>
+        </Typography>
+        <div class="flex flex-wrap gap-2">
+          <Tag
+            v-for="option in categoryOptions"
+            :key="option.value"
+            :variant="form.category === option.value ? 'primary' : 'gray'"
+            size="sm"
+            tagClass="cursor-pointer"
+            @click="handleSelectCategory(option.value)"
+          >
+            {{ option.label }}
+          </Tag>
+        </div>
       </div>
 
       <!-- Thumbnail Upload -->
@@ -81,12 +96,12 @@
     </div>
 
     <template #footer>
-      <Button variant="outline" size="md" :disabled="submitting" @click="$emit('close')">
+      <Button variant="outline" size="xs" :disabled="submitting" @click="$emit('close')">
         Hủy
       </Button>
       <Button
         variant="primary"
-        size="md"
+        size="xs"
         :loading="submitting"
         :disabled="submitting"
         @click="handleSubmit"
@@ -101,11 +116,12 @@
   import Modal from '~/components/ui/Modal.vue'
   import Editor from '~/components/ui/Editor.vue'
   import UploadFile from '~/components/ui/UploadFile.vue'
-  import Select from '~/components/ui/Select.vue'
+  import Tag from '~/components/ui/Tag.vue'
   import Button from '~/components/ui/Button.vue'
   import Typography from '~/components/ui/Typography.vue'
   import Input from '~/components/ui/Input/Input.vue'
   import { ref } from 'vue'
+  import { useNotification } from '~/composables/useNotification'
 
   // Category options
   const categoryOptions = [
@@ -144,19 +160,29 @@
 
   const thumbnailFile = ref(null)
 
+  const { showError } = useNotification()
+
   const handleThumbnailChange = file => {
     thumbnailFile.value = file
     emit('thumbnailChange', file)
   }
 
+  const handleSelectCategory = value => {
+    props.form.category = value
+  }
+
   const handleSubmit = () => {
     // Validation
     if (!props.form.title?.trim()) {
-      emit('submit', { success: false, error: 'Tiêu đề không được để trống' })
+      showError('Tiêu đề không được để trống')
+      return
+    }
+    if (!props.form.category) {
+      showError('Danh mục không được để trống')
       return
     }
     if (!props.form.description?.trim()) {
-      emit('submit', { success: false, error: 'Nội dung không được để trống' })
+      showError('Nội dung không được để trống')
       return
     }
 

@@ -5,10 +5,7 @@
       class="fixed inset-0 z-[100] flex items-end md:items-center justify-center"
     >
       <!-- Overlay with only opacity -->
-      <div
-        class="fixed inset-0 bg-black/70 modal-overlay"
-        @click="close"
-      ></div>
+      <div class="fixed inset-0 bg-black/70 modal-overlay" @click="close"></div>
       <!-- Modal Content -->
       <div
         :class="modalClasses"
@@ -21,7 +18,7 @@
         <!-- Header -->
         <div
           v-if="$slots.header"
-          class="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-6 py-4 bg-white dark:bg-gray-900"
+          class="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-4 py-4 md:px-6 md:py-4 bg-white dark:bg-gray-900"
         >
           <slot name="header" />
           <button
@@ -34,14 +31,14 @@
         </div>
         <!-- Content -->
         <div
-          class="px-6 py-6 text-gray-700 dark:text-gray-100 text-base flex-1 overflow-y-auto bg-white dark:bg-gray-900"
+          class="px-4 py-4 md:px-6 md:py-6 text-gray-700 dark:text-gray-100 text-base flex-1 overflow-y-auto bg-white dark:bg-gray-900"
         >
           <slot />
         </div>
         <!-- Footer -->
         <div
           v-if="$slots.footer"
-          class="sticky bottom-0 z-10 border-t border-gray-200 dark:border-gray-800 px-6 py-4 flex justify-end space-x-3 bg-white dark:bg-gray-900"
+          class="sticky bottom-0 z-10 border-t border-gray-200 dark:border-gray-800 px-4 py-4 md:px-6 md:py-4 flex justify-end space-x-3 bg-white dark:bg-gray-900"
         >
           <slot name="footer" />
         </div>
@@ -107,7 +104,7 @@
   .modal-enter-active .modal-content {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .modal-leave-active {
     transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
