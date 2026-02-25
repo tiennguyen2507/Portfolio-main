@@ -8,7 +8,7 @@
         : 'bg-white/60 dark:bg-black/60'
     "
   >
-    <div class="max-w-7xl mx-auto px-2 py-2">
+    <div class="mx-auto px-2 py-2 md:px-4 md:py-4" :class="{ 'max-w-7xl': !props.admin }">
       <div class="flex justify-between items-center">
         <Logo />
         <div class="flex items-center gap-4">
@@ -29,6 +29,13 @@
 </template>
 
 <script setup>
+  const props = defineProps({
+    admin: {
+      type: Boolean,
+      default: false,
+    },
+  })
+
   // Dark mode
   const { isDark, toggleDarkMode } = useDarkMode()
 

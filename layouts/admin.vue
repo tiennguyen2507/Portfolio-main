@@ -7,7 +7,7 @@
       <Loading size="lg" color="green" />
     </div>
     <template v-else>
-      <Header />
+      <Header :admin="true" />
       <main class="flex-1 overflow-auto bg-gray-50 dark:bg-black pb-24 pt-16">
         <div class="px-2 py-4 lg:p-8 w-full">
           <slot />
