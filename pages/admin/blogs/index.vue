@@ -11,80 +11,120 @@
           @click="handleClickButtonAddBlog"
           class="rounded-full px-3"
         >
-          <Icon name="plus" size="sm" />
+          <Icon name="plus" size="sm" color="white" />
         </Button>
       </template>
     </HeaderContent>
     <ErrorCommon v-if="error" :message="error" @retry="fetchPosts" />
 
+    <Loading v-if="loading" size="md" color="orange" />
+
     <ul
-      class="flex flex-col gap-4 border-[1px] border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-[#050505]"
+      v-if="!loading"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6"
     >
       <li
         v-for="post in posts"
         :key="post._id"
-        class="p-2 border-b-[1px] border-gray-200 dark:border-gray-800 list-none flex flex-col gap-2"
+        class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between"
       >
-        <div class="flex items-center gap-2">
-          <img
-            :src="post.thumbnail"
-            alt="Thumbnail"
-            class="w-24 h-24 rounded-md"
-          />
-          <div class="flex flex-col">
-            <Typography as="h3" size="sm" weight="bold">
+        <!-- Phần trên: ảnh + title + desc -->
+        <div class="flex flex-row items-center gap-2 sm:gap-3">
+          <!-- Thumbnail bên trái -->
+          <div class="flex-shrink-0 w-20 sm:w-24">
+            <div
+              class="relative overflow-hidden rounded-lg w-20 h-20 sm:w-24 sm:h-24"
+            >
+              <img
+                :src="post.thumbnail"
+                alt="Thumbnail"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- Nội dung bên phải: title + mô tả -->
+          <div class="flex-1 min-w-0 flex flex-col">
+            <!-- Tiêu đề: 1 dòng, quá thì ... -->
+            <Typography
+              as="h3"
+              size="sm"
+              weight="semibold"
+              color="default"
+              class="mb-1 sm:mb-2 line-clamp-1 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors text-[11px] sm:text-sm"
+            >
               {{ post.title }}
             </Typography>
+
+            <!-- Mô tả: tối đa 2 dòng, quá thì ... -->
             <ViewEditor
-              class="text-xs text-gray-500 dark:text-gray-400"
+              class="text-[9px] sm:text-xs text-gray-500 dark:text-gray-400 line-clamp-2"
               :content="post.description"
               :strip-html="true"
-              :truncate="true"
-              :max-length="90"
             />
           </div>
         </div>
-        <div class="flex items-center gap-2 justify-between">
-          <div class="flex items-center gap-1">
-            <span
+
+        <!-- Phần dưới: tags bên trái, actions bên phải -->
+        <div class="mt-2 flex items-center gap-1 flex-wrap">
+          <div class="flex items-center gap-1 flex-wrap">
+            <Tag
+              size="sm"
+              variant="default"
+              :pill="true"
+              tag-class="!px-1.5 !py-[1px] !text-[10px]"
+            >
+              {{ post.category || 'Blog' }}
+            </Tag>
+            <Tag
               v-if="post.createdAt"
-              class="text-[8px] bg-green-100 text-green-800 px-2 py-1 rounded-full dark:bg-green-900/40 dark:text-green-300"
+              size="sm"
+              variant="info"
+              tag-class="!px-1.5 !py-[1px] !text-[10px] whitespace-nowrap"
             >
               {{ formatDate(post.createdAt) }}
-            </span>
-            <span
-              v-if="post.category"
-              class="text-[8px] bg-red-100 text-red-800 px-2 py-1 rounded-full dark:bg-red-900/40 dark:text-red-300"
-            >
-              {{ post.category }}
-            </span>
-            <span
+            </Tag>
+            <Tag
               v-if="post?.createdBy?.lastName"
-              class="text-[8px] bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full dark:bg-yellow-900/40 dark:text-yellow-200"
+              size="sm"
+              variant="gray"
+              tag-class="!px-1.5 !py-[1px] !text-[10px]"
             >
-              {{ post?.createdBy?.lastName }}
-            </span>
+              {{
+                (post?.createdBy?.firstName || '') +
+                ' ' +
+                post?.createdBy?.lastName
+              }}
+            </Tag>
           </div>
-          <div class="flex items-center gap-2">
-            <button
-              class="bg-blue-500 text-white px-1 py-1 rounded-full hover:bg-blue-700 transition-colors flex items-center"
-              @click="startEdit(post)"
+
+          <div class="flex items-center gap-1 ml-auto">
+            <Button
+              size="sm"
+              variant="ghost"
+              class="!p-1.5 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-200"
+              @click.stop="startEdit(post)"
+              aria-label="Chỉnh sửa bài viết"
             >
-              <AdminUiIcon name="edit" size="sm" />
-            </button>
-            <button
-              class="bg-red-500 text-white px-1 py-1 rounded-full hover:bg-red-700 transition-colors flex items-center"
-              @click="deletePost(post._id)"
+              <Icon name="edit" size="sm" />
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              class="!p-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-900/40 dark:hover:bg-red-900/60 dark:text-red-300"
+              @click.stop="deletePost(post._id)"
+              aria-label="Xóa bài viết"
             >
-              <AdminUiIcon name="delete" size="sm" />
-            </button>
+              <Icon name="delete" size="sm" />
+            </Button>
           </div>
         </div>
       </li>
     </ul>
 
     <div
-      v-if="!error && posts.length > 0"
+      v-if="!error && posts.length > 0 && !loading"
       class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
     >
       <Pagination
@@ -124,6 +164,8 @@
   import TableBlogs from '~/pages/admin/blogs/_components/TableBlogs.vue'
   import { format } from 'date-fns'
   import Typography from '~/components/ui/Typography.vue'
+  import Tag from '~/components/ui/Tag.vue'
+  import Loading from '~/components/ui/Loading.vue'
 
   definePageMeta({
     layout: 'admin',
@@ -305,7 +347,8 @@
   const formatDate = dateString => {
     if (!dateString) return 'N/A'
     try {
-      return format(new Date(dateString), 'dd/MM/yyyy HH:mm')
+      // Rút gọn format để hiển thị gọn trên mobile
+      return format(new Date(dateString), 'dd/MM HH:mm')
     } catch (error) {
       console.error('Error formatting date:', error)
       return 'N/A'

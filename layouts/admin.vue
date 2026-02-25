@@ -9,7 +9,7 @@
     <template v-else>
       <Header />
       <main class="flex-1 overflow-auto bg-gray-50 dark:bg-black pb-24 pt-16">
-        <div class="p-6 lg:p-8 w-full">
+        <div class="px-2 py-4 lg:p-8 w-full">
           <slot />
         </div>
       </main>
@@ -17,16 +17,20 @@
       <aside
         class="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom bg-white dark:bg-black"
       >
-        <nav class="overflow-x-auto flex justify-center">
+        <nav class="overflow-x-auto flex justify-center px-2 sm:px-4">
           <div
-            class="flex items-end justify-between w-full gap-6 p-3 px-6 pb-5 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800"
+            class="flex items-end w-full md:mx-auto gap-10 p-2 px-4 pb-4 bg-white dark:bg-black justify-center"
           >
             <NuxtLink
               v-for="item in menuItems"
               :key="item.path"
               :to="item.path"
-              class="group relative flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 ease-out hover:scale-105 active:scale-95"
-              :class="[item.active ? 'bg-orange-500 text-white scale-105 shadow-md' : '']"
+              class="group relative flex flex-col items-center justify-center gap-0.5 px-2 py-1 rounded-xl transition-all duration-200 ease-out hover:scale-105 active:scale-95"
+              :class="[
+                item.active
+                  ? 'bg-orange-500 text-white scale-105 shadow-md'
+                  : '',
+              ]"
               :aria-label="item.label"
             >
               <Icon
@@ -47,18 +51,6 @@
                   item.active ? 'drop-shadow-md' : 'group-hover:drop-shadow-sm',
                 ]"
               />
-
-              <Typography
-                as="span"
-                :size="{ sp: 'xxs', pc: 'xs' }"
-                weight="medium"
-                :color="item.active ? 'white' : 'muted'"
-                align="center"
-                no-wrap
-                class="relative z-10 hidden sm:block"
-              >
-                {{ item.label }}
-              </Typography>
             </NuxtLink>
           </div>
         </nav>
@@ -71,7 +63,6 @@
   import Icon from '~/components/ui/Icon/Icon.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Header from '~/components/common/Header/Header.vue'
-  import Typography from '~/components/ui/Typography.vue'
   import {
     adminMenuItems,
     ICON_CONFIG,

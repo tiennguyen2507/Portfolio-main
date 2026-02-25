@@ -30,7 +30,7 @@
     size: {
       type: String,
       default: 'md',
-      validator: v => ['sm', 'md', 'lg'].includes(v),
+      validator: v => ['xxs', 'xs', 'sm', 'md', 'lg'].includes(v),
     },
     pill: { type: Boolean, default: true },
     color: { type: String, default: '' }, // custom background color
@@ -41,6 +41,8 @@
   const slots = useSlots()
 
   const sizeMap = {
+    xxs: 'px-1.5 py-[1px] text-[10px]',
+    xs: 'px-2 py-[1px] text-[11px]',
     sm: 'px-2 py-0.5 text-[11px]',
     md: 'px-3 py-1 text-xs',
     lg: 'px-3.5 py-1.5 text-sm',
