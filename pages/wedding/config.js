@@ -51,7 +51,7 @@ export const weddingConfig = {
   // Ngày cưới
   weddingDate: {
     ceremony: {
-      date: '2026-01-11',
+      date: '2026-08-01',
       time: '09:00',
       name: 'Lễ Thành Hôn',
       nameEn: 'Wedding Ceremony',
@@ -60,7 +60,7 @@ export const weddingConfig = {
       mapUrl: 'https://goo.gl/maps/example',
     },
     reception: {
-      date: '2026-01-11',
+      date: '2026-08-01',
       time: '18:00',
       name: 'Tiệc Cưới',
       nameEn: 'Reception',

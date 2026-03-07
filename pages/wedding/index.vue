@@ -1,24 +1,26 @@
 <template>
-  <div class="wedding-page min-h-[100dvh] bg-[#0A202F] overflow-x-hidden">
-    <!-- SP: full màn (card full width, không padding). PC: full màn -->
-    <main class="flex justify-center items-start min-h-[100dvh] py-0 px-0">
-      <div class="w-full min-w-0 max-w-none">
-        <!-- Card thiệp: SP + PC đều full màn, font Times New Roman (tiếng Việt không lỗi) -->
-        <div
-          class="wedding-card relative w-full max-w-full min-h-[100dvh] overflow-hidden rounded-none border-0 md:border border-white/10 bg-[#0A202F] text-[#e9ce9e] shadow-xl"
-        >
-          <!-- Họa tiết chìm wedding (trái tim, hoa, nhẫn) -->
-          <WeddingBackground />
-          <WeddingHero />
-          <WeddingGallery />
-          <WeddingAbout />
-          <WeddingTimeline />
-          <WeddingLocation />
-          <WeddingRSVP />
+  <div class="wedding-page relative min-h-[100dvh] bg-[#0A202F] overflow-x-hidden">
+    <main class="w-full min-h-[100dvh] py-0 px-0">
+      <div
+        class="wedding-card relative w-full min-h-[100dvh] overflow-hidden text-[#e9ce9e] flex flex-col"
+      >
+          <!-- Phần chìm: absolute trong card, scroll theo trang (không fixed) -->
+          <div class="absolute inset-0 z-0 pointer-events-none">
+            <WeddingBackground />
+          </div>
+          <!-- Nội dung -->
+          <div class="relative z-10 flex flex-col gap-10 sm:gap-14 md:gap-20 lg:gap-24">
+            <WeddingHero />
+            <WeddingGallery />
+            <WeddingAbout />
+            <WeddingTimeline />
+            <WeddingLocation />
+            <WeddingRSVP />
+          </div>
 
           <!-- Footer (SP: padding nhỏ hơn, chữ vừa đọc) -->
           <footer
-            class="relative mt-6 md:mt-8 flex flex-col items-center gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-10 py-5 sm:py-6 md:py-8 pb-8 sm:pb-10 text-center font-baskerville text-[#d9bc86]"
+            class="relative mt-10 sm:mt-12 md:mt-16 flex flex-col items-center gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-10 py-6 sm:py-8 md:py-10 pb-8 sm:pb-10 text-center font-baskerville text-[#d9bc86]"
           >
             <p class="text-xs sm:text-sm md:text-lg whitespace-pre-line max-w-[95vw]">
               Gia đình xin chân thành cảm ơn quý khách đã đến chung vui.
@@ -32,7 +34,6 @@
             </p>
           </footer>
         </div>
-      </div>
     </main>
   </div>
 </template>
@@ -77,7 +78,7 @@
 <style lang="scss">
   @import '~/assets/scss/_wedding-fonts';
 
-  /* Scrollbar trang wedding theo tông vàng */
+  /* Scrollbar trang wedding: màu giống chữ (#e9ce9e) */
   .wedding-page {
     ::-webkit-scrollbar {
       width: 10px;
@@ -86,11 +87,11 @@
       background: #0a1628;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(233, 206, 158, 0.4);
+      background: #e9ce9e;
       border-radius: 5px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #e9ce9e;
+      background: #d9bc86;
     }
   }
 

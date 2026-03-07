@@ -3,37 +3,47 @@
   <header
     class="relative flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-10 wedding-hero-fullscreen overflow-hidden"
   >
-    <!-- Nền: rồng góc trên, phượng góc dưới. SP vừa màn, PC lớn -->
+    <!-- Rồng phượng: scroll theo trang (nằm trong Hero, không fixed) -->
     <img
       src="/images/rong.png"
       alt=""
       role="presentation"
-      class="hero-deco absolute left-0 top-0 h-[65vh] max-h-[420px] w-auto object-contain object-[left_top] opacity-[0.15] pointer-events-none z-0 md:h-[90%] md:max-h-[960px]"
+      class="absolute left-0 top-0 z-0 h-[55vh] max-h-[360px] w-auto object-contain object-[left_top] opacity-[0.14] pointer-events-none md:h-[75vh] md:max-h-[520px]"
     />
     <img
       src="/images/phuong.png"
       alt=""
       role="presentation"
-      class="hero-deco absolute right-0 bottom-0 h-[65vh] max-h-[420px] w-auto object-contain object-[right_bottom] opacity-[0.15] pointer-events-none z-0 md:h-[90%] md:max-h-[960px]"
+      class="absolute right-0 bottom-0 z-0 h-[55vh] max-h-[360px] w-auto object-contain object-[right_bottom] opacity-[0.14] pointer-events-none md:h-[75vh] md:max-h-[520px]"
     />
 
-    <div class="relative z-10 flex flex-col items-center justify-center gap-3 sm:gap-5 w-full max-w-[92vw] mx-auto">
+    <div
+      class="relative z-10 flex flex-col items-center justify-center gap-3 sm:gap-5 w-full max-w-[92vw] mx-auto"
+    >
       <!-- Tên cô dâu chú rể: lớn, chính giữa, font UNI Chu / Times New Roman -->
-      <div class="font-uni-chu leading-tight w-full flex flex-col items-center">
-        <div class="name-line text-[clamp(2.25rem,9vw,4.5rem)] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center">
-          {{ shortGroomName }}
+      <div
+        class="font-uni-chu leading-tight w-full flex flex-col items-center gap-12"
+      >
+        <div
+          class="name-line text-[clamp(2.25rem,9vw,4.5rem)] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center"
+        >
+          Tiên Nguyễn
         </div>
-        <div class="mt-1 sm:mt-2 text-[clamp(1.75rem,5vw,3rem)] sm:text-[2.75rem] md:text-[3.5rem] leading-none text-center">
+        <div
+          class="mt-1 sm:mt-2 text-[clamp(1.75rem,5vw,3rem)] sm:text-[2.75rem] md:text-[3.5rem] leading-none text-center"
+        >
           &amp;
         </div>
-        <div class="name-line text-[clamp(2.25rem,9vw,4.5rem)] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center">
-          {{ shortBrideName }}
+        <div
+          class="name-line text-[clamp(2.25rem,9vw,4.5rem)] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center"
+        >
+          Hạnh Phan
         </div>
       </div>
     </div>
 
     <!-- Countdown -->
-    <div class="mt-6 sm:mt-8 w-full flex justify-center">
+    <div class="mt-12 sm:mt-12 w-full flex justify-center">
       <WeddingCountdown :target-date="getTargetDateTime()" />
     </div>
 

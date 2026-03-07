@@ -4,7 +4,7 @@
   >
     <!-- Ông Bà - hai bên (SP: chữ nhỏ, cho phép xuống dòng) -->
     <div
-      class="grid grid-cols-2 gap-2 sm:gap-3 text-center font-baskerville text-xs sm:text-sm md:text-lg tracking-[0.05em]"
+      class="grid grid-cols-2 gap-2 sm:gap-3 md:gap-12 lg:gap-16 text-center font-baskerville text-xs sm:text-sm md:text-lg tracking-[0.05em]"
     >
       <div class="flex flex-col gap-1 sm:gap-1.5 min-w-0">
         <span class="text-[#d9bc86]">Ông Bà</span>

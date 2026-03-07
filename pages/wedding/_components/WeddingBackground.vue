@@ -20,30 +20,61 @@
       <rect width="100%" height="100%" fill="url(#wedding-dots)" opacity="0.5" />
     </svg>
 
+    <!-- Các icon chỉ từ dưới hero trở xuống (vùng rồng phượng chỉ có rồng phượng) -->
+    <div class="deco-icons-below-hero absolute left-0 right-0 bottom-0">
     <!-- === Icon trôi chậm (floating) === -->
     <!-- Trái tim 1 -->
-    <div class="deco-float deco-float-1 absolute left-[8%] top-[12%] w-8 opacity-20 sm:w-10 md:w-12">
+    <div class="deco-float deco-float-1 absolute left-[8%] top-[12%] w-10 opacity-20 sm:w-12 md:w-14">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
       </svg>
     </div>
     <!-- Trái tim 2 -->
-    <div class="deco-float deco-float-2 absolute right-[10%] top-[18%] w-6 opacity-15 sm:w-8">
+    <div class="deco-float deco-float-2 absolute right-[10%] top-[18%] w-8 opacity-15 sm:w-10 md:w-12">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
       </svg>
     </div>
     <!-- Trái tim 3 -->
-    <div class="deco-float deco-float-3 absolute left-[15%] bottom-[25%] w-7 opacity-[0.18]">
+    <div class="deco-float deco-float-3 absolute left-[15%] bottom-[25%] w-9 opacity-[0.18] sm:w-10 md:w-12">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
       </svg>
     </div>
     <!-- Trái tim 4 -->
-    <div class="deco-float deco-float-4 absolute right-[12%] bottom-[20%] w-9 opacity-20 md:w-11">
+    <div class="deco-float deco-float-4 absolute right-[12%] bottom-[20%] w-11 opacity-20 md:w-14">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
       </svg>
+    </div>
+
+    <!-- Trái tim giữa màn: nhiều hơn, vị trí ngẫu nhiên, chuyển động -->
+    <div class="heart-center heart-c1 absolute left-[32%] top-[28%] w-8 opacity-[0.16] md:w-10" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c2 absolute left-[48%] top-[22%] w-7 opacity-[0.12] md:w-9" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c3 absolute left-[58%] top-[38%] w-9 opacity-[0.14] md:w-11" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c4 absolute left-[38%] top-[48%] w-7 opacity-[0.18] md:w-8" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c5 absolute left-[52%] top-[55%] w-8 opacity-[0.1] md:w-10" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c6 absolute left-[42%] top-[35%] w-6 opacity-[0.13] md:w-8" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c7 absolute left-[62%] top-[45%] w-7 opacity-[0.11] md:w-9" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c8 absolute left-[35%] top-[62%] w-8 opacity-[0.15] md:w-10" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+    </div>
+    <div class="heart-center heart-c9 absolute left-[55%] top-[32%] w-7 opacity-[0.17] md:w-8" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
     </div>
 
     <!-- Hoa 1 (5 cánh) -->
@@ -172,6 +203,7 @@
         <ellipse cx="50" cy="20" rx="38" ry="14" />
       </svg>
     </div>
+    </div>
   </div>
 </template>
 
@@ -182,6 +214,10 @@
 <style scoped>
   .wedding-bg-deco {
     color: #e9ce9e;
+  }
+  /* Icon (tim, hoa, nhẫn, viền) chỉ từ 100vh xuống — vùng hero chỉ có rồng phượng */
+  .deco-icons-below-hero {
+    top: 100vh;
   }
   .text-gold {
     color: #e9ce9e;
@@ -201,6 +237,20 @@
   .deco-delay-1 { animation-delay: 0.8s; }
   .deco-delay-2 { animation-delay: 2s; }
   .deco-delay-3 { animation-delay: 3.5s; }
+
+  /* Trái tim giữa màn: chuyển động chậm, delay khác nhau (ngẫu nhiên) */
+  .heart-center {
+    animation: float 7s ease-in-out infinite;
+  }
+  .heart-c1 { animation-delay: 0s; }
+  .heart-c2 { animation-delay: 1.2s; }
+  .heart-c3 { animation-delay: 2.5s; }
+  .heart-c4 { animation-delay: 0.7s; }
+  .heart-c5 { animation-delay: 3.8s; }
+  .heart-c6 { animation-delay: 1.8s; }
+  .heart-c7 { animation-delay: 4.2s; }
+  .heart-c8 { animation-delay: 2.2s; }
+  .heart-c9 { animation-delay: 0.4s; }
 
   /* Lắc nhẹ (hoa) */
   .deco-sway {
