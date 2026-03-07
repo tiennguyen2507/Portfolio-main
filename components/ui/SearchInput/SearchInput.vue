@@ -5,7 +5,7 @@
       class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10"
     >
       <svg
-        class="w-5 h-5 text-gray-600 dark:text-gray-400"
+        class="w-5 h-5 text-gray-500 dark:text-gray-400"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -35,17 +35,19 @@
     />
 
     <!-- Right Side Icons -->
-    <div class="absolute inset-y-0 right-0 pr-4 flex items-center z-10">
+    <div
+      class="absolute inset-y-0 right-0 pr-2 flex items-center justify-end z-10"
+    >
       <!-- Clear Button (when has text) -->
       <button
         v-if="hasValue && !disabled"
         type="button"
-        class="flex items-center justify-center w-8 h-8 rounded-full bg-primary-500 hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500/30"
+        class="flex items-center justify-center w-8 h-8 min-w-8 min-h-8 rounded-full bg-orange-500 hover:bg-orange-600 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 dark:text-white [&_svg]:block [&_svg]:shrink-0"
         @click="handleClear"
         aria-label="Clear search"
       >
         <svg
-          class="w-4 h-4 text-white"
+          class="w-4 h-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -126,10 +128,10 @@
 
   const inputClasses = computed(() => {
     const base =
-      'w-full pl-12 pr-12 py-2 rounded-full border-[1px] bg-white text-gray-900 placeholder-gray-400 focus:outline-none dark:bg-gray-900 dark:text-white dark:placeholder-gray-500'
+      'w-full pl-12 pr-12 py-2.5 rounded-full border bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:ring-offset-0 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:ring-offset-gray-900'
     const activeBorder = isActive.value
-      ? 'border-primary-500 dark:border-primary-500'
-      : 'border-gray-300 hover:border-gray-400 focus:border-gray-400 dark:border-gray-700 dark:hover:border-gray-500 dark:focus:border-gray-500'
+      ? 'border-orange-500 dark:border-orange-500'
+      : 'border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500'
     const disabledClass = props.disabled
       ? 'opacity-50 cursor-not-allowed bg-gray-100 dark:bg-gray-800'
       : ''

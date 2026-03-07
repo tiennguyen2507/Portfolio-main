@@ -12,34 +12,55 @@
     <div v-if="!loading">
     <!-- Filters -->
     <div
-      class="bg-white dark:bg-[#050505] p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 mb-6"
+      class="bg-white dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-gray-800 p-3 sm:p-4 mb-4"
     >
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <Input
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <div class="w-full sm:max-w-xs flex-shrink-0">
+          <SearchInput
+            id="search-contacts"
             v-model="searchQuery"
-            label="Tìm kiếm"
-            type="text"
             placeholder="Tìm theo tên, email..."
-            size="md"
+            :show-microphone="false"
             @input="debouncedSearch"
           />
         </div>
-        <Select
-          v-model="selectedStatus"
-          label="Trạng thái"
-          placeholder="Tất cả trạng thái"
-          :options="[
-            { label: 'Đã xử lý', value: 'true' },
-            { label: 'Chưa xử lý', value: 'false' },
-          ]"
-          @change="fetchContacts"
-        />
-        <div class="flex items-end">
-          <Button fullWidth variant="primary" size="md" @click="fetchContacts">
-            Lọc
-          </Button>
+        <div class="flex flex-wrap items-center gap-2">
+          <Tag
+            :variant="selectedStatus === '' ? 'primary' : 'gray'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+            @click="selectStatus('')"
+          >
+            Tất cả
+          </Tag>
+          <Tag
+            :variant="selectedStatus === 'true' ? 'success' : 'gray'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+            @click="selectStatus('true')"
+          >
+            Đã xử lý
+          </Tag>
+          <Tag
+            :variant="selectedStatus === 'false' ? 'warning' : 'gray'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+            @click="selectStatus('false')"
+          >
+            Chưa xử lý
+          </Tag>
         </div>
+        <Button
+          variant="primary"
+          size="sm"
+          class="rounded-full px-4 flex-shrink-0 sm:ml-auto"
+          @click="fetchContacts"
+        >
+          Lọc
+        </Button>
       </div>
     </div>
 
@@ -92,27 +113,15 @@
           >
             {{ formatDate(contact.createdAt) }}
           </Tag>
-        </div>
-        <div class="mt-2 flex items-center gap-1 flex-wrap">
           <Button
-            size="xs"
-            :variant="contact.status ? 'outline' : 'primary'"
-            class="rounded-full"
-            @click="toggleStatus(contact._id, contact.status)"
+            size="sm"
+            variant="ghost"
+            class="!p-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-900/40 dark:hover:bg-red-900/60 dark:text-red-300 flex-shrink-0 ml-auto"
+            @click="deleteContact(contact._id)"
+            aria-label="Xóa liên hệ"
           >
-            {{ contact.status ? 'Chưa xử lý' : 'Đã xử lý' }}
+            <Icon name="delete" size="sm" />
           </Button>
-          <div class="flex items-center gap-1 ml-auto">
-            <Button
-              size="sm"
-              variant="ghost"
-              class="!p-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-900/40 dark:hover:bg-red-900/60 dark:text-red-300"
-              @click="deleteContact(contact._id)"
-              aria-label="Xóa liên hệ"
-            >
-              <Icon name="delete" size="sm" />
-            </Button>
-          </div>
         </div>
       </li>
     </ul>
@@ -163,10 +172,9 @@
   import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import Input from '~/components/ui/Input/Input.vue'
+  import SearchInput from '~/components/ui/SearchInput/SearchInput.vue'
   import Button from '~/components/ui/Button.vue'
   import Icon from '~/components/ui/Icon/Icon.vue'
-  import Select from '~/components/ui/Select.vue'
   import Typography from '~/components/ui/Typography.vue'
   import Tag from '~/components/ui/Tag.vue'
   import { useNotification } from '~/composables/useNotification'
@@ -206,6 +214,13 @@
       updateQueryParams()
       fetchContacts()
     }, 500)
+  }
+
+  const selectStatus = (status) => {
+    selectedStatus.value = status
+    currentPage.value = 1
+    updateQueryParams()
+    fetchContacts()
   }
 
   const handlePageChange = page => {
