@@ -34,7 +34,7 @@
               <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
                 Tổng Leads
               </Typography>
-              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+              <Typography as="p" size="2xl" weight="bold">
                 1,234
               </Typography>
             </div>
@@ -85,7 +85,7 @@
               <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
                 Leads Chuyển đổi
               </Typography>
-              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+              <Typography as="p" size="2xl" weight="bold">
                 456
               </Typography>
             </div>
@@ -136,7 +136,7 @@
               <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
                 Doanh thu
               </Typography>
-              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+              <Typography as="p" size="2xl" weight="bold">
                 $45,678
               </Typography>
             </div>
@@ -187,7 +187,7 @@
               <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
                 Người dùng
               </Typography>
-              <Typography as="p" size="{ sp: 'xl', pc: '3xl' }" weight="bold">
+              <Typography as="p" size="2xl" weight="bold">
                 89
               </Typography>
             </div>
@@ -248,7 +248,7 @@
             <div
               v-for="lead in recentLeads"
               :key="lead.id"
-              class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200 group"
+              class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-200 group"
             >
               <div class="flex items-center">
                 <div

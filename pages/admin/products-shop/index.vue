@@ -6,14 +6,20 @@
       subtitle="Quản lý và theo dõi tất cả sản phẩm trong shop"
     >
       <template #action>
-        <Button variant="secondary" size="md" @click="openCreateModal">
-          <span class="inline-flex items-center gap-2">
-            <span>Thêm Sản phẩm mới</span>
-            <Icon name="plus" size="md" color="text-white" />
-          </span>
+        <Button
+          variant="primary"
+          size="sm"
+          @click="openCreateModal"
+          class="rounded-full px-3"
+        >
+          <Icon name="plus" size="sm" color="white" />
         </Button>
       </template>
     </HeaderContent>
+
+    <ErrorCommon v-if="error" :message="error" @retry="fetchProducts" />
+
+    <Loading v-if="loading" size="md" color="orange" />
 
     <!-- Create/Edit Product Modal -->
     <ModalFormProducts
@@ -28,16 +34,8 @@
       @thumbnailChange="f => (thumbnailFile = f)"
     />
 
-    <!-- Loading State -->
-    <div
-      v-if="loading"
-      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-8"
-    >
-      <Loading size="lg" />
-    </div>
-
     <!-- Content -->
-    <div v-else>
+    <div v-if="!loading">
       <!-- Filters -->
       <div
         class="bg-white dark:bg-[#050505] p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 mb-6"
@@ -69,15 +67,54 @@
         </div>
       </div>
 
-      <!-- Products Table -->
-      <TableAdminProducts
-        :products="paginatedProducts"
-        :loading="loading"
-        @edit="editProduct"
-        @delete="deleteProduct"
-      />
+      <!-- Products Card Grid -->
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+        <li v-for="product in paginatedProducts" :key="product._id" class="list-none">
+          <Card variant="default" padding="md" hover class="h-full flex flex-col">
+            <div class="flex gap-3">
+              <div class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+                <img
+                  :src="product.thumbnail"
+                  :alt="product.title"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="flex-1 min-w-0">
+                <Typography as="h3" size="sm" weight="semibold" class="line-clamp-1">
+                  {{ product.title || 'N/A' }}
+                </Typography>
+                <Typography as="p" size="xs" color="muted" class="line-clamp-2 mt-0.5">
+                  {{ product.description }}
+                </Typography>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2 items-center">
+              <Tag variant="info" size="xs">{{ product.category || 'N/A' }}</Tag>
+              <Typography as="span" size="xs" color="tertiary">
+                {{ formatProductDate(product.createdAt) }}
+              </Typography>
+            </div>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <span class="font-semibold text-green-600 dark:text-green-400">{{ formatProductPrice(product.price) }}</span>
+              <span class="text-gray-500 dark:text-gray-400">SL: {{ product.quantity || 0 }}</span>
+              <span class="text-orange-600 dark:text-orange-400">DT: {{ formatProductPrice(product.sales) }}</span>
+            </div>
+            <div class="mt-3 flex gap-2">
+              <Button size="xs" variant="primary" @click="editProduct(product._id)">
+                <Icon name="edit" size="sm" />
+              </Button>
+              <Button size="xs" variant="ghost" class="text-red-600 dark:text-red-400" @click="deleteProduct(product._id)">
+                <Icon name="delete" size="sm" />
+              </Button>
+            </div>
+          </Card>
+        </li>
+      </ul>
       <!-- Pagination -->
-      <div class="bg-white dark:bg-[#050505] px-6 py-3 border-t border-gray-200 dark:border-gray-800">
+      <div
+        v-if="!error && filteredProducts.length > 0"
+        class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
+      >
         <Pagination
           :page="currentPage"
           :total="filteredProducts.length"
@@ -100,13 +137,19 @@
   import Select from '~/components/ui/Select.vue'
   import Button from '~/components/ui/Button.vue'
   import Icon from '~/components/ui/Icon/Icon.vue'
-  import TableAdminProducts from './_components/TableAdminProducts.vue'
+  import Card from '~/components/ui/Card.vue'
+  import Tag from '~/components/ui/Tag.vue'
+  import Typography from '~/components/ui/Typography.vue'
   import ModalFormProducts from './_components/ModalFormProducts.vue'
+  import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
+  import { useNotification } from '~/composables/useNotification'
 
   definePageMeta({
     layout: 'admin',
     middleware: 'auth',
   })
+
+  const { showNotification, showError } = useNotification()
 
   // Route and Router for query params
   const route = useRoute()
@@ -188,7 +231,8 @@
       products.value = response && response.data ? response.data : []
     } catch (err) {
       console.error('Error fetching products:', err)
-      error.value = err.message || 'Có lỗi xảy ra khi tải danh sách sản phẩm'
+      error.value = err?.message || 'Có lỗi xảy ra khi tải danh sách sản phẩm'
+      showError(error.value)
       products.value = []
     } finally {
       loading.value = false
@@ -265,13 +309,24 @@
     thumbnailFile = null
   }
 
-  const formatDate = dateString => {
+  const formatProductDate = dateString => {
     if (!dateString) return 'N/A'
-    const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, '0')
-    const month = date.toLocaleDateString('en-US', { month: 'short' })
-    const year = date.getFullYear()
-    return `${day} ${month}, ${year}`
+    return new Date(dateString).toLocaleDateString('vi-VN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  }
+
+  const formatProductPrice = price => {
+    if (price == null) return '0 ₫'
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      maximumFractionDigits: 0,
+    }).format(price)
   }
 
   const editProduct = id => {
@@ -296,7 +351,7 @@
       }
     } catch (err) {
       console.error('Error toggling product status:', err)
-      alert('Có lỗi xảy ra khi cập nhật trạng thái sản phẩm')
+      showError(err?.message || 'Có lỗi xảy ra khi cập nhật trạng thái sản phẩm')
     }
   }
 
@@ -309,7 +364,8 @@
         products.value = products.value.filter(product => product._id !== id)
       } catch (err) {
         console.error('Error deleting product:', err)
-        error.value = 'Có lỗi xảy ra khi xóa sản phẩm'
+        error.value = err?.message || 'Có lỗi xảy ra khi xóa sản phẩm'
+        showError(error.value)
       }
     }
   }
@@ -374,8 +430,12 @@
       await fetchProducts()
       closeModal()
       error.value = ''
+      showNotification(
+        isEditing.value ? 'Cập nhật sản phẩm thành công!' : 'Tạo sản phẩm thành công!'
+      )
     } catch (err) {
       error.value = err?.message || 'Không thể lưu dữ liệu.'
+      showError(error.value)
     } finally {
       submitting.value = false
     }

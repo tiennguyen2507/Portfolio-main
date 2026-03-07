@@ -94,7 +94,7 @@
         <main v-else-if="projects.length" class="space-y-8">
           <h2 class="sr-only">Danh sách dự án</h2>
           <!-- Grid View -->
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <article
               v-for="project in projects"
               :key="project._id"

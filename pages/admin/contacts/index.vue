@@ -5,6 +5,11 @@
       subtitle="Quản lý và theo dõi tất cả liên hệ từ khách hàng"
     />
 
+    <ErrorCommon v-if="error" :message="error" @retry="fetchContacts" />
+
+    <Loading v-if="loading" size="md" color="orange" />
+
+    <div v-if="!loading">
     <!-- Filters -->
     <div
       class="bg-white dark:bg-[#050505] p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 mb-6"
@@ -38,128 +43,61 @@
       </div>
     </div>
 
-    <!-- Loading State -->
-    <div
-      v-if="loading"
-      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-8"
-    >
-      <Loading />
-    </div>
-
-    <!-- Contacts Table -->
-    <div
-      v-else
-      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800"
-    >
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-          <thead class="bg-gray-50 dark:bg-[#080808]">
-            <tr>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Thông tin liên hệ
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Tin nhắn
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Trạng thái
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Ngày tạo
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Thao tác
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white dark:bg-[#050505] divide-y divide-gray-200 dark:divide-gray-800">
-            <tr
-              v-for="contact in contacts"
-              :key="contact._id"
-              class="hover:bg-gray-50"
+    <!-- Contacts Card Grid -->
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+      <li v-for="contact in contacts" :key="contact._id" class="list-none">
+        <Card variant="default" padding="md" hover class="h-full flex flex-col">
+          <div class="flex items-start gap-3">
+            <div
+              class="w-10 h-10 flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center"
             >
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div
-                    class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center"
-                  >
-                    <span class="text-sm font-medium text-gray-600 dark:text-gray-100">
-                      {{ contact.name.charAt(0).toUpperCase() }}
-                    </span>
-                  </div>
-                  <div class="ml-4">
-                    <Typography as="p" size="sm" weight="medium">
-                      {{ contact.name }}
-                    </Typography>
-                    <Typography as="p" size="xs" color="muted">
-                      {{ contact.email }}
-                    </Typography>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4">
-                <Typography as="p" size="sm" class="max-w-xs truncate">
-                  {{ contact.message }}
-                </Typography>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
-                  :class="{
-                    'bg-green-100 text-green-800': contact.status === true,
-                    'bg-yellow-100 text-yellow-800': contact.status === false,
-                  }"
-                >
-                  {{ contact.status ? 'Đã xử lý' : 'Chưa xử lý' }}
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <Typography as="p" size="xs" color="muted">
-                  {{ formatDate(contact.createdAt) }}
-                </Typography>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <div class="flex space-x-2">
-                  <button
-                    @click="toggleStatus(contact._id, contact.status)"
-                    :class="[
-                      'px-3 py-1 rounded text-xs font-medium',
-                      contact.status
-                        ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
-                        : 'bg-green-100 text-green-800 hover:bg-green-200',
-                    ]"
-                  >
-                    {{
-                      contact.status
-                        ? 'Đánh dấu chưa xử lý'
-                        : 'Đánh dấu đã xử lý'
-                    }}
-                  </button>
-                  <button
-                    @click="deleteContact(contact._id)"
-                    class="text-red-600 hover:text-red-900 px-3 py-1 rounded text-xs font-medium hover:bg-red-50"
-                  >
-                    Xóa
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              <span class="text-sm font-medium text-gray-600 dark:text-gray-100">
+                {{ (contact.name || '').charAt(0).toUpperCase() }}
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <Typography as="p" size="sm" weight="medium">
+                {{ contact.name }}
+              </Typography>
+              <Typography as="p" size="xs" color="muted" class="truncate">
+                {{ contact.email }}
+              </Typography>
+            </div>
+          </div>
+          <Typography as="p" size="sm" color="default" class="mt-3 line-clamp-2">
+            {{ contact.message }}
+          </Typography>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <Tag :variant="contact.status ? 'success' : 'warning'" size="xs">
+              {{ contact.status ? 'Đã xử lý' : 'Chưa xử lý' }}
+            </Tag>
+            <Typography as="span" size="xs" color="tertiary">
+              {{ formatDate(contact.createdAt) }}
+            </Typography>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <Button
+              size="xs"
+              :variant="contact.status ? 'outline' : 'primary'"
+              @click="toggleStatus(contact._id, contact.status)"
+            >
+              {{ contact.status ? 'Đánh dấu chưa xử lý' : 'Đánh dấu đã xử lý' }}
+            </Button>
+            <Button
+              size="xs"
+              variant="ghost"
+              class="text-red-600 dark:text-red-400"
+              @click="deleteContact(contact._id)"
+            >
+              Xóa
+            </Button>
+          </div>
+        </Card>
+      </li>
+    </ul>
 
-      <!-- Empty State -->
-      <div v-if="contacts.length === 0 && !loading" class="text-center py-12">
+    <!-- Empty State -->
+      <div v-if="contacts.length === 0" class="text-center py-12">
         <svg
           class="mx-auto h-12 w-12 text-gray-400"
           fill="none"
@@ -183,8 +121,8 @@
 
       <!-- Pagination -->
       <div
-        v-if="contacts.length > 0"
-        class="bg-white dark:bg-[#050505] px-4 py-3 border-t border-gray-200 dark:border-gray-800 sm:px-6"
+        v-if="!error && contacts.length > 0 && !loading"
+        class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
       >
         <Pagination
           :page="currentPage"
@@ -208,6 +146,9 @@
   import Button from '~/components/ui/Button.vue'
   import Select from '~/components/ui/Select.vue'
   import Typography from '~/components/ui/Typography.vue'
+  import Card from '~/components/ui/Card.vue'
+  import Tag from '~/components/ui/Tag.vue'
+  import { useNotification } from '~/composables/useNotification'
 
   definePageMeta({
     layout: 'admin',
@@ -217,8 +158,10 @@
   // Route and Router for query params
   const route = useRoute()
   const router = useRouter()
+  const { showNotification, showError } = useNotification()
 
   // Reactive data
+  const error = ref('')
   const searchQuery = ref('')
   const selectedStatus = ref('')
   const currentPage = ref(parseInt(route.query.page) || 1)
@@ -262,6 +205,7 @@
   // Fetch contacts from API
   const fetchContacts = async () => {
     loading.value = true
+    error.value = ''
     try {
       const params = new URLSearchParams({
         page: currentPage.value.toString(),
@@ -286,9 +230,10 @@
         nextPage: response.nextPage,
         prePage: response.prePage,
       }
-    } catch (error) {
-      console.error('Error fetching contacts:', error)
-      // You might want to show a toast notification here
+    } catch (err) {
+      console.error('Error fetching contacts:', err)
+      error.value = err?.message || 'Không thể tải danh sách liên hệ.'
+      showError(error.value)
     } finally {
       loading.value = false
     }
@@ -306,8 +251,10 @@
       if (contact) {
         contact.status = !currentStatus
       }
-    } catch (error) {
-      console.error('Error updating contact status:', error)
+      showNotification('Cập nhật trạng thái thành công!')
+    } catch (err) {
+      console.error('Error updating contact status:', err)
+      showError(err?.message || 'Không thể cập nhật trạng thái.')
     }
   }
 
@@ -325,8 +272,10 @@
           currentPage.value--
           fetchContacts()
         }
-      } catch (error) {
-        console.error('Error deleting contact:', error)
+        showNotification('Xóa liên hệ thành công!')
+      } catch (err) {
+        console.error('Error deleting contact:', err)
+        showError(err?.message || 'Không thể xóa liên hệ.')
       }
     }
   }

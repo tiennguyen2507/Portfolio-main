@@ -15,16 +15,12 @@
       </template>
     </HeaderContent>
 
-    <!-- Loading State -->
-    <div
-      v-if="loading"
-      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-8"
-    >
-      <Loading size="lg" />
-    </div>
+    <ErrorCommon v-if="error" :message="error" @retry="fetchOrders" />
+
+    <Loading v-if="loading" size="md" color="orange" />
 
     <!-- Content -->
-    <div v-else>
+    <div v-if="!loading">
       <!-- Filters -->
       <div
         class="bg-white dark:bg-[#050505] p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 mb-6"
@@ -123,28 +119,109 @@
         </div>
       </div>
 
-      <!-- Orders Table -->
-      <TableAdminOrders
-        :orders="paginatedOrders"
-        :loading="loading"
-        @view="viewOrder"
-        @updateStatus="updateOrderStatus"
-      />
+      <!-- Orders Card Grid -->
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+        <li v-for="order in paginatedOrders" :key="order._id" class="list-none">
+          <Card variant="default" padding="md" hover class="h-full flex flex-col">
+            <div class="space-y-2">
+              <Typography as="p" size="sm" weight="semibold">
+                {{ order.fullName }}
+              </Typography>
+              <Typography as="p" size="xs" color="muted">
+                {{ order.phone }}
+              </Typography>
+              <Typography as="p" size="xs" color="tertiary" class="line-clamp-2">
+                {{ order.address }}
+              </Typography>
+              <div
+                v-if="order.note"
+                class="p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg"
+              >
+                <Typography as="span" size="xs" color="default">
+                  Ghi chú: {{ order.note }}
+                </Typography>
+              </div>
+            </div>
+            <div class="mt-3 p-2 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+              <Typography as="span" size="xs" weight="medium">
+                {{ order.orderItems?.length || 0 }} sản phẩm
+              </Typography>
+              <div v-if="order.orderItems?.length" class="mt-1 space-y-0.5">
+                <Typography
+                  v-for="(item, idx) in order.orderItems.slice(0, 2)"
+                  :key="idx"
+                  as="p"
+                  size="xs"
+                  color="muted"
+                >
+                  {{ item.productId?.title || 'N/A' }} × {{ item.quantity }}
+                </Typography>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <Typography as="span" size="sm" weight="bold">
+                {{ formatPrice(order.totalAmount) }}
+              </Typography>
+              <Tag :variant="getOrderStatusVariant(order.status)" size="xs">
+                {{ getOrderStatusText(order.status) }}
+              </Tag>
+              <Typography as="span" size="xs" color="tertiary">
+                {{ formatDate(order.createdAt) }}
+              </Typography>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <Button size="xs" variant="primary" @click="viewOrder(order)">
+                Xem chi tiết
+              </Button>
+              <Button
+                v-if="order.status === 'pending'"
+                size="xs"
+                variant="success"
+                @click="updateOrderStatus(order._id, 'confirmed')"
+              >
+                Xác nhận
+              </Button>
+              <Button
+                v-if="order.status === 'confirmed'"
+                size="xs"
+                variant="primary"
+                @click="updateOrderStatus(order._id, 'shipped')"
+              >
+                Giao hàng
+              </Button>
+              <Button
+                v-if="order.status === 'shipped'"
+                size="xs"
+                variant="success"
+                @click="updateOrderStatus(order._id, 'delivered')"
+              >
+                Đã giao
+              </Button>
+              <Button
+                v-if="['pending', 'confirmed', 'shipped'].includes(order.status)"
+                size="xs"
+                variant="danger"
+                @click="updateOrderStatus(order._id, 'cancelled')"
+              >
+                Hủy
+              </Button>
+            </div>
+          </Card>
+        </li>
+      </ul>
 
       <!-- Pagination -->
-      <div class="bg-white dark:bg-[#050505] px-6 py-3 border-t border-gray-200 dark:border-gray-800">
+      <div
+        v-if="!error && filteredOrders.length > 0"
+        class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
+      >
         <Pagination
           :page="currentPage"
           :total="filteredOrders.length"
           :limit="itemsPerPage"
           :show-info="true"
           :split="true"
-          @update:page="
-            p => {
-              currentPage = p
-              updateQueryParams()
-            }
-          "
+          @update:page="handlePageChange"
         />
       </div>
     </div>
@@ -168,8 +245,11 @@
   import Button from '~/components/ui/Button.vue'
   import Tag from '~/components/ui/Tag.vue'
   import Icon from '~/components/ui/Icon/Icon.vue'
-  import TableAdminOrders from './_components/TableAdminOrders.vue'
+  import Card from '~/components/ui/Card.vue'
+  import Typography from '~/components/ui/Typography.vue'
   import ModalOrderDetail from './_components/ModalOrderDetail.vue'
+  import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
+  import { useNotification } from '~/composables/useNotification'
 
   // Route and Router
   const route = useRoute()
@@ -179,6 +259,8 @@
     layout: 'admin',
     middleware: 'auth',
   })
+
+  const { showNotification, showError } = useNotification()
 
   // Reactive data - initialize from query params
   const searchQuery = ref(route.query.search || '')
@@ -259,7 +341,8 @@
       }
     } catch (err) {
       console.error('Error fetching orders:', err)
-      error.value = err.message || 'Có lỗi xảy ra khi tải danh sách đơn hàng'
+      error.value = err?.message || 'Có lỗi xảy ra khi tải danh sách đơn hàng'
+      showError(error.value)
       orders.value = []
     } finally {
       loading.value = false
@@ -278,6 +361,11 @@
 
     // Fetch orders
     fetchOrders()
+  }
+
+  const handlePageChange = p => {
+    currentPage.value = p
+    updateQueryParams()
   }
 
   const applyFilters = () => {
@@ -332,10 +420,10 @@
         orders.value[orderIndex].status = newStatus
       }
 
-      alert(`Cập nhật trạng thái đơn hàng thành công: ${newStatus}`)
+      showNotification(`Cập nhật trạng thái đơn hàng thành công: ${newStatus}`)
     } catch (err) {
       console.error('Error updating order status:', err)
-      alert('Có lỗi xảy ra khi cập nhật trạng thái đơn hàng')
+      showError(err?.message || 'Có lỗi xảy ra khi cập nhật trạng thái đơn hàng')
     }
   }
 
@@ -356,6 +444,28 @@
       currency: 'VND',
       maximumFractionDigits: 0,
     }).format(price)
+  }
+
+  const getOrderStatusVariant = status => {
+    const map = {
+      pending: 'warning',
+      confirmed: 'info',
+      shipped: 'primary',
+      delivered: 'success',
+      cancelled: 'danger',
+    }
+    return map[status] || 'default'
+  }
+
+  const getOrderStatusText = status => {
+    const map = {
+      pending: 'Chờ xác nhận',
+      confirmed: 'Đã xác nhận',
+      shipped: 'Đang giao hàng',
+      delivered: 'Đã giao hàng',
+      cancelled: 'Đã hủy',
+    }
+    return map[status] || status
   }
 
   // Watchers for auto-updating query params

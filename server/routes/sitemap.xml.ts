@@ -1,8 +1,9 @@
-export default defineEventHandler(async event => {
-  const baseUrl = 'https://nguyenledinhtien.io.vn'
-  const currentDate = new Date().toISOString().split('T')[0]
+export default defineEventHandler(async (event) => {
+  try {
+    const baseUrl = 'https://nguyenledinhtien.io.vn'
+    const currentDate = new Date().toISOString().split('T')[0]
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${baseUrl}/</loc>
@@ -54,6 +55,11 @@ export default defineEventHandler(async event => {
   </url>
 </urlset>`
 
-  setHeader(event, 'Content-Type', 'application/xml')
-  return sitemap
+    setHeader(event, 'Content-Type', 'application/xml')
+    return sitemap
+  } catch (err) {
+    console.error('[sitemap.xml]', err)
+    setHeader(event, 'Content-Type', 'application/xml')
+    return '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>'
+  }
 })

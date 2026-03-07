@@ -7,33 +7,19 @@
     >
       <template #action>
         <Button
-          @click="
-            () => {
-              showCreateModal = true
-              isEditing = false
-              editingId = null
-              form = { title: '', description: '', thumbnail: '', skill: [] }
-            }
-          "
-          class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors flex items-center"
+          variant="primary"
+          size="sm"
+          @click="handleClickButtonAddProject"
+          class="rounded-full px-3"
         >
-          <svg
-            class="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-          Thêm dự án mới
+          <Icon name="plus" size="sm" color="white" />
         </Button>
       </template>
     </HeaderContent>
+
+    <ErrorCommon v-if="error" :message="error" @retry="fetchProjects" />
+
+    <Loading v-if="loading" size="md" color="orange" />
 
     <!-- Create/Edit Project Modal -->
     <FormProjects
@@ -49,21 +35,93 @@
       @thumbnailChange="f => (thumbnailFile = f)"
     />
 
-    <!-- Projects List -->
-    <ErrorCommon v-if="error" :message="error" @retry="fetchProjects" />
+    <!-- Projects List - Card Grid -->
+    <ul
+      v-if="!loading"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
+    >
+      <li
+        v-for="project in projects"
+        :key="project._id"
+        class="list-none"
+      >
+        <Card variant="default" padding="md" hover class="h-full flex flex-col">
+          <div class="flex flex-row items-start gap-3">
+            <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+              <img
+                :src="project.thumbnail || '/images/blog-1.webp'"
+                :alt="project.title"
+                class="w-full h-full object-cover"
+                @error="e => (e.target.src = '/images/blog-1.webp')"
+              />
+            </div>
+            <div class="flex-1 min-w-0">
+              <Typography as="h3" size="sm" weight="semibold" color="default" class="line-clamp-1 mb-1">
+                {{ project.title }}
+              </Typography>
+              <Typography as="p" size="xs" color="muted" class="line-clamp-2">
+                {{ stripHtml(project.description) }}
+              </Typography>
+            </div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-1">
+            <Tag
+              v-for="s in (project.skill || []).slice(0, 3)"
+              :key="s"
+              size="xs"
+              variant="primary"
+            >
+              {{ s }}
+            </Tag>
+            <Tag v-if="(project.skill || []).length > 3" size="xs" variant="gray">
+              +{{ (project.skill || []).length - 3 }}
+            </Tag>
+          </div>
+          <div class="mt-3 flex items-center justify-between gap-2 flex-wrap">
+            <div class="flex items-center gap-2">
+              <Tag
+                :variant="project.status ? 'success' : 'warning'"
+                size="xs"
+              >
+                {{ project.status ? 'Hoàn thành' : 'Đang phát triển' }}
+              </Tag>
+              <Typography as="span" size="xs" color="tertiary">
+                {{ formatProjectDate(project.createdAt) }}
+              </Typography>
+            </div>
+            <div class="flex items-center gap-1">
+              <Button
+                size="sm"
+                variant="ghost"
+                class="!p-1.5 rounded-full"
+                aria-label="Chỉnh sửa"
+                @click.stop="startEdit(project)"
+              >
+                <Icon name="edit" size="sm" />
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                class="!p-1.5 rounded-full text-red-600 dark:text-red-400"
+                aria-label="Xóa"
+                @click.stop="deleteProject(project._id)"
+              >
+                <Icon name="delete" size="sm" />
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </li>
+    </ul>
 
-    <TableProjects
-      v-if="!error"
-      :projects="projects"
-      :loading="loading"
-      @edit="startEdit"
-      @delete="deleteProject"
-    />
+    <div v-if="!loading && projects.length === 0" class="text-center py-12">
+      <Typography as="p" size="sm" color="muted">Không có dự án nào.</Typography>
+    </div>
 
     <!-- Pagination - Separated from Table -->
     <div
-      v-if="!error && projects.length > 0"
-      class="mt-6 bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 px-6 py-3"
+      v-if="!error && projects.length > 0 && !loading"
+      class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
     >
       <Pagination
         :page="currentPage"
@@ -82,16 +140,23 @@
   import { httpRequest } from '~/utils/httpRequest'
   import handleUpdateImage from '~/utils/handleUpdateImage'
   import Button from '~/components/ui/Button.vue'
+  import Icon from '~/components/ui/Icon/Icon.vue'
   import FormProjects from '~/pages/admin/projects/_components/ModalFormProjects.vue'
   import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import TableProjects from '~/pages/admin/projects/_components/TableProjects.vue'
+  import Card from '~/components/ui/Card.vue'
+  import Tag from '~/components/ui/Tag.vue'
+  import Typography from '~/components/ui/Typography.vue'
+  import Loading from '~/components/ui/Loading.vue'
+  import { useNotification } from '~/composables/useNotification'
 
   definePageMeta({
     layout: 'admin',
     middleware: 'auth',
   })
+
+  const { showNotification, showError } = useNotification()
 
   // Route and Router for query params
   const route = useRoute()
@@ -176,7 +241,8 @@
       }
     } catch (err) {
       console.error('Error fetching projects:', err)
-      error.value = 'Không thể tải danh sách dự án. Vui lòng thử lại.'
+      error.value = err?.message || 'Không thể tải danh sách dự án. Vui lòng thử lại.'
+      showError(error.value)
     } finally {
       loading.value = false
     }
@@ -242,13 +308,14 @@
       // Refresh projects list
       await fetchProjects()
 
-      // Show success message
-      alert(
+      showNotification(
         isEditing.value ? 'Cập nhật dự án thành công!' : 'Tạo dự án thành công!'
       )
     } catch (err) {
       console.error('Error submitting project:', err)
-      error.value = err.message || 'Có lỗi xảy ra. Vui lòng thử lại.'
+      const msg = err?.message || 'Có lỗi xảy ra. Vui lòng thử lại.'
+      error.value = msg
+      showError(msg)
     } finally {
       submitting.value = false
     }
@@ -277,11 +344,25 @@
     try {
       await httpRequest.delete(`/projects/${projectId}`)
       await fetchProjects()
-      alert('Xóa dự án thành công!')
+      showNotification('Xóa dự án thành công!')
     } catch (err) {
       console.error('Error deleting project:', err)
-      error.value = 'Không thể xóa dự án. Vui lòng thử lại.'
+      error.value = err?.message || 'Không thể xóa dự án. Vui lòng thử lại.'
+      showError(error.value)
     }
+  }
+
+  const handleClickButtonAddProject = () => {
+    showCreateModal.value = true
+    isEditing.value = false
+    editingId.value = null
+    form.value = {
+      title: '',
+      description: '',
+      thumbnail: '',
+      skill: [],
+    }
+    thumbnailFile.value = null
   }
 
   // Close modal
@@ -312,7 +393,20 @@
     fetchProjects()
   }
 
-  // Initialize
+  const formatProjectDate = dateString => {
+    if (!dateString) return ''
+    return new Date(dateString).toLocaleDateString('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    })
+  }
+
+  const stripHtml = html => {
+    if (!html) return ''
+    return String(html).replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim()
+  }
+
   onMounted(() => {
     fetchProjects()
   })

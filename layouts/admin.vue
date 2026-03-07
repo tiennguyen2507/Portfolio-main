@@ -1,14 +1,14 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-black flex flex-col">
+  <div class="h-screen min-h-screen bg-gray-50 dark:bg-black flex flex-col overflow-hidden">
     <div
       v-if="isLoading"
-      class="min-h-screen flex items-center justify-center bg-gray-50"
+      class="h-screen min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-50"
     >
       <Loading size="lg" color="green" />
     </div>
     <template v-else>
       <Header :admin="true" />
-      <main class="flex-1 overflow-auto bg-gray-50 dark:bg-black pb-24 pt-16">
+      <main class="flex-1 min-h-0 overflow-auto bg-gray-50 dark:bg-black pb-24 pt-16">
         <div class="px-2 py-4 lg:p-8 w-full">
           <slot />
         </div>

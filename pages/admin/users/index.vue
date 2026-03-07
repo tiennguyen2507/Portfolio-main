@@ -5,8 +5,11 @@
       subtitle="Quản lý và theo dõi tất cả users trong hệ thống"
     />
     <ErrorCommon v-if="error" :message="error" @retry="fetchUsers" />
-    <div v-else>
-      <div class="sm:flex sm:justify-end">
+
+    <Loading v-if="loading" size="md" color="orange" />
+
+    <div v-if="!loading">
+      <div class="sm:flex sm:justify-end mb-4">
         <SearchInput
           class="sm:max-w-md"
           id="search-users"
@@ -14,51 +17,58 @@
           placeholder="Tìm theo tên, email..."
         />
       </div>
-      <div
-        v-if="loading"
-        class="mt-6 bg-white dark:bg-[#050505] rounded-lg shadow-sm border-[1px] border-gray-200 dark:border-gray-800"
-      >
-        <Loading container-class="py-12" />
-      </div>
-      <ul
-        v-else
-        class="mt-6 bg-white dark:bg-[#050505] rounded-lg shadow-sm border-[1px] border-gray-200 dark:border-gray-800"
-      >
-        <li
-          v-for="user in users"
-          :key="user.id"
-          class="p-2 border-b-[1px] border-gray-200"
-        >
-          <div class="flex items-center gap-2">
-            <Avatar
-              :src="user.avatar"
-              :size="45"
-              :readOnly="true"
-              :ring="false"
-            />
-            <div class="flex flex-col flex-grow gap-1">
-              <div class="flex items-center justify-between">
-                <Typography as="p" size="sm" weight="semibold">
+
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+        <li v-for="user in paginatedUsers" :key="user.id" class="list-none">
+          <Card variant="default" padding="md" hover class="h-full flex flex-col">
+            <div class="flex items-start gap-3">
+              <Avatar
+                :src="user.avatar"
+                :size="48"
+                :readOnly="true"
+                :ring="false"
+              />
+              <div class="flex-1 min-w-0">
+                <Typography as="p" size="sm" weight="semibold" class="line-clamp-1">
                   {{ user.fullName }}
                 </Typography>
-                <Typography as="p" size="xxs" color="tertiary">
-                  {{ formatDate(user.createdAt) }}
-                </Typography>
-              </div>
-              <div class="flex items-center justify-between">
-                <Typography as="p" size="xs" color="muted">
+                <Typography as="p" size="xs" color="muted" class="truncate mt-0.5">
                   {{ user.email }}
                 </Typography>
-                <span
-                  class="text-[10px] bg-green-100 text-green-800 px-2 py-1 rounded-full dark:bg-green-900/40 dark:text-green-300"
-                >
-                  {{ user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }}
-                </span>
               </div>
             </div>
-          </div>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <Tag
+                :variant="user.status === 1 ? 'success' : 'gray'"
+                size="xs"
+              >
+                {{ user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }}
+              </Tag>
+              <Typography as="span" size="xs" color="tertiary">
+                {{ formatDate(user.createdAt) }}
+              </Typography>
+            </div>
+          </Card>
         </li>
       </ul>
+
+      <div v-if="paginatedUsers.length === 0" class="text-center py-12">
+        <Typography as="p" size="sm" color="muted">Không có user nào.</Typography>
+      </div>
+
+      <div
+        v-if="!error && filteredUsers.length > 0"
+        class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
+      >
+        <Pagination
+          :page="currentPage"
+          :total="filteredUsers.length"
+          :limit="itemsPerPage"
+          :show-info="true"
+          :split="true"
+          @update:page="handlePageChange"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -71,8 +81,10 @@
   import Pagination from '~/components/ui/Pagination.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Avatar from '~/components/ui/Avatar.vue'
-  import TableAdminUsers from './_components/TableAdminUsers.vue'
+  import Card from '~/components/ui/Card.vue'
+  import Tag from '~/components/ui/Tag.vue'
   import Typography from '~/components/ui/Typography.vue'
+  import { useNotification } from '~/composables/useNotification'
 
   definePageMeta({
     layout: 'admin',
@@ -81,6 +93,7 @@
 
   const route = useRoute()
   const router = useRouter()
+  const { showError } = useNotification()
 
   const searchQuery = ref('')
   const currentPage = ref(parseInt(route.query.page) || 1)
@@ -115,7 +128,8 @@
       users.value = Array.isArray(response) ? response : []
     } catch (err) {
       console.error('Error fetching users:', err)
-      error.value = err.message || 'Có lỗi xảy ra khi tải danh sách users'
+      error.value = err?.message || 'Có lỗi xảy ra khi tải danh sách users'
+      showError(error.value)
       users.value = []
     } finally {
       loading.value = false

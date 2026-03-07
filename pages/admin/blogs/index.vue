@@ -21,7 +21,7 @@
 
     <ul
       v-if="!loading"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
     >
       <li
         v-for="post in posts"
@@ -166,11 +166,14 @@
   import Typography from '~/components/ui/Typography.vue'
   import Tag from '~/components/ui/Tag.vue'
   import Loading from '~/components/ui/Loading.vue'
+  import { useNotification } from '~/composables/useNotification'
 
   definePageMeta({
     layout: 'admin',
     middleware: 'auth',
   })
+
+  const { showNotification, showError } = useNotification()
 
   // Route and Router for query params
   const route = useRoute()
@@ -226,6 +229,7 @@
       }
     } catch (err) {
       error.value = err?.message || 'Không thể tải dữ liệu.'
+      showError(error.value)
     } finally {
       loading.value = false
     }
@@ -263,7 +267,7 @@
 
   const handleFormSubmit = async result => {
     if (!result.success) {
-      error.value = result.error
+      if (result.error) showError(result.error)
       return
     }
 
@@ -280,7 +284,7 @@
         if (uploadedUrl) {
           thumbnailUrl = uploadedUrl
         } else {
-          error.value = 'Không thể upload thumbnail. Vui lòng thử lại.'
+          showError('Không thể upload thumbnail. Vui lòng thử lại.')
           submitting.value = false
           return
         }
@@ -312,9 +316,11 @@
         thumbnail: '',
         category: 'my-blog',
       }
-      error.value = '' // Clear any previous errors
+      error.value = ''
+      showNotification(isEditing.value ? 'Cập nhật bài viết thành công!' : 'Tạo bài viết thành công!')
     } catch (err) {
       error.value = err?.message || 'Không thể lưu dữ liệu.'
+      showError(error.value)
     } finally {
       submitting.value = false
     }
@@ -326,8 +332,10 @@
       try {
         await httpRequest.delete(`/posts/${id}`)
         await fetchPosts()
+        showNotification('Xóa bài viết thành công!')
       } catch (err) {
         error.value = err?.message || 'Không thể xóa bài viết.'
+        showError(error.value)
       }
     }
   }

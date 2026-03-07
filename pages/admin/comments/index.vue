@@ -6,121 +6,59 @@
       subtitle="Danh sách lời nhận xét/testimonials"
     />
 
-    <!-- Error Display -->
     <ErrorCommon v-if="error" :message="error" @retry="fetchComments" />
 
-    <!-- Loading State -->
-    <div
-      v-if="loading"
-      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-8"
-    >
-      <Loading />
-    </div>
+    <Loading v-if="loading" size="md" color="orange" />
 
-    <!-- Comments Table -->
-    <div
-      v-else-if="!error"
-      class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800"
+    <!-- Comments Card Grid -->
+    <ul
+      v-if="!loading"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
     >
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-          <thead class="bg-gray-50 dark:bg-[#080808]">
-            <tr>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Người nhận xét
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Nội dung
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Trạng thái
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Ngày tạo
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-              >
-                Thao tác
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white dark:bg-[#050505] divide-y divide-gray-200 dark:divide-gray-800">
-            <tr
-              v-for="comment in comments"
-              :key="comment._id"
-              class="hover:bg-gray-50"
+      <li v-for="comment in comments" :key="comment._id" class="list-none">
+        <Card variant="default" padding="md" hover class="h-full flex flex-col">
+          <div class="flex items-start gap-3">
+            <Avatar
+              :src="comment.avatar"
+              :size="40"
+              :ring="false"
+              :readOnly="true"
+            />
+            <div class="flex-1 min-w-0">
+              <Typography as="p" size="sm" weight="medium">
+                {{ comment.name }}
+              </Typography>
+              <Typography as="p" size="xs" color="muted">
+                {{ comment.relationship }}
+              </Typography>
+            </div>
+          </div>
+          <Typography as="p" size="sm" class="mt-3 line-clamp-3">
+            {{ comment.comment }}
+          </Typography>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <Tag
+              :variant="isActiveStatus(comment.status) ? 'success' : 'warning'"
+              size="xs"
             >
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <Avatar
-                    :src="comment.avatar"
-                    :size="40"
-                    :ring="false"
-                    :readOnly="true"
-                  />
-                  <div class="ml-4">
-                    <Typography as="p" size="sm" weight="medium">
-                      {{ comment.name }}
-                    </Typography>
-                    <Typography as="p" size="xs" color="muted">
-                      {{ comment.relationship }}
-                    </Typography>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4">
-                <Typography as="p" size="sm" class="max-w-xs truncate">
-                  {{ comment.comment }}
-                </Typography>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
-                  :class="{
-                    'bg-green-100 text-green-800': isActiveStatus(
-                      comment.status
-                    ),
-                    'bg-yellow-100 text-yellow-800': !isActiveStatus(
-                      comment.status
-                    ),
-                  }"
-                >
-                  {{ isActiveStatus(comment.status) ? 'Hiển thị' : 'Ẩn' }}
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <Typography as="p" size="xs" color="muted">
-                  {{ formatDate(comment.createdAt) }}
-                </Typography>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <div class="flex space-x-2">
-                  <ButtonIcon
-                    icon="delete"
-                    color="red"
-                    :disabled="deletingId === comment._id"
-                    @click="deleteComment(comment._id)"
-                  />
-                  <div v-if="deletingId === comment._id" class="ml-2">
-                    <div
-                      class="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"
-                    ></div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              {{ isActiveStatus(comment.status) ? 'Hiển thị' : 'Ẩn' }}
+            </Tag>
+            <Typography as="span" size="xs" color="tertiary">
+              {{ formatDate(comment.createdAt) }}
+            </Typography>
+          </div>
+          <div class="mt-3 flex items-center gap-2">
+            <ButtonIcon
+              icon="delete"
+              color="red"
+              :disabled="deletingId === comment._id"
+              @click="deleteComment(comment._id)"
+            />
+            <div v-if="deletingId === comment._id" class="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+          </div>
+        </Card>
+      </li>
+    </ul>
 
       <!-- Empty State -->
       <EmptyData
@@ -129,21 +67,20 @@
         description="Chưa có dữ liệu hiển thị."
       />
 
-      <!-- Pagination -->
-      <div
-        v-if="comments.length > 0"
-        class="bg-white dark:bg-[#050505] px-4 py-3 border-t border-gray-200 dark:border-gray-800 sm:px-6 mt-2"
-      >
-        <Pagination
-          :page="currentPage"
-          :total="pagination.total"
-          :limit="limit"
-          :page-count="Math.ceil(pagination.total / limit)"
-          :show-info="true"
-          :split="true"
-          @update:page="handlePageChange"
-        />
-      </div>
+    <!-- Pagination -->
+    <div
+      v-if="!error && comments.length > 0 && !loading"
+      class="mt-8 bg-white dark:bg-[#050505] rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 px-6 py-4 hover:shadow-lg transition-shadow duration-300"
+    >
+      <Pagination
+        :page="currentPage"
+        :total="pagination.total"
+        :limit="limit"
+        :page-count="Math.ceil(pagination.total / limit)"
+        :show-info="true"
+        :split="true"
+        @update:page="handlePageChange"
+      />
     </div>
   </div>
 </template>
@@ -155,10 +92,13 @@
   import ButtonIcon from '~/components/ui/ButtonIcon.vue'
   import EmptyData from '~/components/ui/EmptyData.vue'
   import Pagination from '~/components/ui/Pagination.vue'
+  import Card from '~/components/ui/Card.vue'
+  import Tag from '~/components/ui/Tag.vue'
   import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'
   import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
   import Typography from '~/components/ui/Typography.vue'
+  import { useNotification } from '~/composables/useNotification'
 
   definePageMeta({
     layout: 'admin',
@@ -168,6 +108,7 @@
   // Route and Router for query params
   const route = useRoute()
   const router = useRouter()
+  const { showError } = useNotification()
 
   // Reactive data
   const currentPage = ref(parseInt(route.query.page) || 1)
@@ -220,6 +161,7 @@
     } catch (err) {
       console.error('Error fetching comments:', err)
       error.value = err?.message || 'Không thể tải dữ liệu comments.'
+      showError(error.value)
     } finally {
       loading.value = false
     }
@@ -244,6 +186,7 @@
       } catch (err) {
         console.error('Error deleting comment:', err)
         error.value = err?.message || 'Không thể xóa comment.'
+        showError(error.value)
       } finally {
         deletingId.value = null
       }

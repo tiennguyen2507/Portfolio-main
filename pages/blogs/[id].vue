@@ -307,7 +307,7 @@
             </div>
 
             <!-- Loading State for Recommended -->
-            <div v-if="recommendedPending" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+            <div v-if="recommendedPending" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               <div v-for="i in 6" :key="i" class="animate-pulse">
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
                   <!-- Image Skeleton -->
@@ -333,7 +333,7 @@
             <!-- Recommended Articles Grid - Responsive columns with horizontal layout per article -->
             <div
               v-else-if="recommendedPosts.length"
-              class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
+              class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"
             >
               <article
                 v-for="post in recommendedPosts"

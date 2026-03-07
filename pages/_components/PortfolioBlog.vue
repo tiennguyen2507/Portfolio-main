@@ -38,7 +38,7 @@
       <!-- Blog Grid -->
       <div
         v-else-if="allPosts.length"
-        class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8"
+        class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8"
       >
         <NuxtLink
           v-for="post in allPosts"
