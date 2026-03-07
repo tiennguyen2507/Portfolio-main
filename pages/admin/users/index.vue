@@ -9,14 +9,58 @@
     <Loading v-if="loading" size="md" color="orange" />
 
     <div v-if="!loading">
-      <div class="sm:flex sm:justify-end mb-4">
-        <SearchInput
-          class="sm:max-w-md"
-          id="search-users"
-          v-model="searchQuery"
-          placeholder="Tìm theo tên, email..."
-        />
+    <!-- Filters (giống admin/contacts) -->
+    <div
+      class="bg-white dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-gray-800 p-3 sm:p-4 mb-4"
+    >
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <div class="w-full sm:max-w-xs flex-shrink-0">
+          <SearchInput
+            id="search-users"
+            v-model="searchQuery"
+            placeholder="Tìm theo tên, email..."
+            :show-microphone="false"
+          />
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <Tag
+            :variant="selectedStatus === '' ? 'primary' : 'gray'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+            @click="selectStatus('')"
+          >
+            Tất cả
+          </Tag>
+          <Tag
+            :variant="selectedStatus === '1' ? 'success' : 'gray'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+            @click="selectStatus('1')"
+          >
+            Hoạt động
+          </Tag>
+          <Tag
+            :variant="selectedStatus === '0' ? 'warning' : 'gray'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+            @click="selectStatus('0')"
+          >
+            Không hoạt động
+          </Tag>
+        </div>
+        <Button
+          variant="primary"
+          size="sm"
+          class="rounded-full px-4 flex-shrink-0 sm:ml-auto"
+          @click="updateQueryParams()"
+        >
+          Lọc
+        </Button>
       </div>
+    </div>
 
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         <li
@@ -97,6 +141,7 @@
   import Pagination from '~/components/ui/Pagination.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Avatar from '~/components/ui/Avatar.vue'
+  import Button from '~/components/ui/Button.vue'
   import Tag from '~/components/ui/Tag.vue'
   import Typography from '~/components/ui/Typography.vue'
   import { useNotification } from '~/composables/useNotification'
@@ -111,6 +156,7 @@
   const { showError } = useNotification()
 
   const searchQuery = ref('')
+  const selectedStatus = ref(route.query.status ?? '')
   const currentPage = ref(parseInt(route.query.page) || 1)
   const itemsPerPage = 10
   const loading = ref(true)
@@ -118,15 +164,30 @@
   const users = ref([])
 
   const filteredUsers = computed(() => {
-    if (!searchQuery.value) return users.value
+    let list = users.value
 
-    const query = searchQuery.value.toLowerCase()
-    return users.value.filter(
-      user =>
-        user.fullName?.toLowerCase().includes(query) ||
-        user.email?.toLowerCase().includes(query)
-    )
+    if (searchQuery.value) {
+      const query = searchQuery.value.toLowerCase()
+      list = list.filter(
+        user =>
+          user.fullName?.toLowerCase().includes(query) ||
+          user.email?.toLowerCase().includes(query)
+      )
+    }
+
+    if (selectedStatus.value !== '') {
+      const statusNum = selectedStatus.value === '1' ? 1 : 0
+      list = list.filter(user => (user.status ?? 0) === statusNum)
+    }
+
+    return list
   })
+
+  const selectStatus = status => {
+    selectedStatus.value = status
+    currentPage.value = 1
+    updateQueryParams()
+  }
 
   const paginatedUsers = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage
@@ -161,6 +222,7 @@
       query: {
         ...route.query,
         page: currentPage.value > 1 ? currentPage.value : undefined,
+        status: selectedStatus.value || undefined,
       },
     })
   }
@@ -175,7 +237,7 @@
     }
   }
 
-  watch(searchQuery, () => {
+  watch([searchQuery, selectedStatus], () => {
     currentPage.value = 1
     updateQueryParams()
   })

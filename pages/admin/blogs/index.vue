@@ -26,7 +26,11 @@
       <li
         v-for="post in posts"
         :key="post._id"
-        class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between"
+        role="button"
+        tabindex="0"
+        class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between cursor-pointer"
+        @click="goToBlog(post._id)"
+        @keydown.enter="goToBlog(post._id)"
       >
         <!-- Phần trên: ảnh + title + desc -->
         <div class="flex flex-row items-center gap-2 sm:gap-3">
@@ -263,6 +267,10 @@
       title: '',
       description: '',
     }
+  }
+
+  const goToBlog = id => {
+    if (id) router.push(`/blogs/${id}`)
   }
 
   const handleFormSubmit = async result => {

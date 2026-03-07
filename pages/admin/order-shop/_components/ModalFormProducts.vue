@@ -124,12 +124,12 @@
     </div>
 
     <template #footer>
-      <Button variant="outline" size="md" :disabled="submitting" @click="$emit('close')">
+      <Button variant="outline" size="xs" :disabled="submitting" @click="$emit('close')">
         Hủy
       </Button>
       <Button
         variant="primary"
-        size="md"
+        size="xs"
         :loading="submitting"
         :disabled="submitting"
         @click="handleSubmit"

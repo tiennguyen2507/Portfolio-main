@@ -1,7 +1,7 @@
 <template>
-  <Modal :isOpen="isOpen" @close="$emit('close')" size="2xl">
+  <Modal :isOpen="isOpen" width="2xl" max-height="90vh" @close="$emit('close')">
     <template #header>
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between w-full pr-8">
         <Typography as="h3" size="lg" weight="semibold" color="default">
           Chi tiết đơn hàng #{{ order?._id?.slice(-8) }}
         </Typography>
@@ -11,8 +11,7 @@
       </div>
     </template>
 
-    <template #body>
-      <div v-if="order" class="space-y-6">
+    <div v-if="order" class="space-y-6">
         <!-- Customer Information -->
         <div class="bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg">
           <Typography as="h4" size="md" weight="medium" color="default" class="mb-3">
@@ -194,11 +193,10 @@
           </div>
         </div>
       </div>
-    </template>
 
     <template #footer>
       <div class="flex justify-end gap-3">
-        <Button variant="secondary" @click="$emit('close')">
+        <Button variant="outline" size="xs" @click="$emit('close')">
           Đóng
         </Button>
         <Button
