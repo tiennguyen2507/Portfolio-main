@@ -10,53 +10,80 @@
 
     <Loading v-if="loading" size="md" color="orange" />
 
-    <!-- Comments Card Grid -->
+    <!-- Comments Card Grid (style như admin/blogs) -->
     <ul
       v-if="!loading"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
     >
-      <li v-for="comment in comments" :key="comment._id" class="list-none">
-        <Card variant="default" padding="md" hover class="h-full flex flex-col">
-          <div class="flex items-start gap-3">
+      <li
+        v-for="comment in comments"
+        :key="comment._id"
+        class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between"
+      >
+        <div class="flex flex-row items-center gap-2 sm:gap-3">
+          <div class="flex-shrink-0">
             <Avatar
               :src="comment.avatar"
               :size="40"
               :ring="false"
               :readOnly="true"
             />
-            <div class="flex-1 min-w-0">
-              <Typography as="p" size="sm" weight="medium">
-                {{ comment.name }}
-              </Typography>
-              <Typography as="p" size="xs" color="muted">
-                {{ comment.relationship }}
-              </Typography>
-            </div>
           </div>
-          <Typography as="p" size="sm" class="mt-3 line-clamp-3">
-            {{ comment.comment }}
-          </Typography>
-          <div class="mt-3 flex flex-wrap items-center gap-2">
-            <Tag
-              :variant="isActiveStatus(comment.status) ? 'success' : 'warning'"
-              size="xs"
+          <div class="flex-1 min-w-0 flex flex-col">
+            <Typography
+              as="p"
+              size="sm"
+              weight="medium"
+              class="line-clamp-1 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors text-[11px] sm:text-sm"
             >
-              {{ isActiveStatus(comment.status) ? 'Hiển thị' : 'Ẩn' }}
-            </Tag>
-            <Typography as="span" size="xs" color="tertiary">
-              {{ formatDate(comment.createdAt) }}
+              {{ comment.name }}
+            </Typography>
+            <Typography as="p" size="xs" color="muted" class="text-[9px] sm:text-xs">
+              {{ comment.relationship }}
             </Typography>
           </div>
-          <div class="mt-3 flex items-center gap-2">
-            <ButtonIcon
-              icon="delete"
-              color="red"
+        </div>
+        <Typography as="p" size="sm" class="mt-2 line-clamp-3 text-[9px] sm:text-xs text-gray-500 dark:text-gray-400">
+          {{ comment.comment }}
+        </Typography>
+        <div class="mt-2 flex items-center gap-1 flex-wrap">
+          <Tag
+            :variant="isActiveStatus(comment.status) ? 'success' : 'warning'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-1.5 !py-[1px] !text-[10px]"
+          >
+            {{ isActiveStatus(comment.status) ? 'Hiển thị' : 'Ẩn' }}
+          </Tag>
+          <Tag
+            v-if="comment.createdAt"
+            size="sm"
+            variant="info"
+            tag-class="!px-1.5 !py-[1px] !text-[10px] whitespace-nowrap"
+          >
+            {{ formatDate(comment.createdAt) }}
+          </Tag>
+          <div class="flex items-center gap-1 ml-auto">
+            <Button
+              size="sm"
+              variant="ghost"
+              class="!p-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-900/40 dark:hover:bg-red-900/60 dark:text-red-300"
               :disabled="deletingId === comment._id"
-              @click="deleteComment(comment._id)"
-            />
-            <div v-if="deletingId === comment._id" class="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+              @click.stop="deleteComment(comment._id)"
+              aria-label="Xóa nhận xét"
+            >
+              <Icon
+                v-if="deletingId !== comment._id"
+                name="delete"
+                size="sm"
+              />
+              <span
+                v-else
+                class="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin inline-block"
+              />
+            </Button>
           </div>
-        </Card>
+        </div>
       </li>
     </ul>
 
@@ -89,10 +116,10 @@
   import { ref, onMounted } from 'vue'
   import { httpRequest } from '~/utils/httpRequest'
   import Avatar from '~/components/ui/Avatar.vue'
-  import ButtonIcon from '~/components/ui/ButtonIcon.vue'
+  import Button from '~/components/ui/Button.vue'
+  import Icon from '~/components/ui/Icon/Icon.vue'
   import EmptyData from '~/components/ui/EmptyData.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import Card from '~/components/ui/Card.vue'
   import Tag from '~/components/ui/Tag.vue'
   import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import Loading from '~/components/ui/Loading.vue'

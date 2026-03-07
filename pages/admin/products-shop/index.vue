@@ -67,47 +67,83 @@
         </div>
       </div>
 
-      <!-- Products Card Grid -->
+      <!-- Products Card Grid (style như admin/blogs) -->
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-        <li v-for="product in paginatedProducts" :key="product._id" class="list-none">
-          <Card variant="default" padding="md" hover class="h-full flex flex-col">
-            <div class="flex gap-3">
-              <div class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <li
+          v-for="product in paginatedProducts"
+          :key="product._id"
+          class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between"
+        >
+          <div class="flex flex-row items-center gap-2 sm:gap-3">
+            <div class="flex-shrink-0 w-20 sm:w-24">
+              <div
+                class="relative overflow-hidden rounded-lg w-20 h-20 sm:w-24 sm:h-24"
+              >
                 <img
                   :src="product.thumbnail"
                   :alt="product.title"
-                  class="w-full h-full object-cover"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div class="flex-1 min-w-0">
-                <Typography as="h3" size="sm" weight="semibold" class="line-clamp-1">
-                  {{ product.title || 'N/A' }}
-                </Typography>
-                <Typography as="p" size="xs" color="muted" class="line-clamp-2 mt-0.5">
-                  {{ product.description }}
-                </Typography>
-              </div>
             </div>
-            <div class="mt-3 flex flex-wrap gap-2 items-center">
-              <Tag variant="info" size="xs">{{ product.category || 'N/A' }}</Tag>
-              <Typography as="span" size="xs" color="tertiary">
-                {{ formatProductDate(product.createdAt) }}
+            <div class="flex-1 min-w-0 flex flex-col">
+              <Typography
+                as="h3"
+                size="sm"
+                weight="semibold"
+                color="default"
+                class="mb-1 sm:mb-2 line-clamp-1 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors text-[11px] sm:text-sm"
+              >
+                {{ product.title || 'N/A' }}
+              </Typography>
+              <Typography as="p" size="xs" color="muted" class="line-clamp-2 text-[9px] sm:text-xs">
+                {{ product.description }}
               </Typography>
             </div>
-            <div class="mt-2 flex flex-wrap gap-2 text-xs">
-              <span class="font-semibold text-green-600 dark:text-green-400">{{ formatProductPrice(product.price) }}</span>
-              <span class="text-gray-500 dark:text-gray-400">SL: {{ product.quantity || 0 }}</span>
-              <span class="text-orange-600 dark:text-orange-400">DT: {{ formatProductPrice(product.sales) }}</span>
-            </div>
-            <div class="mt-3 flex gap-2">
-              <Button size="xs" variant="primary" @click="editProduct(product._id)">
+          </div>
+          <div class="mt-2 flex items-center gap-1 flex-wrap">
+            <Tag
+              variant="info"
+              size="sm"
+              :pill="true"
+              tag-class="!px-1.5 !py-[1px] !text-[10px]"
+            >
+              {{ product.category || 'N/A' }}
+            </Tag>
+            <Tag
+              v-if="product.createdAt"
+              size="sm"
+              variant="gray"
+              tag-class="!px-1.5 !py-[1px] !text-[10px] whitespace-nowrap"
+            >
+              {{ formatProductDate(product.createdAt) }}
+            </Tag>
+            <span class="text-[10px] font-semibold text-green-600 dark:text-green-400">{{ formatProductPrice(product.price) }}</span>
+            <span class="text-[10px] text-gray-500 dark:text-gray-400">SL: {{ product.quantity || 0 }}</span>
+          </div>
+          <div class="mt-2 flex items-center gap-1 flex-wrap">
+            <div class="flex-1" />
+            <div class="flex items-center gap-1">
+              <Button
+                size="sm"
+                variant="ghost"
+                class="!p-1.5 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-200"
+                @click.stop="editProduct(product._id)"
+                aria-label="Chỉnh sửa sản phẩm"
+              >
                 <Icon name="edit" size="sm" />
               </Button>
-              <Button size="xs" variant="ghost" class="text-red-600 dark:text-red-400" @click="deleteProduct(product._id)">
+              <Button
+                size="sm"
+                variant="ghost"
+                class="!p-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-900/40 dark:hover:bg-red-900/60 dark:text-red-300"
+                @click.stop="deleteProduct(product._id)"
+                aria-label="Xóa sản phẩm"
+              >
                 <Icon name="delete" size="sm" />
               </Button>
             </div>
-          </Card>
+          </div>
         </li>
       </ul>
       <!-- Pagination -->
@@ -137,7 +173,6 @@
   import Select from '~/components/ui/Select.vue'
   import Button from '~/components/ui/Button.vue'
   import Icon from '~/components/ui/Icon/Icon.vue'
-  import Card from '~/components/ui/Card.vue'
   import Tag from '~/components/ui/Tag.vue'
   import Typography from '~/components/ui/Typography.vue'
   import ModalFormProducts from './_components/ModalFormProducts.vue'

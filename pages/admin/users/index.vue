@@ -19,36 +19,52 @@
       </div>
 
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-        <li v-for="user in paginatedUsers" :key="user.id" class="list-none">
-          <Card variant="default" padding="md" hover class="h-full flex flex-col">
-            <div class="flex items-start gap-3">
+        <li
+          v-for="user in paginatedUsers"
+          :key="user.id"
+          class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between"
+        >
+          <div class="flex flex-row items-center gap-2 sm:gap-3">
+            <div class="flex-shrink-0">
               <Avatar
                 :src="user.avatar"
                 :size="48"
                 :readOnly="true"
                 :ring="false"
               />
-              <div class="flex-1 min-w-0">
-                <Typography as="p" size="sm" weight="semibold" class="line-clamp-1">
-                  {{ user.fullName }}
-                </Typography>
-                <Typography as="p" size="xs" color="muted" class="truncate mt-0.5">
-                  {{ user.email }}
-                </Typography>
-              </div>
             </div>
-            <div class="mt-3 flex flex-wrap items-center gap-2">
-              <Tag
-                :variant="user.status === 1 ? 'success' : 'gray'"
-                size="xs"
+            <div class="flex-1 min-w-0 flex flex-col">
+              <Typography
+                as="p"
+                size="sm"
+                weight="semibold"
+                class="line-clamp-1 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors text-[11px] sm:text-sm"
               >
-                {{ user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }}
-              </Tag>
-              <Typography as="span" size="xs" color="tertiary">
-                {{ formatDate(user.createdAt) }}
+                {{ user.fullName }}
+              </Typography>
+              <Typography as="p" size="xs" color="muted" class="truncate mt-0.5 text-[9px] sm:text-xs">
+                {{ user.email }}
               </Typography>
             </div>
-          </Card>
+          </div>
+          <div class="mt-2 flex items-center gap-1 flex-wrap">
+            <Tag
+              :variant="user.status === 1 ? 'success' : 'gray'"
+              size="sm"
+              :pill="true"
+              tag-class="!px-1.5 !py-[1px] !text-[10px]"
+            >
+              {{ user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }}
+            </Tag>
+            <Tag
+              v-if="user.createdAt"
+              size="sm"
+              variant="info"
+              tag-class="!px-1.5 !py-[1px] !text-[10px] whitespace-nowrap"
+            >
+              {{ formatDate(user.createdAt) }}
+            </Tag>
+          </div>
         </li>
       </ul>
 
@@ -81,7 +97,6 @@
   import Pagination from '~/components/ui/Pagination.vue'
   import Loading from '~/components/ui/Loading.vue'
   import Avatar from '~/components/ui/Avatar.vue'
-  import Card from '~/components/ui/Card.vue'
   import Tag from '~/components/ui/Tag.vue'
   import Typography from '~/components/ui/Typography.vue'
   import { useNotification } from '~/composables/useNotification'

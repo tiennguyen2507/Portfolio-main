@@ -35,7 +35,7 @@
       @thumbnailChange="f => (thumbnailFile = f)"
     />
 
-    <!-- Projects List - Card Grid -->
+    <!-- Projects List - Card Grid (style như admin/blogs) -->
     <ul
       v-if="!loading"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
@@ -43,74 +43,96 @@
       <li
         v-for="project in projects"
         :key="project._id"
-        class="list-none"
+        class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between"
       >
-        <Card variant="default" padding="md" hover class="h-full flex flex-col">
-          <div class="flex flex-row items-start gap-3">
-            <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <div class="flex flex-row items-center gap-2 sm:gap-3">
+          <div class="flex-shrink-0 w-20 sm:w-24">
+            <div
+              class="relative overflow-hidden rounded-lg w-20 h-20 sm:w-24 sm:h-24"
+            >
               <img
                 :src="project.thumbnail || '/images/blog-1.webp'"
                 :alt="project.title"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 @error="e => (e.target.src = '/images/blog-1.webp')"
               />
             </div>
-            <div class="flex-1 min-w-0">
-              <Typography as="h3" size="sm" weight="semibold" color="default" class="line-clamp-1 mb-1">
-                {{ project.title }}
-              </Typography>
-              <Typography as="p" size="xs" color="muted" class="line-clamp-2">
-                {{ stripHtml(project.description) }}
-              </Typography>
-            </div>
           </div>
-          <div class="mt-3 flex flex-wrap gap-1">
-            <Tag
-              v-for="s in (project.skill || []).slice(0, 3)"
-              :key="s"
-              size="xs"
-              variant="primary"
+          <div class="flex-1 min-w-0 flex flex-col">
+            <Typography
+              as="h3"
+              size="sm"
+              weight="semibold"
+              color="default"
+              class="mb-1 sm:mb-2 line-clamp-1 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors text-[11px] sm:text-sm"
             >
-              {{ s }}
-            </Tag>
-            <Tag v-if="(project.skill || []).length > 3" size="xs" variant="gray">
-              +{{ (project.skill || []).length - 3 }}
-            </Tag>
+              {{ project.title }}
+            </Typography>
+            <Typography as="p" size="xs" color="muted" class="line-clamp-2 text-[9px] sm:text-xs">
+              {{ stripHtml(project.description) }}
+            </Typography>
           </div>
-          <div class="mt-3 flex items-center justify-between gap-2 flex-wrap">
-            <div class="flex items-center gap-2">
-              <Tag
-                :variant="project.status ? 'success' : 'warning'"
-                size="xs"
-              >
-                {{ project.status ? 'Hoàn thành' : 'Đang phát triển' }}
-              </Tag>
-              <Typography as="span" size="xs" color="tertiary">
-                {{ formatProjectDate(project.createdAt) }}
-              </Typography>
-            </div>
-            <div class="flex items-center gap-1">
-              <Button
-                size="sm"
-                variant="ghost"
-                class="!p-1.5 rounded-full"
-                aria-label="Chỉnh sửa"
-                @click.stop="startEdit(project)"
-              >
-                <Icon name="edit" size="sm" />
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                class="!p-1.5 rounded-full text-red-600 dark:text-red-400"
-                aria-label="Xóa"
-                @click.stop="deleteProject(project._id)"
-              >
-                <Icon name="delete" size="sm" />
-              </Button>
-            </div>
+        </div>
+        <div class="mt-2 flex flex-wrap gap-1">
+          <Tag
+            v-for="s in (project.skill || []).slice(0, 3)"
+            :key="s"
+            size="sm"
+            variant="primary"
+            :pill="true"
+            tag-class="!px-1.5 !py-[1px] !text-[10px]"
+          >
+            {{ s }}
+          </Tag>
+          <Tag
+            v-if="(project.skill || []).length > 3"
+            size="sm"
+            variant="gray"
+            :pill="true"
+            tag-class="!px-1.5 !py-[1px] !text-[10px]"
+          >
+            +{{ (project.skill || []).length - 3 }}
+          </Tag>
+          <Tag
+            :variant="project.status ? 'success' : 'warning'"
+            size="sm"
+            :pill="true"
+            tag-class="!px-1.5 !py-[1px] !text-[10px]"
+          >
+            {{ project.status ? 'Hoàn thành' : 'Đang phát triển' }}
+          </Tag>
+          <Tag
+            v-if="project.createdAt"
+            size="sm"
+            variant="info"
+            tag-class="!px-1.5 !py-[1px] !text-[10px] whitespace-nowrap"
+          >
+            {{ formatProjectDate(project.createdAt) }}
+          </Tag>
+        </div>
+        <div class="mt-2 flex items-center gap-1 flex-wrap">
+          <div class="flex-1" />
+          <div class="flex items-center gap-1">
+            <Button
+              size="sm"
+              variant="ghost"
+              class="!p-1.5 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-200"
+              @click.stop="startEdit(project)"
+              aria-label="Chỉnh sửa"
+            >
+              <Icon name="edit" size="sm" />
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              class="!p-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-900/40 dark:hover:bg-red-900/60 dark:text-red-300"
+              @click.stop="deleteProject(project._id)"
+              aria-label="Xóa"
+            >
+              <Icon name="delete" size="sm" />
+            </Button>
           </div>
-        </Card>
+        </div>
       </li>
     </ul>
 
@@ -145,7 +167,6 @@
   import HeaderContent from '~/components/common/Admin/HeaderContent.vue'
   import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
   import Pagination from '~/components/ui/Pagination.vue'
-  import Card from '~/components/ui/Card.vue'
   import Tag from '~/components/ui/Tag.vue'
   import Typography from '~/components/ui/Typography.vue'
   import Loading from '~/components/ui/Loading.vue'

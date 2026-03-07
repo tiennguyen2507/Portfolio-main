@@ -119,11 +119,14 @@
         </div>
       </div>
 
-      <!-- Orders Card Grid -->
+      <!-- Orders Card Grid (style như admin/blogs) -->
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-        <li v-for="order in paginatedOrders" :key="order._id" class="list-none">
-          <Card variant="default" padding="md" hover class="h-full flex flex-col">
-            <div class="space-y-2">
+        <li
+          v-for="order in paginatedOrders"
+          :key="order._id"
+          class="list-none group border border-gray-200 dark:border-gray-700 rounded-lg p-2 sm:p-4 bg-white dark:bg-gray-800/30 hover:border-gray-300 dark:hover:border-gray-600 transition-colors flex flex-col justify-between"
+        >
+          <div class="space-y-2">
               <Typography as="p" size="sm" weight="semibold">
                 {{ order.fullName }}
               </Typography>
@@ -206,7 +209,6 @@
                 Hủy
               </Button>
             </div>
-          </Card>
         </li>
       </ul>
 
@@ -245,7 +247,6 @@
   import Button from '~/components/ui/Button.vue'
   import Tag from '~/components/ui/Tag.vue'
   import Icon from '~/components/ui/Icon/Icon.vue'
-  import Card from '~/components/ui/Card.vue'
   import Typography from '~/components/ui/Typography.vue'
   import ModalOrderDetail from './_components/ModalOrderDetail.vue'
   import ErrorCommon from '~/components/common/Admin/ErrorCommon.vue'
