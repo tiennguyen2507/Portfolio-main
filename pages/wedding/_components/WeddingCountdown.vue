@@ -1,13 +1,13 @@
 <template>
-  <div class="flex justify-center gap-4 md:gap-8">
+  <div class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-6">
     <div v-for="(value, key) in timeLeft" :key="key" class="text-center">
       <div
-        class="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 md:px-6 md:py-4 min-w-[70px] md:min-w-[100px]"
+        class="rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2 md:px-5 md:py-3 min-w-[52px] sm:min-w-[60px] md:min-w-[90px] border border-[#e9ce9e]/30 bg-[#e9ce9e]/10 backdrop-blur-sm"
       >
-        <div class="text-3xl md:text-5xl font-light mb-1">
+        <div class="text-xl sm:text-2xl md:text-4xl font-light mb-0.5 text-[#e9ce9e] font-baskerville tabular-nums">
           {{ value }}
         </div>
-        <div class="text-xs md:text-sm uppercase tracking-wide opacity-90">
+        <div class="text-[9px] sm:text-[10px] md:text-xs uppercase tracking-wide text-[#d9bc86] font-baskerville">
           {{ getLabel(key) }}
         </div>
       </div>

@@ -1,148 +1,110 @@
 <template>
-  <section class="py-20 md:py-32 bg-gray-900">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Title -->
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-light text-white mb-4">
-          Lịch Trình
-        </h2>
-        <div class="flex items-center justify-center gap-4">
-          <div class="h-px w-16 bg-gray-700"></div>
-          <span class="text-2xl">📅</span>
-          <div class="h-px w-16 bg-gray-700"></div>
-        </div>
+  <section class="relative flex flex-col gap-12 sm:gap-16 md:gap-20 px-3 sm:px-4 md:px-6 pb-10 sm:pb-12 md:pb-16">
+    <!-- Lễ thành hôn (SP: dòng ngày gọn, wrap nếu cần) -->
+    <div
+      class="flex flex-col items-center gap-3 sm:gap-4 md:gap-5 text-center font-baskerville"
+    >
+      <div class="flex flex-col items-center gap-1.5 sm:gap-2 text-[#e9ce9e] px-1">
+        <span class="tracking-[0.05em] whitespace-pre-line text-xs sm:text-sm md:text-base">
+          LỄ THÀNH HÔN ĐƯỢC CỬ HÀNH TẠI<br />{{ ceremonyVenue }}
+        </span>
+        <p class="text-sm sm:text-base md:text-lg mb-1 sm:mb-2 uppercase">VÀO LÚC</p>
       </div>
-
-      <!-- Timeline -->
-      <div class="max-w-3xl mx-auto space-y-12">
-        <!-- Ceremony -->
-        <div
-          class="flex flex-col md:flex-row gap-6 items-center md:items-start"
-        >
-          <div class="flex-shrink-0 w-full md:w-1/2 text-center md:text-right">
-            <div
-              class="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-lg p-6 shadow-lg"
-            >
-              <div class="text-2xl mb-2">💒</div>
-              <h3 class="text-2xl font-light mb-2">
-                {{ config.weddingDate.ceremony.name }}
-              </h3>
-              <p class="text-lg opacity-90 mb-4">
-                {{
-                  formatDateTime(
-                    config.weddingDate.ceremony.date,
-                    config.weddingDate.ceremony.time
-                  )
-                }}
-              </p>
-              <p class="text-sm opacity-80 mb-2">
-                {{ config.weddingDate.ceremony.location }}
-              </p>
-              <p class="text-xs opacity-70">
-                {{ config.weddingDate.ceremony.address }}
-              </p>
-              <a
-                :href="config.weddingDate.ceremony.mapUrl"
-                target="_blank"
-                class="inline-block mt-4 text-sm underline opacity-90 hover:opacity-100"
-              >
-                Xem bản đồ →
-              </a>
-            </div>
-          </div>
-
-          <!-- Timeline connector (hidden on mobile) -->
-          <div
-            class="hidden md:flex flex-col items-center justify-center flex-shrink-0 w-12"
-          >
-            <div
-              class="w-1 h-24 bg-gradient-to-b from-orange-500 to-orange-600"
-            ></div>
-            <div
-              class="w-4 h-4 rounded-full bg-orange-500 border-4 border-gray-900 shadow-lg"
-            ></div>
-            <div
-              class="w-1 h-24 bg-gradient-to-b from-orange-500 to-orange-600"
-            ></div>
-          </div>
-
-          <!-- Empty space for alignment -->
-          <div class="hidden md:block w-1/2"></div>
-        </div>
-
-        <!-- Reception -->
-        <div
-          class="flex flex-col md:flex-row gap-6 items-center md:items-start"
-        >
-          <!-- Empty space for alignment -->
-          <div class="hidden md:block w-1/2"></div>
-
-          <!-- Timeline connector (hidden on mobile) -->
-          <div
-            class="hidden md:flex flex-col items-center justify-center flex-shrink-0 w-12"
-          >
-            <div
-              class="w-1 h-24 bg-gradient-to-b from-orange-500 to-orange-600"
-            ></div>
-            <div
-              class="w-4 h-4 rounded-full bg-orange-500 border-4 border-gray-900 shadow-lg"
-            ></div>
-            <div
-              class="w-1 h-24 bg-gradient-to-b from-orange-500 to-orange-600"
-            ></div>
-          </div>
-
-          <div class="flex-shrink-0 w-full md:w-1/2 text-center md:text-left">
-            <div
-              class="bg-gradient-to-br from-orange-600 to-orange-500 text-white rounded-lg p-6 shadow-lg"
-            >
-              <div class="text-2xl mb-2">🍾</div>
-              <h3 class="text-2xl font-light mb-2">
-                {{ config.weddingDate.reception.name }}
-              </h3>
-              <p class="text-lg opacity-90 mb-4">
-                {{
-                  formatDateTime(
-                    config.weddingDate.reception.date,
-                    config.weddingDate.reception.time
-                  )
-                }}
-              </p>
-              <p class="text-sm opacity-80 mb-2">
-                {{ config.weddingDate.reception.location }}
-              </p>
-              <p class="text-xs opacity-70">
-                {{ config.weddingDate.reception.address }}
-              </p>
-              <a
-                :href="config.weddingDate.reception.mapUrl"
-                target="_blank"
-                class="inline-block mt-4 text-sm underline opacity-90 hover:opacity-100"
-              >
-                Xem bản đồ →
-              </a>
-            </div>
-          </div>
-        </div>
+      <div class="text-[18px] sm:text-[20px] md:text-[30px] text-[#e9ce9e] font-baskerville">
+        {{ config.weddingDate.ceremony.time }}
       </div>
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6 text-[#e9ce9e]">
+        <span class="text-[10px] sm:text-xs md:text-base font-baskerville">
+          {{ weekdayCeremony }}
+        </span>
+        <span class="h-5 sm:h-6 md:h-8 w-[2px] bg-[#e9ce9e]/60 shrink-0" aria-hidden="true" />
+        <span class="text-[24px] sm:text-[30px] md:text-[40px] font-baskerville">
+          {{ dayCeremony }}
+        </span>
+        <span class="h-5 sm:h-6 md:h-8 w-[2px] bg-[#e9ce9e]/60 shrink-0" aria-hidden="true" />
+        <span class="text-[10px] sm:text-xs md:text-base font-baskerville">
+          {{ monthYearCeremony }}
+        </span>
+      </div>
+      <div class="text-base sm:text-lg md:text-2xl text-[#e9ce9e] font-baskerville">
+        {{ yearCeremony }}
+      </div>
+    </div>
+
+    <!-- Tiệc cưới -->
+    <div
+      class="flex flex-col items-center gap-3 sm:gap-4 md:gap-5 text-center font-baskerville"
+    >
+      <h3
+        class="uppercase text-[16px] sm:text-[20px] md:text-[26px] text-[#e9ce9e] font-baskerville tracking-[0.05em] px-2"
+      >
+        Tiệc cưới sẽ diễn ra vào lúc:
+      </h3>
+      <div class="text-[18px] sm:text-[20px] md:text-[30px] text-[#e9ce9e] font-baskerville">
+        {{ config.weddingDate.reception.time }}
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6 text-[#e9ce9e]">
+        <span class="text-[10px] sm:text-xs md:text-base font-baskerville">
+          {{ weekdayReception }}
+        </span>
+        <span class="h-5 sm:h-6 md:h-8 w-[2px] bg-[#e9ce9e]/60 shrink-0" aria-hidden="true" />
+        <span class="text-[24px] sm:text-[30px] md:text-[40px] font-baskerville">
+          {{ dayReception }}
+        </span>
+        <span class="h-5 sm:h-6 md:h-8 w-[2px] bg-[#e9ce9e]/60 shrink-0" aria-hidden="true" />
+        <span class="text-[10px] sm:text-xs md:text-base font-baskerville">
+          {{ monthYearReception }}
+        </span>
+      </div>
+      <div class="text-base sm:text-lg md:text-2xl text-[#e9ce9e] font-baskerville">
+        {{ yearReception }}
+      </div>
+      <p class="text-[10px] sm:text-xs md:text-base uppercase tracking-wider text-[#d9bc86] font-baskerville">
+        Khai tiệc {{ config.weddingDate.reception.time }}
+      </p>
     </div>
   </section>
 </template>
 
 <script setup>
+  import { computed } from 'vue'
   import { weddingConfig } from '../config.js'
 
   const config = weddingConfig
 
-  const formatDateTime = (dateString, timeString) => {
-    const date = new Date(dateString)
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+  const ceremonyVenue = computed(
+    () => config.weddingDate.ceremony.location || 'TƯ GIA'
+  )
+
+  const formatParts = (dateString, locale = 'vi-VN') => {
+    const d = new Date(dateString)
+    const month = (d.getMonth() + 1).toString().padStart(2, '0')
+    return {
+      weekday: d.toLocaleDateString(locale, { weekday: 'long' }).toUpperCase(),
+      day: d.getDate().toString(),
+      month,
+      year: d.getFullYear().toString(),
     }
-    const dateFormatted = date.toLocaleDateString('vi-VN', options)
-    return `${dateFormatted} - ${timeString}`
   }
+
+  const ceremonyParts = computed(() =>
+    formatParts(config.weddingDate.ceremony.date)
+  )
+  const receptionParts = computed(() =>
+    formatParts(config.weddingDate.reception.date)
+  )
+
+  const weekdayCeremony = computed(() => ceremonyParts.value.weekday)
+  const dayCeremony = computed(() => ceremonyParts.value.day)
+  const monthYearCeremony = computed(
+    () => `THÁNG ${ceremonyParts.value.month}`
+  )
+  const yearCeremony = computed(() => ceremonyParts.value.year)
+
+  const weekdayReception = computed(() => receptionParts.value.weekday)
+  const dayReception = computed(() => receptionParts.value.day)
+  const monthYearReception = computed(
+    () => `THÁNG ${receptionParts.value.month}`
+  )
+  const yearReception = computed(() => receptionParts.value.year)
 </script>

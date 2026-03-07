@@ -1,0 +1,49 @@
+// ============================================
+// Wedding template fonts (Mẫu thiệp Long Phụng Lam)
+// Dùng Times New Roman làm font chính – hiển thị tiếng Việt không lỗi
+// ============================================
+
+// UNI Chu truyen thong – tên cô dâu chú rể (đặt file vào public/fonts/)
+@font-face {
+  font-family: 'UNI Chu truyen thong';
+  src: url('/fonts/UNI_Chu_truyen_thong.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+// ---------- Class font ----------
+
+// Tên cô dâu chú rể (UNI Chu hoặc fallback Times New Roman)
+.font-uni-chu {
+  font-family: 'UNI Chu truyen thong', 'Times New Roman', Times, serif !important;
+}
+
+// Chữ body – Times New Roman (tiếng Việt chuẩn, không lỗi)
+.font-baskerville {
+  font-family: 'Times New Roman', Times, serif !important;
+}
+
+.font-pattaya {
+  font-family: 'Pattaya', Georgia, 'Times New Roman', serif !important;
+}
+
+// Cả card wedding: Times New Roman làm font chính (tiếng Việt không lỗi)
+.wedding-card {
+  font-family: 'Times New Roman', Times, serif !important;
+}
+
+// Đảm bảo mọi thẻ con trong card kế thừa font (trừ khi có .font-uni-chu)
+.wedding-card p,
+.wedding-card span,
+.wedding-card div,
+.wedding-card h2,
+.wedding-card h3,
+.wedding-card h4,
+.wedding-card a,
+.wedding-card button,
+.wedding-card input,
+.wedding-card textarea,
+.wedding-card label {
+  font-family: inherit;
+}

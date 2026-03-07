@@ -1,100 +1,71 @@
 <template>
-  <section class="py-20 md:py-32 bg-gray-900">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Title -->
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-light text-white mb-4">
-          Gửi lời chúc mừng
-        </h2>
-        <div class="flex items-center justify-center gap-4">
-          <div class="h-px w-16 bg-gray-700"></div>
-          <span class="text-2xl">💌</span>
-          <div class="h-px w-16 bg-gray-700"></div>
-        </div>
-        <p class="text-gray-400 mt-6 max-w-2xl mx-auto">
-          {{ config.contact.message }}
-        </p>
-      </div>
-
-      <!-- RSVP Form -->
-      <form
-        @submit.prevent="handleSubmit"
-        class="bg-gray-800/50 border border-gray-700 rounded-2xl p-8 md:p-12 shadow-xl"
+  <section
+    class="px-4 sm:px-6 md:px-10 pt-4 sm:pt-6 pb-6 sm:pb-8 bg-[#0A202F] text-[#e9ce9e] font-baskerville"
+  >
+    <div class="text-center">
+      <h2
+        class="uppercase font-normal text-[18px] sm:text-[20px] md:text-[26px] text-center text-[#e9ce9e] font-baskerville tracking-[0.05em]"
       >
-        <div class="space-y-6">
-          <!-- Name -->
-          <div>
-            <label
-              for="name"
-              class="block text-sm font-medium text-gray-300 mb-2"
-            >
-              Họ và Tên *
-            </label>
-            <input
-              id="name"
-              v-model="form.name"
-              type="text"
-              required
-              class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 text-white rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition placeholder-gray-500"
-              placeholder="Nhập họ và tên của bạn"
-            />
-          </div>
+        Sổ lưu bút
+      </h2>
+    </div>
 
-          <!-- Message -->
-          <div>
-            <label
-              for="message"
-              class="block text-sm font-medium text-gray-300 mb-2"
-            >
-              Lời nhắn
-            </label>
-            <textarea
-              id="message"
-              v-model="form.message"
-              rows="4"
-              class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 text-white rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition resize-none placeholder-gray-500"
-              placeholder="Gửi lời chúc mừng đến cô dâu chú rể..."
-            ></textarea>
-          </div>
-
-          <!-- Submit Button -->
+    <form
+      class="mt-4 sm:mt-6 mx-auto max-w-full md:max-w-[600px]"
+      @submit.prevent="handleSubmit"
+    >
+      <div
+        class="rounded-xl sm:rounded-2xl border border-[#e9ce9e]/40 bg-white/10 p-4 sm:p-6 shadow-lg backdrop-blur-sm"
+      >
+        <div class="mb-3 sm:mb-4">
+          <input
+            v-model="form.name"
+            type="text"
+            required
+            placeholder="Nhập tên của bạn*"
+            class="w-full rounded-lg border px-4 py-3 text-base sm:text-sm focus:outline-none bg-[#e9ce9e]/10 border-[#e9ce9e] text-[#e9ce9e] placeholder-[#e9ce9e]/60 min-h-[44px]"
+          />
+        </div>
+        <textarea
+          v-model="form.message"
+          rows="4"
+          required
+          placeholder="Nhập lời chúc của bạn*"
+          class="w-full resize-none rounded-lg border px-4 py-3 text-base sm:text-sm focus:outline-none bg-[#e9ce9e]/10 border-[#e9ce9e] text-[#e9ce9e] placeholder-[#e9ce9e]/60 min-h-[120px]"
+        />
+        <div class="mt-4 flex items-center justify-end">
           <button
             type="submit"
             :disabled="isSubmitting"
-            class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 px-8 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            class="rounded-full min-h-[44px] px-5 py-2.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold transition-transform hover:scale-105 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed bg-[#e9ce9e] text-[#553f18] font-baskerville"
           >
-            {{ isSubmitting ? 'Đang gửi...' : 'Gửi Xác Nhận' }}
+            {{ isSubmitting ? 'ĐANG GỬI...' : 'GỬI LỜI CHÚC' }}
           </button>
         </div>
-
-        <!-- Success Message -->
-        <div
-          v-if="showSuccess"
-          class="mt-6 p-4 bg-green-900/50 border border-green-700 text-green-300 rounded-lg text-center"
-        >
-          Cảm ơn bạn! Chúng tôi đã nhận được xác nhận của bạn. 💕
-        </div>
-      </form>
-
-      <!-- Contact Info -->
-      <div class="mt-12 text-center text-gray-400">
-        <p class="mb-2">
-          Liên hệ:
-          <a
-            :href="`tel:${config.contact.phone}`"
-            class="hover:text-orange-500 transition-colors"
-            >{{ config.contact.phone }}</a
-          >
-        </p>
-        <p>
-          Email:
-          <a
-            :href="`mailto:${config.contact.email}`"
-            class="hover:text-orange-500 transition-colors"
-            >{{ config.contact.email }}</a
-          >
-        </p>
       </div>
+    </form>
+
+    <div
+      v-if="showSuccess"
+      class="mt-4 mx-auto max-w-[600px] p-3 sm:p-4 rounded-xl border border-[#e9ce9e]/40 bg-white/10 text-[#e9ce9e] text-center text-sm"
+    >
+      Cảm ơn bạn! Lời chúc đã được lưu.
+    </div>
+
+    <p class="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-[#d9bc86]/80 max-w-xl mx-auto px-1">
+      {{ config.contact.message }}
+    </p>
+    <div class="mt-3 sm:mt-4 text-center text-xs text-[#d9bc86]/60 break-all">
+      Liên hệ:
+      <a
+        :href="`tel:${config.contact.phone}`"
+        class="underline hover:opacity-90"
+      >{{ config.contact.phone }}</a>
+      ·
+      <a
+        :href="`mailto:${config.contact.email}`"
+        class="underline hover:opacity-90"
+      >{{ config.contact.email }}</a>
     </div>
   </section>
 </template>
@@ -105,32 +76,18 @@
 
   const config = weddingConfig
 
-  const form = ref({
-    name: '',
-    message: '',
-  })
-
+  const form = ref({ name: '', message: '' })
   const isSubmitting = ref(false)
   const showSuccess = ref(false)
 
   const handleSubmit = async () => {
     isSubmitting.value = true
-
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    // Here you would typically send the data to your backend
-    console.log('RSVP Form Data:', form.value)
-
+    await new Promise((r) => setTimeout(r, 1000))
+    console.log('RSVP:', form.value)
     isSubmitting.value = false
     showSuccess.value = true
-
-    // Reset form after 3 seconds
+    form.value = { name: '', message: '' }
     setTimeout(() => {
-      form.value = {
-        name: '',
-        message: '',
-      }
       showSuccess.value = false
     }, 3000)
   }

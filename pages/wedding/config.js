@@ -17,29 +17,34 @@
 // ============================================
 
 export const weddingConfig = {
-  // Thông tin cô dâu chú rể
+  // Thông tin cô dâu chú rể (danh xưng: ÚT NAM / ÚT NỮ theo mẫu thiệp)
   couple: {
     bride: {
       name: 'Phan Thị Hạnh',
       nameEn: 'Hanh Phan',
+      birthOrder: 'ÚT NỮ', // Danh xưng: CON, ÚT NỮ...
       image:
         'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80',
       description: 'Cô gái xinh đẹp và dịu dàng',
-      social: {
-        facebook: '#',
-        instagram: '#',
-      },
+      social: { facebook: '#', instagram: '#' },
+      parentTitle: 'Ông Bà',
+      fatherName: 'Phan Văn C',
+      motherName: 'Lê Thị D',
+      address: 'Địa chỉ nhà gái',
     },
     groom: {
       name: 'Nguyễn Lê Đình Tiên',
       nameEn: 'Tien Nguyen',
+      birthOrder: 'ÚT NAM', // Danh xưng: CON, ÚT NAM...
       image:
         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
       description: 'Chàng trai ấm áp và chân thành',
-      social: {
-        facebook: '#',
-        instagram: '#',
-      },
+      social: { facebook: '#', instagram: '#' },
+      // Nhà trai (cho mẫu thiệp)
+      parentTitle: 'Ông Bà',
+      fatherName: 'Nguyễn Văn A',
+      motherName: 'Trần Thị B',
+      address: 'Địa chỉ nhà trai',
     },
   },
 
@@ -94,5 +99,9 @@ export const weddingConfig = {
     primary: '#f97316', // Orange-500 (màu chủ đạo)
     secondary: '#1f2937', // Gray-800 (nền tối)
     accent: '#ea580c', // Orange-600 (accent đậm)
+    // Mẫu thiệp Long Phụng Lam
+    templateGold: '#e9ce9e', // Chữ vàng kem
+    templateGoldMuted: '#d9bc86', // Vàng đậm hơn
+    templateBg: '#0A202F', // Nền xanh lam đậm
   },
 }
