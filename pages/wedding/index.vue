@@ -2,12 +2,16 @@
   <div class="wedding-page relative min-h-[100dvh] bg-[#0A202F] overflow-x-hidden">
     <main class="w-full min-h-[100dvh] py-0 px-0">
       <div
-        class="wedding-card relative w-full min-h-[100dvh] overflow-hidden text-[#e9ce9e] flex flex-col"
+        class="wedding-card relative w-full min-h-[100dvh] overflow-hidden text-[#e9ce9e] text-base sm:text-lg md:text-xl flex flex-col"
       >
           <!-- Phần chìm: absolute trong card, scroll theo trang (không fixed) -->
           <div class="absolute inset-0 z-0 pointer-events-none">
             <WeddingBackground />
           </div>
+          <!-- Nút nhạc (cố định góc trên trái) + overlay chat lời chúc -->
+          <WeddingMusicToggle />
+          <WeddingChatOverlay />
+
           <!-- Nội dung -->
           <div class="relative z-10 flex flex-col gap-10 sm:gap-14 md:gap-20 lg:gap-24">
             <WeddingHero />
@@ -16,20 +20,21 @@
             <WeddingTimeline />
             <WeddingLocation />
             <WeddingRSVP />
+            <WeddingWishes />
           </div>
 
           <!-- Footer (SP: padding nhỏ hơn, chữ vừa đọc) -->
           <footer
             class="relative mt-10 sm:mt-12 md:mt-16 flex flex-col items-center gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-10 py-6 sm:py-8 md:py-10 pb-8 sm:pb-10 text-center font-baskerville text-[#d9bc86]"
           >
-            <p class="text-xs sm:text-sm md:text-lg whitespace-pre-line max-w-[95vw]">
+            <p class="text-sm sm:text-base md:text-xl whitespace-pre-line max-w-[95vw]">
               Gia đình xin chân thành cảm ơn quý khách đã đến chung vui.
             </p>
-            <p class="text-[11px] sm:text-xs opacity-70 break-words max-w-[95vw]">
+            <p class="text-xs sm:text-sm opacity-70 break-words max-w-[95vw]">
               {{ weddingConfig.couple.groom.name }} &
               {{ weddingConfig.couple.bride.name }}
             </p>
-            <p class="text-xs sm:text-sm opacity-80">
+            <p class="text-sm sm:text-base opacity-80">
               {{ formatDate(weddingConfig.weddingDate.ceremony.date) }}
             </p>
           </footer>
@@ -46,6 +51,8 @@
   import WeddingRSVP from './_components/WeddingRSVP.vue'
   import WeddingLocation from './_components/WeddingLocation.vue'
   import WeddingBackground from './_components/WeddingBackground.vue'
+  import WeddingMusicToggle from './_components/WeddingMusicToggle.vue'
+  import WeddingChatOverlay from './_components/WeddingChatOverlay.vue'
   import { weddingConfig } from './config.js'
   import { useSeoWedding } from './useSeoWedding.tsx'
 

@@ -1,7 +1,7 @@
 <template>
   <section class="relative flex flex-col items-center px-4 sm:px-6 md:px-10 pb-10 sm:pb-12 md:pb-16">
     <h2
-      class="uppercase font-normal text-[18px] sm:text-[20px] md:text-[26px] text-[#e9ce9e] font-baskerville tracking-[0.05em] mb-4 sm:mb-6"
+      class="uppercase font-normal text-[20px] sm:text-[22px] md:text-[26px] text-[#e9ce9e] font-baskerville tracking-[0.05em] mb-4 sm:mb-6"
     >
       Album Ảnh Cưới
     </h2>

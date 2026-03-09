@@ -285,4 +285,15 @@
     0%, 100% { opacity: 0.06; transform: translateX(-50%) scale(1); }
     50% { opacity: 0.1; transform: translateX(-50%) scale(1.08); }
   }
+
+  /* Mobile performance: tắt animation nền trên màn nhỏ để scroll mượt hơn */
+  @media (max-width: 767px) {
+    .deco-float,
+    .deco-float-slow,
+    .deco-sway,
+    .deco-pulse,
+    .heart-center {
+      animation: none !important;
+    }
+  }
 </style>

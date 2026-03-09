@@ -18,14 +18,14 @@
     />
 
     <div
-      class="relative z-10 flex flex-col items-center justify-center gap-3 sm:gap-5 w-full max-w-[92vw] mx-auto"
+      class="relative z-10 flex flex-col items-center justify-center gap-2 sm:gap-4 w-full max-w-[92vw] mx-auto"
     >
       <!-- Tên cô dâu chú rể: lớn, chính giữa, font UNI Chu / Times New Roman -->
       <div
-        class="font-uni-chu leading-tight w-full flex flex-col items-center gap-12"
+        class="font-uni-chu leading-tight w-full flex flex-col items-center gap-8"
       >
         <div
-          class="name-line text-[clamp(2.25rem,9vw,4.5rem)] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center"
+          class="name-line text-[52px] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center"
         >
           Tiên Nguyễn
         </div>
@@ -35,7 +35,7 @@
           &amp;
         </div>
         <div
-          class="name-line text-[clamp(2.25rem,9vw,4.5rem)] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center"
+          class="name-line text-[52px] sm:text-[3.25rem] md:text-[5rem] leading-[1.15] md:leading-[1.2] break-words text-center"
         >
           Hạnh Phan
         </div>
@@ -43,7 +43,7 @@
     </div>
 
     <!-- Countdown -->
-    <div class="mt-12 sm:mt-12 w-full flex justify-center">
+    <div class="mt-8 sm:mt-10 w-full flex justify-center">
       <WeddingCountdown :target-date="getTargetDateTime()" />
     </div>
 
@@ -73,13 +73,6 @@
   import WeddingCountdown from './WeddingCountdown.vue'
 
   const config = weddingConfig
-
-  const shortGroomName =
-    config.couple.groom.name.split(' ').slice(-2).join(' ') ||
-    config.couple.groom.name
-  const shortBrideName =
-    config.couple.bride.name.split(' ').slice(-2).join(' ') ||
-    config.couple.bride.name
 
   const getTargetDateTime = () => {
     const { date, time } = config.weddingDate.ceremony

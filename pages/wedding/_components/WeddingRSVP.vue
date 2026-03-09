@@ -4,7 +4,7 @@
   >
     <div class="text-center">
       <h2
-        class="uppercase font-normal text-[18px] sm:text-[20px] md:text-[26px] text-center text-[#e9ce9e] font-baskerville tracking-[0.05em]"
+        class="uppercase font-normal text-[20px] sm:text-[22px] md:text-[26px] text-center text-[#e9ce9e] font-baskerville tracking-[0.05em]"
       >
         Sổ lưu bút
       </h2>
@@ -23,7 +23,7 @@
             type="text"
             required
             placeholder="Nhập tên của bạn*"
-            class="w-full rounded-lg border px-4 py-3 text-base sm:text-sm focus:outline-none bg-[#e9ce9e]/10 border-[#e9ce9e] text-[#e9ce9e] placeholder-[#e9ce9e]/60 min-h-[44px]"
+            class="w-full rounded-lg border px-4 py-3 text-[16px] sm:text-[15px] focus:outline-none bg-[#e9ce9e]/10 border-[#e9ce9e] text-[#e9ce9e] placeholder-[#e9ce9e]/60 min-h-[44px]"
           />
         </div>
         <textarea
@@ -31,13 +31,13 @@
           rows="4"
           required
           placeholder="Nhập lời chúc của bạn*"
-          class="w-full resize-none rounded-lg border px-4 py-3 text-base sm:text-sm focus:outline-none bg-[#e9ce9e]/10 border-[#e9ce9e] text-[#e9ce9e] placeholder-[#e9ce9e]/60 min-h-[120px]"
+          class="w-full resize-none rounded-lg border px-4 py-3 text-[16px] sm:text-[15px] focus:outline-none bg-[#e9ce9e]/10 border-[#e9ce9e] text-[#e9ce9e] placeholder-[#e9ce9e]/60 min-h-[120px]"
         />
         <div class="mt-4 flex items-center justify-end">
           <button
             type="submit"
             :disabled="isSubmitting"
-            class="rounded-full min-h-[44px] px-5 py-2.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold transition-transform hover:scale-105 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed bg-[#e9ce9e] text-[#553f18] font-baskerville"
+            class="rounded-full min-h-[44px] px-5 py-2.5 sm:px-4 sm:py-2 text-[14px] sm:text-[15px] font-semibold transition-transform hover:scale-105 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed bg-[#e9ce9e] text-[#553f18] font-baskerville"
           >
             {{ isSubmitting ? 'ĐANG GỬI...' : 'GỬI LỜI CHÚC' }}
           </button>
@@ -47,15 +47,15 @@
 
     <div
       v-if="showSuccess"
-      class="mt-4 mx-auto max-w-[600px] p-3 sm:p-4 rounded-xl border border-[#e9ce9e]/40 bg-white/10 text-[#e9ce9e] text-center text-sm"
+      class="mt-4 mx-auto max-w-[600px] p-3 sm:p-4 rounded-xl border border-[#e9ce9e]/40 bg-white/10 text-[#e9ce9e] text-center text-[14px] sm:text-[15px]"
     >
       Cảm ơn bạn! Lời chúc đã được lưu.
     </div>
 
-    <p class="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-[#d9bc86]/80 max-w-xl mx-auto px-1">
+    <p class="mt-4 sm:mt-6 text-center text-[13px] sm:text-[14px] text-[#d9bc86]/80 max-w-xl mx-auto px-1">
       {{ config.contact.message }}
     </p>
-    <div class="mt-3 sm:mt-4 text-center text-xs text-[#d9bc86]/60 break-all">
+    <div class="mt-3 sm:mt-4 text-center text-[13px] sm:text-[14px] text-[#d9bc86]/60 break-all">
       Liên hệ:
       <a
         :href="`tel:${config.contact.phone}`"
