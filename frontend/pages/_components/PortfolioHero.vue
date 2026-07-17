@@ -61,7 +61,7 @@
       <!-- Code-like Elements -->
       <Typography
         as="div"
-        :size="{sp: 'xxs', pc: 'xs'}"
+        :size="{ sp: 'xxs', pc: 'xs' }"
         color="tertiary"
         class="absolute top-1/4 left-1/2 font-mono opacity-60"
       >
@@ -69,7 +69,7 @@
       </Typography>
       <Typography
         as="div"
-        :size="{sp: 'xxs', pc: 'xs'}"
+        :size="{ sp: 'xxs', pc: 'xs' }"
         color="tertiary"
         class="absolute top-1/3 left-1/2 font-mono opacity-60"
       >
@@ -77,7 +77,7 @@
       </Typography>
       <Typography
         as="div"
-        :size="{sp: 'xxs', pc: 'xs'}"
+        :size="{ sp: 'xxs', pc: 'xs' }"
         color="tertiary"
         class="absolute bottom-1/3 right-1/4 font-mono opacity-60"
       >
@@ -85,7 +85,7 @@
       </Typography>
       <Typography
         as="div"
-        :size="{sp: 'xxs', pc: 'xs'}"
+        :size="{ sp: 'xxs', pc: 'xs' }"
         color="tertiary"
         class="absolute bottom-1/4 right-1/4 font-mono opacity-60"
       >
@@ -205,25 +205,41 @@
         <!-- Left Side - Introduction -->
         <div class="space-y-8">
           <div class="space-y-4">
-            <Typography as="h1" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default">
-              Hello.<span class="text-orange-500 dark:text-orange-400 ml-2">●</span>
+            <Typography
+              as="h1"
+              :size="{ sp: '2xl', pc: '3xl' }"
+              weight="bold"
+              color="default"
+            >
+              Hello.<span class="text-orange-500 dark:text-orange-400 ml-2"
+                >●</span
+              >
             </Typography>
             <div class="flex items-center space-x-4">
-              <Typography as="span" :size="{sp: 'lg', pc: 'xl'}" weight="normal" color="default">
+              <Typography
+                as="span"
+                :size="{ sp: 'lg', pc: 'xl' }"
+                weight="normal"
+                color="default"
+              >
                 I'm Nguyễn Lê Đình Tiên
               </Typography>
-              <div class="w-8 sm:w-12 md:w-16 h-0.5 bg-orange-500 dark:bg-orange-400"></div>
+              <div
+                class="w-8 sm:w-12 md:w-16 h-0.5 bg-orange-500 dark:bg-orange-400"
+              ></div>
             </div>
-            <Typography as="h2" :size="{sp: 'xl', pc: '2xl'}" weight="bold" color="default">
+            <Typography
+              as="h2"
+              :size="{ sp: 'xl', pc: '2xl' }"
+              weight="bold"
+              color="default"
+            >
               Software Developer
             </Typography>
           </div>
 
           <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-md">
-            <NuxtLink
-              to="/blogs"
-              class="w-full sm:w-auto focus:outline-none"
-            >
+            <NuxtLink to="/blogs" class="w-full sm:w-auto focus:outline-none">
               <Button variant="primary" size="md" :fullWidth="true">
                 <Typography
                   as="span"

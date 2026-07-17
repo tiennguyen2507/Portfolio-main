@@ -36,12 +36,10 @@
       'dark:bg-gray-900 dark:text-white shadow-sm'
 
     const variantClasses = {
-      default:
-        'border-gray-200 dark:border-gray-800',
+      default: 'border-gray-200 dark:border-gray-800',
       elevated:
         'border-gray-200 dark:border-gray-800 shadow-lg shadow-black/5 dark:shadow-black/40',
-      outlined:
-        'bg-transparent border border-gray-300 dark:border-gray-700',
+      outlined: 'bg-transparent border border-gray-300 dark:border-gray-700',
     }
 
     const paddingClasses = {

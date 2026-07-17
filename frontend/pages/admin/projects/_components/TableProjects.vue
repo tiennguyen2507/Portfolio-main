@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800">
+  <div
+    class="bg-white dark:bg-[#050505] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800"
+  >
     <!-- Table Header -->
     <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
       <Typography as="h3" size="lg" weight="semibold" color="default">
@@ -32,7 +34,13 @@
           d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
         />
       </svg>
-      <Typography as="h3" size="sm" weight="medium" color="default" class="mt-2">
+      <Typography
+        as="h3"
+        size="sm"
+        weight="medium"
+        color="default"
+        class="mt-2"
+      >
         Không có dự án nào
       </Typography>
       <Typography as="p" size="sm" color="muted" class="mt-1">
@@ -77,7 +85,9 @@
             </th>
           </tr>
         </thead>
-        <tbody class="bg-white dark:bg-[#050505] divide-y divide-gray-200 dark:divide-gray-800">
+        <tbody
+          class="bg-white dark:bg-[#050505] divide-y divide-gray-200 dark:divide-gray-800"
+        >
           <tr
             v-for="project in projects"
             :key="project._id"
@@ -95,7 +105,12 @@
                   />
                 </div>
                 <div class="ml-4">
-                  <Typography as="div" size="sm" weight="medium" color="default">
+                  <Typography
+                    as="div"
+                    size="sm"
+                    weight="medium"
+                    color="default"
+                  >
                     {{ project.title }}
                   </Typography>
                   <Typography
@@ -140,7 +155,11 @@
                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
               >
                 <svg
-                  :class="project.status ? 'text-green-400 dark:text-green-500' : 'text-yellow-400 dark:text-yellow-500'"
+                  :class="
+                    project.status
+                      ? 'text-green-400 dark:text-green-500'
+                      : 'text-yellow-400 dark:text-yellow-500'
+                  "
                   class="w-2 h-2 mr-1"
                   fill="currentColor"
                   viewBox="0 0 8 8"

@@ -2,7 +2,11 @@
   <!-- Header/Navigation -->
   <header
     class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-gray-300 dark:border-gray-700 transition-all duration-300"
-    :class="isScrolled ? 'bg-white/80 dark:bg-black/80' : 'bg-white/60 dark:bg-black/60'"
+    :class="
+      isScrolled
+        ? 'bg-white/80 dark:bg-black/80'
+        : 'bg-white/60 dark:bg-black/60'
+    "
   >
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
@@ -15,17 +19,24 @@
               :href="item.path"
               class="transition-colors"
             >
-              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default" class="hover:text-orange-500 dark:hover:text-orange-400">
+              <Typography
+                as="span"
+                :size="{ sp: 'sm', pc: 'md' }"
+                color="default"
+                class="hover:text-orange-500 dark:hover:text-orange-400"
+              >
                 {{ item.label }}
               </Typography>
             </a>
           </nav>
-          
+
           <!-- Dark Mode Toggle Button -->
           <button
             @click="toggleDarkMode"
             class="p-2 rounded-lg text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
-            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+            :aria-label="
+              isDark ? 'Switch to light mode' : 'Switch to dark mode'
+            "
           >
             <!-- Sun icon (light mode) -->
             <svg
@@ -101,7 +112,7 @@
           </li>
         </ul>
       </div>
-      </div>
+    </div>
   </header>
 </template>
 

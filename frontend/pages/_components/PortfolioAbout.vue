@@ -1,6 +1,9 @@
 <template>
   <!-- About & Services Section -->
-  <section id="about" class="py-20 bg-[#F2F2F7] dark:bg-[#1C1C1E] transition-colors duration-300">
+  <section
+    id="about"
+    class="py-20 bg-[#F2F2F7] dark:bg-[#1C1C1E] transition-colors duration-300"
+  >
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-2 gap-16">
         <!-- Left Side - Services -->
@@ -38,10 +41,20 @@
                   </svg>
                 </div>
                 <div>
-                  <Typography as="h3" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="default">
+                  <Typography
+                    as="h3"
+                    :size="{ sp: 'md', pc: 'lg' }"
+                    weight="semibold"
+                    color="default"
+                  >
                     {{ service.title }}
                   </Typography>
-                  <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" class="mt-1">
+                  <Typography
+                    as="p"
+                    :size="{ sp: 'sm', pc: 'md' }"
+                    color="muted"
+                    class="mt-1"
+                  >
                     {{ service.description }}
                   </Typography>
                 </div>
@@ -52,10 +65,21 @@
 
         <!-- Right Side - About Me -->
         <div class="space-y-8">
-          <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" class="mb-6">
+          <Typography
+            as="h2"
+            :size="{ sp: '2xl', pc: '3xl' }"
+            weight="bold"
+            color="default"
+            class="mb-6"
+          >
             Giới thiệu
           </Typography>
-          <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="default" class="leading-relaxed">
+          <Typography
+            as="p"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="default"
+            class="leading-relaxed"
+          >
             Tôi là Tiên, lập trình viên web với 6 năm kinh nghiệm. Tôi có khả
             năng làm việc cả Frontend và Backend. Ở phía giao diện, tôi thành
             thạo Vue.js và React, thường xuyên xây dựng các ứng dụng web hiện
@@ -72,10 +96,16 @@
               :key="stat.label"
               class="text-center"
             >
-              <Typography as="div" :size="{sp: 'xl', pc: '2xl'}" weight="bold" color="primary" class="mb-2">
+              <Typography
+                as="div"
+                :size="{ sp: 'xl', pc: '2xl' }"
+                weight="bold"
+                color="primary"
+                class="mb-2"
+              >
                 {{ stat.value }}{{ stat.suffix }}
               </Typography>
-              <Typography as="div" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+              <Typography as="div" :size="{ sp: 'xs', pc: 'sm' }" color="muted">
                 {{ stat.label }}
               </Typography>
             </div>

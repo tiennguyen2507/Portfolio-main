@@ -68,7 +68,12 @@
 
       <!-- Thumbnail Upload -->
       <div>
-        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
+        <Typography
+          as="label"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
           >Thumbnail</Typography
         >
         <UploadFile :value="form.thumbnail" :onChange="handleThumbnailChange" />
@@ -81,7 +86,12 @@
 
       <!-- Content Editor -->
       <div>
-        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2"
+        <Typography
+          as="label"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
           >Nội dung bài viết</Typography
         >
         <Editor
@@ -96,7 +106,12 @@
     </div>
 
     <template #footer>
-      <Button variant="outline" size="xs" :disabled="submitting" @click="$emit('close')">
+      <Button
+        variant="outline"
+        size="xs"
+        :disabled="submitting"
+        @click="$emit('close')"
+      >
         Hủy
       </Button>
       <Button

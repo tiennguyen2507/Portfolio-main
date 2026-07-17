@@ -9,60 +9,62 @@
     <Loading v-if="loading" size="md" color="orange" />
 
     <div v-if="!loading">
-    <!-- Filters (giống admin/contacts) -->
-    <div
-      class="bg-white dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-gray-800 p-3 sm:p-4 mb-4"
-    >
-      <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-        <div class="w-full sm:max-w-xs flex-shrink-0">
-          <SearchInput
-            id="search-users"
-            v-model="searchQuery"
-            placeholder="Tìm theo tên, email..."
-            :show-microphone="false"
-          />
+      <!-- Filters (giống admin/contacts) -->
+      <div
+        class="bg-white dark:bg-[#050505] rounded-xl border border-gray-200 dark:border-gray-800 p-3 sm:p-4 mb-4"
+      >
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <div class="w-full sm:max-w-xs flex-shrink-0">
+            <SearchInput
+              id="search-users"
+              v-model="searchQuery"
+              placeholder="Tìm theo tên, email..."
+              :show-microphone="false"
+            />
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <Tag
+              :variant="selectedStatus === '' ? 'primary' : 'gray'"
+              size="sm"
+              :pill="true"
+              tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+              @click="selectStatus('')"
+            >
+              Tất cả
+            </Tag>
+            <Tag
+              :variant="selectedStatus === '1' ? 'success' : 'gray'"
+              size="sm"
+              :pill="true"
+              tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+              @click="selectStatus('1')"
+            >
+              Hoạt động
+            </Tag>
+            <Tag
+              :variant="selectedStatus === '0' ? 'warning' : 'gray'"
+              size="sm"
+              :pill="true"
+              tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
+              @click="selectStatus('0')"
+            >
+              Không hoạt động
+            </Tag>
+          </div>
+          <Button
+            variant="primary"
+            size="sm"
+            class="rounded-full px-4 flex-shrink-0 sm:ml-auto"
+            @click="updateQueryParams()"
+          >
+            Lọc
+          </Button>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <Tag
-            :variant="selectedStatus === '' ? 'primary' : 'gray'"
-            size="sm"
-            :pill="true"
-            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
-            @click="selectStatus('')"
-          >
-            Tất cả
-          </Tag>
-          <Tag
-            :variant="selectedStatus === '1' ? 'success' : 'gray'"
-            size="sm"
-            :pill="true"
-            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
-            @click="selectStatus('1')"
-          >
-            Hoạt động
-          </Tag>
-          <Tag
-            :variant="selectedStatus === '0' ? 'warning' : 'gray'"
-            size="sm"
-            :pill="true"
-            tag-class="!px-2 !py-1 cursor-pointer hover:opacity-90 transition-opacity"
-            @click="selectStatus('0')"
-          >
-            Không hoạt động
-          </Tag>
-        </div>
-        <Button
-          variant="primary"
-          size="sm"
-          class="rounded-full px-4 flex-shrink-0 sm:ml-auto"
-          @click="updateQueryParams()"
-        >
-          Lọc
-        </Button>
       </div>
-    </div>
 
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+      <ul
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
+      >
         <li
           v-for="user in paginatedUsers"
           :key="user.id"
@@ -86,7 +88,12 @@
               >
                 {{ user.fullName }}
               </Typography>
-              <Typography as="p" size="xs" color="muted" class="truncate mt-0.5 text-[9px] sm:text-xs">
+              <Typography
+                as="p"
+                size="xs"
+                color="muted"
+                class="truncate mt-0.5 text-[9px] sm:text-xs"
+              >
                 {{ user.email }}
               </Typography>
             </div>
@@ -113,7 +120,9 @@
       </ul>
 
       <div v-if="paginatedUsers.length === 0" class="text-center py-12">
-        <Typography as="p" size="sm" color="muted">Không có user nào.</Typography>
+        <Typography as="p" size="sm" color="muted"
+          >Không có user nào.</Typography
+        >
       </div>
 
       <div

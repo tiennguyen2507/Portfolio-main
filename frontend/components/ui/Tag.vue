@@ -61,16 +61,16 @@
       'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 border border-red-500/30',
     warning:
       'bg-yellow-100 text-yellow-800 dark:bg-amber-900/40 dark:text-amber-200 border border-amber-500/30',
-    info:
-      'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border border-blue-500/30',
-    gray:
-      'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 border border-gray-300/60 dark:border-gray-700',
+    info: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border border-blue-500/30',
+    gray: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 border border-gray-300/60 dark:border-gray-700',
   }
 
   const base =
     'inline-flex items-center font-medium select-none align-middle transition-colors'
 
-  const shapeClass = computed(() => (props.pill ? 'rounded-full' : 'rounded-md'))
+  const shapeClass = computed(() =>
+    props.pill ? 'rounded-full' : 'rounded-md'
+  )
 
   const styleObject = computed(() => {
     if (!props.color) return {}
@@ -95,5 +95,3 @@
       .join(' ')
   )
 </script>
-
-

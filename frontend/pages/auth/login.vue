@@ -1,6 +1,12 @@
 <template>
   <div class="text-center">
-    <Typography as="h2" size="3xl" weight="extrabold" color="default" class="mt-1">
+    <Typography
+      as="h2"
+      size="3xl"
+      weight="extrabold"
+      color="default"
+      class="mt-1"
+    >
       Đăng nhập vào tài khoản
     </Typography>
     <Typography as="p" size="sm" color="muted" class="mt-2">
@@ -18,7 +24,14 @@
     <div class="space-y-4">
       <!-- Email Input -->
       <div>
-        <Typography as="label" for="email" size="sm" weight="medium" color="default" class="block mb-2">
+        <Typography
+          as="label"
+          for="email"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
+        >
           Email
         </Typography>
         <Input
@@ -31,7 +44,13 @@
           :variant="errors.email ? 'error' : 'default'"
           size="lg"
         />
-        <Typography v-if="errors.email" as="p" size="sm" color="error" class="mt-1">
+        <Typography
+          v-if="errors.email"
+          as="p"
+          size="sm"
+          color="error"
+          class="mt-1"
+        >
           {{ errors.email }}
         </Typography>
       </div>
@@ -58,7 +77,13 @@
           :variant="errors.password ? 'error' : 'default'"
           size="lg"
         />
-        <Typography v-if="errors.password" as="p" size="sm" color="error" class="mt-1">
+        <Typography
+          v-if="errors.password"
+          as="p"
+          size="sm"
+          color="error"
+          class="mt-1"
+        >
           {{ errors.password }}
         </Typography>
       </div>
@@ -73,7 +98,13 @@
           type="checkbox"
           class="h-4 w-4 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400 border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900"
         />
-        <Typography as="label" for="remember-me" size="sm" color="default" class="ml-2 block">
+        <Typography
+          as="label"
+          for="remember-me"
+          size="sm"
+          color="default"
+          class="ml-2 block"
+        >
           Ghi nhớ đăng nhập
         </Typography>
       </div>

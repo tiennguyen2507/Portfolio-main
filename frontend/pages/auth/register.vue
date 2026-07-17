@@ -1,6 +1,12 @@
 <template>
   <div class="text-center">
-    <Typography as="h2" size="3xl" weight="extrabold" color="default" class="mt-2">
+    <Typography
+      as="h2"
+      size="3xl"
+      weight="extrabold"
+      color="default"
+      class="mt-2"
+    >
       Đăng ký tài khoản mới
     </Typography>
     <Typography as="p" size="sm" color="muted" class="mt-2">
@@ -58,7 +64,9 @@
             d="M5 13l4 4L19 7"
           />
         </svg>
-        <Typography as="span" size="sm" color="success">{{ successMessage }}</Typography>
+        <Typography as="span" size="sm" color="success">{{
+          successMessage
+        }}</Typography>
       </div>
     </div>
 
@@ -85,7 +93,13 @@
           :variant="errors.firstName ? 'error' : 'default'"
           size="lg"
         />
-        <Typography v-if="errors.firstName" as="p" size="sm" color="error" class="mt-1">
+        <Typography
+          v-if="errors.firstName"
+          as="p"
+          size="sm"
+          color="error"
+          class="mt-1"
+        >
           {{ errors.firstName }}
         </Typography>
       </div>
@@ -112,14 +126,27 @@
           :variant="errors.lastName ? 'error' : 'default'"
           size="lg"
         />
-        <Typography v-if="errors.lastName" as="p" size="sm" color="error" class="mt-1">
+        <Typography
+          v-if="errors.lastName"
+          as="p"
+          size="sm"
+          color="error"
+          class="mt-1"
+        >
           {{ errors.lastName }}
         </Typography>
       </div>
 
       <!-- Email Input -->
       <div>
-        <Typography as="label" for="email" size="sm" weight="medium" color="default" class="block mb-2">
+        <Typography
+          as="label"
+          for="email"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
+        >
           Email
         </Typography>
         <Input
@@ -132,7 +159,13 @@
           :variant="errors.email ? 'error' : 'default'"
           size="lg"
         />
-        <Typography v-if="errors.email" as="p" size="sm" color="error" class="mt-1">
+        <Typography
+          v-if="errors.email"
+          as="p"
+          size="sm"
+          color="error"
+          class="mt-1"
+        >
           {{ errors.email }}
         </Typography>
       </div>
@@ -159,7 +192,13 @@
           :variant="errors.password ? 'error' : 'default'"
           size="lg"
         />
-        <Typography v-if="errors.password" as="p" size="sm" color="error" class="mt-1">
+        <Typography
+          v-if="errors.password"
+          as="p"
+          size="sm"
+          color="error"
+          class="mt-1"
+        >
           {{ errors.password }}
         </Typography>
       </div>
@@ -186,7 +225,13 @@
           :variant="errors.confirmPassword ? 'error' : 'default'"
           size="lg"
         />
-        <Typography v-if="errors.confirmPassword" as="p" size="sm" color="error" class="mt-1">
+        <Typography
+          v-if="errors.confirmPassword"
+          as="p"
+          size="sm"
+          color="error"
+          class="mt-1"
+        >
           {{ errors.confirmPassword }}
         </Typography>
       </div>
@@ -200,10 +245,22 @@
         type="checkbox"
         class="h-4 w-4 text-blue-600 dark:text-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400 border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900"
       />
-      <Typography v-if="errors.agreeTerms" as="p" size="sm" color="error" class="mt-1">
+      <Typography
+        v-if="errors.agreeTerms"
+        as="p"
+        size="sm"
+        color="error"
+        class="mt-1"
+      >
         {{ errors.agreeTerms }}
       </Typography>
-      <Typography as="label" for="agree-terms" size="sm" color="default" class="ml-2 block">
+      <Typography
+        as="label"
+        for="agree-terms"
+        size="sm"
+        color="default"
+        class="ml-2 block"
+      >
         Tôi đồng ý với
         <NuxtLink
           to="/terms"

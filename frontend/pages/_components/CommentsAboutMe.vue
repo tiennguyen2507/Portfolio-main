@@ -1,8 +1,17 @@
 <template>
-  <section class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
+  <section
+    class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col items-center mb-8 gap-3">
-        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-0">
+        <Typography
+          as="h2"
+          :size="{ sp: '2xl', pc: '3xl' }"
+          weight="bold"
+          color="default"
+          align="center"
+          class="mb-0"
+        >
           Nhận xét về tôi
         </Typography>
         <button
@@ -61,7 +70,9 @@
               "
               @change="handleAvatarChange"
             />
-            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">Ảnh đại diện</Typography>
+            <Typography as="span" :size="{ sp: 'xs', pc: 'sm' }" color="muted"
+              >Ảnh đại diện</Typography
+            >
           </div>
           <p v-if="errors.avatar" class="mt-1 text-xs text-red-400">
             {{ errors.avatar }}
@@ -171,11 +182,13 @@
         </div>
       </div>
       <div v-else>
-        <div
-          v-if="commentsList.length === 0"
-          class="text-center py-8"
-        >
-          <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center">
+        <div v-if="commentsList.length === 0" class="text-center py-8">
+          <Typography
+            as="p"
+            :size="{ sp: 'sm', pc: 'md' }"
+            color="muted"
+            align="center"
+          >
             Chưa có nhận xét nào.
           </Typography>
         </div>
@@ -189,23 +202,40 @@
               <div class="flex items-center mb-4">
                 <Avatar :src="comment.avatar" :readOnly="true" :size="56" />
                 <div class="ml-4 flex-1 min-w-0">
-                  <Typography as="div" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="default" class="line-clamp-1">
+                  <Typography
+                    as="div"
+                    :size="{ sp: 'md', pc: 'lg' }"
+                    weight="semibold"
+                    color="default"
+                    class="line-clamp-1"
+                  >
                     {{ comment.name }}
                   </Typography>
-                  <Typography as="div" :size="{sp: 'xs', pc: 'sm'}" color="primary" class="line-clamp-1">
+                  <Typography
+                    as="div"
+                    :size="{ sp: 'xs', pc: 'sm' }"
+                    color="primary"
+                    class="line-clamp-1"
+                  >
                     {{ comment.relationship }}
                   </Typography>
                 </div>
               </div>
               <Typography
                 as="div"
-                :size="{sp: 'sm', pc: 'md'}"
+                :size="{ sp: 'sm', pc: 'md' }"
                 color="default"
                 class="mb-3 italic break-words comment-clamp"
               >
                 "{{ comment.comment }}"
               </Typography>
-              <Typography as="div" :size="{sp: 'xxs', pc: 'xs'}" color="tertiary" align="right" class="mt-auto">
+              <Typography
+                as="div"
+                :size="{ sp: 'xxs', pc: 'xs' }"
+                color="tertiary"
+                align="right"
+                class="mt-auto"
+              >
                 {{ formatDate(comment.createdAt) }}
               </Typography>
             </div>
@@ -221,11 +251,16 @@
               :disabled="pagination.page === 1 || loading"
               class="px-4 py-2 rounded bg-[#F2F2F7] dark:bg-[#1C1C1E] hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 transition"
             >
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="medium" color="default">
+              <Typography
+                as="span"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                weight="medium"
+                color="default"
+              >
                 Trước
               </Typography>
             </button>
-            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+            <Typography as="span" :size="{ sp: 'xs', pc: 'sm' }" color="muted">
               Trang {{ pagination.page }} / {{ totalPages }}
             </Typography>
             <button
@@ -233,7 +268,12 @@
               :disabled="!pagination.nextPage || loading"
               class="px-4 py-2 rounded bg-[#F2F2F7] dark:bg-[#1C1C1E] hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 transition"
             >
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" weight="medium" color="default">
+              <Typography
+                as="span"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                weight="medium"
+                color="default"
+              >
                 Sau
               </Typography>
             </button>
@@ -300,9 +340,7 @@
   const commentsList = computed(() =>
     props.comments && props.comments.length ? props.comments : comments.value
   )
-  const paginationData = computed(
-    () => props.pagination || pagination.value
-  )
+  const paginationData = computed(() => props.pagination || pagination.value)
 
   // Trạng thái loading tổng hợp: ưu tiên pending từ props + loading local
   const isLoading = computed(() => props.pending || loading.value)

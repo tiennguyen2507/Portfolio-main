@@ -37,7 +37,19 @@
       type: [String, Object],
       default: 'md',
       validator: value => {
-        const validSizes = ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl']
+        const validSizes = [
+          'xxs',
+          'xs',
+          'sm',
+          'md',
+          'lg',
+          'xl',
+          '2xl',
+          '3xl',
+          '4xl',
+          '5xl',
+          '6xl',
+        ]
         // Nếu là string, validate như cũ
         if (typeof value === 'string') {
           return validSizes.includes(value)
@@ -45,8 +57,10 @@
         // Nếu là object, validate sp và pc
         if (typeof value === 'object' && value !== null) {
           return (
-            ('sp' in value && validSizes.includes(value.sp)) &&
-            ('pc' in value && validSizes.includes(value.pc))
+            'sp' in value &&
+            validSizes.includes(value.sp) &&
+            'pc' in value &&
+            validSizes.includes(value.pc)
           )
         }
         return false
@@ -58,7 +72,8 @@
     weight: {
       type: String,
       default: 'normal',
-      validator: value => ['light', 'normal', 'medium', 'semibold', 'bold'].includes(value),
+      validator: value =>
+        ['light', 'normal', 'medium', 'semibold', 'bold'].includes(value),
     },
     /**
      * Màu chữ theo semantic
@@ -66,10 +81,18 @@
     color: {
       type: String,
       default: 'default',
-        validator: value =>
-          ['default', 'muted', 'tertiary', 'primary', 'secondary', 'success', 'warning', 'error', 'white'].includes(
-            value
-          ),
+      validator: value =>
+        [
+          'default',
+          'muted',
+          'tertiary',
+          'primary',
+          'secondary',
+          'success',
+          'warning',
+          'error',
+          'white',
+        ].includes(value),
     },
     /**
      * Canh lề văn bản
@@ -77,7 +100,8 @@
     align: {
       type: String,
       default: 'left',
-      validator: value => ['left', 'center', 'right', 'justify'].includes(value),
+      validator: value =>
+        ['left', 'center', 'right', 'justify'].includes(value),
     },
     /**
      * Viết hoa toàn bộ
@@ -190,5 +214,3 @@
       .join(' ')
   })
 </script>
-
-

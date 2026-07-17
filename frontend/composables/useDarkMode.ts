@@ -43,7 +43,7 @@ export const useDarkMode = () => {
     if (process.client) {
       // Refresh cookie từ browser để đảm bảo sync
       darkModeCookie.refresh()
-      
+
       // Parse và apply dark mode
       const shouldBeDark = getDarkModeValue()
       isDark.value = shouldBeDark

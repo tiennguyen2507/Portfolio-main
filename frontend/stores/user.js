@@ -14,14 +14,11 @@ export const useUserStore = defineStore('user', () => {
 
     try {
       isLoading.value = true
-      const response = await $fetch(
-        'https://blog-data.up.railway.app/auth/info',
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-          },
-        }
-      )
+      const response = await $fetch('http://localhost:3001/auth/info', {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      })
 
       if (response) {
         user.value = response

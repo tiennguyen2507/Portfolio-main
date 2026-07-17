@@ -29,14 +29,62 @@
     <div class="relative z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex flex-wrap justify-center gap-8">
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">HTML</Typography>
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">CSS</Typography>
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Javascript</Typography>
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Nest JS</Typography>
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">React</Typography>
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Next</Typography>
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Vue</Typography>
-          <Typography as="span" :size="{sp: 'md', pc: 'lg'}" color="muted" class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer">Nuxt</Typography>
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >HTML</Typography
+          >
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >CSS</Typography
+          >
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >Javascript</Typography
+          >
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >Nest JS</Typography
+          >
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >React</Typography
+          >
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >Next</Typography
+          >
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >Vue</Typography
+          >
+          <Typography
+            as="span"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="muted"
+            class="hover:text-orange-500 dark:hover:text-orange-400 transition-colors cursor-pointer"
+            >Nuxt</Typography
+          >
         </div>
       </div>
     </div>

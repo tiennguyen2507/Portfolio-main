@@ -38,12 +38,21 @@
             >
               {{ comment.name }}
             </Typography>
-            <Typography as="p" size="xs" color="muted" class="text-[9px] sm:text-xs">
+            <Typography
+              as="p"
+              size="xs"
+              color="muted"
+              class="text-[9px] sm:text-xs"
+            >
               {{ comment.relationship }}
             </Typography>
           </div>
         </div>
-        <Typography as="p" size="sm" class="mt-2 line-clamp-3 text-[9px] sm:text-xs text-gray-500 dark:text-gray-400">
+        <Typography
+          as="p"
+          size="sm"
+          class="mt-2 line-clamp-3 text-[9px] sm:text-xs text-gray-500 dark:text-gray-400"
+        >
           {{ comment.comment }}
         </Typography>
         <div class="mt-2 flex items-center gap-1 flex-wrap">
@@ -72,11 +81,7 @@
               @click.stop="deleteComment(comment._id)"
               aria-label="Xóa nhận xét"
             >
-              <Icon
-                v-if="deletingId !== comment._id"
-                name="delete"
-                size="sm"
-              />
+              <Icon v-if="deletingId !== comment._id" name="delete" size="sm" />
               <span
                 v-else
                 class="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin inline-block"
@@ -87,12 +92,12 @@
       </li>
     </ul>
 
-      <!-- Empty State -->
-      <EmptyData
-        v-if="comments.length === 0 && !loading && !error"
-        title="Không có nhận xét nào"
-        description="Chưa có dữ liệu hiển thị."
-      />
+    <!-- Empty State -->
+    <EmptyData
+      v-if="comments.length === 0 && !loading && !error"
+      title="Không có nhận xét nào"
+      description="Chưa có dữ liệu hiển thị."
+    />
 
     <!-- Pagination -->
     <div

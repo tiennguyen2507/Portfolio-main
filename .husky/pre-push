@@ -1,0 +1,20 @@
+#!/bin/sh
+echo "=========================================="
+echo "🚀 [Husky] Chay kiem tra chat luong ma nguon truoc khi push..."
+echo "=========================================="
+
+# 1. Kiem tra frontend
+echo "👉 [1/2] Dang kiem tra thu muc: frontend..."
+cd frontend
+yarn run lint || { echo "❌ Frontend: Loi linting! Vui long sua loi truoc khi push."; exit 1; }
+yarn run build || { echo "❌ Frontend: Loi build! Vui long sua loi truoc khi push."; exit 1; }
+
+# 2. Kiem tra backend
+echo "👉 [2/2] Dang kiem tra thu muc: backend..."
+cd ../backend
+yarn run lint || { echo "❌ Backend: Loi linting! Vui long sua loi truoc khi push."; exit 1; }
+yarn run build || { echo "❌ Backend: Loi build! Vui long sua loi truoc khi push."; exit 1; }
+
+echo "=========================================="
+echo "✅ [Husky] Kiem tra thanh cong! Dang tien hanh push code..."
+echo "=========================================="

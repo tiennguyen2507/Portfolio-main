@@ -52,20 +52,26 @@
       Cảm ơn bạn! Lời chúc đã được lưu.
     </div>
 
-    <p class="mt-4 sm:mt-6 text-center text-[13px] sm:text-[14px] text-[#d9bc86]/80 max-w-xl mx-auto px-1">
+    <p
+      class="mt-4 sm:mt-6 text-center text-[13px] sm:text-[14px] text-[#d9bc86]/80 max-w-xl mx-auto px-1"
+    >
       {{ config.contact.message }}
     </p>
-    <div class="mt-3 sm:mt-4 text-center text-[13px] sm:text-[14px] text-[#d9bc86]/60 break-all">
+    <div
+      class="mt-3 sm:mt-4 text-center text-[13px] sm:text-[14px] text-[#d9bc86]/60 break-all"
+    >
       Liên hệ:
       <a
         :href="`tel:${config.contact.phone}`"
         class="underline hover:opacity-90"
-      >{{ config.contact.phone }}</a>
+        >{{ config.contact.phone }}</a
+      >
       ·
       <a
         :href="`mailto:${config.contact.email}`"
         class="underline hover:opacity-90"
-      >{{ config.contact.email }}</a>
+        >{{ config.contact.email }}</a
+      >
     </div>
   </section>
 </template>
@@ -82,7 +88,7 @@
 
   const handleSubmit = async () => {
     isSubmitting.value = true
-    await new Promise((r) => setTimeout(r, 1000))
+    await new Promise(r => setTimeout(r, 1000))
     console.log('RSVP:', form.value)
     isSubmitting.value = false
     showSuccess.value = true

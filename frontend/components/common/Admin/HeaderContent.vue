@@ -1,8 +1,6 @@
 <template>
   <div class="mb-4 sm:mb-6">
-    <div
-      class="flex items-center justify-between gap-3 sm:gap-4"
-    >
+    <div class="flex items-center justify-between gap-3 sm:gap-4">
       <div class="flex-1 min-w-0 mr-2">
         <Typography
           as="h1"
@@ -44,4 +42,3 @@
     },
   })
 </script>
-

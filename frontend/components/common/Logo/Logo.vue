@@ -1,8 +1,6 @@
 <template>
   <NuxtLink to="/" class="hover:opacity-80 transition-opacity">
-    <div
-      class="flex items-center gap-2 md:gap-3"
-    >
+    <div class="flex items-center gap-2 md:gap-3">
       <img
         src="~/assets/images/logo-main.webp"
         alt="Nguyễn Lê Đình Tiên Logo"
@@ -11,7 +9,7 @@
       <div class="flex flex-col justify-center">
         <Typography
           as="span"
-          :size="{sp: 'xxs', pc: 'sm'}"
+          :size="{ sp: 'xxs', pc: 'sm' }"
           weight="semibold"
           :class="titleClass"
         >
@@ -19,7 +17,7 @@
         </Typography>
         <Typography
           as="span"
-          :size="{sp: 'xxs', pc: 'md'}"
+          :size="{ sp: 'xxs', pc: 'md' }"
           color="muted"
           :class="subtitleClass"
         >
@@ -28,7 +26,7 @@
       </div>
     </div>
   </NuxtLink>
-</template> 
+</template>
 
 <script setup>
   const props = defineProps({
@@ -42,4 +40,3 @@
     },
   })
 </script>
-

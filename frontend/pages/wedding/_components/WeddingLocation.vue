@@ -1,5 +1,7 @@
 <template>
-  <section class="relative flex flex-col gap-5 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-10 pb-10 sm:pb-12 md:pb-16">
+  <section
+    class="relative flex flex-col gap-5 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-10 pb-10 sm:pb-12 md:pb-16"
+  >
     <div class="text-center px-1">
       <h3
         class="uppercase font-normal text-[16px] sm:text-[20px] md:text-[26px] text-[#e9ce9e] font-baskerville tracking-[0.05em]"

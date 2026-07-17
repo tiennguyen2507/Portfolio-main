@@ -1,12 +1,28 @@
 <template>
   <!-- Contact Section -->
-  <section id="contact" class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
+  <section
+    id="contact"
+    class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-8 sm:mb-12 md:mb-16">
-        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-4">
+        <Typography
+          as="h2"
+          :size="{ sp: '2xl', pc: '3xl' }"
+          weight="bold"
+          color="default"
+          align="center"
+          class="mb-4"
+        >
           {{ contactData.title }}
         </Typography>
-        <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="muted" align="center" class="max-w-2xl mx-auto">
+        <Typography
+          as="p"
+          :size="{ sp: 'md', pc: 'lg' }"
+          color="muted"
+          align="center"
+          class="max-w-2xl mx-auto"
+        >
           {{ contactData.description }}
         </Typography>
       </div>
@@ -37,10 +53,20 @@
               </svg>
             </div>
             <div>
-              <Typography as="h3" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="default">
+              <Typography
+                as="h3"
+                :size="{ sp: 'md', pc: 'lg' }"
+                weight="semibold"
+                color="default"
+              >
                 {{ contact.label }}
               </Typography>
-              <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" class="mt-1">
+              <Typography
+                as="p"
+                :size="{ sp: 'sm', pc: 'md' }"
+                color="muted"
+                class="mt-1"
+              >
                 {{ contact.value }}
               </Typography>
             </div>
@@ -48,7 +74,9 @@
         </div>
 
         <!-- Contact Form -->
-        <div class="bg-[#F2F2F7] dark:bg-[#1C1C1E] p-4 sm:p-6 md:p-8 rounded-lg border border-gray-300 dark:border-gray-700">
+        <div
+          class="bg-[#F2F2F7] dark:bg-[#1C1C1E] p-4 sm:p-6 md:p-8 rounded-lg border border-gray-300 dark:border-gray-700"
+        >
           <form @submit.prevent="handleSubmit" class="space-y-4 sm:space-y-6">
             <Input
               v-model="form.name"

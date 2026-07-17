@@ -1,5 +1,7 @@
 <template>
-  <section class="relative flex flex-col items-center px-4 sm:px-6 md:px-10 pb-10 sm:pb-12 md:pb-16">
+  <section
+    class="relative flex flex-col items-center px-4 sm:px-6 md:px-10 pb-10 sm:pb-12 md:pb-16"
+  >
     <h2
       class="uppercase font-normal text-[20px] sm:text-[22px] md:text-[26px] text-[#e9ce9e] font-baskerville tracking-[0.05em] mb-4 sm:mb-6"
     >
@@ -22,7 +24,9 @@
             v-if="image.isMore"
             class="absolute inset-0 flex items-center justify-center bg-black/55"
           >
-            <span class="text-lg font-semibold text-white">+{{ moreCount }}</span>
+            <span class="text-lg font-semibold text-white"
+              >+{{ moreCount }}</span
+            >
           </div>
         </div>
       </div>
@@ -87,7 +91,7 @@
     return list
   })
 
-  const openLightbox = (index) => {
+  const openLightbox = index => {
     currentImageIndex.value = index
     lightboxOpen.value = true
     document.body.style.overflow = 'hidden'
@@ -99,7 +103,8 @@
   }
 
   const nextImage = () => {
-    if (currentImageIndex.value < config.gallery.length - 1) currentImageIndex.value++
+    if (currentImageIndex.value < config.gallery.length - 1)
+      currentImageIndex.value++
   }
 
   const previousImage = () => {

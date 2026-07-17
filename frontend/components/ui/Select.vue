@@ -97,8 +97,7 @@
     variant: {
       type: String,
       default: 'primary',
-      validator: v =>
-        ['primary', 'secondary', 'success', 'danger'].includes(v),
+      validator: v => ['primary', 'secondary', 'success', 'danger'].includes(v),
     },
     name: { type: String, default: '' },
     id: { type: String, default: '' },
@@ -235,5 +234,3 @@
       .join(' ')
   })
 </script>
-
-

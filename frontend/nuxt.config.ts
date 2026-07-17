@@ -83,7 +83,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
+      viewport:
+        'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
       title:
         process.env.SITE_TITLE ||
         'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
@@ -133,7 +134,8 @@ export default defineNuxtConfig({
         },
         {
           name: 'viewport',
-          content: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
+          content:
+            'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
         },
         { name: 'theme-color', content: '#f97316' },
         { name: 'msapplication-TileColor', content: '#f97316' },
@@ -148,10 +150,30 @@ export default defineNuxtConfig({
       ],
       link: [
         // Favicon với các kích thước chuẩn cho Chrome và các trình duyệt khác
-        { rel: 'icon', type: 'image/webp', sizes: '16x16', href: '/favicon-16x16.webp' },
-        { rel: 'icon', type: 'image/webp', sizes: '32x32', href: '/favicon-32x32.webp' },
-        { rel: 'icon', type: 'image/webp', sizes: '96x96', href: '/favicon-96x96.webp' },
-        { rel: 'icon', type: 'image/webp', sizes: '192x192', href: '/favicon-192x192.webp' },
+        {
+          rel: 'icon',
+          type: 'image/webp',
+          sizes: '16x16',
+          href: '/favicon-16x16.webp',
+        },
+        {
+          rel: 'icon',
+          type: 'image/webp',
+          sizes: '32x32',
+          href: '/favicon-32x32.webp',
+        },
+        {
+          rel: 'icon',
+          type: 'image/webp',
+          sizes: '96x96',
+          href: '/favicon-96x96.webp',
+        },
+        {
+          rel: 'icon',
+          type: 'image/webp',
+          sizes: '192x192',
+          href: '/favicon-192x192.webp',
+        },
         { rel: 'icon', type: 'image/webp', href: '/favicon.webp' },
         { rel: 'shortcut icon', href: '/favicon.ico' },
         // iOS PWA Icons

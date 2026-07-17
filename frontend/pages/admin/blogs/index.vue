@@ -325,7 +325,11 @@
         category: 'my-blog',
       }
       error.value = ''
-      showNotification(isEditing.value ? 'Cập nhật bài viết thành công!' : 'Tạo bài viết thành công!')
+      showNotification(
+        isEditing.value
+          ? 'Cập nhật bài viết thành công!'
+          : 'Tạo bài viết thành công!'
+      )
     } catch (err) {
       error.value = err?.message || 'Không thể lưu dữ liệu.'
       showError(error.value)

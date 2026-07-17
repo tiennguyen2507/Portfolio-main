@@ -1,9 +1,22 @@
-export default defineNitroPlugin((nitroApp) => {
+export default defineNitroPlugin(nitroApp => {
   const isIgnorableError = (err: any) => {
     if (!err) return false
-    const str = typeof err === 'string' ? err : (err.message || '') + ' ' + (err.code || '') + ' ' + (err.syscall || '')
-    const ignorableCodes = ['EPIPE', 'ECONNRESET', 'ETIMEDOUT', 'ECONNREFUSED', 'ENOTFOUND']
-    return ignorableCodes.some((c) => str.includes(c))
+    const str =
+      typeof err === 'string'
+        ? err
+        : (err.message || '') +
+          ' ' +
+          (err.code || '') +
+          ' ' +
+          (err.syscall || '')
+    const ignorableCodes = [
+      'EPIPE',
+      'ECONNRESET',
+      'ETIMEDOUT',
+      'ECONNREFUSED',
+      'ENOTFOUND',
+    ]
+    return ignorableCodes.some(c => str.includes(c))
   }
 
   const wrapListener = (listener: any) => {

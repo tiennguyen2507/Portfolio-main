@@ -1,7 +1,9 @@
 <template>
   <!-- Overlay chat: cố định dưới màn hình, không che toàn bộ click (dùng pointer-events) -->
   <div class="fixed inset-x-0 bottom-0 z-30 pointer-events-none">
-    <div class="mx-auto max-w-[700px] px-3 pb-3 sm:px-4 sm:pb-4 pointer-events-auto">
+    <div
+      class="mx-auto max-w-[700px] px-3 pb-3 sm:px-4 sm:pb-4 pointer-events-auto"
+    >
       <!-- Danh sách lời chúc dạng bong bóng -->
       <transition-group
         name="wish-fade"
@@ -88,7 +90,8 @@
     {
       id: 'seed-3',
       name: 'Bạn Hoà',
-      message: 'Chúc hai bạn mãi mãi hạnh phúc, luôn nắm tay nhau đi hết con đường.',
+      message:
+        'Chúc hai bạn mãi mãi hạnh phúc, luôn nắm tay nhau đi hết con đường.',
     },
     {
       id: 'seed-4',
@@ -159,7 +162,9 @@
 <style scoped>
   .wish-fade-enter-active,
   .wish-fade-leave-active {
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease;
   }
   .wish-fade-enter-from,
   .wish-fade-leave-to {
@@ -167,4 +172,3 @@
     transform: translateY(6px);
   }
 </style>
-

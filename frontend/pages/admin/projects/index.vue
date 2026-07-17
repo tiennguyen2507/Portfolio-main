@@ -68,7 +68,12 @@
             >
               {{ project.title }}
             </Typography>
-            <Typography as="p" size="xs" color="muted" class="line-clamp-2 text-[9px] sm:text-xs">
+            <Typography
+              as="p"
+              size="xs"
+              color="muted"
+              class="line-clamp-2 text-[9px] sm:text-xs"
+            >
               {{ stripHtml(project.description) }}
             </Typography>
           </div>
@@ -137,7 +142,9 @@
     </ul>
 
     <div v-if="!loading && projects.length === 0" class="text-center py-12">
-      <Typography as="p" size="sm" color="muted">Không có dự án nào.</Typography>
+      <Typography as="p" size="sm" color="muted"
+        >Không có dự án nào.</Typography
+      >
     </div>
 
     <!-- Pagination - Separated from Table -->
@@ -262,7 +269,8 @@
       }
     } catch (err) {
       console.error('Error fetching projects:', err)
-      error.value = err?.message || 'Không thể tải danh sách dự án. Vui lòng thử lại.'
+      error.value =
+        err?.message || 'Không thể tải danh sách dự án. Vui lòng thử lại.'
       showError(error.value)
     } finally {
       loading.value = false
@@ -425,7 +433,10 @@
 
   const stripHtml = html => {
     if (!html) return ''
-    return String(html).replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim()
+    return String(html)
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .trim()
   }
 
   onMounted(() => {

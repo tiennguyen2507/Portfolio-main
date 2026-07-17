@@ -29,10 +29,7 @@
     >
       {{ title }}
     </h3>
-    <p
-      v-if="description"
-      class="mt-1 text-sm text-gray-500 dark:text-gray-400"
-    >
+    <p v-if="description" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
       {{ description }}
     </p>
 

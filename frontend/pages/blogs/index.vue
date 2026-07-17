@@ -1,12 +1,16 @@
 <template>
-  <div class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 pt-16">
+  <div
+    class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 pt-16"
+  >
     <Header />
-    <section class="bg-gray-50 dark:bg-gray-800/30 py-16 md:py-20 transition-colors duration-300">
+    <section
+      class="bg-gray-50 dark:bg-gray-800/30 py-16 md:py-20 transition-colors duration-300"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <Typography
             as="h1"
-            :size="{sp: '4xl', pc: '6xl'}"
+            :size="{ sp: '4xl', pc: '6xl' }"
             weight="bold"
             color="default"
             align="center"
@@ -16,7 +20,7 @@
           </Typography>
           <Typography
             as="p"
-            :size="{sp: 'xl', pc: '2xl'}"
+            :size="{ sp: 'xl', pc: '2xl' }"
             color="muted"
             align="center"
             class="mb-8 max-w-3xl mx-auto"
@@ -24,20 +28,25 @@
             Khám phá những bài viết mới nhất về công nghệ, phát triển web và
             kinh nghiệm lập trình
           </Typography>
-          <div class="w-16 h-1 bg-orange-500 dark:bg-orange-400 mx-auto transition-colors duration-300"></div>
+          <div
+            class="w-16 h-1 bg-orange-500 dark:bg-orange-400 mx-auto transition-colors duration-300"
+          ></div>
         </div>
       </div>
     </section>
 
     <!-- Main Content -->
-    <section id="blogs" class="py-12 bg-white dark:bg-gray-900 transition-colors duration-300">
+    <section
+      id="blogs"
+      class="py-12 bg-white dark:bg-gray-900 transition-colors duration-300"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         <!-- My Blog Section -->
         <section id="my-blog" class="space-y-8">
           <div class="text-center">
             <Typography
               as="h2"
-              :size="{sp: '3xl', pc: '4xl'}"
+              :size="{ sp: '3xl', pc: '4xl' }"
               weight="bold"
               color="default"
               align="center"
@@ -45,15 +54,12 @@
             >
               My Blog
             </Typography>
-            <Typography
-              as="p"
-              size="lg"
-              color="muted"
-              align="center"
-            >
+            <Typography as="p" size="lg" color="muted" align="center">
               Những bài viết cá nhân của tôi
             </Typography>
-            <div class="w-16 h-1 bg-blue-500 dark:bg-blue-400 mx-auto mt-4 transition-colors duration-300"></div>
+            <div
+              class="w-16 h-1 bg-blue-500 dark:bg-blue-400 mx-auto mt-4 transition-colors duration-300"
+            ></div>
           </div>
 
           <!-- Loading State for My Blog -->
@@ -74,11 +80,7 @@
 
           <!-- Error State for My Blog -->
           <div v-else-if="myBlogError" class="text-center py-8">
-            <Typography
-              as="p"
-              color="tertiary"
-              align="center"
-            >
+            <Typography as="p" color="tertiary" align="center">
               Không thể tải bài viết My Blog
             </Typography>
           </div>
@@ -176,11 +178,7 @@
                           {{ post.createdBy?.firstName }}
                           {{ post.createdBy?.lastName }}
                         </Typography>
-                        <Typography
-                          as="p"
-                          size="xs"
-                          color="tertiary"
-                        >
+                        <Typography as="p" size="xs" color="tertiary">
                           {{ calculateReadingTime(post.description) }} phút đọc
                         </Typography>
                       </div>
@@ -221,12 +219,7 @@
               >
                 Chưa có bài viết My Blog
               </Typography>
-              <Typography
-                as="p"
-                color="tertiary"
-                align="center"
-                class="mb-4"
-              >
+              <Typography as="p" color="tertiary" align="center" class="mb-4">
                 Chưa có bài viết nào được đăng
               </Typography>
             </div>
@@ -238,7 +231,7 @@
           <div class="text-center">
             <Typography
               as="h2"
-              :size="{sp: '3xl', pc: '4xl'}"
+              :size="{ sp: '3xl', pc: '4xl' }"
               weight="bold"
               color="default"
               align="center"
@@ -246,15 +239,12 @@
             >
               Blog AI
             </Typography>
-            <Typography
-              as="p"
-              size="lg"
-              color="muted"
-              align="center"
-            >
+            <Typography as="p" size="lg" color="muted" align="center">
               Những bài viết được tạo bởi AI
             </Typography>
-            <div class="w-16 h-1 bg-cyan-500 dark:bg-cyan-400 mx-auto mt-4 transition-colors duration-300"></div>
+            <div
+              class="w-16 h-1 bg-cyan-500 dark:bg-cyan-400 mx-auto mt-4 transition-colors duration-300"
+            ></div>
           </div>
 
           <!-- Loading State for Blog AI -->
@@ -275,11 +265,7 @@
 
           <!-- Error State for Blog AI -->
           <div v-else-if="aiBlogError" class="text-center py-8">
-            <Typography
-              as="p"
-              color="tertiary"
-              align="center"
-            >
+            <Typography as="p" color="tertiary" align="center">
               Không thể tải bài viết Blog AI
             </Typography>
           </div>
@@ -377,11 +363,7 @@
                           {{ post.createdBy?.firstName }}
                           {{ post.createdBy?.lastName }}
                         </Typography>
-                        <Typography
-                          as="p"
-                          size="xs"
-                          color="tertiary"
-                        >
+                        <Typography as="p" size="xs" color="tertiary">
                           {{ calculateReadingTime(post.description) }} phút đọc
                         </Typography>
                       </div>
@@ -422,12 +404,7 @@
               >
                 Chưa có bài viết Blog AI
               </Typography>
-              <Typography
-                as="p"
-                color="tertiary"
-                align="center"
-                class="mb-4"
-              >
+              <Typography as="p" color="tertiary" align="center" class="mb-4">
                 Chưa có bài viết nào được đăng
               </Typography>
             </div>
@@ -725,4 +702,3 @@
     ssr: true, // Enable server-side rendering
   })
 </script>
-

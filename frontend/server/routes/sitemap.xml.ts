@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   try {
     const baseUrl = 'https://nguyenledinhtien.io.vn'
     const currentDate = new Date().toISOString().split('T')[0]

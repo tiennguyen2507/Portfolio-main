@@ -1,12 +1,28 @@
 <template>
   <!-- Blog Section -->
-  <section id="blogs" class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
+  <section
+    id="blogs"
+    class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-8 sm:mb-12 md:mb-16">
-        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-4">
+        <Typography
+          as="h2"
+          :size="{ sp: '2xl', pc: '3xl' }"
+          weight="bold"
+          color="default"
+          align="center"
+          class="mb-4"
+        >
           Blog & Tin tức
         </Typography>
-        <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="muted" align="center" class="mb-4">
+        <Typography
+          as="p"
+          :size="{ sp: 'md', pc: 'lg' }"
+          color="muted"
+          align="center"
+          class="mb-4"
+        >
           Những bài viết mới nhất về công nghệ và phát triển web
         </Typography>
         <div class="w-16 h-1 bg-orange-500 dark:bg-orange-400 mx-auto"></div>
@@ -17,14 +33,26 @@
         <div
           class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"
         ></div>
-        <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center" class="mt-4">
+        <Typography
+          as="p"
+          :size="{ sp: 'sm', pc: 'md' }"
+          color="muted"
+          align="center"
+          class="mt-4"
+        >
           Đang tải bài viết...
         </Typography>
       </div>
 
       <!-- Error State -->
       <div v-else-if="error" class="text-center py-12">
-        <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="error" align="center" class="mb-4">
+        <Typography
+          as="p"
+          :size="{ sp: 'sm', pc: 'md' }"
+          color="error"
+          align="center"
+          class="mb-4"
+        >
           Không thể tải bài viết
         </Typography>
         <button
@@ -68,7 +96,7 @@
             <div>
               <Typography
                 as="h3"
-                :size="{sp: 'lg', pc: 'xl'}"
+                :size="{ sp: 'lg', pc: 'xl' }"
                 weight="semibold"
                 color="default"
                 class="mb-3 line-clamp-2 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors h-[56px] overflow-hidden"
@@ -85,7 +113,9 @@
                 variant="light"
               />
 
-              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div
+                class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+              >
                 <div class="flex items-center space-x-2">
                   <img
                     v-if="post.createdBy?.avatar"
@@ -93,7 +123,11 @@
                     :alt="`${post.createdBy.firstName} ${post.createdBy.lastName}`"
                     class="w-8 h-8 rounded-full object-cover"
                   />
-                  <Typography as="div" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+                  <Typography
+                    as="div"
+                    :size="{ sp: 'xs', pc: 'sm' }"
+                    color="muted"
+                  >
                     {{ post.createdBy?.firstName }}
                     {{ post.createdBy?.lastName }}
                   </Typography>
@@ -101,7 +135,7 @@
 
                 <Typography
                   as="span"
-                  :size="{sp: 'xs', pc: 'sm'}"
+                  :size="{ sp: 'xs', pc: 'sm' }"
                   weight="medium"
                   color="primary"
                   class="hover:text-orange-600 dark:hover:text-orange-300 transition-colors"
@@ -140,7 +174,12 @@
 
       <!-- Empty State -->
       <div v-else-if="!allPosts.length" class="text-center py-12">
-        <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center">
+        <Typography
+          as="p"
+          :size="{ sp: 'sm', pc: 'md' }"
+          color="muted"
+          align="center"
+        >
           Chưa có bài viết nào
         </Typography>
       </div>

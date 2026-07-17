@@ -47,22 +47,10 @@
     </div>
 
     <!-- Helper / Error text -->
-    <Typography
-      v-if="error"
-      as="p"
-      size="xs"
-      color="error"
-      class="mt-1"
-    >
+    <Typography v-if="error" as="p" size="xs" color="error" class="mt-1">
       {{ error }}
     </Typography>
-    <Typography
-      v-else-if="hint"
-      as="p"
-      size="xs"
-      color="muted"
-      class="mt-1"
-    >
+    <Typography v-else-if="hint" as="p" size="xs" color="muted" class="mt-1">
       {{ hint }}
     </Typography>
   </div>
@@ -157,4 +145,3 @@
     ].join(' ')
   })
 </script>
-

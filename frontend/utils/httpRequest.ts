@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://blog-data.up.railway.app'
+const API_BASE_URL = 'http://localhost:3001'
 
 // Chỉ lấy token khi chạy trên client (tránh lỗi SSR)
 function getToken(): string | null {
@@ -29,7 +29,8 @@ function createRequestConfig(options?: any) {
 // Chuẩn hóa lỗi từ $fetch (4xx/5xx) để UI luôn có message và status
 function normalizeError(err: any): { message: string; status?: number } {
   const status = err?.statusCode ?? err?.status ?? err?.response?.status
-  let message = err?.data?.message ?? err?.message ?? err?.data?.error ?? 'Có lỗi xảy ra'
+  let message =
+    err?.data?.message ?? err?.message ?? err?.data?.error ?? 'Có lỗi xảy ra'
   if (typeof message === 'object') message = JSON.stringify(message)
   if (status >= 500) {
     message = message || 'Lỗi server. Vui lòng thử lại sau.'

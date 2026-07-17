@@ -4,10 +4,14 @@
       <div
         class="rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2 md:px-5 md:py-3 min-w-[52px] sm:min-w-[60px] md:min-w-[90px] border border-[#e9ce9e]/30 bg-[#e9ce9e]/10 backdrop-blur-sm"
       >
-        <div class="text-xl sm:text-2xl md:text-4xl font-light mb-0.5 text-[#e9ce9e] font-baskerville tabular-nums">
+        <div
+          class="text-xl sm:text-2xl md:text-4xl font-light mb-0.5 text-[#e9ce9e] font-baskerville tabular-nums"
+        >
           {{ value }}
         </div>
-        <div class="text-[9px] sm:text-[10px] md:text-xs uppercase tracking-wide text-[#d9bc86] font-baskerville">
+        <div
+          class="text-[9px] sm:text-[10px] md:text-xs uppercase tracking-wide text-[#d9bc86] font-baskerville"
+        >
           {{ getLabel(key) }}
         </div>
       </div>

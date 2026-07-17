@@ -1,12 +1,28 @@
 <template>
   <!-- Projects Section -->
-  <section id="projects" class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300">
+  <section
+    id="projects"
+    class="py-12 sm:py-16 md:py-20 bg-white dark:bg-black transition-colors duration-300"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-8 sm:mb-12 md:mb-16">
-        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-4">
+        <Typography
+          as="h2"
+          :size="{ sp: '2xl', pc: '3xl' }"
+          weight="bold"
+          color="default"
+          align="center"
+          class="mb-4"
+        >
           Dự án nổi bật
         </Typography>
-        <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="muted" align="center" class="mb-4">
+        <Typography
+          as="p"
+          :size="{ sp: 'md', pc: 'lg' }"
+          color="muted"
+          align="center"
+          class="mb-4"
+        >
           Các dự án web và ứng dụng tôi đã phát triển
         </Typography>
         <div class="w-16 h-1 bg-orange-500 dark:bg-orange-400 mx-auto"></div>
@@ -17,7 +33,13 @@
         <div
           class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"
         ></div>
-        <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="muted" align="center" class="mt-4">
+        <Typography
+          as="p"
+          :size="{ sp: 'md', pc: 'lg' }"
+          color="muted"
+          align="center"
+          class="mt-4"
+        >
           Đang tải dự án...
         </Typography>
       </div>
@@ -27,10 +49,23 @@
         <div
           class="bg-[#F2F2F7] dark:bg-[#1C1C1E] border border-red-500/50 dark:border-red-400/50 rounded-lg p-8 max-w-md mx-auto"
         >
-          <Typography as="h3" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="error" align="center" class="mb-2">
+          <Typography
+            as="h3"
+            :size="{ sp: 'md', pc: 'lg' }"
+            weight="semibold"
+            color="error"
+            align="center"
+            class="mb-2"
+          >
             Không thể tải dự án
           </Typography>
-          <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="default" align="center" class="mb-4">
+          <Typography
+            as="p"
+            :size="{ sp: 'sm', pc: 'md' }"
+            color="default"
+            align="center"
+            class="mb-4"
+          >
             Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.
           </Typography>
           <button
@@ -65,7 +100,7 @@
             <div class="p-3 sm:p-5 flex flex-col h-full">
               <Typography
                 as="h3"
-                :size="{sp: 'md', pc: 'lg'}"
+                :size="{ sp: 'md', pc: 'lg' }"
                 weight="semibold"
                 color="default"
                 class="mb-2 line-clamp-1 min-h-[1.5rem] hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
@@ -99,7 +134,9 @@
                       variant="primary"
                       size="sm"
                     >
-                      <span class="max-w-[90px] truncate whitespace-nowrap inline-block align-middle">
+                      <span
+                        class="max-w-[90px] truncate whitespace-nowrap inline-block align-middle"
+                      >
                         {{ skill }}
                       </span>
                     </Badge>
@@ -120,7 +157,11 @@
                 class="mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-gray-300 dark:border-gray-700"
               >
                 <div class="flex items-center justify-between">
-                  <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+                  <Typography
+                    as="span"
+                    :size="{ sp: 'xs', pc: 'sm' }"
+                    color="muted"
+                  >
                     Xem chi tiết
                   </Typography>
                   <svg
@@ -157,11 +198,13 @@
                 clip-rule="evenodd"
               ></path>
             </svg>
-            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default">Trước</Typography>
+            <Typography as="span" :size="{ sp: 'xs', pc: 'sm' }" color="default"
+              >Trước</Typography
+            >
           </button>
 
           <div class="flex items-center space-x-2">
-            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+            <Typography as="span" :size="{ sp: 'xs', pc: 'sm' }" color="muted">
               Trang {{ currentPage }} / {{ totalPages }}
             </Typography>
           </div>
@@ -171,7 +214,9 @@
             :disabled="currentPage === totalPages || pending"
             class="px-4 py-2 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
           >
-            <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default">Sau</Typography>
+            <Typography as="span" :size="{ sp: 'xs', pc: 'sm' }" color="default"
+              >Sau</Typography
+            >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fill-rule="evenodd"
@@ -188,10 +233,22 @@
         <div
           class="bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-lg p-8 max-w-md mx-auto border border-gray-300 dark:border-gray-700"
         >
-          <Typography as="h3" :size="{sp: 'md', pc: 'lg'}" weight="semibold" color="default" align="center" class="mb-2">
+          <Typography
+            as="h3"
+            :size="{ sp: 'md', pc: 'lg' }"
+            weight="semibold"
+            color="default"
+            align="center"
+            class="mb-2"
+          >
             Không có dự án nào
           </Typography>
-          <Typography as="p" :size="{sp: 'sm', pc: 'md'}" color="muted" align="center">
+          <Typography
+            as="p"
+            :size="{ sp: 'sm', pc: 'md' }"
+            color="muted"
+            align="center"
+          >
             Chưa có dự án nào được đăng
           </Typography>
         </div>

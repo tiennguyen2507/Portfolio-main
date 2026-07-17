@@ -21,7 +21,9 @@
           <Typography as="div" size="sm" weight="bold" color="default">
             {{ record.fullName || 'N/A' }}
           </Typography>
-          <Typography as="div" size="sm" color="muted">{{ record.email }}</Typography>
+          <Typography as="div" size="sm" color="muted">{{
+            record.email
+          }}</Typography>
         </div>
       </div>
     </template>
@@ -42,7 +44,9 @@
 
     <!-- Cell: Created At -->
     <template #cell-createdAt="{ value }">
-      <Typography as="span" size="sm" color="tertiary">{{ formatDate(value) }}</Typography>
+      <Typography as="span" size="sm" color="tertiary">{{
+        formatDate(value)
+      }}</Typography>
     </template>
   </Table>
 </template>

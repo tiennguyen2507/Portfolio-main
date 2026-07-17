@@ -42,7 +42,13 @@
 
       <!-- Description -->
       <div>
-        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2">
+        <Typography
+          as="label"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
+        >
           Mô tả dự án *
         </Typography>
         <Editor
@@ -54,7 +60,13 @@
 
       <!-- Skills -->
       <div>
-        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2">
+        <Typography
+          as="label"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
+        >
           Công nghệ sử dụng
         </Typography>
         <div class="space-y-3">
@@ -119,7 +131,13 @@
 
       <!-- Thumbnail -->
       <div>
-        <Typography as="label" size="sm" weight="medium" color="default" class="block mb-2">
+        <Typography
+          as="label"
+          size="sm"
+          weight="medium"
+          color="default"
+          class="block mb-2"
+        >
           Hình ảnh dự án
         </Typography>
         <UploadFile
@@ -144,14 +162,21 @@
     </div>
 
     <template #footer>
-      <Button variant="outline" size="xs" :disabled="submitting" @click="$emit('close')">
+      <Button
+        variant="outline"
+        size="xs"
+        :disabled="submitting"
+        @click="$emit('close')"
+      >
         Hủy
       </Button>
       <Button
         variant="primary"
         size="xs"
         :loading="submitting"
-        :disabled="submitting || !localForm.title.trim() || !localForm.description.trim()"
+        :disabled="
+          submitting || !localForm.title.trim() || !localForm.description.trim()
+        "
         @click="handleSubmit"
       >
         {{ isEditing ? 'Cập nhật' : 'Tạo mới' }}

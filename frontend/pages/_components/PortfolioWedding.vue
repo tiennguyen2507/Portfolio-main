@@ -1,12 +1,29 @@
 <template>
-  <section id="wedding" class="py-20 bg-[#F2F2F7] dark:bg-[#1C1C1E] transition-colors duration-300">
+  <section
+    id="wedding"
+    class="py-20 bg-[#F2F2F7] dark:bg-[#1C1C1E] transition-colors duration-300"
+  >
     <div class="max-w-7xl mx-auto px-6">
       <!-- Section Header -->
       <div class="text-center mb-16">
-        <Typography as="h2" :size="{sp: '2xl', pc: '3xl'}" weight="bold" color="default" align="center" class="mb-4"></Typography>
-          Trang Web Wedding
-        <Typography as="p" :size="{sp: 'lg', pc: 'xl'}" color="muted" align="center" class="max-w-3xl mx-auto">
-          Trang web đám cưới đẹp mắt, hiện đại với đầy đủ tính năng: countdown timer, gallery, RSVP form và thông tin lễ cưới
+        <Typography
+          as="h2"
+          :size="{ sp: '2xl', pc: '3xl' }"
+          weight="bold"
+          color="default"
+          align="center"
+          class="mb-4"
+        ></Typography>
+        Trang Web Wedding
+        <Typography
+          as="p"
+          :size="{ sp: 'lg', pc: 'xl' }"
+          color="muted"
+          align="center"
+          class="max-w-3xl mx-auto"
+        >
+          Trang web đám cưới đẹp mắt, hiện đại với đầy đủ tính năng: countdown
+          timer, gallery, RSVP form và thông tin lễ cưới
         </Typography>
       </div>
 
@@ -36,15 +53,26 @@
 
         <!-- Right: Content -->
         <div class="space-y-6">
-          <Typography as="h3" :size="{sp: 'xl', pc: '2xl'}" weight="bold" color="default">
+          <Typography
+            as="h3"
+            :size="{ sp: 'xl', pc: '2xl' }"
+            weight="bold"
+            color="default"
+          >
             Trang Web Cưới Hỏi Chuyên Nghiệp
           </Typography>
 
-          <Typography as="p" :size="{sp: 'md', pc: 'lg'}" color="default" class="leading-relaxed">
+          <Typography
+            as="p"
+            :size="{ sp: 'md', pc: 'lg' }"
+            color="default"
+            class="leading-relaxed"
+          >
             Trang web wedding được thiết kế với giao diện nhẹ nhàng, sang trọng.
-            Bao gồm đầy đủ các tính năng cần thiết cho một đám cưới: countdown timer,
-            thông tin cô dâu chú rể, lịch trình lễ cưới, gallery ảnh, form xác nhận tham dự
-            và bản đồ địa điểm. Hoàn toàn responsive và tối ưu cho mọi thiết bị.
+            Bao gồm đầy đủ các tính năng cần thiết cho một đám cưới: countdown
+            timer, thông tin cô dâu chú rể, lịch trình lễ cưới, gallery ảnh,
+            form xác nhận tham dự và bản đồ địa điểm. Hoàn toàn responsive và
+            tối ưu cho mọi thiết bị.
           </Typography>
 
           <!-- Features -->
@@ -65,7 +93,12 @@
                   ></path>
                 </svg>
               </div>
-              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">Countdown Timer</Typography>
+              <Typography
+                as="span"
+                :size="{ sp: 'sm', pc: 'md' }"
+                color="default"
+                >Countdown Timer</Typography
+              >
             </div>
             <div class="flex items-center gap-3">
               <div
@@ -83,7 +116,12 @@
                   ></path>
                 </svg>
               </div>
-              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">Photo Gallery</Typography>
+              <Typography
+                as="span"
+                :size="{ sp: 'sm', pc: 'md' }"
+                color="default"
+                >Photo Gallery</Typography
+              >
             </div>
             <div class="flex items-center gap-3">
               <div
@@ -101,7 +139,12 @@
                   ></path>
                 </svg>
               </div>
-              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">RSVP Form</Typography>
+              <Typography
+                as="span"
+                :size="{ sp: 'sm', pc: 'md' }"
+                color="default"
+                >RSVP Form</Typography
+              >
             </div>
             <div class="flex items-center gap-3">
               <div
@@ -119,24 +162,55 @@
                   ></path>
                 </svg>
               </div>
-              <Typography as="span" :size="{sp: 'sm', pc: 'md'}" color="default">Responsive Design</Typography>
+              <Typography
+                as="span"
+                :size="{ sp: 'sm', pc: 'md' }"
+                color="default"
+                >Responsive Design</Typography
+              >
             </div>
           </div>
 
           <!-- Tech Stack -->
           <div class="pt-4">
-            <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="muted" class="mb-2">Tech Stack:</Typography>
+            <Typography
+              as="p"
+              :size="{ sp: 'xs', pc: 'sm' }"
+              color="muted"
+              class="mb-2"
+              >Tech Stack:</Typography
+            >
             <div class="flex flex-wrap gap-2">
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default" class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full">
+              <Typography
+                as="span"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="default"
+                class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full"
+              >
                 Vue.js
               </Typography>
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default" class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full">
+              <Typography
+                as="span"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="default"
+                class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full"
+              >
                 Nuxt 3
               </Typography>
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default" class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full">
+              <Typography
+                as="span"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="default"
+                class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full"
+              >
                 Tailwind CSS
               </Typography>
-              <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="default" class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full">
+              <Typography
+                as="span"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="default"
+                class="px-3 py-1 bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-full"
+              >
                 JavaScript
               </Typography>
             </div>
@@ -172,7 +246,9 @@
         <div
           class="bg-gray-700/50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-600 dark:border-gray-700 hover:border-orange-500/50 dark:hover:border-orange-400/50 transition-colors"
         >
-          <div class="w-12 h-12 bg-orange-500/20 dark:bg-orange-600/20 rounded-lg flex items-center justify-center mb-4">
+          <div
+            class="w-12 h-12 bg-orange-500/20 dark:bg-orange-600/20 rounded-lg flex items-center justify-center mb-4"
+          >
             <svg
               class="w-6 h-6 text-orange-500 dark:text-orange-400"
               fill="none"
@@ -187,10 +263,16 @@
               ></path>
             </svg>
           </div>
-          <Typography as="h4" :size="{sp: 'sm', pc: 'md'}" weight="semibold" color="default" class="mb-2">
+          <Typography
+            as="h4"
+            :size="{ sp: 'sm', pc: 'md' }"
+            weight="semibold"
+            color="default"
+            class="mb-2"
+          >
             Countdown Timer
           </Typography>
-          <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+          <Typography as="p" :size="{ sp: 'xs', pc: 'sm' }" color="muted">
             Đếm ngược thời gian đến ngày cưới với độ chính xác đến từng giây
           </Typography>
         </div>
@@ -198,7 +280,9 @@
         <div
           class="bg-white dark:bg-[#1C1C1E] rounded-xl p-6 border border-gray-300 dark:border-gray-700 hover:border-orange-500/50 dark:hover:border-orange-400/50 transition-colors"
         >
-          <div class="w-12 h-12 bg-orange-500/20 dark:bg-orange-600/20 rounded-lg flex items-center justify-center mb-4">
+          <div
+            class="w-12 h-12 bg-orange-500/20 dark:bg-orange-600/20 rounded-lg flex items-center justify-center mb-4"
+          >
             <svg
               class="w-6 h-6 text-orange-500 dark:text-orange-400"
               fill="none"
@@ -213,10 +297,16 @@
               ></path>
             </svg>
           </div>
-          <Typography as="h4" :size="{sp: 'sm', pc: 'md'}" weight="semibold" color="default" class="mb-2">
+          <Typography
+            as="h4"
+            :size="{ sp: 'sm', pc: 'md' }"
+            weight="semibold"
+            color="default"
+            class="mb-2"
+          >
             Photo Gallery
           </Typography>
-          <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+          <Typography as="p" :size="{ sp: 'xs', pc: 'sm' }" color="muted">
             Gallery ảnh đẹp mắt với lightbox để xem ảnh ở độ phân giải cao
           </Typography>
         </div>
@@ -224,7 +314,9 @@
         <div
           class="bg-white dark:bg-[#1C1C1E] rounded-xl p-6 border border-gray-300 dark:border-gray-700 hover:border-orange-500/50 dark:hover:border-orange-400/50 transition-colors"
         >
-          <div class="w-12 h-12 bg-orange-500/20 dark:bg-orange-600/20 rounded-lg flex items-center justify-center mb-4">
+          <div
+            class="w-12 h-12 bg-orange-500/20 dark:bg-orange-600/20 rounded-lg flex items-center justify-center mb-4"
+          >
             <svg
               class="w-6 h-6 text-orange-500 dark:text-orange-400"
               fill="none"
@@ -239,10 +331,16 @@
               ></path>
             </svg>
           </div>
-          <Typography as="h4" :size="{sp: 'sm', pc: 'md'}" weight="semibold" color="default" class="mb-2">
+          <Typography
+            as="h4"
+            :size="{ sp: 'sm', pc: 'md' }"
+            weight="semibold"
+            color="default"
+            class="mb-2"
+          >
             RSVP Form
           </Typography>
-          <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="muted">
+          <Typography as="p" :size="{ sp: 'xs', pc: 'sm' }" color="muted">
             Form xác nhận tham dự đơn giản, dễ sử dụng cho khách mời
           </Typography>
         </div>
@@ -254,4 +352,3 @@
 <script setup>
   import Image from '~/components/ui/Image.vue'
 </script>
-

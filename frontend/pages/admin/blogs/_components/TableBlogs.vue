@@ -19,7 +19,9 @@
             v-else
             class="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center"
           >
-            <Typography as="span" size="xxs" color="tertiary">No image</Typography>
+            <Typography as="span" size="xxs" color="tertiary"
+              >No image</Typography
+            >
           </div>
         </div>
       </template>

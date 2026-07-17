@@ -4,12 +4,14 @@
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Mobile: 2 columns, Tablet: 2 columns, Desktop: 5 columns -->
-      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-6">
+      <div
+        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-6"
+      >
         <!-- VỀ TÔI -->
         <div class="space-y-3 sm:space-y-4">
           <Typography
             as="h3"
-            :size="{sp: 'md', pc: 'lg'}"
+            :size="{ sp: 'md', pc: 'lg' }"
             weight="bold"
             color="white"
             class="mb-3 sm:mb-4"
@@ -22,7 +24,12 @@
                 to="/"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors"
               >
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white" class="opacity-80 hover:opacity-100">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                  class="opacity-80 hover:opacity-100"
+                >
                   Trang chủ
                 </Typography>
               </NuxtLink>
@@ -32,7 +39,12 @@
                 to="/projects"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors"
               >
-                <Typography as="span" size="sm" color="white" class="opacity-80 hover:opacity-100">
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="white"
+                  class="opacity-80 hover:opacity-100"
+                >
                   Dự án & Portfolio
                 </Typography>
               </NuxtLink>
@@ -42,7 +54,12 @@
                 to="/blogs"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors"
               >
-                <Typography as="span" size="sm" color="white" class="opacity-80 hover:opacity-100">
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="white"
+                  class="opacity-80 hover:opacity-100"
+                >
                   Blog & Tin tức
                 </Typography>
               </NuxtLink>
@@ -52,7 +69,12 @@
                 to="/#about"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors"
               >
-                <Typography as="span" size="sm" color="white" class="opacity-80 hover:opacity-100">
+                <Typography
+                  as="span"
+                  size="sm"
+                  color="white"
+                  class="opacity-80 hover:opacity-100"
+                >
                   Giới thiệu
                 </Typography>
               </NuxtLink>
@@ -64,7 +86,7 @@
         <div class="space-y-3 sm:space-y-4">
           <Typography
             as="h3"
-            :size="{sp: 'md', pc: 'lg'}"
+            :size="{ sp: 'md', pc: 'lg' }"
             weight="bold"
             color="white"
             class="mb-3 sm:mb-4"
@@ -77,10 +99,21 @@
                 to="/projects"
                 class="flex items-center gap-2 hover:text-orange-400 dark:hover:text-orange-300 transition-colors group"
               >
-                <div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0">
-                  <Icon name="code" size="sm" class="text-orange-500 group-hover:text-orange-400" />
+                <div
+                  class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0"
+                >
+                  <Icon
+                    name="code"
+                    size="sm"
+                    class="text-orange-500 group-hover:text-orange-400"
+                  />
                 </div>
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white" class="opacity-80 group-hover:opacity-100">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                  class="opacity-80 group-hover:opacity-100"
+                >
                   Phát triển Web
                 </Typography>
               </NuxtLink>
@@ -90,10 +123,21 @@
                 to="/projects"
                 class="flex items-center gap-2 hover:text-orange-400 dark:hover:text-orange-300 transition-colors group"
               >
-                <div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0">
-                  <Icon name="mobile" size="sm" class="text-blue-500 group-hover:text-blue-400" />
+                <div
+                  class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0"
+                >
+                  <Icon
+                    name="mobile"
+                    size="sm"
+                    class="text-blue-500 group-hover:text-blue-400"
+                  />
                 </div>
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white" class="opacity-80 group-hover:opacity-100">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                  class="opacity-80 group-hover:opacity-100"
+                >
                   Ứng dụng Mobile
                 </Typography>
               </NuxtLink>
@@ -103,10 +147,21 @@
                 to="/projects"
                 class="flex items-center gap-2 hover:text-orange-400 dark:hover:text-orange-300 transition-colors group"
               >
-                <div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0">
-                  <Icon name="database" size="sm" class="text-green-500 group-hover:text-green-400" />
+                <div
+                  class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0"
+                >
+                  <Icon
+                    name="database"
+                    size="sm"
+                    class="text-green-500 group-hover:text-green-400"
+                  />
                 </div>
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white" class="opacity-80 group-hover:opacity-100">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                  class="opacity-80 group-hover:opacity-100"
+                >
                   API Development
                 </Typography>
               </NuxtLink>
@@ -116,10 +171,21 @@
                 to="/blogs"
                 class="flex items-center gap-2 hover:text-orange-400 dark:hover:text-orange-300 transition-colors group"
               >
-                <div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0">
-                  <Icon name="book" size="sm" class="text-purple-500 group-hover:text-purple-400" />
+                <div
+                  class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center flex-shrink-0"
+                >
+                  <Icon
+                    name="book"
+                    size="sm"
+                    class="text-purple-500 group-hover:text-purple-400"
+                  />
                 </div>
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white" class="opacity-80 group-hover:opacity-100">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                  class="opacity-80 group-hover:opacity-100"
+                >
                   Blog & Tutorials
                 </Typography>
               </NuxtLink>
@@ -131,7 +197,7 @@
         <div class="space-y-3 sm:space-y-4 col-span-2 sm:col-span-1">
           <Typography
             as="h3"
-            :size="{sp: 'md', pc: 'lg'}"
+            :size="{ sp: 'md', pc: 'lg' }"
             weight="bold"
             color="white"
             class="mb-3 sm:mb-4"
@@ -140,36 +206,64 @@
           </Typography>
           <div class="space-y-2 sm:space-y-3">
             <div>
-              <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="white" class="mb-1 opacity-70">
+              <Typography
+                as="p"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="white"
+                class="mb-1 opacity-70"
+              >
                 Email:
               </Typography>
               <a
                 href="mailto:Nguyenledinhtien2507@gmail.com"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors block break-all"
               >
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                >
                   Nguyenledinhtien2507@gmail.com
                 </Typography>
               </a>
             </div>
             <div>
-              <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="white" class="mb-1 opacity-70">
+              <Typography
+                as="p"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="white"
+                class="mb-1 opacity-70"
+              >
                 Phone:
               </Typography>
               <a
                 href="tel:+84886694350"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors"
               >
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                >
                   {{ config.public.SITE_PHONE }}
                 </Typography>
               </a>
             </div>
             <div>
-              <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="white" class="mb-1 opacity-70">
+              <Typography
+                as="p"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="white"
+                class="mb-1 opacity-70"
+              >
                 Địa chỉ:
               </Typography>
-              <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="white" class="opacity-80">
+              <Typography
+                as="p"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="white"
+                class="opacity-80"
+              >
                 Đà Nẵng, Việt Nam
               </Typography>
             </div>
@@ -180,7 +274,7 @@
         <div class="space-y-3 sm:space-y-4 col-span-2 sm:col-span-1">
           <Typography
             as="h3"
-            :size="{sp: 'md', pc: 'lg'}"
+            :size="{ sp: 'md', pc: 'lg' }"
             weight="bold"
             color="white"
             class="mb-3 sm:mb-4"
@@ -189,20 +283,34 @@
           </Typography>
           <div class="space-y-2 sm:space-y-3">
             <div>
-              <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="white" class="mb-1 opacity-70">
+              <Typography
+                as="p"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="white"
+                class="mb-1 opacity-70"
+              >
                 Email hợp tác:
               </Typography>
               <a
                 href="mailto:Nguyenledinhtien2507@gmail.com"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors block break-all"
               >
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                >
                   Nguyenledinhtien2507@gmail.com
                 </Typography>
               </a>
             </div>
             <div>
-              <Typography as="p" :size="{sp: 'xs', pc: 'sm'}" color="white" class="mb-1 opacity-70">
+              <Typography
+                as="p"
+                :size="{ sp: 'xs', pc: 'sm' }"
+                color="white"
+                class="mb-1 opacity-70"
+              >
                 Website:
               </Typography>
               <a
@@ -211,7 +319,11 @@
                 rel="noopener noreferrer"
                 class="hover:text-orange-400 dark:hover:text-orange-300 transition-colors block break-all"
               >
-                <Typography as="span" :size="{sp: 'xs', pc: 'sm'}" color="white">
+                <Typography
+                  as="span"
+                  :size="{ sp: 'xs', pc: 'sm' }"
+                  color="white"
+                >
                   {{ config.public.SITE_URL?.replace('https://', '') }}
                 </Typography>
               </a>
@@ -224,7 +336,7 @@
           <div>
             <Typography
               as="h3"
-              :size="{sp: 'md', pc: 'lg'}"
+              :size="{ sp: 'md', pc: 'lg' }"
               weight="bold"
               color="white"
               class="mb-3 sm:mb-4"
@@ -276,8 +388,16 @@
           </div>
 
           <!-- Copyright -->
-          <div class="pt-4 sm:pt-6 border-t border-gray-700 dark:border-gray-600">
-            <Typography as="p" :size="{sp: 'xxs', pc: 'xs'}" color="white" align="center" class="opacity-60">
+          <div
+            class="pt-4 sm:pt-6 border-t border-gray-700 dark:border-gray-600"
+          >
+            <Typography
+              as="p"
+              :size="{ sp: 'xxs', pc: 'xs' }"
+              color="white"
+              align="center"
+              class="opacity-60"
+            >
               © {{ new Date().getFullYear() }} Nguyễn Lê Đình Tiên. All rights
               reserved.
             </Typography>
@@ -291,4 +411,3 @@
 <script setup>
   const config = useRuntimeConfig()
 </script>
-

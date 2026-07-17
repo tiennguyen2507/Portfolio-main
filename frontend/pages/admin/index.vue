@@ -31,12 +31,16 @@
               </svg>
             </div>
             <div class="ml-4">
-              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
+              <Typography
+                as="p"
+                size="sm"
+                weight="medium"
+                color="muted"
+                class="mb-1"
+              >
                 Tổng Leads
               </Typography>
-              <Typography as="p" size="2xl" weight="bold">
-                1,234
-              </Typography>
+              <Typography as="p" size="2xl" weight="bold"> 1,234 </Typography>
             </div>
           </div>
         </div>
@@ -82,12 +86,16 @@
               </svg>
             </div>
             <div class="ml-4">
-              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
+              <Typography
+                as="p"
+                size="sm"
+                weight="medium"
+                color="muted"
+                class="mb-1"
+              >
                 Leads Chuyển đổi
               </Typography>
-              <Typography as="p" size="2xl" weight="bold">
-                456
-              </Typography>
+              <Typography as="p" size="2xl" weight="bold"> 456 </Typography>
             </div>
           </div>
         </div>
@@ -133,12 +141,16 @@
               </svg>
             </div>
             <div class="ml-4">
-              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
+              <Typography
+                as="p"
+                size="sm"
+                weight="medium"
+                color="muted"
+                class="mb-1"
+              >
                 Doanh thu
               </Typography>
-              <Typography as="p" size="2xl" weight="bold">
-                $45,678
-              </Typography>
+              <Typography as="p" size="2xl" weight="bold"> $45,678 </Typography>
             </div>
           </div>
         </div>
@@ -184,12 +196,16 @@
               </svg>
             </div>
             <div class="ml-4">
-              <Typography as="p" size="sm" weight="medium" color="muted" class="mb-1">
+              <Typography
+                as="p"
+                size="sm"
+                weight="medium"
+                color="muted"
+                class="mb-1"
+              >
                 Người dùng
               </Typography>
-              <Typography as="p" size="2xl" weight="bold">
-                89
-              </Typography>
+              <Typography as="p" size="2xl" weight="bold"> 89 </Typography>
             </div>
           </div>
         </div>
