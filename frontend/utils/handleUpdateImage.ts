@@ -4,7 +4,7 @@
  * - Uploads to backend and returns the image URL when successful; otherwise returns null
  */
 
-const BASE_URL = 'https://blog-data.up.railway.app'
+const BASE_URL = 'http://localhost:3001'
 
 export type UploadableImage = File | Blob | FormData | string
 

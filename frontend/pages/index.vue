@@ -55,7 +55,7 @@
     refresh: refreshBlog,
   } = await useAsyncData(
     'portfolio-blog-posts',
-    () => $fetch('https://blog-data.up.railway.app/posts?page=1&limit=6'),
+    () => httpRequest.get('/posts?page=1&limit=6'),
     {
       default: () => [],
       server: true, // Fetch trên server
