@@ -87,7 +87,7 @@ export class ContactsService {
   private mapContact(contact: any) {
     return {
       ...contact,
-      _id: String(contact.id), // dynamic mapping for frontend compatibility
+      _id: String(contact.id),
     };
   }
 }

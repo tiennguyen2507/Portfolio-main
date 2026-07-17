@@ -96,7 +96,7 @@ export class PostsService {
   private mapPost(post: any) {
     return {
       ...post,
-      _id: String(post.id), // dynamic mapping for frontend compatibility
+      _id: String(post.id),
     };
   }
 }

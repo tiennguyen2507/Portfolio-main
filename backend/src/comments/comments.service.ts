@@ -75,7 +75,7 @@ export class CommentsService {
   private mapComment(comment: any) {
     return {
       ...comment,
-      _id: String(comment.id), // dynamic mapping for frontend compatibility
+      _id: String(comment.id),
     };
   }
 }

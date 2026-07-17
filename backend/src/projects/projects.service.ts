@@ -65,7 +65,6 @@ export class ProjectsService {
   }
 
   async update(id: number, dto: UpdateProjectDto) {
-    // Check if exists
     await this.findOne(id);
 
     const updated = await this.prisma.project.update({
@@ -93,7 +92,7 @@ export class ProjectsService {
   private mapProject(project: any) {
     return {
       ...project,
-      _id: String(project.id), // dynamic mapping for frontend compatibility
+      _id: String(project.id),
     };
   }
 }
