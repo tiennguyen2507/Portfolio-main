@@ -39,7 +39,6 @@
 - **Styling**: Tailwind CSS, SCSS
 - **UI Components**: Custom components với Vee-validate
 - **Performance**: Image optimization, lazy loading
-- **Deployment**: Docker ready
 
 ---
 
@@ -136,18 +135,6 @@ cp .env.example .env
 ---
 
 ## 🚀 Deployment
-
-### Docker
-
-```bash
-# Build Docker image
-docker build -t portfolio .
-
-# Run container
-docker run -p 3000:3000 portfolio
-```
-
-### Manual deployment
 
 ```bash
 # Build for production

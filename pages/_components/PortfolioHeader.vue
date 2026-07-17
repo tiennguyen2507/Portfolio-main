@@ -138,10 +138,6 @@
       path: '#wedding',
     },
     {
-      label: 'Shop',
-      path: '/shop',
-    },
-    {
       label: 'Contact',
       path: '#contact',
     },

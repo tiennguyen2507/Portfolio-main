@@ -12,11 +12,6 @@
       :error="projectsError"
       @refresh="refreshProjects"
     />
-    <PortfolioShop
-      :products="shopProducts?.data || []"
-      :pending="shopPending"
-      :error="shopError"
-    />
     <PortfolioBlog
       :posts="blogPostsData"
       :pending="blogPending"
@@ -46,7 +41,6 @@
   import PortfolioHero from '~/pages/_components/PortfolioHero.vue'
   import TechnologiesSection from '~/pages/_components/TechnologiesSection.vue'
   import ProjectsSection from '~/pages/_components/ProjectsSection.vue'
-  import PortfolioShop from '~/pages/_components/PortfolioShop.vue'
   import PortfolioWedding from '~/pages/_components/PortfolioWedding.vue'
   import PortfolioBlog from '~/pages/_components/PortfolioBlog.vue'
   import StructuredData from '~/components/StructuredData.vue'
@@ -77,21 +71,6 @@
   } = await useAsyncData(
     'portfolio-projects',
     () => httpRequest.get('/projects?page=1&limit=6'),
-    {
-      default: () => [],
-      server: true,
-      client: true,
-    }
-  )
-
-  const {
-    data: shopProducts,
-    pending: shopPending,
-    error: shopError,
-    refresh: refreshShop,
-  } = await useAsyncData(
-    'portfolio-shop-products',
-    () => httpRequest.get('/products?page=1&limit=4'),
     {
       default: () => [],
       server: true,
