@@ -47,29 +47,25 @@
 ### Yêu cầu hệ thống
 
 - Node.js 18+
-- Yarn hoặc npm
+- npm hoặc Yarn
 
 ### Cài đặt dependencies
 
 ```bash
-# Sử dụng yarn (khuyến nghị)
-yarn install
-
-# Hoặc npm
-npm install
+npm install --legacy-peer-deps
 ```
 
 ### Chạy development server
 
 ```bash
 # Development mode
-yarn dev
+npm run dev
 
 # Build production
-yarn build
+npm run build
 
 # Preview production build
-yarn preview
+npm run preview
 ```
 
 ### Environment variables
@@ -138,10 +134,10 @@ cp .env.example .env
 
 ```bash
 # Build for production
-yarn build
+npm run build
 
 # Start production server
-yarn preview
+npm run preview
 ```
 
 ---

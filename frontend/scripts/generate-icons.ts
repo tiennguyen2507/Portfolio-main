@@ -1,8 +1,8 @@
 /**
  * Script để generate PWA icons từ favicon.webp sử dụng Sharp
  *
- * Yêu cầu: yarn add -D sharp tsx @types/node
- * Chạy: yarn generate:icons
+ * Yêu cầu: npm install -D sharp tsx @types/node
+ * Chạy: npm run generate:icons
  */
 
 import sharp from 'sharp'
@@ -80,7 +80,7 @@ async function generateIcons(): Promise<void> {
         console.error('❌ Chưa cài đặt sharp!')
         console.log('')
         console.log('💡 Chạy lệnh sau để cài đặt:')
-        console.log('   yarn add -D sharp')
+        console.log('   npm install -D sharp')
         console.log('')
       } else {
         console.error('❌ Lỗi khi generate icons:', error.message)

@@ -43,8 +43,8 @@ convert public/favicon.webp -resize 512x512 public/icons/pwa-512x512.png
 ### Option 3: Sử dụng Sharp (Node.js)
 
 ```bash
-yarn add -D sharp
-node scripts/generate-icons-sharp.js
+npm install -D sharp
+npm run generate:icons
 ```
 
 ## Lưu ý
