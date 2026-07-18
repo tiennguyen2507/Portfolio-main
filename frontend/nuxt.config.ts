@@ -83,189 +83,80 @@ export default defineNuxtConfig({
   app: {
     head: {
       charset: 'utf-8',
-      viewport:
-        'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
-      title:
-        process.env.SITE_TITLE ||
-        'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
+      viewport: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
+      title: 'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
       meta: [
         {
           name: 'description',
-          content:
-            process.env.SITE_DESCRIPTION ||
-            'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.',
+          content: 'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend (React, Vue.js) và Backend (Node.js, NestJS). Dựa tại Đà Nẵng, Việt Nam.'
         },
         { name: 'robots', content: 'index, follow' },
-        {
-          name: 'author',
-          content: process.env.SITE_AUTHOR || 'Nguyễn Lê Đình Tiên',
-        },
+        { name: 'author', content: 'Nguyễn Lê Đình Tiên' },
         {
           name: 'keywords',
-          content:
-            'portfolio, web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer, NestJS, TypeScript',
+          content: 'portfolio, web developer, fullstack developer, frontend developer, backend developer, React, Vue.js, Node.js, Da Nang, Vietnam, NestJS, TypeScript, Nuxt 3'
         },
+        // Open Graph
         { property: 'og:type', content: 'website' },
-        {
-          property: 'og:title',
-          content:
-            process.env.SITE_TITLE ||
-            'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
-        },
-        {
-          property: 'og:description',
-          content:
-            process.env.SITE_DESCRIPTION ||
-            'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS.',
-        },
-        {
-          property: 'og:site_name',
-          content: process.env.SITE_NAME || 'Nguyễn Lê Đình Tiên Portfolio',
-        },
+        { property: 'og:title', content: 'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer' },
+        { property: 'og:description', content: 'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend (React, Vue.js) và Backend (Node.js, NestJS).' },
+        { property: 'og:site_name', content: 'Nguyễn Lê Đình Tiên Portfolio' },
+        { property: 'og:url', content: 'https://nguyenledinhtien.io.vn' },
+        { property: 'og:image', content: 'https://nguyenledinhtien.io.vn/og-image.jpg' },
+        // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
-        {
-          name: 'twitter:title',
-          content: 'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer',
-        },
-        {
-          name: 'twitter:description',
-          content:
-            'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development',
-        },
-        {
-          name: 'viewport',
-          content:
-            'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
-        },
+        { name: 'twitter:title', content: 'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer' },
+        { name: 'twitter:description', content: 'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development' },
+        { name: 'twitter:image', content: 'https://nguyenledinhtien.io.vn/twitter-image.jpg' },
+        { name: 'twitter:site', content: '@nguyenledinhtien' },
+        { name: 'twitter:creator', content: '@nguyenledinhtien' },
+        // Styling & Theme
         { name: 'theme-color', content: '#f97316' },
         { name: 'msapplication-TileColor', content: '#f97316' },
         // iOS PWA Meta Tags
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        {
-          name: 'apple-mobile-web-app-status-bar-style',
-          content: 'black-translucent',
-        },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
         { name: 'apple-mobile-web-app-title', content: 'Nguyễn Lê Đình Tiên' },
-        { name: 'application-name', content: 'Nguyễn Lê Đình Tiên Portfolio' },
+        { name: 'application-name', content: 'Nguyễn Lê Đình Tiên Portfolio' }
       ],
       link: [
-        // Favicon với các kích thước chuẩn cho Chrome và các trình duyệt khác
-        {
-          rel: 'icon',
-          type: 'image/webp',
-          sizes: '16x16',
-          href: '/favicon-16x16.webp',
-        },
-        {
-          rel: 'icon',
-          type: 'image/webp',
-          sizes: '32x32',
-          href: '/favicon-32x32.webp',
-        },
-        {
-          rel: 'icon',
-          type: 'image/webp',
-          sizes: '96x96',
-          href: '/favicon-96x96.webp',
-        },
-        {
-          rel: 'icon',
-          type: 'image/webp',
-          sizes: '192x192',
-          href: '/favicon-192x192.webp',
-        },
+        // Favicon với các kích thước chuẩn
+        { rel: 'icon', type: 'image/webp', sizes: '16x16', href: '/favicon-16x16.webp' },
+        { rel: 'icon', type: 'image/webp', sizes: '32x32', href: '/favicon-32x32.webp' },
+        { rel: 'icon', type: 'image/webp', sizes: '96x96', href: '/favicon-96x96.webp' },
+        { rel: 'icon', type: 'image/webp', sizes: '192x192', href: '/favicon-192x192.webp' },
         { rel: 'icon', type: 'image/webp', href: '/favicon.webp' },
         { rel: 'shortcut icon', href: '/favicon.ico' },
         // iOS PWA Icons
-        {
-          rel: 'apple-touch-icon',
-          sizes: '180x180',
-          href: '/icons/apple-touch-icon.png',
-        },
-        {
-          rel: 'apple-touch-icon',
-          sizes: '152x152',
-          href: '/icons/apple-touch-icon-152x152.png',
-        },
-        {
-          rel: 'apple-touch-icon',
-          sizes: '120x120',
-          href: '/icons/apple-touch-icon-120x120.png',
-        },
-        {
-          rel: 'canonical',
-          href: process.env.SITE_URL || 'https://nguyenledinhtien.io.vn',
-        },
-        // Preload critical resources
-        {
-          rel: 'preload',
-          href: '/fonts/UTM-Hanzel.ttf',
-          as: 'font',
-          type: 'font/ttf',
-          crossorigin: 'anonymous',
-        },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/icons/apple-touch-icon.png' },
+        { rel: 'apple-touch-icon', sizes: '152x152', href: '/icons/apple-touch-icon-152x152.png' },
+        { rel: 'apple-touch-icon', sizes: '120x120', href: '/icons/apple-touch-icon-120x120.png' },
+        { rel: 'canonical', href: 'https://nguyenledinhtien.io.vn' },
+        // Preload & Preconnect
+        { rel: 'preload', href: '/fonts/UTM-Hanzel.ttf', as: 'font', type: 'font/ttf', crossorigin: 'anonymous' },
         { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        {
-          rel: 'preconnect',
-          href: 'https://fonts.gstatic.com',
-          crossorigin: 'anonymous',
-        },
-      ],
-    },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' }
+      ]
+    }
   },
 
   runtimeConfig: {
     public: {
-      // API URL
-      NUXT_PUBLIC_API_URL:
-        process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3000',
+      NUXT_PUBLIC_API_URL: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3000',
+      PUBLISHER_SIGNUP_URL: '',
+      LOGIN_URL: '',
 
-      // Authentication URLs (if needed for admin panel)
-      PUBLISHER_SIGNUP_URL: process.env.PUBLISHER_SIGNUP_URL || '',
-      LOGIN_URL: process.env.LOGIN_URL || '',
-
-      // Site SEO Configuration
-      SITE_URL: process.env.SITE_URL || 'https://nguyenledinhtien.io.vn',
-      SITE_TITLE:
-        process.env.SITE_TITLE ||
-        'Nguyễn Lê Đình Tiên - Portfolio | Fullstack Web Developer | Đà Nẵng',
-      SITE_DESCRIPTION:
-        process.env.SITE_DESCRIPTION ||
-        'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với 6 năm kinh nghiệm trong Frontend và Backend Development. Chuyên xây dựng giao diện hiện đại với React, Vue.js và API mạnh mẽ với Node.js, NestJS. Dựa tại Đà Nẵng, Việt Nam.',
-      SITE_KEYWORDS:
-        process.env.SITE_KEYWORDS ||
-        'portfolio, web developer, fullstack developer, frontend developer, backend developer, React developer, Vue.js developer, Node.js developer, Da Nang, Vietnam, hire developer, modern UI/UX, API development, software engineer, NestJS, TypeScript',
-      SITE_NAME: process.env.SITE_NAME || 'Nguyễn Lê Đình Tiên Portfolio',
-      SITE_AUTHOR: process.env.SITE_AUTHOR || 'Nguyễn Lê Đình Tiên',
-      SITE_LOCALE: process.env.SITE_LOCALE || 'en_US',
-
-      // Social Media URLs
-      SITE_FACEBOOK:
-        process.env.SITE_FACEBOOK || 'https://facebook.com/nguyenledinhtien',
-      SITE_TWITTER:
-        process.env.SITE_TWITTER || 'https://twitter.com/nguyenledinhtien',
-      SITE_LINKEDIN:
-        process.env.SITE_LINKEDIN || 'https://linkedin.com/in/nguyenledinhtien',
-      SITE_TWITTER_SITE: process.env.SITE_TWITTER_SITE || '@nguyenledinhtien',
-      SITE_TWITTER_CREATOR:
-        process.env.SITE_TWITTER_CREATOR || '@nguyenledinhtien',
-
-      // Images
-      SITE_OG_IMAGE:
-        process.env.SITE_OG_IMAGE ||
-        'https://nguyenledinhtien.io.vn/og-image.jpg',
-      SITE_TWITTER_IMAGE:
-        process.env.SITE_TWITTER_IMAGE ||
-        'https://nguyenledinhtien.io.vn/twitter-image.jpg',
-      SITE_LOGO:
-        process.env.SITE_LOGO || 'https://nguyenledinhtien.io.vn/logo.png',
-
-      // Contact Information
-      SITE_PHONE: process.env.SITE_PHONE || '+84 88 669 4350',
-      SITE_AREA_SERVED: process.env.SITE_AREA_SERVED || 'VN',
-      SITE_LANGUAGES: process.env.SITE_LANGUAGES || 'English,Vietnamese',
-    },
+      // Fixed metadata used by footer / other pages
+      SITE_URL: 'https://nguyenledinhtien.io.vn',
+      SITE_NAME: 'Nguyễn Lê Đình Tiên Portfolio',
+      SITE_AUTHOR: 'Nguyễn Lê Đình Tiên',
+      SITE_PHONE: '+84 88 669 4350',
+      SITE_FACEBOOK: 'https://facebook.com/nguyenledinhtien',
+      SITE_LINKEDIN: 'https://linkedin.com/in/nguyenledinhtien',
+      SITE_TWITTER: 'https://twitter.com/nguyenledinhtien',
+      SITE_GITHUB: 'https://github.com/nguyenledinhtien'
+    }
   },
 
   // PWA Configuration
@@ -273,11 +164,9 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     strategies: 'generateSW',
     manifest: {
-      name: process.env.SITE_NAME || 'Nguyễn Lê Đình Tiên Portfolio',
+      name: 'Nguyễn Lê Đình Tiên Portfolio',
       short_name: 'Tiên Portfolio',
-      description:
-        process.env.SITE_DESCRIPTION ||
-        'Portfolio của Nguyễn Lê Đình Tiên - Fullstack Web Developer',
+      description: 'Portfolio của Nguyễn Lê Đình Tiên - Lập trình viên web với kinh nghiệm trong Frontend và Backend Development.',
       theme_color: '#f97316',
       background_color: '#ffffff',
       display: 'standalone',
