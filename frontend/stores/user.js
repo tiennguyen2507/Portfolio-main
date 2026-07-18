@@ -14,7 +14,9 @@ export const useUserStore = defineStore('user', () => {
 
     try {
       isLoading.value = true
-      const response = await $fetch('http://localhost:3001/auth/info', {
+      const config = useRuntimeConfig()
+      const baseURL = config.public.NUXT_PUBLIC_API_URL || 'http://localhost:3001'
+      const response = await $fetch(`${baseURL}/auth/info`, {
         headers: {
           Authorization: `Bearer ${token.value}`,
         },

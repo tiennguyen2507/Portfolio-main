@@ -1,5 +1,3 @@
-const API_BASE_URL = 'http://localhost:3001'
-
 // Chỉ lấy token khi chạy trên client (tránh lỗi SSR)
 function getToken(): string | null {
   if (typeof window === 'undefined') return null
@@ -19,9 +17,20 @@ function createRequestConfig(options?: any) {
   if (token) {
     headers['Authorization'] = `Bearer ${token}`
   }
+
+  let baseURL = 'http://localhost:3001'
+  try {
+    const config = useRuntimeConfig()
+    if (config?.public?.NUXT_PUBLIC_API_URL) {
+      baseURL = config.public.NUXT_PUBLIC_API_URL
+    }
+  } catch {
+    // Nuxt context not active
+  }
+
   return {
     headers,
-    baseURL: API_BASE_URL,
+    baseURL,
     ...options,
   }
 }
