@@ -28,6 +28,14 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
+  @Get('api/auth/health')
+  healthCheck() {
+    return {
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+    };
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('auth/info')
   async getInfo(@Request() req: any) {
