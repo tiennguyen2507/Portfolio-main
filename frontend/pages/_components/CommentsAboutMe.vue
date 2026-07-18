@@ -305,9 +305,9 @@
   const hasAnyError = computed(() =>
     Boolean(
       errors.value.avatar ||
-        errors.value.name ||
-        errors.value.relationship ||
-        errors.value.comment
+      errors.value.name ||
+      errors.value.relationship ||
+      errors.value.comment
     )
   )
 
